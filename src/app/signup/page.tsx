@@ -40,8 +40,8 @@ const page = () => {
                     </div>
                 </div>
                 <div className="w-full md:w-1/2 p-8">
-                    <div className="p-4 py-16 flex flex-col justify-start items-center bg-blue-50 h-full">
-                        <div className='bg-black/10 my-10 flex flex-row w-3/4 justify-around text-black items-center h-16 p-2 rounded-xl gap-2'>
+                    <div className={`p-4 flex flex-col justify-start items-center bg-blue-50 h-full`}>
+                        <div className='shadow-inner bg-black/10 my-10 flex flex-row w-3/4 justify-around text-black items-center h-16 p-2 rounded-xl gap-2'>
                             <button onClick={() => setSelected("developer")} className={`${selected === "developer" ? "bg-white shadow-xl" : "bg-transparent text-slate-400 hover:text-slate-600 hover:bg-white/50"}  w-full h-full flex items-center justify-center gap-2 rounded-xl font-bold`}>
                                 <div className={`${selected === "developer" ? "bg-blue-100" : "bg-gray-200"} bg-blue-100 w-8 h-8 rounded-full flex items-center justify-center`}><CodeXml size={20} color={selected === "developer" ? "#3b82fc" : "#4b5563"} strokeWidth={2} /> </div>  Developer
                             </button>
@@ -50,25 +50,43 @@ const page = () => {
                                 Company
                             </button>
                         </div>
-                        <form className="md:max-w-lg mx-auto">
-                            <div className='flex flex-row gap-4'>
-                                <label className="block mb-4">
+                        <form className="w-3/4">
+                            <div className='flex flex-row w-full justify-between gap-4'>
+                                <label className="block mb-4 flex-1">
                                     <p className="mb-2 text-gray-900 font-semibold leading-normal">First Name *</p>
-                                    <input className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300" id="signUpInput1-1" type="text" placeholder="First name" />
+                                    <div className="flex flex-wrap sm:flex-nowrap">
+                                        <div className="w-full sm:w-auto">
+                                            <div className="relative h-full">
+                                                <select className="appearance-none py-2 pl-3.5 pr-10 text-sm text-neutral-500 font-medium w-full h-full bg-light outline-none cursor-pointer rounded-tl-lg rounded-bl-lg border border-gray-300">
+                                                    <option value="US">Mr</option>
+                                                    <option value="US">Mrs</option>
+                                                    <option value="US">Ms</option>
+                                                </select>
+                                                <svg className="absolute top-1/2 right-4 transform -translate-y-1/2" width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M12.6673 9L8.00065 13.6667L3.33398 9" stroke="#495460" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div className="w-full sm:flex-1">
+                                            <input className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-tr-lg rounded-br-lg focus:ring focus:ring-indigo-300" id="inputsInput14-1" type="text" placeholder="First Name" />
+                                        </div>
+                                    </div>
                                 </label>
+
                                 <label className="block mb-4">
                                     <p className="mb-2 text-gray-900 font-semibold leading-normal">Last Name *</p>
                                     <input className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300" id="signUpInput1-1" type="text" placeholder="Last name" />
                                 </label>
                             </div>
 
+
                             {selected === "company" && (
                                 <div className='flex flex-row gap-4'>
-                                    <label className="block mb-4">
+                                    <label className="block mb-4 flex-1">
                                         <p className="mb-2 text-gray-900 font-semibold leading-normal">Company Name *</p>
                                         <input className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300" id="signUpInput1-1" type="text" placeholder="First name" />
                                     </label>
-                                    <label className="block mb-4">
+                                    <label className="block mb-4 flex-1">
                                         <p className="mb-2 text-gray-900 font-semibold leading-normal">Industry *</p>
                                         <input className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300" id="signUpInput1-1" type="text" placeholder="Last name" />
                                     </label>
@@ -83,20 +101,11 @@ const page = () => {
                                 <p className="mb-2 text-gray-900 font-semibold leading-normal">Phone Number *</p>
                                 <input className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300" id="signUpInput1-3" type="password" placeholder="********" />
                             </label>
-                            <div className="flex flex-wrap justify-between mb-4">
-                                <div className="w-full">
-                                    <div className="flex items-center">
-                                        <input className="w-4 h-4" id="default-checkbox" type="checkbox" value="" />
-                                        <label className="ml-2 text-sm text-gray-900 font-medium" htmlFor="default-checkbox">
-                                            <span>By signing up, I agree to the</span>
-                                            <Link className="text-indigo-600 hover:text-indigo-700" href="#">Terms & Conditions</Link>
-                                            <span>of Flaro</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <button className="mb-8 py-4 px-9 w-full text-white font-semibold border border-indigo-700 rounded-xl shadow-4xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200" type="button">Sign Up</button>
+                            <button className="mb-3 py-4 px-9 w-full text-white font-semibold border border-indigo-700 rounded-xl shadow-4xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200" type="button">Sign Up</button>
 
+                            <div className='text-black'>
+                                Already have an account? <Link className="text-indigo-600 hover:text-indigo-700 font-extrabold" href={`/${selected}/login`}>Login</Link>
+                            </div>
                         </form>
                     </div>
                 </div>

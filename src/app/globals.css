@@ -25,3 +25,21 @@ body {
     text-wrap: balance;
   }
 }
+
+/* Hidden initially */
+.mobile-menu {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+/* Open animation */
+.mobile-menu.open {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Close animation */
+.mobile-menu.close {
+  transform: translateX(-100%);
+  opacity: 1;
+}

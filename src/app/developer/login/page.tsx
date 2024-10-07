@@ -1,7 +1,12 @@
+"use client"
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 export default function Login() {
+
+    const router = useRouter();
+
     return (
         <section className="relative bg-white h-screen">
             <img className="absolute left-0 top-0" src="https://static.shuffle.dev/components/preview/238eb578-e531-4cf4-a658-a1ff13c9b896/assets/public/flaro-assets/images/sign-in/gradient.svg" alt="" />
@@ -55,7 +60,13 @@ export default function Login() {
                                 </div>
                                 <div className="w-auto p-2"><Link className="text-sm text-indigo-600 hover:text-indigo-700 font-medium" href="#">Forgot Password?</Link></div>
                             </div>
-                            <button className="mb-9 py-4 px-9 w-full text-white font-semibold border border-indigo-700 rounded-xl shadow-4xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200" type="button">Sign In</button>
+                            <button
+                                className="mb-9 py-4 px-9 w-full text-white font-semibold border border-indigo-700 rounded-xl shadow-4xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200"
+                                type="button"
+                                onClick={() => router.push('/developer/dashboard')}
+                            >
+                                Sign In
+                            </button>
                         </form>
                     </div>
                 </div>
