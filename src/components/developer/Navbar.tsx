@@ -1,9 +1,14 @@
+"use client"
 import { BellIcon, Home, HomeIcon, MessageCircle } from 'lucide-react'
 import React from 'react'
 import Stepper from './onboarding/Stepper'
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
     const onboarding = true;
+    const developerOnboarding = useSelector((state: any) => state.developerOnboarding)
+    console.log("developerOnboarding::", developerOnboarding)
+
     return (
         <section className="py-5 px-6 bg-white shadow-sm border border-gray-300 rounded-3xl w-full">
             <nav className="relative">

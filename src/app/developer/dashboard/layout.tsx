@@ -22,7 +22,7 @@ export default function DashboardLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const [sideBar, setSideBar] = useState(false);
+    const sideBar = false;
 
     return (
         <html lang="en">
