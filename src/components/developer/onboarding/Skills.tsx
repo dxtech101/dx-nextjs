@@ -87,7 +87,7 @@ const Skills = () => {
                             Enter the Core skills that you have
                         </p>
                     </span>
-                    <div className='flex flex-row gap-4 py-6'>
+                    <div className='flex flex-row gap-4 '>
                         <button onClick={handlePrevious} className='bg-gray-200 text-gray-400 text-bold font-bold h-12 px-6 rounded-xl'>Previous</button>
                         <button onClick={handleNext} className='bg-blue-500 text-bold text-white font-bold h-12 px-6 rounded-xl'>Save & Next</button>
                     </div>

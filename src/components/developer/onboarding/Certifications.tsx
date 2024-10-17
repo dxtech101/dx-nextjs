@@ -22,11 +22,11 @@ const Certifications = () => {
                             Select Salesforce Certifications that you hold
                         </p>
                     </span>
-                    <div className='flex flex-row gap-6 py-6 justify-center items-center'>
-                        <InputField placeHolder="Search Skills" iconName="search" className="w-full" />
+                    <div className='flex flex-row gap-6 justify-center items-center'>
+                        <InputField placeHolder="Search Skills" iconName="search" className="w-80" />
                         <button
                             onClick={() => handleNext()}
-                            className='bg-blue-500 text-bold text-white font-bold h-12 px-2 rounded-xl'>
+                            className='bg-blue-500 text-bold text-white font-bold h-12 px-4 rounded-xl whitespace-nowrap'>
                             Save & Next
                         </button>
                     </div>

@@ -2,9 +2,54 @@
 import React, { useState } from 'react'
 import { CodeXml, Building2 } from 'lucide-react';
 import Link from 'next/link';
+import InputField from '@/components/InputField';
+import axios from 'axios';
+import { axiosInstance } from '@/lib/axios-configuration';
 
 const page = () => {
-    const [selected, setSelected] = useState('developer')
+    const [selected, setSelected] = useState('developer');
+    const [formData, setFormData] = useState({
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone: '',
+        company_name: '',
+        industry: '',
+        role: selected
+    });
+
+    const handleChange = (e: any) => {
+        const { id, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [id]: value,
+        }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const signupData = new FormData();
+        signupData.append('first_name', formData.first_name);
+        signupData.append('last_name', formData.last_name);
+        signupData.append('email', formData.email);
+        signupData.append('phone', formData.phone);
+        if (selected === 'company') {
+            signupData.append('company_name', formData.company_name);
+            signupData.append('industry', formData.industry);
+            signupData.append('role', selected);
+        } else {
+            signupData.append('role', selected);
+        }
+        signupData.append('password', "Demo");
+
+        try {
+            const response = await axiosInstance.post('/users/enroll-user/', signupData);
+            console.log(response.data); // Handle success response
+        } catch (error) {
+            console.error(error); // Handle error
+        }
+    };
 
     return (
         <section className="relative bg-white overflow-hidden h-screen">
@@ -50,62 +95,67 @@ const page = () => {
                                 Company
                             </button>
                         </div>
-                        <form className="w-3/4">
+                        <form onSubmit={handleSubmit} className="w-3/4 flex flex-col gap-6">
                             <div className='flex flex-row w-full justify-between gap-4'>
-                                <label className="block mb-4 flex-1">
-                                    <p className="mb-2 text-gray-900 font-semibold leading-normal">First Name *</p>
-                                    <div className="flex flex-wrap sm:flex-nowrap">
-                                        <div className="w-full sm:w-auto">
-                                            <div className="relative h-full">
-                                                <select className="appearance-none py-2 pl-3.5 pr-10 text-sm text-neutral-500 font-medium w-full h-full bg-light outline-none cursor-pointer rounded-tl-lg rounded-bl-lg border border-gray-300">
-                                                    <option value="US">Mr</option>
-                                                    <option value="US">Mrs</option>
-                                                    <option value="US">Ms</option>
-                                                </select>
-                                                <svg className="absolute top-1/2 right-4 transform -translate-y-1/2" width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M12.6673 9L8.00065 13.6667L3.33398 9" stroke="#495460" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        <div className="w-full sm:flex-1">
-                                            <input className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-tr-lg rounded-br-lg focus:ring focus:ring-indigo-300" id="inputsInput14-1" type="text" placeholder="First Name" />
-                                        </div>
-                                    </div>
-                                </label>
-
-                                <label className="block mb-4">
-                                    <p className="mb-2 text-gray-900 font-semibold leading-normal">Last Name *</p>
-                                    <input className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300" id="signUpInput1-1" type="text" placeholder="Last name" />
-                                </label>
+                                <InputField
+                                    label="First Name"
+                                    value={formData.first_name}
+                                    onChange={handleChange}
+                                    id="first_name"
+                                    className="w-full"
+                                    placeholder="Enter first name"
+                                    customTag={true}
+                                />
+                                <InputField
+                                    label="Last Name"
+                                    value={formData.last_name}
+                                    onChange={handleChange}
+                                    id="last_name"
+                                    className="w-full"
+                                    placeholder="Enter last name"
+                                />
                             </div>
-
 
                             {selected === "company" && (
                                 <div className='flex flex-row gap-4'>
-                                    <label className="block mb-4 flex-1">
-                                        <p className="mb-2 text-gray-900 font-semibold leading-normal">Company Name *</p>
-                                        <input className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300" id="signUpInput1-1" type="text" placeholder="First name" />
-                                    </label>
-                                    <label className="block mb-4 flex-1">
-                                        <p className="mb-2 text-gray-900 font-semibold leading-normal">Industry *</p>
-                                        <input className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300" id="signUpInput1-1" type="text" placeholder="Last name" />
-                                    </label>
+                                    <InputField
+                                        label="Company Name"
+                                        value={formData.company_name}
+                                        onChange={handleChange}
+                                        id="company_name"
+                                        className="w-full"
+                                        placeholder="Enter company name"
+                                    />
+                                    <InputField
+                                        label="Industry"
+                                        value={formData.industry}
+                                        onChange={handleChange}
+                                        id="industry"
+                                        className="w-full"
+                                        placeholder="Enter industry"
+                                    />
                                 </div>
                             )}
 
-                            <label className="block mb-4">
-                                <p className="mb-2 text-gray-900 font-semibold leading-normal">Email Address *</p>
-                                <input className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300" id="signUpInput1-2" type="text" placeholder="Enter email address" />
-                            </label>
-                            <label className="block mb-5">
-                                <p className="mb-2 text-gray-900 font-semibold leading-normal">Phone Number *</p>
-                                <input className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300" id="signUpInput1-3" type="password" placeholder="********" />
-                            </label>
-                            <button className="mb-3 py-4 px-9 w-full text-white font-semibold border border-indigo-700 rounded-xl shadow-4xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200" type="button">Sign Up</button>
-
-                            <div className='text-black'>
-                                Already have an account? <Link className="text-indigo-600 hover:text-indigo-700 font-extrabold" href={`/${selected}/login`}>Login</Link>
-                            </div>
+                            <InputField
+                                label="Email Address"
+                                value={formData.email}
+                                onChange={handleChange}
+                                id="email"
+                                className="w-full"
+                                placeholder="Enter email address"
+                            />
+                            <InputField
+                                label="Phone Number"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                id="phone"
+                                className="w-full"
+                                placeholder="Enter phone number"
+                            />
+                            <button className="mb-3 py-4 px-9 w-full text-white rounded-xl bg-indigo-600" type="submit">
+                                Sign Up
+                            </button>
                         </form>
                     </div>
                 </div>
