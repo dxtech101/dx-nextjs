@@ -1,11 +1,63 @@
 "use client"
+import InputField from '@/components/InputField';
+import ErrorToast from '@/components/toast/ErrorToast';
+import SuccessfulToast from '@/components/toast/SuccessfulToast';
+import { addDeveloperProfile } from '@/feature/reducers/developerProfile';
+import { setAuthenticationToken } from '@/lib/cookie';
+import { handleFormDataChange, validateForm } from '@/lib/helper';
+import axios from 'axios';
+import { LoaderCircle } from 'lucide-react';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { useState } from 'react'
+import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
 
 export default function Login() {
-
     const router = useRouter();
+    const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+        medium: 'email'
+    });
+    const [errors, setErrors] = useState({
+        email: '',
+        password: ''
+    });
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!validateForm(formData, setErrors)) {
+            return;
+        }
+
+        const signupData = new FormData();
+        signupData.append('email', formData.email);
+        signupData.append('password', "Demo");
+        signupData.append('medium', "email");
+
+        try {
+            setLoading(true)
+            const response = await axios.post('/users/sign-in/', signupData);
+            if (response.data && response.data.user) {
+                setAuthenticationToken(response.data)
+                dispatch(addDeveloperProfile(response.data.user));
+                toast.custom((t) => (
+                    <SuccessfulToast t={t} message={"Logged in successfully"} />
+                ));
+                router.push('/developer/dashboard');
+            }
+        } catch (error: any) {
+            toast.custom((t) => (
+                <ErrorToast t={t} message={error?.response?.data?.error} />
+            ))
+        } finally {
+            setLoading(false)
+        }
+    };
 
     return (
         <section className="relative bg-white h-screen">
@@ -42,15 +94,27 @@ export default function Login() {
                 </div>
                 <div className="w-full md:w-1/2 ">
                     <div className="p-4 py-16 flex flex-col justify-center items-center bg-blue-50 h-screen ">
-                        <form className="w-3/4">
-                            <label className="block mb-4">
-                                <p className="mb-2 text-gray-900 font-semibold leading-normal">Email Address *</p>
-                                <input className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-100 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300" id="signInInput1-1" type="text" placeholder="Enter email address" />
-                            </label>
-                            <label className="block mb-5">
-                                <p className="mb-2 text-gray-900 font-semibold leading-normal">Password *</p>
-                                <input className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300" id="signInInput1-2" type="password" placeholder="********" />
-                            </label>
+                        <form onSubmit={handleSubmit} className="w-3/4 flex flex-col gap-6">
+                            <InputField
+                                type="email"
+                                label={"Email Address"}
+                                className="w-full"
+                                value={formData.email}
+                                onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
+                                id="email"
+                                error={errors.email}
+                                isRequired={true}
+                            />
+                            <InputField
+                                type="password"
+                                label={"Password"}
+                                value={formData.password}
+                                onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
+                                id="password"
+                                error={errors.password}
+                                className="w-full"
+                                isRequired={true}
+                            />
                             <div className="flex flex-wrap justify-between -m-2 mb-4">
                                 <div className="w-auto p-2">
                                     <div className="flex items-center">
@@ -58,15 +122,25 @@ export default function Login() {
                                         <label className="ml-2 text-sm text-gray-900 font-medium" htmlFor="default-checkbox">Remember Me</label>
                                     </div>
                                 </div>
-                                <div className="w-auto p-2"><Link className="text-sm text-indigo-600 hover:text-indigo-700 font-medium" href="#">Forgot Password?</Link></div>
+                                <div className="w-auto p-2">
+                                    <Link className="text-sm text-indigo-600 hover:text-indigo-700 font-medium" href="#">
+                                        Forgot Password?
+                                    </Link>
+                                </div>
+                                <button
+                                    disabled={loading}
+                                    className="mb-9 py-4 px-9 w-full text-white font-semibold border border-indigo-700 rounded-xl shadow-4xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200"
+                                    type="submit"
+                                >
+                                    {loading ?
+                                        <div className="flex items-center justify-center">
+                                            <LoaderCircle className="animate-spin h-6 w-auto mr-2" />
+                                            Loading...
+                                        </div>
+                                        : "Login"}
+                                </button>
                             </div>
-                            <button
-                                className="mb-9 py-4 px-9 w-full text-white font-semibold border border-indigo-700 rounded-xl shadow-4xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200"
-                                type="button"
-                                onClick={() => router.push('/developer/dashboard')}
-                            >
-                                Sign In
-                            </button>
+
                         </form>
                     </div>
                 </div>

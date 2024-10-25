@@ -1,10 +1,11 @@
 "use client"
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "../globals.css";
-import NavBar from "@/components/web/Navbar";
 import Footer from "@/components/web/Footer";
+import NavBar from "@/components/web/Navbar";
 import StateProvider from "@/feature/Provider";
+import "@/lib/axios-configuration";
+import localFont from "next/font/local";
+import { Toaster } from 'react-hot-toast';
+import "../globals.css";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -22,6 +23,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en" suppressHydrationWarning suppressContentEditableWarning>
       <body
@@ -32,6 +34,7 @@ export default function RootLayout({
           <StateProvider>
             {children}
           </StateProvider>
+          <Toaster />
         </div>
         <Footer />
       </body>

@@ -1,4 +1,5 @@
 "use client"
+import InputField from '@/components/InputField';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
@@ -42,15 +43,19 @@ export default function Login() {
                 </div>
                 <div className="w-full md:w-1/2 ">
                     <div className="p-4 py-16 flex flex-col justify-center items-center bg-blue-50 h-screen ">
-                        <form className="w-3/4">
-                            <label className="block mb-4">
-                                <p className="mb-2 text-gray-900 font-semibold leading-normal">Email Address *</p>
-                                <input className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-100 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300" id="signInInput1-1" type="text" placeholder="Enter email address" />
-                            </label>
-                            <label className="block mb-5">
-                                <p className="mb-2 text-gray-900 font-semibold leading-normal">Password *</p>
-                                <input className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300" id="signInInput1-2" type="password" placeholder="********" />
-                            </label>
+                        <form className="w-3/4 flex flex-col gap-6">
+                            <InputField
+                                type="email"
+                                label={"Email Address"}
+                                className="w-full"
+                                isRequired={true}
+                            />
+                            <InputField
+                                type="password"
+                                label={"Password"}
+                                className="w-full"
+                                isRequired={true}
+                            />
                             <div className="flex flex-wrap justify-between -m-2 mb-4">
                                 <div className="w-auto p-2">
                                     <div className="flex items-center">
@@ -59,14 +64,14 @@ export default function Login() {
                                     </div>
                                 </div>
                                 <div className="w-auto p-2"><Link className="text-sm text-indigo-600 hover:text-indigo-700 font-medium" href="#">Forgot Password?</Link></div>
+                                <button
+                                    className="mb-9 py-4 px-9 w-full text-white font-semibold border border-indigo-700 rounded-xl shadow-4xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200"
+                                    type="button"
+                                    onClick={() => router.push('/developer/dashboard')}
+                                >
+                                    Sign In
+                                </button>
                             </div>
-                            <button
-                                className="mb-9 py-4 px-9 w-full text-white font-semibold border border-indigo-700 rounded-xl shadow-4xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200"
-                                type="button"
-                                onClick={() => router.push('/developer/dashboard')}
-                            >
-                                Sign In
-                            </button>
                         </form>
                     </div>
                 </div>

@@ -6,13 +6,33 @@ import React, { useEffect, useState } from 'react'
 const NavBar = () => {
     const [mobileNavOpen, setMobileNavOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const [scrollDirection, setScrollDirection] = useState("up");
+    const [prevOffset, setPrevOffset] = useState(0);
+    const [visible, setVisible] = useState(true);
+
     useEffect(() => {
         setMounted(true);
     }, []);
 
+    const toggleVisible = () => {
+        const currentScrollPos = window.scrollY;
+        if (currentScrollPos > prevOffset) {
+            setScrollDirection("down");
+        } else if (currentScrollPos < prevOffset) {
+            setScrollDirection("up");
+        }
+        setPrevOffset(currentScrollPos);
+        setVisible(currentScrollPos < 10 || scrollDirection === "up");
+    };
+
+    useEffect(() => {
+        window.addEventListener("scroll", toggleVisible);
+        return () => window.removeEventListener("scroll", toggleVisible);
+    }, [prevOffset]);
+
     return (
         <div>
-            <nav className="fixed top-0 w-full py-6 bg-white z-30 border-b-[0.5px] shadow-sm">
+            <nav className={`fixed top-0 w-full py-6 bg-white z-30 border-b-[0.5px] shadow-sm tansition-transform duration-300 ${visible ? "translate-y-0" : "-translate-y-full"}`}>
                 <div className="container px-4 mx-auto">
                     <div className="flex items-center relative">
                         <Link className="inline-block text-lg font-bold" href="#">
@@ -45,7 +65,7 @@ const NavBar = () => {
                                             <div className="w-full shadow-lg max-w-xl bg-white border border-gray-200 rounded-3xl pt-4 pb-4 px-4 flex flex-row gap-4">
                                                 <div className='flex flex-col gap-4'>
                                                     <Link href="/developer/login" className='w-64 h-24 bg-purple-100 hover:bg-purple-200 border-[1px] border-purple-400 rounded-xl flex justify-around items-center relative'>
-                                                        <span className='font-extrabold flex flex-col text-purple-900'>
+                                                        <span className='font-extrabold flex flex-col items-start text-purple-900'>
                                                             Developer
                                                             <span className='text-xs text-gray-500'>
                                                                 Login as developer
@@ -54,7 +74,7 @@ const NavBar = () => {
                                                         <Image src="/developer.png" alt="Developer" width={100} height={100} className='' />
                                                     </Link>
                                                     <Link href="/company/login" className='w-64 h-24 bg-amber-50 hover:bg-amber-100 border-[1px] border-amber-400 rounded-xl flex justify-around items-center relative'>
-                                                        <span className='font-extrabold flex flex-col text-amber-900'>
+                                                        <span className='font-extrabold flex flex-col items-start text-amber-900'>
                                                             Company
                                                             <span className='text-xs text-gray-500'>
                                                                 Login as company
@@ -64,12 +84,12 @@ const NavBar = () => {
                                                     </Link>
                                                 </div>
                                                 <Link href="/signup" className='w-64 h-52 bg-blue-50 hover:bg-blue-100 border-[1px] border-blue-400 rounded-xl flex flex-col justify-start items-start p-6 relative'>
-                                                    <span className='font-extrabold flex flex-col text-blue-900 '>
+                                                    <span className='font-extrabold flex flex-col items-start text-blue-900 '>
                                                         <span className='text-2xl font-black '>
                                                             Sign Up
                                                         </span>
-                                                        <span className='text-xs text-gray-500'>
-                                                            Register your
+                                                        <span className='text-xs text-gray-500 max-w-xl text-start'>
+                                                            Register yourself as a Company or Developer
                                                         </span>
                                                     </span>
                                                     <Image src="/company.png" alt="Developer" width={120} height={120} className='absolute bottom-0 right-0' />
@@ -97,7 +117,7 @@ const NavBar = () => {
                             </svg>
                         </button>
                     </div>
-                    <div className='flex flex-col items-start justify-evenly h-screen'>
+                    <div className='flex flex-col items-start justify-start gap-6 h-screen'>
                         <ul className="mb-2">
                             <li><Link className="block py-4 px-5 text-gray-900 hover:bg-orange-50 rounded-lg" href="#">Home</Link></li>
                             <li><Link className="block py-4 px-5 text-gray-900 hover:bg-orange-50 rounded-lg" href="#">Services</Link></li>
@@ -122,11 +142,11 @@ const NavBar = () => {
                             </span>
                             <Image src="/company.png" alt="Developer" width={100} height={100} className='' />
                         </Link>
-                        <Link href="/company/login" className='w-64 h-24 bg-blue-50 hover:bg-blue-100 border-[1px] border-blue-400 rounded-xl flex justify-around items-center relative'>
+                        <Link href="/signup" className='w-64 h-24 bg-blue-50 hover:bg-blue-100 border-[1px] border-blue-400 rounded-xl flex justify-around items-center relative'>
                             <span className='font-extrabold flex flex-col text-amber-900'>
-                                Company
+                                Sign Up
                                 <span className='text-xs text-gray-500'>
-                                    Login as company
+                                    Register yourself as a Company or Developer
                                 </span>
                             </span>
                             <Image src="/company.png" alt="Developer" width={100} height={100} className='' />

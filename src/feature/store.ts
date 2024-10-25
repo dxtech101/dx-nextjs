@@ -11,11 +11,12 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; 
-
-import developerOnboardingReducer from './developerOnboardingStepper/developerOnboarding';
+import developerOnboardingReducer from './reducers/developerOnboarding';
+import developerProfileReducer from './reducers/developerProfile';
 
 const rootReducer = combineReducers({
   developerOnboarding: developerOnboardingReducer,
+  developerProfile: developerProfileReducer,
 });
 
 const persistConfig = {

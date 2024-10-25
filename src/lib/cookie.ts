@@ -1,5 +1,5 @@
 // next imports
-import Router from "next/router";
+import Router from "next/navigation";
 // next-cookie
 import nextCookie from "next-cookies";
 // js cookie
@@ -25,6 +25,7 @@ export const getServerAuthenticationCookie = (context: any) => {
 export const setAuthenticationToken = (userToken: any) => {
   if (userToken) {
     let stringifyUserToken = userToken ? optimizeUserToken(userToken) : null;
+    console.log("stringifyUserToken",stringifyUserToken);
     stringifyUserToken = stringifyUserToken != null ? JSON.stringify(stringifyUserToken) : "";
     cookie.set("userToken", stringifyUserToken);
     setAxiosHeader(userToken.access_token);

@@ -1,6 +1,8 @@
 "use client"
 import StateProvider from "@/feature/Provider";
 import "../globals.css";
+import "@/lib/axios-configuration"
+import { Toaster } from "react-hot-toast";
 
 
 export default function RootLayout({
@@ -14,6 +16,10 @@ export default function RootLayout({
         <StateProvider>
           {children}
         </StateProvider>
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+        />
       </body>
     </html>
   )

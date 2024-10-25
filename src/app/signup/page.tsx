@@ -1,14 +1,28 @@
 "use client"
-import React, { useState } from 'react'
-import { CodeXml, Building2 } from 'lucide-react';
-import Link from 'next/link';
 import InputField from '@/components/InputField';
+import SuccessModal from '@/components/modal/SuccessModal';
+import ErrorToast from '@/components/toast/ErrorToast';
+import { handleFormDataChange, validateForm } from '@/lib/helper';
 import axios from 'axios';
-import { axiosInstance } from '@/lib/axios-configuration';
+import { Building2, CodeXml, LoaderCircle } from 'lucide-react';
+import Link from 'next/link';
+import React, { useState } from 'react';
+import toast, { LoaderIcon } from 'react-hot-toast';
 
 const page = () => {
     const [selected, setSelected] = useState('developer');
-    const [formData, setFormData] = useState({
+    const [successModal, setSuccessModal] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [formData, setFormData] = useState<any>({
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone: '',
+        ...(selected === 'company' && { company_name: '', industry: '' }),
+        role: selected
+    });
+
+    const [errors, setErrors] = useState({
         first_name: '',
         last_name: '',
         email: '',
@@ -16,18 +30,14 @@ const page = () => {
         company_name: '',
         industry: '',
         role: selected
-    });
-
-    const handleChange = (e: any) => {
-        const { id, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [id]: value,
-        }));
-    };
-
+    })
+    
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!validateForm(formData, setErrors)) {
+            return;
+        }
 
         const signupData = new FormData();
         signupData.append('first_name', formData.first_name);
@@ -37,17 +47,21 @@ const page = () => {
         if (selected === 'company') {
             signupData.append('company_name', formData.company_name);
             signupData.append('industry', formData.industry);
-            signupData.append('role', selected);
-        } else {
-            signupData.append('role', selected);
         }
-        signupData.append('password', "Demo");
-
+        signupData.append('role', selected);
+        signupData.append('medium', "email");
         try {
-            const response = await axiosInstance.post('/users/enroll-user/', signupData);
-            console.log(response.data); // Handle success response
-        } catch (error) {
-            console.error(error); // Handle error
+            setLoading(true);
+            const response = await axios.post('/users/enroll-user/', signupData);
+            console.log(response.data);
+            setSuccessModal(true)
+        } catch (error: any) {
+            toast.custom((t) => (
+                <ErrorToast t={t} message={error.response.data.error} />
+            ))
+        }
+        finally {
+            setLoading(false);
         }
     };
 
@@ -98,68 +112,105 @@ const page = () => {
                         <form onSubmit={handleSubmit} className="w-3/4 flex flex-col gap-6">
                             <div className='flex flex-row w-full justify-between gap-4'>
                                 <InputField
+                                    type="text"
+                                    isRequired={true}
                                     label="First Name"
                                     value={formData.first_name}
-                                    onChange={handleChange}
+                                    onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
                                     id="first_name"
                                     className="w-full"
                                     placeholder="Enter first name"
-                                    customTag={true}
+                                    error={errors.first_name}
+                                    customTag={{ options: ["Mr", "Mrs", "Ms"] }}
                                 />
                                 <InputField
+                                    type="text"
+                                    isRequired={true}
                                     label="Last Name"
                                     value={formData.last_name}
-                                    onChange={handleChange}
+                                    onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
                                     id="last_name"
                                     className="w-full"
                                     placeholder="Enter last name"
+                                    error={errors.last_name}
                                 />
                             </div>
 
                             {selected === "company" && (
                                 <div className='flex flex-row gap-4'>
                                     <InputField
+                                        type="text"
+                                        isRequired={true}
                                         label="Company Name"
                                         value={formData.company_name}
-                                        onChange={handleChange}
+                                        onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
                                         id="company_name"
                                         className="w-full"
                                         placeholder="Enter company name"
+                                        error={errors.company_name}
                                     />
                                     <InputField
+                                        type="text"
                                         label="Industry"
+                                        isRequired={true}
                                         value={formData.industry}
-                                        onChange={handleChange}
+                                        onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
                                         id="industry"
                                         className="w-full"
                                         placeholder="Enter industry"
+                                        error={errors.industry}
                                     />
                                 </div>
                             )}
 
                             <InputField
+                                type="email"
                                 label="Email Address"
                                 value={formData.email}
-                                onChange={handleChange}
+                                isRequired={true}
+                                onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
                                 id="email"
                                 className="w-full"
                                 placeholder="Enter email address"
+                                error={errors.email}
                             />
                             <InputField
+                                type="tel"
                                 label="Phone Number"
+                                isRequired={true}
                                 value={formData.phone}
-                                onChange={handleChange}
+                                onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
                                 id="phone"
                                 className="w-full"
                                 placeholder="Enter phone number"
+                                error={errors.phone}
                             />
-                            <button className="mb-3 py-4 px-9 w-full text-white rounded-xl bg-indigo-600" type="submit">
-                                Sign Up
+                            <button
+                                // disabled={loading}
+                                className="mb-3 py-4 px-9 w-full text-white rounded-xl bg-indigo-600"
+                                type="submit">
+                                {loading ?
+                                    <div className="flex items-center justify-center">
+                                        <LoaderCircle className="animate-spin h-6 w-auto mr-2" />
+                                        Loading...
+                                    </div>
+                                    : "Sign Up"
+                                }
                             </button>
                         </form>
+                        <div className='text-black float-start'>
+                            Already have an account?{" "}
+                            <Link
+                                href={`/${selected}/login`}
+                                className='font-bold text-blue-600'
+                            >
+                                SignIn
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
+            {successModal && <SuccessModal email={formData.email} />}
         </section>
     )
 }

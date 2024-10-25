@@ -1,16 +1,19 @@
 "use client"
-import Dropdown from '@/components/Dropdown'
+import Dropdown from '@/components/MultiSelectDropdown'
 import InputArea from '@/components/InputArea'
 import InputDate from '@/components/InputDate'
 import InputField from '@/components/InputField'
-import Modal from '@/components/Modal'
-import { onBoardingHandlePrevious } from '@/feature/developerOnboardingStepper/developerOnboarding'
+import Modal from '@/components/modal/Modal'
+import { onBoardingHandlePrevious } from '@/feature/reducers/developerOnboarding'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 
 const WorkExperience = () => {
+    const dispatch = useDispatch();
+
     const [experience, setExperience] = React.useState<any>([])
     const [addWork, setAddWork] = React.useState<any>(false)
+
     const options = [
         { value: 'salesforce_platform', label: 'Salesforce Platform' },
         { value: 'sales_cloud', label: 'Sales Cloud' },
@@ -21,20 +24,20 @@ const WorkExperience = () => {
         { value: 'b2c_commerce_cloud', label: 'B2C Commerce Cloud' },
         { value: 'cpq', label: 'CPQ' },
     ];
-    const dispatch = useDispatch();
+
     const handlePrevious = () => {
         dispatch(onBoardingHandlePrevious({ stepperId: 3 }))
     }
 
     return (
         <>
-            <div className='rounded-2xl w-full h-full relative px-10'>
-                <div className='w-full bg-white border-b border-gray-200 top-0 left-0 sticky py-6 flex flex-row justify-between items-center'>
+            <div className='rounded-2xl w-full h-full relative px-5 lg:px-10'>
+                <div className='w-full bg-white border-b border-gray-200 top-0 left-0 sticky py-6 flex flex-col gap-6 lg:flex-row justify-between items-start z-10 lg:items-center'>
                     <span>
-                        <h1 className='text-start text-3xl font-bold text-black'>
+                        <h1 className='text-start text-2xl lg:text-3xl font-bold text-black'>
                             Work Experience Details
                         </h1>
-                        <p className='pt-2 text-gray-400'>
+                        <p className='pt-2 text-gray-400 text-sm'>
                             Enter the Core skills that you have
                         </p>
                     </span>
@@ -53,24 +56,23 @@ const WorkExperience = () => {
                             </div>
                             <div className='w-5/6 h-screen border-l-2 border-gray-200 place-content-start p-6'>
                                 <label htmlFor=""></label>
-                                <InputField placeHolder="Enter your work experience" className="w-3/4" />
                             </div>
                         </div>
                     </div>
                 ) : (
-                    <div className='absolute bottom-0 left-0 w-full h-3/4 flex items-start pt-20 justify-center'>
+                    <div className='absolute bottom-0 left-0 w-full h-3/4 flex items-start pt-32 lg:pt-20 justify-center'>
                         <div className='flex flex-col gap-4 text-start z-10'>
-                            <span className='uppercase font-extrabold text-4xl text-slate-300 '>
+                            <span className='uppercase font-extrabold text-2xl text-center lg:text-4xl text-slate-300 '>
                                 Add your work experience
                             </span>
                             <button
                                 onClick={() => setAddWork(true)}
-                                className='bg-blue-500 text-bold text-white font-medium h-12 px-6 rounded-xl'
+                                className='bg-blue-500 text-bold text-white font-medium h-12 px-6 mx-12 rounded-xl'
                             >
                                 Add Experience
                             </button>
                         </div>
-                        <img src="/skillsBG1.webp" alt="bgImage" className='absolute bottom-0 left-0 w-full h-3/4 object-content z-0' />
+                        <img src="/skillsBG1.webp" alt="bgImage" className='absolute bottom-0 left-0 w-full h-1/3 lg:h-auto object-left-bottom object-cover z-0' />
                     </div>
                 )}
             </div>
@@ -80,7 +82,7 @@ const WorkExperience = () => {
                     setModal={setAddWork}
                 >
                     <div className='w-full flex flex-col gap-4'>
-                        <div className='flex flex-row w-full gap-6'>
+                        <div className='flex flex-col lg:flex-row w-full gap-6'>
                             <InputField
                                 label={"Company Name"}
                                 className=" w-full"
@@ -88,10 +90,10 @@ const WorkExperience = () => {
                             />
                             <InputField label={"Your Role"} className="w-full" />
                         </div>
-                        <div className='flex flex-row w-full gap-6'>
+                        <div className='flex flex-col lg:flex-row w-full gap-6'>
                             <InputArea label={"Description"} className="w-full" cols={20} />
                         </div>
-                        <div className='flex flex-row w-full gap-6'>
+                        <div className='flex flex-col lg:flex-row w-full gap-6'>
                             <InputDate label={"Start Date"} className=" w-full" />
                             <InputDate label={"End Date"} className="w-full" />
                         </div>

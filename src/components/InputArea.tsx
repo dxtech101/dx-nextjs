@@ -1,10 +1,12 @@
 "use client"
 import * as Icons from 'lucide-react';
 
-const InputField = ({
+const InputArea = ({
     placeHolder,
     label,
     cols,
+    value,
+    onChange,
     className = ''
 }: any) => {
     return (
@@ -14,9 +16,11 @@ const InputField = ({
                 rows={4}
                 className={`h-auto pl-4 pr-4 py-2 text-black bg-gray-100 border border-gray-400 rounded-xl ${className}`}
                 placeholder={placeHolder}
+                value={value}
+                onChange={onChange}
             />
         </div>
     );
 };
 
-export default InputField;
+export default InputArea;

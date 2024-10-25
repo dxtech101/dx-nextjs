@@ -22,7 +22,7 @@ export default function DashboardLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const sideBar = false;
+    const sideBar = true;
 
     return (
         <html lang="en">
@@ -31,14 +31,14 @@ export default function DashboardLayout({
             >
                 <div className="grid grid-cols-12 grid-rows-12 gap-5 min-h-screen max-h-screen p-4">
                     {sideBar && (
-                        <div className="col-span-2 row-span-12 w-full">
+                        <div className="col-span-2 row-span-12 hidden lg:block w-full">
                             <Sidebar />
                         </div>
                     )}
-                    <div className={`${sideBar ? "col-span-10" : "col-span-12"} row-span-2 w-full`}>
+                    <div className={`${sideBar ? "col-span-12 lg:col-span-10" : "col-span-12"} row-span-2 w-full`}>
                         <Navbar />
                     </div>
-                    <main className={`bg-white rounded-3xl border border-gray-300 ${sideBar ? "col-span-10 col-start-3" : "col-span-12"} row-span-10 row-start-3 w-full h-full overflow-y-scroll`}>
+                    <main className={`bg-white rounded-3xl border border-gray-300 ${sideBar ? "col-span-12 lg:col-span-10 col-start-1 lg:col-start-3" : "col-span-12"} row-span-10 row-start-3 w-full h-full overflow-y-scroll`}>
                         {children}
                     </main>
                 </div>

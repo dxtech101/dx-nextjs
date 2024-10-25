@@ -9,7 +9,7 @@ const Modal = ({
 }: any) => {
     return (
         <div className='absolute top-0 left-0 z-20 w-full h-full bg-black bg-opacity-65 text-black flex justify-center items-center'>
-            <div className='bg-white rounded-2xl w-1/2 flex flex-col justify-center items-start'>
+            <div className='bg-white rounded-2xl w-11/12 lg:w-1/2 flex flex-col justify-center items-start'>
                 <div className='w-full flex flex-row justify-between items-center border-b border-0 p-4'>
                     <span className='font-bold text-xl'>
                         {header}
