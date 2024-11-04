@@ -1,6 +1,6 @@
 "use client"
 import { Toaster } from "react-hot-toast";
-import "../globals.css";
+import "./globals.css";
 import "@/lib/axios-configuration"
 
 export default function RootLayout({

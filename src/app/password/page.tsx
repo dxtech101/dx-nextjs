@@ -9,13 +9,15 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-const resetPasswordPage = ({ params }: { params: { temp_token: string; user_token: string } }) => {
+const resetPasswordPage = () => {
     const router = useRouter();
-    const { temp_token, user_token } = params;
+    const slug = 0;
     const [errors, setErrors] = useState({
         new_password: '',
         confirm_password: ''
     });
+    console.log("slug", slug);
+
     const tokenVerificationData = {
         "user_id": 107,
         "token": "fdfdsfds"
@@ -23,13 +25,13 @@ const resetPasswordPage = ({ params }: { params: { temp_token: string; user_toke
     const [formData, setFormData] = useState({
         new_password: '',
         confirm_password: '',
-        token: user_token
+        token: "ser_token"
     });
     console.log("axios", axios.defaults.baseURL);
 
     const tokenVerify = async () => {
         try {
-            const response = await axios.post("users/token-verification/", tokenVerificationData);
+            const response = await axios.post("/users/enroll-user/", tokenVerificationData);
             if (response && response.data.user) {
                 console.log("User Data", response.data.user);
                 toast.custom((t) => (
@@ -57,7 +59,7 @@ const resetPasswordPage = ({ params }: { params: { temp_token: string; user_toke
         const signupData = new FormData();
         signupData.append('new_password', formData.new_password);
         signupData.append('confirm_password', formData.confirm_password);
-        signupData.append('token', user_token);
+        signupData.append('token', "user_token");
         try {
             const response = await resetPassword(signupData);
             if (response && response.user) {
@@ -108,7 +110,7 @@ const resetPasswordPage = ({ params }: { params: { temp_token: string; user_toke
                         <button
                             onClick={tokenVerify}
                             className="mb-8 py-4 px-9 w-full text-white font-semibold border border-indigo-700 rounded-xl shadow-4xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200"
-                            type="submit">
+                            type="button">
                             Reset Password
                         </button>
                     </form>
