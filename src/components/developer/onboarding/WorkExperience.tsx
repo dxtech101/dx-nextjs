@@ -31,7 +31,7 @@ const WorkExperience = () => {
 
     return (
         <>
-            <div className='rounded-2xl w-full h-full relative px-5 lg:px-10'>
+            <div className='bg-white rounded-3xl border border-gray-300 overflow-clip w-full h-full relative px-5 lg:px-10'>
                 <div className='w-full bg-white top-0 left-0 sticky py-6 flex flex-col gap-6 lg:flex-row justify-between items-start z-10 lg:items-center'>
                     <span>
                         <h1 className='text-start text-4xl md:text-5xl font-heading tracking-tight font-medium text-black'>

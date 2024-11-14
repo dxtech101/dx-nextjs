@@ -30,7 +30,7 @@ const JobListingCard = ({ title, location, salary, type }: any) => {
 
 const JobListing = () => {
     return (
-        <section className="">
+        <section className="bg-white rounded-3xl border border-gray-300">
             <div className="container mx-auto px-4">
                 <div className="flex flex-col flex-wrap">
                     <div className='w-full bg-white z-20 sticky top-0 left-0 py-6 px-4 flex flex-col gap-6 lg:flex-row justify-between items-start lg:items-center'>
@@ -44,7 +44,7 @@ const JobListing = () => {
                         </span>
                         <button
                             // onClick={() => handleNext()}
-                            className=' text-white font-normal h-12  whitespace-nowrap flex flex-row gap-2 justify-center items-end lg:items-center bg-blue-500 px-4 rounded-xl'>
+                            className='text-white font-normal h-12  whitespace-nowrap flex flex-row gap-2 justify-center items-end lg:items-center bg-blue-500 px-4 rounded-xl'>
                             <Filter className='w-6 h-6 text-white' /> Apply Filter
                         </button>
                     </div>

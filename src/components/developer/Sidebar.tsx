@@ -9,8 +9,8 @@ const SidebarItem = ({ href, icon: Icon, label }: any) => {
     const isActive = router === href;
 
     return (
-        <Link href={href} className={`flex items-center p-4 ${isActive ? 'text-white bg-blue-500' : 'text-gray-300 hover:bg-gray-800'} rounded-xl mb-4`}>
-            <Icon className={`h-5 w-5 ${isActive ? 'text-white' : 'text-gray-400'}`} />
+        <Link href={href} className={`flex items-center p-4 ${isActive ? 'text-white bg-gray-800' : 'text-gray-600 hover:bg-gray-200'} rounded-xl mb-4`}>
+            <Icon className={`h-5 w-5 ${isActive ? 'text-white' : 'text-gray-600'}`} />
             <span className="ml-4 text-sm font-medium">{label}</span>
         </Link>
     );
@@ -22,8 +22,7 @@ const Sidebar = () => {
             <div className="hidden lg:block relative h-full">
                 <div className="bg-white absolute top-0 left-0 w-full p-1 rounded-t-3xl border border-gray-300">
                     <div className="flex items-center justify-center p-4 text-gray-900 rounded-xl">
-                        <MapIcon className="h-5 w-5" />
-                        <span className="ml-4 text-sm font-medium">DX Digital</span>
+                        <span className="text-sm font-medium">DX Digital</span>
                     </div>
                 </div>
                 <nav className="w-full h-full flex flex-col px-4 bg-white overflow-auto border border-gray-300 rounded-3xl">
@@ -39,7 +38,7 @@ const Sidebar = () => {
                 </nav>
                 <div className="bg-white absolute bottom-0 left-0 w-full p-1 rounded-b-3xl group hover:bg-gray-800 border border-gray-300">
                     <a className="flex relative items-center justify-center w-full p-4 text-gray-300 rounded-xl" href="#">
-                        <img src="/Einstein.png" alt="bgImage" className='absolute bottom-0 left-1 h-36 object-left-bottom object-cover z-0' />
+                        <img src="/Einstein.png" alt="bgImage" className='absolute bottom-0 left-2 h-28 object-left-bottom object-cover z-0' />
                         <span className="ml-8 text-sm font-semibold group-hover:text-gray-100 text-gray-600">Log Out</span>
                     </a>
                 </div>

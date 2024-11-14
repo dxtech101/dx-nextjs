@@ -145,76 +145,74 @@ const Certifications = () => {
     }
 
     return (
-        <>
-            <div className='relative px-5 lg:px-10 bg-[url(https://wp.sfdcdigital.com/en-in/wp-content/uploads/sites/21/2023/03/pb-hp-products-bg-2.png?resize=2048,410)] bg-contain min-h-full bg-fixed bg-no-repeat bg-bottom'>
-                <div className='w-full bg-white z-20 sticky top-0 left-0 py-6 flex flex-col gap-6 lg:flex-row justify-between items-start lg:items-center'>
-                    <span>
-                        <h1 className='text-start text-4xl md:text-5xl font-heading tracking-tight font-medium text-black'>
-                            Certification Details
-                        </h1>
-                        <p className='pt-2 tracking-tight text-gray-600 max-w-sm'>
-                            Select Salesforce Certifications that you hold
-                        </p>
-                    </span>
-                    <div className='flex flex-row gap-2 justify-center items-end lg:items-center'>
-                        <button
-                            onClick={() => handleNext()}
-                            className='bg-blue-500 text-white font-normal h-12 px-4 rounded-xl whitespace-nowrap'>
-                            Save & Next
-                        </button>
-                    </div>
-                </div>
-                <div className='py-6'>
-                    <h2 className='text-lg font-normal mb-4'>Search Certifications</h2>
-                    <div className='relative mt-4'>
-                        <InputField
-                            className='w-full lg:w-1/2 z-10'
-                            iconName='search'
-                            placeHolder='Search your Certifications (Ex. Salesforce Administrator, Salesforce Developer)'
-                            value={inputValue}
-                            onChange={(e: any) => {
-                                setInputValue(e.target.value)
-                            }}
-                            onFocus={() => setShowSuggestions(true)}
-                        />
-                        {showSuggestions && (
-                            <div className='absolute bg-white border-2 left-0 border-gray-100 rounded-xl w-full lg:w-1/2 mt-1 max-h-56 overflow-y-auto z-20'>
-                                {items.length > 0 ? (
-                                    items.map((item) => (
-                                        <div
-                                            key={item.id}
-                                            className='flex items-center gap-2 p-3 border border-b-0 cursor-pointer hover:bg-gray-100'
-                                            onMouseDown={() => handleSuggestionSelect(item)}
-                                        >
-                                            <img className='w-8 h-auto' src={item.src} alt={item.text} />
-                                            <span className='font-bold text-gray-800 ml-4'>{item.text}</span>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div className='text-md text-gray-400 p-4'>No matching Certification</div>
-                                )}
-                            </div>
-                        )}
-                    </div>
-                    <h2 className='text-lg font-normal my-4'>Selected Certifications</h2>
-                    <div className='pt-2 flex flex-row gap-4 flex-nowrap lg:flex-wrap z-40 overflow-x-auto w-full appearance-none'>
-                        {checkedItems.length > 0 ? checkedItems.map(item => (
-                            <CheckboxItem
-                                key={item.id}
-                                text={item.text}
-                                imageSrc={item.src}
-                                checked={checkedItems.some(checkedItem => checkedItem.id === item.id)}
-                                onChange={() => handleCheckboxChange(item.id)}
-                            />
-                        )) : (
-                            <span className="text-md font-normal text-gray-400 ml-2">
-                                No Certification Selected...
-                            </span>
-                        )}
-                    </div>
+        <div className='bg-white rounded-3xl border border-gray-300 relative px-5 lg:px-10 bg-[url(https://wp.sfdcdigital.com/en-in/wp-content/uploads/sites/21/2023/03/pb-hp-products-bg-2.png?resize=2048,410)] bg-contain min-h-full bg-fixed bg-no-repeat bg-bottom'>
+            <div className='w-full bg-white z-20 sticky top-0 left-0 py-6 flex flex-col gap-6 lg:flex-row justify-between items-start lg:items-center'>
+                <span>
+                    <h1 className='text-start text-4xl md:text-5xl font-heading tracking-tight font-medium text-black'>
+                        Certification Details
+                    </h1>
+                    <p className='pt-2 tracking-tight text-gray-600 max-w-sm'>
+                        Select Salesforce Certifications that you hold
+                    </p>
+                </span>
+                <div className='flex flex-row gap-2 justify-center items-end lg:items-center'>
+                    <button
+                        onClick={() => handleNext()}
+                        className='bg-blue-500 text-white font-normal h-12 px-4 rounded-xl whitespace-nowrap'>
+                        Save & Next
+                    </button>
                 </div>
             </div>
-        </>
+            <div className='py-6'>
+                <h2 className='text-lg font-normal mb-4'>Search Certifications</h2>
+                <div className='relative mt-4'>
+                    <InputField
+                        className='w-full lg:w-1/2 z-10'
+                        iconName='search'
+                        placeHolder='Search your Certifications (Ex. Salesforce Administrator, Salesforce Developer)'
+                        value={inputValue}
+                        onChange={(e: any) => {
+                            setInputValue(e.target.value)
+                        }}
+                        onFocus={() => setShowSuggestions(true)}
+                    />
+                    {showSuggestions && (
+                        <div className='absolute bg-white border-2 left-0 border-gray-100 rounded-xl w-full lg:w-1/2 mt-1 max-h-56 overflow-y-auto z-20'>
+                            {items.length > 0 ? (
+                                items.map((item) => (
+                                    <div
+                                        key={item.id}
+                                        className='flex items-center gap-2 p-3 border border-b-0 cursor-pointer hover:bg-gray-100'
+                                        onMouseDown={() => handleSuggestionSelect(item)}
+                                    >
+                                        <img className='w-8 h-auto' src={item.src} alt={item.text} />
+                                        <span className='font-bold text-gray-800 ml-4'>{item.text}</span>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className='text-md text-gray-400 p-4'>No matching Certification</div>
+                            )}
+                        </div>
+                    )}
+                </div>
+                <h2 className='text-lg font-normal my-4'>Selected Certifications</h2>
+                <div className='pt-2 flex flex-row gap-4 flex-nowrap lg:flex-wrap z-40 overflow-x-auto w-full appearance-none'>
+                    {checkedItems.length > 0 ? checkedItems.map(item => (
+                        <CheckboxItem
+                            key={item.id}
+                            text={item.text}
+                            imageSrc={item.src}
+                            checked={checkedItems.some(checkedItem => checkedItem.id === item.id)}
+                            onChange={() => handleCheckboxChange(item.id)}
+                        />
+                    )) : (
+                        <span className="text-md font-normal text-gray-400 ml-2">
+                            No Certification Selected...
+                        </span>
+                    )}
+                </div>
+            </div>
+        </div>
     )
 }
 
