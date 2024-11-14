@@ -1,8 +1,18 @@
-import Dropdown from "@/components/MultiSelectDropdown"
-import InputField from "@/components/InputField"
-import { Clock2, Clock4, Clock6, Clock7, Clock8, Clock9 } from "lucide-react"
+import InputField from "@/components/InputField";
+import Dropdown from "@/components/MultiSelectDropdown";
+import { Clock2, Clock4, Clock7, Clock9 } from "lucide-react";
 
 const TimePreference = () => {
+    const options = [
+        { value: 'salesforce_platform', label: 'Salesforce Platform' },
+        { value: 'sales_cloud', label: 'Sales Cloud' },
+        { value: 'service_cloud', label: 'Service Cloud' },
+        { value: 'experience_cloud', label: 'Experience Cloud' },
+        { value: 'marketing_cloud', label: 'Marketing Cloud' },
+        { value: 'b2b_commerce_cloud', label: 'B2B Commerce Cloud' },
+        { value: 'b2c_commerce_cloud', label: 'B2C Commerce Cloud' },
+        { value: 'cpq', label: 'CPQ' },
+    ];
     return (
         <div className="w-full h-fit relative px-10">
             <div className='w-full bg-white border-b border-gray-200 top-0 left-0 sticky py-6 flex flex-row justify-between items-center'>
@@ -59,6 +69,7 @@ const TimePreference = () => {
                     </div>
                 </div>
                 <InputField placeHolder="For example ($5 - $10)" label="Desired Rates ($USD)" className="w-full" iconName="currency" />
+                <Dropdown label={"Salesforce Technologies"} className="w-full" options={options} />
             </div>
         </div>
     )

@@ -32,25 +32,25 @@ const WorkExperience = () => {
     return (
         <>
             <div className='rounded-2xl w-full h-full relative px-5 lg:px-10'>
-                <div className='w-full bg-white border-b border-gray-200 top-0 left-0 sticky py-6 flex flex-col gap-6 lg:flex-row justify-between items-start z-10 lg:items-center'>
+                <div className='w-full bg-white top-0 left-0 sticky py-6 flex flex-col gap-6 lg:flex-row justify-between items-start z-10 lg:items-center'>
                     <span>
-                        <h1 className='text-start text-2xl lg:text-3xl font-bold text-black'>
+                        <h1 className='text-start text-4xl md:text-5xl font-heading tracking-tight font-medium text-black'>
                             Work Experience Details
                         </h1>
-                        <p className='pt-2 text-gray-400 text-sm'>
+                        <p className='pt-2 tracking-tight text-gray-600 max-w-sm'>
                             Enter the Core skills that you have
                         </p>
                     </span>
                     <div className='flex flex-row gap-4'>
-                        <button onClick={() => handlePrevious()} className='bg-gray-200 text-gray-400 text-bold font-bold h-12 px-6 rounded-xl'>Previous</button>
-                        <button className='bg-blue-500 text-bold text-white font-bold h-12 px-6 rounded-xl'>Save & Next</button>
+                        <button onClick={() => handlePrevious()} className='bg-gray-200 text-gray-400 text-normal font-normal h-12 px-6 rounded-xl'>Previous</button>
+                        <button className='bg-blue-500 text-white font-medium h-12 px-6 rounded-xl'>Save & Next</button>
                     </div>
                 </div>
                 {experience.length > 0 ? (
                     <div className='my-6'>
                         <div className='flex flex-row w-full items-start gap-4'>
                             <div className='w-1/6'>
-                                <span className='bg-gray-200 w-12 h-12 rounded-full font-bold place-content-center '>
+                                <span className='bg-gray-200 w-12 h-12 rounded-full font-normal place-content-center '>
                                     1
                                 </span>
                             </div>
@@ -62,12 +62,12 @@ const WorkExperience = () => {
                 ) : (
                     <div className='absolute bottom-0 left-0 w-full h-3/4 flex items-start pt-32 lg:pt-20 justify-center'>
                         <div className='flex flex-col gap-4 text-start z-10'>
-                            <span className='uppercase font-extrabold text-2xl text-center lg:text-4xl text-slate-300 '>
+                            <span className='uppercase font-extranormal text-2xl text-center lg:text-4xl text-slate-300 '>
                                 Add your work experience
                             </span>
                             <button
                                 onClick={() => setAddWork(true)}
-                                className='bg-blue-500 text-bold text-white font-medium h-12 px-6 mx-12 rounded-xl'
+                                className='bg-blue-500 text-normal text-white font-medium h-12 px-6 mx-12 rounded-xl'
                             >
                                 Add Experience
                             </button>

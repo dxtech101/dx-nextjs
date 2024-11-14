@@ -1,7 +1,11 @@
 "use client";
 import * as Icons from 'lucide-react';
 import { ChevronDown } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { getCountries, getCountryCallingCode } from 'react-phone-number-input'
+import flags from 'react-phone-number-input/flags'
+import en from 'react-phone-number-input/locale/en'
+
 
 const InputField = ({
   type,
@@ -15,7 +19,9 @@ const InputField = ({
   customTag = false,
   value,
   onChange,
-  id
+  id,
+  onFocus,
+  onMouseDown
 }: any) => {
   const iconMap: any = {
     search: Icons.Search,
@@ -25,12 +31,17 @@ const InputField = ({
   };
   const selectRef = useRef<any>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [country, setCountry] = useState('US')
 
   const handleChevronClick = () => {
     if (selectRef.current) {
       selectRef.current.focus();
     }
   };
+
+  useEffect(() => {
+    console.log("selectRef", selectRef.current?.focus());
+  }, [selectRef.current])
 
   const IconComponent = iconName ? iconMap[iconName] : null;
 
@@ -56,8 +67,10 @@ const InputField = ({
             value={value}
             id={id}
             onChange={onChange}
-            className={`h-12 pl-4 ${iconName && "pl-[2.5rem]"} ${customTag && "pl-[5rem]"} pr-4 text-black border ${type === "password" && !showPassword && "text-2xl leading-loose"} ${error ? "border-red-400 bg-red-100" : "border-gray-400 bg-gray-50"} rounded-xl ${className}`}
+            className={`h-12 pl-4 ${iconName && "pl-[2.5rem]"} ${customTag || type === "tel" && "pl-[5rem]"} pr-4 text-black border ${type === "password" && !showPassword && "text-2xl leading-loose"} ${error ? "border-red-400 bg-red-100" : "border-gray-400 bg-gray-50"} rounded-xl ${className}`}
             placeholder={placeHolder}
+            onFocus={onFocus}
+            onMouseDown={onMouseDown}
           />
           {IconComponent && (
             <IconComponent
@@ -90,12 +103,14 @@ const InputField = ({
             </>
           )}
           {customTag && (
-            <div className="absolute top-1 left-2 mt-1 w-full sm:w-auto">
+            <div className="absolute top-1.5 left-2 mt-1 w-fit sm:w-auto">
               <div className="relative h-full">
                 <select
                   ref={selectRef}
                   name="salutation"
-                  className="appearance-none py-1 pl-3.5 pr-7 text-sm text-neutral-500 font-medium w-full h-full bg-light outline-none cursor-pointer rounded-full border bg-gray-200 shadow-sm border-gray-300"
+                  className={`p-1 text-sm font-medium max-w-fit h-full bg-light outline-none cursor-pointer rounded-full border 
+                    ${error ? "bg-red-200 border-red-300 text-red-500" : "bg-gray-200 border-gray-300 text-neutral-500"} 
+                    shadow-sm`}
                 >
                   {customTag.options.map((option: any) => {
                     return (
@@ -104,12 +119,25 @@ const InputField = ({
                   })}
                 </select>
               </div>
-              <button className='absolute top-1/2 right-1 transform -translate-y-1/2'
-                onClick={handleChevronClick}
-              >
-                <ChevronDown
-                  className=" text-gray-400" size={20} />
-              </button>
+            </div>
+          )}
+          {type === "tel" && (
+            <div className="absolute top-1.5 left-2 mt-1 w-fit sm:w-auto">
+              <div className="relative h-full">
+                <select
+                  value={country}
+                  onChange={event => setCountry(event.target.value)}
+                  className={`p-1 text-sm font-medium max-w-fit h-full bg-light outline-none cursor-pointer rounded-full border 
+                  ${error ? "bg-red-200 border-red-300 text-red-500" : "bg-gray-200 border-gray-300 text-neutral-500"} 
+                  shadow-sm`}
+                >
+                  {getCountries().map((country) => (
+                    <option key={country} value={country}>
+                      +{getCountryCallingCode(country)}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           )}
         </div>

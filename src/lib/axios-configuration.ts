@@ -6,6 +6,12 @@ import { BASE_STAGING, BASE_LOCAL, BASE_PROD } from "@/constants/api-routes";
 import { logout, getAuthenticationToken, getRefreshToken, setAccessToken } from "./cookie";
 
 axios.defaults.baseURL = "https://dx-digital-94bdac14721f.herokuapp.com/"
+// axios.defaults.headers.common["Content-Type"] = "application/json";
+// axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+// axios.defaults.headers.common["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, PATCH, OPTIONS";
+// axios.defaults.headers.common["Access-Control-Allow-Headers"] = "X-Requested-With, content-type, Authorization";
+axios.defaults.maxRedirects = 0;
+axios.defaults.timeout = 10000;
 
 export const setAxiosHeader = (token: string) => {
   if (token) axios.defaults.headers.common["Authorization"] = `JWT ${token}`;

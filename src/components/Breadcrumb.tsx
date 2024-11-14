@@ -34,7 +34,7 @@ const Breadcrumb = ({
                         {breadCrumbArray.map((crumb, idx) => (
                             <React.Fragment key={idx}>
                                 <Link className="flex items-center text-sm hover:text-black" href={`/${type}/dashboard/${crumb}`}>
-                                    <span className='text-gray-600 capitalize'>{crumb}</span>
+                                    <span className='text-gray-600 capitalize whitespace-nowrap'>{crumb.split('-').join(' ')}</span>
                                 </Link>
                                 {idx < breadCrumbArray.length - 1 && (
                                     <ChevronRight className='w-4 h-4 mx-2' />

@@ -6,6 +6,8 @@ import "@/lib/axios-configuration";
 import localFont from "next/font/local";
 import { Toaster } from 'react-hot-toast';
 import "../globals.css";
+import { use } from "react";
+import { useParams, usePathname } from "next/navigation";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -23,12 +25,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
+   
   return (
     <html lang="en" suppressHydrationWarning suppressContentEditableWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <title>DX Digital</title>
         <NavBar />
         <div className="mt-16">
           <StateProvider>

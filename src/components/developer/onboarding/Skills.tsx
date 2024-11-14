@@ -10,7 +10,7 @@ const CheckboxItem = ({ text, imageSrc, bgColor, borderColor, textColor, checked
     return (
         <div className={`inline-flex gap-2 items-center ${bgColor} border ${borderColor} p-2 pl-4 rounded-full relative z-10 whitespace-nowrap min-w-max`}>
             <img className='w-auto h-6' src={imageSrc} alt={text} />
-            <span className={`font-bold ${textColor}`}>
+            <span className={`font-normal ${textColor}`}>
                 {text}
             </span>
             <input
@@ -99,22 +99,22 @@ const Skills = () => {
     return (
         <>
             <div className='rounded-2xl w-full h-full relative px-5 lg:px-10'>
-                <div className='w-full bg-white border-b border-gray-200 top-0 left-0 sticky py-6 flex flex-col gap-6 lg:flex-row justify-between items-start lg:items-center'>
+                <div className='w-full bg-white top-0 left-0 sticky py-6 flex flex-col gap-6 lg:flex-row justify-between items-start lg:items-center'>
                     <span>
-                        <h1 className='text-start text-2xl lg:text-3xl font-bold text-black'>
+                        <h1 className='text-start text-4xl md:text-5xl font-heading tracking-tight font-medium text-black'>
                             Skills Details
                         </h1>
-                        <p className='pt-2 text-gray-400 text-sm '>
+                        <p className='pt-2 tracking-tight text-gray-600 max-w-sm'>
                             Enter the Core skills that you have
                         </p>
                     </span>
                     <div className='flex flex-row gap-4'>
-                        <button onClick={handlePrevious} className='bg-gray-200 text-gray-400 text-bold font-bold h-12 px-6 rounded-xl'>Previous</button>
-                        <button onClick={handleNext} className='bg-blue-500 text-bold text-white font-bold h-12 px-6 rounded-xl'>Save & Next</button>
+                        <button onClick={handlePrevious} className='bg-gray-200 text-gray-400 text-normal font-normal h-12 px-6 rounded-xl'>Previous</button>
+                        <button onClick={handleNext} className='bg-blue-500 text-normal text-white font-medium h-12 px-6 rounded-xl'>Save & Next</button>
                     </div>
                 </div>
                 <div className='py-8 z-10'>
-                    <h2 className='text-lg font-bold'>Search Skills</h2>
+                    <h2 className='text-lg font-normal'>Search Skills</h2>
                     {checkedItems.length !== initialItems.length ? (
                         <div className='relative mt-4'>
                             <InputField
@@ -134,7 +134,7 @@ const Skills = () => {
                                                 onMouseDown={() => handleSuggestionSelect(item)}
                                             >
                                                 <img className='w-8 h-auto' src={item.imageSrc} alt={item.text} />
-                                                <span className='font-bold text-gray-800 ml-4'>{item.text}</span>
+                                                <span className='font-normal text-gray-800 ml-4'>{item.text}</span>
                                             </div>
                                         ))
                                     ) : (
@@ -144,13 +144,13 @@ const Skills = () => {
                             )}
                         </div>
                     ) : (
-                        <span className="text-md font-bold text-gray-400 ml-2">
+                        <span className="text-md font-normal text-gray-400 ml-2 p-2">
                             No more skills available to select
                         </span>
                     )}
                 </div>
 
-                <h2 className='text-lg font-bold '>Selected Skills</h2>
+                <h2 className='text-lg font-normal '>Selected Skills</h2>
                 <div className='pt-4 flex flex-row gap-4 flex-nowrap lg:flex-wrap z-40 overflow-x-auto w-full appearance-none'>
                     {checkedItems.length > 0 ? checkedItems.map(item => (
                         <CheckboxItem
@@ -165,13 +165,11 @@ const Skills = () => {
                             onChange={() => handleCheckboxChange(item.id)}
                         />
                     )) : (
-                        <span className="text-md font-bold text-gray-400 ml-2">
+                        <span className="text-md font-normal text-gray-400 ml-2">
                             No Skills Selected...
                         </span>
                     )}
                     <img src="/noRecordBG2.webp" alt="bgImage" className='absolute bottom-0 left-0 h-1/3 w-full object-cover object-left -z-0' />
-                </div>
-                <div>
                 </div>
             </div>
         </>

@@ -19,8 +19,8 @@ const resetPasswordPage = () => {
     console.log("slug", slug);
 
     const tokenVerificationData = {
-        "user_id": 107,
-        "token": "fdfdsfds"
+        "user_id": 197,
+        "token": "cg07t3-032cc2f0b17224951a867b362f1f7e6e"
     };
     const [formData, setFormData] = useState({
         new_password: '',
