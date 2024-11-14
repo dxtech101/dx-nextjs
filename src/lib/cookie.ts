@@ -44,7 +44,7 @@ export const removeAuthenticationToken = () => {
 // removing all user tokens
 export const logout = () => {
   removeAuthenticationToken();
-  Router.push("/signin");
+  // Router.push("/signin");
 };
 
 export const getRefreshToken = () => {
