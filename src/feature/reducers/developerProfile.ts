@@ -10,6 +10,9 @@ const developerProfileSlice = createSlice({
     addDeveloperProfile: (state, action) => {
       return action.payload;
     },
+    addSalesforceId: (state, action) => {
+      return action.payload;
+    },
   },
 });
 

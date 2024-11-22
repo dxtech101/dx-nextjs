@@ -67,7 +67,7 @@ const InputField = ({
             value={value}
             id={id}
             onChange={onChange}
-            className={`h-12 pl-4 ${iconName && "pl-[2.5rem]"} ${customTag || type === "tel" && "pl-[5rem]"} pr-4 text-black border ${type === "password" && !showPassword && "text-2xl leading-loose"} ${error ? "border-red-400 bg-red-100" : "border-gray-400 bg-gray-50"} rounded-xl ${className}`}
+            className={`h-12 pl-4 ${iconName && "pl-[2.5rem]"} ${customTag ? "pl-[4.5rem]" : ""} ${type === "tel" ? "pl-[5rem]" : ""} pr-4 text-black border ${type === "password" && !showPassword && "text-2xl leading-loose"} ${error ? "border-red-400 bg-red-100" : "border-gray-400 bg-gray-50"} rounded-xl ${className}`}
             placeholder={placeHolder}
             onFocus={onFocus}
             onMouseDown={onMouseDown}

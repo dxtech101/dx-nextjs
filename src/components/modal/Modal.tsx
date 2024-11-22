@@ -29,7 +29,8 @@ const Modal = ({
                         Cancel
                     </button>
                     <button
-                        onClick={() => onSubmit()}
+                        type='submit'
+                        onClick={onSubmit}
                         className='bg-black text-bold text-white font-bold h-12 px-6 rounded-xl'
                     >
                         Save

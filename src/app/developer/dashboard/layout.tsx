@@ -1,10 +1,10 @@
 "use client"
-import type { Metadata } from "next";
+import Navbar from "@/components/DashboardNavbar";
+import Sidebar from "@/components/DashboardSidebar";
 import localFont from "next/font/local";
 import "../../globals.css";
-import Navbar from "@/components/developer/Navbar";
-import Sidebar from "@/components/developer/Sidebar";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const geistSans = localFont({
     src: "../../fonts/GeistVF.woff",
@@ -17,30 +17,35 @@ const geistMono = localFont({
     weight: "100 900",
 });
 
-export default function DashboardLayout({
+export default function DeveloperDashboardLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const sideBar = false;
+    const developerProfile = useSelector((state: any) => state.developerProfile);
+    const [toggleSideBar, setToggleSideBar] = useState();
+
+    const isDeveloperOnboarded = developerProfile.is_onboard;
 
     return (
-        <html lang="en" suppressHydrationWarning>
-            <body className={`${geistSans.variable} ${geistMono.variable} h-screen bg-gray-100 text-black`}>
-                <div className="grid grid-cols-12 grid-rows-12 gap-5 min-h-screen max-h-screen p-4">
-                    {sideBar && (
-                        <div className="col-span-2 row-span-12 hidden lg:block w-full">
-                            <Sidebar />
-                        </div>
-                    )}
-                    <div className={`${sideBar ? "col-span-12 lg:col-span-10" : "col-span-12"} row-span-2 w-full`}>
-                        <Navbar />
+        <section className={`${geistSans.variable} ${geistMono.variable} h-screen bg-gray-100 text-black`}>
+            <div className="grid grid-cols-12 grid-rows-12 gap-5 min-h-screen max-h-screen p-4">
+                {isDeveloperOnboarded && (
+                    <div
+                        className={`col-span-0 ${toggleSideBar ? "lg:col-span-2" : "lg:col-span-1"
+                            } row-span-0 lg:row-span-12 block w-full transition duration-1000 ease-in-out`}
+                    >
+                        <Sidebar toggleSideBar={toggleSideBar} setToggleSideBar={setToggleSideBar} />
                     </div>
-                    <main className={`${sideBar ? "col-span-12 lg:col-span-10 col-start-1 lg:col-start-3" : "col-span-12"} row-span-10 row-start-3 w-full h-full overflow-y-scroll`}>
-                        {children}
-                    </main>
+                )}
+
+                <div className={`${isDeveloperOnboarded ? `col-span-12 col-start-1 ${toggleSideBar ? "lg:col-span-10 lg:col-start-3" : "lg:col-span-11 lg:col-start-2"}` : "col-span-12"} row-span-2 row-start-1 w-full`}>
+                    <Navbar setToggleSideBar={setToggleSideBar} />
                 </div>
-            </body>
-        </html>
+                <main className={`${isDeveloperOnboarded ? `col-span-12 col-start-1 ${toggleSideBar ? "lg:col-span-10 lg:col-start-3" : "lg:col-span-11 lg:col-start-2"} ` : "col-span-12"} row-span-10 row-start-3 w-full h-full overflow-y-scroll`}>
+                    {children}
+                </main>
+            </div>
+        </section>
     );
 }

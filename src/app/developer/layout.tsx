@@ -5,22 +5,20 @@ import "@/lib/axios-configuration"
 import { Toaster } from "react-hot-toast";
 
 
-export default function RootLayout({
+export default function DeveloperLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>
-        <StateProvider>
-          {children}
-        </StateProvider>
-        <Toaster
-          position="top-center"
-          reverseOrder={false}
-        />
-      </body>
-    </html>
+    <section>
+      <StateProvider>
+        {children}
+      </StateProvider>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
+    </section>
   )
 }

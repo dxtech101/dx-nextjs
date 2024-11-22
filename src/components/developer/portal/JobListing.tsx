@@ -1,4 +1,4 @@
-import { Filter } from 'lucide-react';
+import { CornerUpRight, CornerUpRightIcon, Filter } from 'lucide-react';
 import React from 'react'
 
 const JobListingCard = ({ title, location, salary, type }: any) => {
@@ -19,9 +19,7 @@ const JobListingCard = ({ title, location, salary, type }: any) => {
             <a href="#" className="bg-white border border-gray-200 h-11 rounded-full px-4 py-2 inline-flex items-center justify-center gap-2 hover:bg-black group transition duration-200">
                 <span className="tracking-tight text-sm font-semibold text-gray-900 group-hover:text-white transition duration-200">Apply Now</span>
                 <div className="group-hover:text-white transition duration-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                        <path d="M12.25 5.83334H6.41667C3.83934 5.83334 1.75 7.92268 1.75 10.5V11.6667M12.25 5.83334L8.75 9.33334M12.25 5.83334L8.75 2.33334" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
+                    <CornerUpRightIcon className="w-4 h-4" />
                 </div>
             </a>
         </div>
@@ -44,11 +42,11 @@ const JobListing = () => {
                         </span>
                         <button
                             // onClick={() => handleNext()}
-                            className='text-white font-normal h-12  whitespace-nowrap flex flex-row gap-2 justify-center items-end lg:items-center bg-blue-500 px-4 rounded-xl'>
+                            className='text-white font-normal h-12 whitespace-nowrap flex flex-row gap-2 justify-center items-center bg-blue-500 px-4 rounded-xl'>
                             <Filter className='w-6 h-6 text-white' /> Apply Filter
                         </button>
                     </div>
-                    <div className="w-full flex justify-around p-4 gap-6">
+                    <div className="w-full flex flex-col lg:flex-row justify-around p-4 gap-6">
                         <div className='w-full'>
                             <p className="tracking-tight text-gray-700 font-medium mb-5">Design</p>
                             <JobListingCard title="Product Designer" type="Remote" location="New York" salary="$60k - $72k" />

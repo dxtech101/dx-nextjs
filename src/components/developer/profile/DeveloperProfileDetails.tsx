@@ -1,6 +1,9 @@
+"use client"
 import { BriefcaseBusiness, CodeIcon, MailIcon, PencilIcon, Phone, PinIcon, ShieldCheck } from 'lucide-react';
+import { useSelector } from 'react-redux';
 
 const DeveloperProfileDetails = () => {
+    const developerProfile = useSelector((state: any) => state.developerProfile)
 
     return (
         <div className='relative w-full h-full bg-gray-50 rounded-2xl flex flex-col items-start justify-start gap-4 p-4 lg:p-6'>
@@ -23,7 +26,7 @@ const DeveloperProfileDetails = () => {
 
                 <div className='w-full flex flex-col gap-6 justify-between h-full'>
                     <div className='flex flex-col gap-2'>
-                        <span className='text-3xl lg:text-4xl font-bold'>Hardik Sharma</span>
+                        <span className='text-3xl lg:text-4xl font-bold capitalize'>{developerProfile.first_name} {developerProfile.last_name}</span>
                         <div className='flex flex-wrap gap-2 text-sm'>
                             <span className='shadow-inner inline-flex items-center gap-2 bg-purple-100 border border-purple-300 text-purple-900 w-fit rounded-full py-0.5 px-4'>
                                 <CodeIcon className='w-5 h-5' />
@@ -44,7 +47,7 @@ const DeveloperProfileDetails = () => {
 
                     <div className='grid grid-cols-2 w-full lg:w-3/4 gap-4 justify-between'>
                         <span className='inline-flex items-center gap-4'><MailIcon className='w-5 h-5 text-purple-900' /> Email</span>
-                        <span>Hardik@gmail.com</span>
+                        <span>{developerProfile.email}</span>
 
                         <span className='inline-flex items-center gap-4'><Phone className='w-5 h-5 text-purple-900' /> Phone</span>
                         <span>+91-9876543210</span>

@@ -1,8 +1,10 @@
+import { useSelector } from "react-redux";
+
 const validateRequiredField = (fieldValue: any, fieldName: string, newErrors: any) => {
     if (!fieldValue) {
         const normalCaseFieldName = fieldName
-            .replace('_', ' ')
-            .toLowerCase()
+            .split('_')
+            .join(' ')
             .replace(/^\w|\s\w/g, letter => letter.toUpperCase());
         newErrors[fieldName] = `${normalCaseFieldName} is required`;
     }
@@ -26,12 +28,19 @@ const validateLength = (fieldValue: string, minLength: number, fieldName: string
     }
 };
 
+const validateDate = (startDate:any, endDate:any, newErrors:any) => {        
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    if(start && end && start > end){
+        newErrors.start_date = "Start date should be less than End date";
+    }
+}
+
 export const validateForm = (
     formData: any, 
     setErrors: (errors: any) => void
 ) => {
     const newErrors: any = {};
-    console.log("FormData", formData);
     
     Object.keys(formData).forEach(field => {
         validateRequiredField(formData[field], field, newErrors);
@@ -53,13 +62,17 @@ export const validateForm = (
         validatePasswordMatch(formData.new_password, formData.confirm_password, newErrors);
     }
 
+    if('start_date' in formData && 'end_date' in formData){
+        validateDate(formData.start_date, formData.end_date, newErrors);
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
 };
 
 export const handleFormDataChange = (e: any, setFormData: any, setErrors: any) => {
     const { id, value } = e.target;
-    console.log("id", id, value);
+    console.log("id::", id,"value::", value);
     
     setFormData((prev: any) => ({
         ...prev,
@@ -71,3 +84,4 @@ export const handleFormDataChange = (e: any, setFormData: any, setErrors: any) =
     }));
     return
 };
+

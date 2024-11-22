@@ -2,29 +2,36 @@ import { ChevronDown, ChevronUp, X } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 
 interface DropdownProps {
+    id: string;
     direction?: 'row' | 'col';
     label: string;
     className?: string;
-    options: { value: string; label: string }[];
+    options?: { value: string; label: string }[];
+    onChange?: (value: string) => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({
+const MultiSelectDropdown: React.FC<DropdownProps> = ({
     direction,
     label,
     className = '',
     options,
-}) => {
+    onChange,
+}: any) => {
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [dropdownDirection, setDropdownDirection] = useState<'down' | 'up'>('down');
     const dropdownRef = useRef<HTMLDivElement>(null);
 
+
     const handleSelectionChange = (value: string) => {
-        setSelectedValues(prev =>
-            prev.includes(value)
+        setSelectedValues(prev => {
+            const updatedValues = prev.includes(value)
                 ? prev.filter(v => v !== value)
-                : [...prev, value]
-        );
+                : [...prev, value];
+
+            onChange && onChange(updatedValues);
+            return updatedValues;
+        });
     };
 
     const toggleDropdown = () => {
@@ -69,7 +76,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                                 key={value}
                                 className="flex items-center bg-blue-200 text-blue-700 text-sm font-semibold px-2 py-1 rounded-full"
                             >
-                                <span>{options.find(opt => opt.value === value)?.label}</span>
+                                <span>{options.find((opt: any) => opt.value === value)?.label}</span>
                                 <button
                                     className="ml-2 text-white font-bold bg-red-500 rounded-full"
                                     onClick={(e) => {
@@ -101,7 +108,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                         className={`absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-auto ${dropdownDirection === 'up' ? 'bottom-full mb-1' : 'top-full mt-1'
                             }`}
                     >
-                        {options.map(option => (
+                        {options.map((option: any) => (
                             <div key={option.value} className="flex items-center px-4 py-2">
                                 <input
                                     id={`checkbox-${option.value}`}
@@ -125,4 +132,4 @@ const Dropdown: React.FC<DropdownProps> = ({
     );
 };
 
-export default Dropdown;
+export default MultiSelectDropdown;

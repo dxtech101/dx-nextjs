@@ -3,7 +3,7 @@ import Certifications from '@/components/developer/onboarding/Certifications'
 import Skills from '@/components/developer/onboarding/Skills'
 import WorkExperience from '@/components/developer/onboarding/WorkExperience'
 import InputField from '@/components/InputField'
-import { ChevronRight, ChevronsDown, DollarSign, MapPin } from 'lucide-react'
+import { ChevronRight, ChevronsDown, CornerUpRightIcon, DollarSign, MapPin } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -19,16 +19,17 @@ const JobListingCard = ({ title, location, salary, type }: any) => {
                 </div>
                 <div className="flex gap-3 items-center">
                     <p className="tracking-tight text-gray-700 text-sm">{location}</p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4" fill="none"><circle cx="2" cy="2" r="2" fill="#71717A"></circle></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4" fill="none">
+                        <circle cx="2" cy="2" r="2" fill="#71717A">
+                        </circle>
+                    </svg>
                     <p className="tracking-tight text-gray-700 text-sm">{salary}</p>
                 </div>
             </div>
             <a href="#" className="bg-white border border-gray-200 h-11 rounded-full px-4 py-2 inline-flex items-center justify-center gap-2 hover:bg-black group transition duration-200">
                 <span className="tracking-tight text-sm font-semibold text-gray-900 group-hover:text-white transition duration-200">Apply Now</span>
                 <div className="group-hover:text-white transition duration-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                        <path d="M12.25 5.83334H6.41667C3.83934 5.83334 1.75 7.92268 1.75 10.5V11.6667M12.25 5.83334L8.75 9.33334M12.25 5.83334L8.75 2.33334" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
+                    <CornerUpRightIcon className="w-4 h-4" />
                 </div>
             </a>
         </div>
@@ -37,23 +38,20 @@ const JobListingCard = ({ title, location, salary, type }: any) => {
 
 const page = () => {
     const developerOnboarding = useSelector((state: any) => state.developerOnboarding)
+    const developerProfile = useSelector((state: any) => state.developerProfile);
     const [visible, setVisible] = useState(true);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    const isDeveloperOnboarded = false;
-    let image;
-    // Function to determine time of day greeting
+    const isDeveloperOnboarded = developerProfile.is_onboard;
+
     const getTimeOfDayGreeting = () => {
         const currentHour = new Date().getHours();
         if (currentHour < 12) {
-            image = "morning";
-            return "Good Morning";
+            return "Good-Morning";
         } else if (currentHour < 18) {
-            image = "evening";
-            return "Good Afternoon";
+            return "Good-Afternoon";
         } else {
-            image = "night";
-            return "Good Evening";
+            return "Good-Evening";
         }
     };
 
@@ -80,24 +78,17 @@ const page = () => {
 
     return (
         <div ref={containerRef} className='h-full overflow-y-scroll gap-6'>
-            {!isDeveloperOnboarded ? (
+            {isDeveloperOnboarded ? (
                 <>
-                    {developerOnboarding[0].isActive && <Certifications />}
-                    {developerOnboarding[1].isActive && <Skills />}
-                    {developerOnboarding[2].isActive && <WorkExperience />}
-                </>
-            ) : (
-                <>
-                    <div className={`${visible ? "opacity-100" : "opacity-0"} absolute bottom-10 left-[53%] text-xs flex items-center justify-center p-2 rounded-full bg-blue-100 border border-blue-600 text-blue-700 animate-bounce`}>
+                    <div className={`${visible ? "block" : "hidden"} absolute bottom-10 left-[40%] lg:left-[50%] text-xs flex items-center justify-center p-2 rounded-full bg-blue-100 border border-blue-600 text-blue-700 animate-bounce`}>
                         <ChevronsDown className='h-4' /> Scroll Down
                     </div>
 
-
                     <div className='flex flex-col md:flex-row w-full gap-5'>
-                        <div className={`bg-[url(/${image}.png)] bg-bottom bg-cover bg-no-repeat text-white rounded-3xl flex-1 flex items-center justify-start`}>
-                            <div className={`p-6 ${greeting === "Good Evening" ? "text-white" : "text-black"}`}>
-                                <h2 className={`text-2xl font-semibold mb-2 `}>{greeting} Hardik</h2>
-                                <p >You have 75 new applications to review today!</p>
+                        <div className={`bg-[url(/Good-Evening.png)] bg-bottom bg-cover bg-no-repeat text-white rounded-3xl flex-1 flex items-center justify-start`}>
+                            <div className={`p-6 ${greeting === "Good-Evening" ? "text-white" : "text-black"}`}>
+                                <h2 className={`text-2xl font-semibold mb-2 capitalize`}>{greeting.split('-').join(' ')} {developerProfile.first_name}</h2>
+                                <p >Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, ducimus?</p>
                                 <button className="mt-4 bg-white/80 text-gray-600 px-4 py-2 rounded-lg">
                                     Review It
                                 </button>
@@ -106,7 +97,7 @@ const page = () => {
                         <div className="hidden md:flex bg-white text-white rounded-3xl flex-row items-center justify-center px-6 p-4 gap-4">
                             <img className="h-28 w-28 rounded-full object-cover mr-2 object-right z-0" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80" alt="" />
                             <div className="text-black">
-                                <h2 className="text-2xl font-semibold mb-2">Hardik Sharma</h2>
+                                <h2 className="text-2xl font-semibold mb-2 capitalize"> {developerProfile.first_name}  {developerProfile.last_name}</h2>
                                 <p className='text-gray-400 text-sm'>Software Developer</p>
                                 <button className="mt-4 w-full bg-blue-100 text-blue-600 px-4 text-sm hover:bg-blue-600 hover:text-white py-2 rounded-lg">
                                     Edit Profile
@@ -114,7 +105,7 @@ const page = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='flex-1 w-full text-left py-10 md:py-16 px-6 md:px-10'>
+                    <div className='flex flex-col items-center justify-center w-full text-left py-10 md:py-16 px-6 md:px-10'>
                         <div className='w-full flex flex-row items-center justify-between'>
                             <span className='pb-4'>
                                 <h1 className="font-heading tracking-tight text-3xl md:text-5xl font-medium mb-4">
@@ -140,7 +131,7 @@ const page = () => {
                                 iconName='search'
                                 placeHolder='Search Keyword'
                             />
-                            <div className='flex gap-4'>
+                            <div className='flex flex-wrap w-full gap-4'>
                                 <button className='h-full bg-white rounded-xl px-4 py-2 text-black flex items-center gap-2 whitespace-nowrap'>
                                     <MapPin className='h-5 w-5 text-blue-600' />
                                     Newyork, NY
@@ -190,6 +181,12 @@ const page = () => {
                             </div>
                         </div>
                     </div>
+                </>
+            ) : (
+                <>
+                    {developerOnboarding[0].isActive && <Certifications />}
+                    {developerOnboarding[1].isActive && <Skills />}
+                    {developerOnboarding[2].isActive && <WorkExperience />}
                 </>
             )}
         </div>

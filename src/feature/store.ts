@@ -13,10 +13,12 @@ import {
 import storage from 'redux-persist/lib/storage'; 
 import developerOnboardingReducer from './reducers/developerOnboarding';
 import developerProfileReducer from './reducers/developerProfile';
+import developerSalesforceIDReducer from './reducers/developerSalesforceId';
 
 const rootReducer = combineReducers({
   developerOnboarding: developerOnboardingReducer,
   developerProfile: developerProfileReducer,
+  developerSalesforceID: developerSalesforceIDReducer,
 });
 
 const persistConfig = {
@@ -39,6 +41,4 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
 
