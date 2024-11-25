@@ -1,5 +1,5 @@
 import InputField from "@/components/InputField";
-import Dropdown from "@/components/MultiSelectDropdown";
+import MultiSelectDropdown from "@/components/MultiSelectDropdown";
 import { Clock2, Clock4, Clock7, Clock9 } from "lucide-react";
 
 const TimePreference = () => {
@@ -32,7 +32,12 @@ const TimePreference = () => {
                 </div>
             </div>
             <div className="my-6 flex flex-col gap-6">
-                <Dropdown label={"Preferred Timezone"} options={[]} />
+                <MultiSelectDropdown
+                    id="timezone"
+                    label={"Preferred Timezone"}
+                    className="w-full"
+                    options={[]}
+                />
                 <div>
                     <span className="text-sm font-bold text-gray-700 text-nowrap">
                         Available Hours / Week
@@ -69,7 +74,7 @@ const TimePreference = () => {
                     </div>
                 </div>
                 <InputField placeHolder="For example ($5 - $10)" label="Desired Rates ($USD)" className="w-full" iconName="currency" />
-                <Dropdown label={"Salesforce Technologies"} className="w-full" options={options} />
+                <MultiSelectDropdown label={"Salesforce Technologies"} className="w-full" options={options} id={""} />
             </div>
         </div>
     )
