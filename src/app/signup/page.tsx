@@ -20,6 +20,7 @@ const page = () => {
         last_name: '',
         email: '',
         phone: '',
+        password: '',
         ...(selected === 'company' && { company_name: '', industry: '' }),
         role: selected
     });
@@ -31,6 +32,7 @@ const page = () => {
         phone: '',
         company_name: '',
         industry: '',
+        password: '',
         role: selected
     })
 
@@ -45,6 +47,7 @@ const page = () => {
         signupData.append('first_name', formData.first_name);
         signupData.append('last_name', formData.last_name);
         signupData.append('email', formData.email);
+        signupData.append('password', formData.password);
         signupData.append('phone', formData.phone);
         if (selected === 'company') {
             signupData.append('company_name', formData.company_name);
@@ -176,7 +179,7 @@ const page = () => {
                                 id="password"
                                 className="w-full"
                                 placeholder="Enter Password"
-                                error={errors.email}
+                                error={errors.password}
                             />
 
                             <InputField
