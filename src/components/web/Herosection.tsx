@@ -10,7 +10,7 @@ const Herosection = () => {
                         <div className="w-full md:w-1/2 lg:w-4/12 xl:w-6/12 p-8">
                             <h1 className="mb-9 text-6xl md:text-8xl lg:text-7xl font-bold font-heading md:max-w-7xl leading-none text-black">Hire smart minded people</h1>
                             <div>
-                                <p className="mb-9 text-xl text-gray-900 font-medium md:max-w-sm">Get the best-in-className group mentoring plans and professional benefits for your team</p>
+                                <p className="mb-9 text-xl text-gray-900 font-medium md:max-w-sm">Get the best-in-classame group mentoring plans and professional benefits for your team</p>
                                 <div className="mb-12 md:inline-block">
                                     <button className="py-4 px-6 w-full text-white font-semibold border border-indigo-700 rounded-xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200" type="button">Try 14 Days Free Trial</button>
                                 </div>
