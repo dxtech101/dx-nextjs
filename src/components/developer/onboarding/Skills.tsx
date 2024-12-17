@@ -2,33 +2,19 @@
 import InputField from '@/components/InputField';
 import ErrorToast from '@/components/toast/ErrorToast';
 import SuccessfulToast from '@/components/toast/SuccessfulToast';
-import { onBoardingHandleNext, onBoardingHandlePrevious } from '@/feature/reducers/developerOnboarding';
-import { assignCertification, assignSkills, deleteAssignedSkills, getAllAssignedSkills, getAllSalesforceSkills } from '@/lib/service/portfolio.service';
+import { skillsDetails } from '@/constants/data';
+import { onBoardingHandleNext, onBoardingHandlePrevious } from '@/feature/reducers/userOnboarding';
+import { assignSkills, deleteAssignedSkills, getAllAssignedSkills, getAllSalesforceSkills } from '@/lib/service/portfolio.service';
 import { X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 
 const CheckboxItem = ({ id, checked, onChange }: any) => {
-
     const [checkedItem, setCheckedItem] = useState<any>();
-    const initialItems = [
-        { id: "a0lIo000000viJPIAY", text: 'Salesforce', imageSrc: '/Salesforce.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-        { id: "a0lIo000000viJQIAY", text: 'Mulesoft', imageSrc: '/Mulesoft.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-        { id: "a0lIo000000viJSIAY", text: 'Heroku', imageSrc: '/heroku.png', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
-        { id: "a0lIo000000viJTIAY", text: 'Sales Cloud', imageSrc: '/sales-cloud.svg', bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-800' },
-        { id: "a0lIo000000viJUIAY", text: 'Service Cloud', imageSrc: '/service-cloud.svg', bgColor: 'bg-pink-100', checkedColor: 'bg-pink-500', borderColor: 'border-pink-600', textColor: 'text-pink-600' },
-        { id: "a0lIo000000viJVIAY", text: 'Marketing Cloud', imageSrc: '/marketing-cloud.svg', bgColor: 'bg-orange-100', checkedColor: 'bg-orange-500', borderColor: 'border-orange-600', textColor: 'text-orange-400' },
-        { id: "a0lIo000000viJWIAY", text: 'B2B Commerce Cloud', imageSrc: '/commerce-cloud.svg', bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-800' },
-        { id: "a0lIo000000viJXIAY", text: 'B2C Commerce Cloud', imageSrc: '/commerce-cloud.svg', bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-800' },
-        { id: "a0lIo000000viJaIAI", text: 'Experience Cloud', imageSrc: '/Salesforce.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-        { id: "a0lIo000000viJRIAY", text: 'Industry Cloud', imageSrc: '/Salesforce.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-        { id: "a0lIo000000viJZIAY", text: 'Einstein Copilot', imageSrc: '/encop.webp', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
-        { id: "a0lIo000000viJYIAY", text: 'AI', imageSrc: '/encop.webp', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
-    ];
 
     useEffect(() => {
-        setCheckedItem(initialItems.find((item: any) => item.id === id))
+        setCheckedItem(skillsDetails.find((item: any) => item.id === id))
     }, [])
 
     if (checkedItem?.bgColor) {
@@ -68,7 +54,7 @@ const Skills = () => {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [loading, setLoading] = useState(false);
     const containerRef: any = useRef(null);
-    const contactSfid = useSelector((state: any) => state.developerSalesforceID)
+    const contactSfid = useSelector((state: any) => state.userSalesforceID)
 
     const dispatch = useDispatch();
 
@@ -104,11 +90,11 @@ const Skills = () => {
     }, [])
 
     const handleNext = () => {
-        dispatch(onBoardingHandleNext({ stepperId: 2 }))
+        dispatch(onBoardingHandleNext({ role: "developer", stepperId: 2 }))
     }
 
     const handlePrevious = () => {
-        dispatch(onBoardingHandlePrevious({ stepperId: 2 }))
+        dispatch(onBoardingHandlePrevious({ role: "developer", stepperId: 2 }))
     }
 
     const addSkills = async (id: any) => {
@@ -158,7 +144,6 @@ const Skills = () => {
         const isChecked = checkedItems.find((i: any) => i.sfid === id);
         const item = initialItems.find((i: any) => i.sfid === id);
 
-
         if (isChecked) {
             const uncheckedItem = checkedItems.find(i => i.sfid === id);
             if (uncheckedItem) {
@@ -187,9 +172,6 @@ const Skills = () => {
         setShowSuggestions(false);
         setInputValue("")
     }
-
-    console.log("checkedItems::", checkedItems);
-
 
     return (
         <>

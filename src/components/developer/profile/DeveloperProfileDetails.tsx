@@ -3,7 +3,7 @@ import { BriefcaseBusiness, CodeIcon, MailIcon, PencilIcon, Phone, PinIcon, Shie
 import { useSelector } from 'react-redux';
 
 const DeveloperProfileDetails = () => {
-    const developerProfile = useSelector((state: any) => state.developerProfile)
+    const developerProfile = useSelector((state: any) => state.userProfile)
 
     return (
         <div className='relative w-full h-full bg-gray-50 rounded-2xl flex flex-col items-start justify-start gap-4 p-4 lg:p-6'>
