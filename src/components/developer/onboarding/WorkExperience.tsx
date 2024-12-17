@@ -4,13 +4,14 @@ import InputArea from '@/components/InputArea'
 import InputDate from '@/components/InputDate'
 import InputField from '@/components/InputField'
 import Modal from '@/components/modal/Modal'
-import { onBoardingHandlePrevious } from '@/feature/reducers/developerOnboarding'
+import { onBoardingHandlePrevious } from '@/feature/reducers/userOnboarding'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleFormDataChange, validateForm } from '@/lib/helper'
 import { addWorkExperience, deleteWorkExperience, getWorkExperience, updateWorkExperience } from '@/lib/service/portfolio.service'
 import { Plus } from 'lucide-react'
 import ConfirmationModal from '@/components/modal/ConfirmationModal'
+import { industries, salesforce_technologies } from '@/constants/data'
 
 const InfoLabel = ({ label, content }: any) => {
     return (
@@ -88,7 +89,7 @@ const WorkExperience = () => {
         job_title: "",
         project_description: ""
     });
-    const contactSfid = useSelector((state: any) => state.developerSalesforceID)
+    const contactSfid = useSelector((state: any) => state.userSalesforceID)
 
     useEffect(() => {
         getDeveloperWorkExperienceDetails();
@@ -118,7 +119,6 @@ const WorkExperience = () => {
         }
     }
 
-
     const openEditModal = (experience: any) => {
         setFormData({
             company_project_name: experience.company_project_name || "",
@@ -133,57 +133,8 @@ const WorkExperience = () => {
         setEditSFID(experience.sfid)
     };
 
-    const salesforce_technologies = [
-        { value: 'salesforce_platform', label: 'Salesforce Platform' },
-        { value: 'sales_cloud', label: 'Sales Cloud' },
-        { value: 'service_cloud', label: 'Service Cloud' },
-        { value: 'experience_cloud', label: 'Experience Cloud' },
-        { value: 'marketing_cloud', label: 'Marketing Cloud' },
-        { value: 'b2b_commerce_cloud', label: 'B2B Commerce Cloud' },
-        { value: 'b2c_commerce_cloud', label: 'B2C Commerce Cloud' },
-        { value: 'cpq', label: 'CPQ' },
-    ];
-
-    const industries = [
-        { value: 'Agriculture', label: 'Agriculture' },
-        { value: 'Automotive', label: 'Automotive' },
-        { value: 'Banking', label: 'Banking' },
-        { value: 'Biotechnology', label: 'Biotechnology' },
-        { value: 'Chemicals', label: 'Chemicals' },
-        { value: 'Communications', label: 'Communications' },
-        { value: 'Construction', label: 'Construction' },
-        { value: 'Consulting', label: 'Consulting' },
-        { value: 'Consumer Packaged Goods', label: 'Consumer Packaged Goods' },
-        { value: 'Education', label: 'Education' },
-        { value: 'Energy', label: 'Energy' },
-        { value: 'Engineering', label: 'Engineering' },
-        { value: 'Entertainment', label: 'Entertainment' },
-        { value: 'Environmental', label: 'Environmental' },
-        { value: 'Financial Services', label: 'Financial Services' },
-        { value: 'Food_beverage', label: 'Food & Beverage' },
-        { value: 'Government', label: 'Government' },
-        { value: 'Healthcare', label: 'Healthcare' },
-        { value: 'High Tech', label: 'High Tech' },
-        { value: 'Hospitality', label: 'Hospitality' },
-        { value: 'Insurance', label: 'Insurance' },
-        { value: 'Manufacturing', label: 'Manufacturing' },
-        { value: 'Media', label: 'Media' },
-        { value: 'Nonprofit', label: 'Nonprofit' },
-        { value: 'Other', label: 'Other' },
-        { value: 'Pharmaceuticals', label: 'Pharmaceuticals' },
-        { value: 'Real Estate', label: 'Real Estate' },
-        { value: 'Recreation', label: 'Recreation' },
-        { value: 'Retail', label: 'Retail' },
-        { value: 'Shipping', label: 'Shipping' },
-        { value: 'Technology', label: 'Technology' },
-        { value: 'Telecommunications', label: 'Telecommunications' },
-        { value: 'Transportation', label: 'Transportation' },
-        { value: 'Utilities', label: 'Utilities' }
-    ];
-
-
     const handlePrevious = () => {
-        dispatch(onBoardingHandlePrevious({ stepperId: 3 }))
+        dispatch(onBoardingHandlePrevious({ role: "developer", stepperId: 3 }))
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -227,7 +178,6 @@ const WorkExperience = () => {
     return (
         <>
             <div className='bg-[url(/skillsBG1.webp)] bg-white bg-contain bg-no-repeat bg-bottom rounded-3xl border border-gray-300 overflow-clip w-full min-h-full relative px-5 lg:px-10'>
-
                 <div className='w-full bg-white top-0 left-0 sticky py-6 flex flex-col gap-6 lg:flex-row justify-between items-start z-20 lg:items-center'>
                     <span>
                         <h1 className='text-start text-4xl md:text-5xl font-heading tracking-tight font-medium text-black'>
@@ -347,6 +297,7 @@ const WorkExperience = () => {
                                 onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
                                 className="w-full"
                                 cols={20}
+                                maxLength={100}
                             />
                         </div>
                         <div className='flex flex-col lg:flex-row w-full gap-6'>

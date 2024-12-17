@@ -74,3 +74,13 @@
     /* Firefox */
   }
 }
+
+@layer table {
+  th {
+    border: 1.2px solid #e5e7eb !important; /* border-gray-200 */
+    padding: 8px 16px;         /* px-4 (16px horizontal), py-2 (8px vertical) */
+    text-align: left;          /* text-left */
+    text-transform: uppercase; /* uppercase */
+    font-size: 0.875rem;       /* text-sm (14px) */
+  }
+}

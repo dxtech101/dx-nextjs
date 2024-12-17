@@ -2,52 +2,53 @@
 import { BellIcon, ChevronDown, HelpCircle, Layout, LogOut, MenuIcon, MessageCircle, Settings, Sidebar, User } from 'lucide-react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import Breadcrumb from './Breadcrumb';
-import Stepper from './developer/onboarding/Stepper';
+import DashbaordBreadcrumb from './DashboardBreadcrumb';
+import DashboardStepper from './DashboardStepper';
 import { removeAuthenticationToken } from '@/lib/cookie';
 import { useRouter } from 'next/navigation';
 
 const DashboardNavbar = ({ setToggleSideBar }: any) => {
-    const developerProfile = useSelector((state: any) => state.developerProfile);
-    const isDeveloperOnboarded = developerProfile.is_onboard;
+    const userProfile = useSelector((state: any) => state.userProfile);
+    const isUserOnboarded = userProfile.is_onboard;
     const router = useRouter();
-    const role = "developer";
+    const role: any = "developer";
 
     return (
         <section className="p-6 bg-white shadow-sm border border-gray-300 rounded-3xl w-full h-full inline-flex items-center">
             <div className="flex flex-col-reverse md:flex-row w-full gap-2 items-start lg:items-center justify-between">
-                {isDeveloperOnboarded &&
+                {isUserOnboarded &&
                     <button className="hidden lg:block" onClick={() => { setToggleSideBar((prev: any) => !prev) }}>
                         <Sidebar className="w-full h-full" />
                     </button>
                 }
 
                 <div className='block md:hidden'>
-                    {isDeveloperOnboarded ? <Breadcrumb type={role} /> : <Stepper />}
+                    {isUserOnboarded ? <DashbaordBreadcrumb type={role} /> : <DashboardStepper role={role} />}
                 </div>
                 <div className="flex items-center justify-between w-full">
-                    {isDeveloperOnboarded &&
+                    {isUserOnboarded &&
                         <button className="block lg:hidden text-gray-200 hover:text-gray-300 mr-4" onClick={() => { setToggleSideBar((prev: any) => !prev) }}>
                             <MenuIcon className="h-5 w-5" strokeWidth={2} color='#000' />
                         </button>
                     }
                     <div className='hidden md:block'>
-                        {isDeveloperOnboarded ? <Breadcrumb type={role} /> : <Stepper />}
+                        {isUserOnboarded ? <DashbaordBreadcrumb type={role} /> : <DashboardStepper role={role} />}
                     </div>
                     <div className='flex items-center justify-end w-full space-x-2'>
-                        {isDeveloperOnboarded && <>
-                            <a className="relative text-gray-200 hover:text-gray-300 p-3" href="#">
-                                <div className='absolute w-3 h-3 bg-blue-500 rounded-full right-0 top-0' />
-                                <div className='absolute w-3 h-3 bg-blue-500 rounded-full right-0 top-0 animate-ping' />
-                                <MessageCircle className="h-5 w-5" strokeWidth={2} color='#000' />
-                            </a>
-                            <a className="relative text-gray-200 hover:text-gray-300 p-3 rounded-full" href="#">
-                                <div className='absolute w-3 h-3 bg-red-500 rounded-full right-0 top-0' />
-                                <div className='absolute w-3 h-3 bg-red-500 rounded-full right-0 top-0 animate-ping' />
-                                <BellIcon className="h-5 w-5" strokeWidth={2} color='#000' />
-                            </a>
-                        </>
-                        }
+                        {/* {isUserOnboarded &&
+                            <>
+                                <a className="relative text-gray-200 hover:text-gray-300 p-3" href="#">
+                                    <div className='absolute w-3 h-3 bg-blue-500 rounded-full right-0 top-0' />
+                                    <div className='absolute w-3 h-3 bg-blue-500 rounded-full right-0 top-0 animate-ping' />
+                                    <MessageCircle className="h-5 w-5" strokeWidth={2} color='#000' />
+                                </a>
+                                <a className="relative text-gray-200 hover:text-gray-300 p-3 rounded-full" href="#">
+                                    <div className='absolute w-3 h-3 bg-red-500 rounded-full right-0 top-0' />
+                                    <div className='absolute w-3 h-3 bg-red-500 rounded-full right-0 top-0 animate-ping' />
+                                    <BellIcon className="h-5 w-5" strokeWidth={2} color='#000' />
+                                </a>
+                            </>
+                        } */}
 
                         <div>
                             <button className="relative group flex items-center p-1 rounded-full bg-gray-100 gap-1">
@@ -55,10 +56,10 @@ const DashboardNavbar = ({ setToggleSideBar }: any) => {
                                 <ChevronDown className="h-4 w-4 text-black mr-2" />
                                 <div className='text-black hidden group-hover:flex transition-all duration-300 ease-in-out absolute z-50 top-full right-0 w-fit'>
                                     <div className="w-full shadow-lg max-w-xl bg-white border border-gray-200 rounded-2xl flex flex-col">
-                                        <div className="-top-2 z-20 absolute right-6 w-4 h-4 rounded-sm bg-white border-l border-t border-gray-200 transform rotate-45"></div>
+                                        <div className="-top-2 z-20 absolute right-6 w-4 h-4 rounded-sm bg-white border-l border-t border-gray-200 transform rotate-45"/>
                                         <div className='z-30 w-full flex flex-col items-center gap-4 p-5 border-b border-gray-200 rounded-t-2xl'>
                                             <div className='flex flex-col items-start min-w-44'>
-                                                <h2 className="text-2xl font-semibold mb-1 capitalize">{developerProfile.first_name} {developerProfile.last_name}</h2>
+                                                <h2 className="text-2xl font-semibold mb-1 capitalize">{userProfile.first_name} {userProfile.last_name}</h2>
                                                 <p className='text-gray-400 text-sm'>Software Developer</p>
                                             </div>
 

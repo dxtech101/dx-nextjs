@@ -2,10 +2,10 @@
 import InputField from '@/components/InputField';
 import ErrorToast from '@/components/toast/ErrorToast';
 import SuccessfulToast from '@/components/toast/SuccessfulToast';
-import { addDeveloperProfile } from '@/feature/reducers/developerProfile';
-import { addSalesforceId } from '@/feature/reducers/developerSalesforceId';
+import { addUserProfile } from '@/feature/reducers/userProfile';
+import { addSalesforceId } from '@/feature/reducers/userSalesforceId';
 import { handleFormDataChange, validateForm } from '@/lib/helper';
-import { developerSignIn, getDeveloperSalesforceId } from '@/lib/service/user.service';
+import { getDeveloperSalesforceContactId, userSignIn } from '@/lib/service/user.service';
 import { ArrowLeft, LoaderCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -41,12 +41,12 @@ export default function Login() {
 
         try {
             setLoading(true)
-            const response: any = await developerSignIn(loginData);
-            const { results: userSalesforceId } = await getDeveloperSalesforceId(response.user.email);
+            const response: any = await userSignIn(loginData);
+            const { results: userSalesforceId } = await getDeveloperSalesforceContactId(response.user.email);
             console.log(userSalesforceId);
-            
+
             if (response && response.user) {
-                dispatch(addDeveloperProfile(response.user));
+                dispatch(addUserProfile(response.user));
                 dispatch(addSalesforceId(userSalesforceId[0].sfid));
                 toast.custom((t) => (
                     <SuccessfulToast t={t} message={"Logged in successfully"} />

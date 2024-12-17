@@ -2,7 +2,8 @@
 import InputField from '@/components/InputField'
 import ErrorToast from '@/components/toast/ErrorToast'
 import SuccessfulToast from '@/components/toast/SuccessfulToast'
-import { onBoardingHandleNext } from '@/feature/reducers/developerOnboarding'
+import { filterby } from '@/constants/data'
+import { onBoardingHandleNext } from '@/feature/reducers/userOnboarding'
 import { assignCertification, deleteAssignedCertifications, getAllAssignedCertifications, getAllSalesforceCertifications } from '@/lib/service/portfolio.service'
 import { X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
@@ -34,10 +35,7 @@ const CheckboxItem = ({ text, imageSrc, borderColor, textColor, checked, onChang
     );
 };
 
-
-
 const Certifications = () => {
-    const filterby = ["Admin", "Developer", "Consultant", "Architect", "Marketing", "Commerce", "Industry Cloud", "Designer", "CRM Analytics", "Heroku", "Mulesoft"];
 
     const dispatch = useDispatch();
     const [items, setItems] = useState<any[]>([]);
@@ -49,8 +47,8 @@ const Certifications = () => {
     const [selectedTags, setSelectedTags] = useState<any>([]);
     const containerRef: any = useRef(null);
     const [loading, setLoading] = useState(false);
-    const contactSfid = useSelector((state: any) => state.developerSalesforceID)
-    
+    const contactSfid = useSelector((state: any) => state.userSalesforceID)
+
     const getCertificationDetails = async () => {
         try {
             setLoading(true);
@@ -85,7 +83,7 @@ const Certifications = () => {
     }, []);
 
     const handleNext = async () => {
-        dispatch(onBoardingHandleNext({ stepperId: 1 }))
+        dispatch(onBoardingHandleNext({ role: "developer", stepperId: 1 }))
     }
 
     const addCertification = async (sfid: any) => {
@@ -197,7 +195,7 @@ const Certifications = () => {
                 <div className='flex flex-row gap-2 justify-center items-end lg:items-center'>
                     <button
                         disabled={loading}
-                        onClick={() => handleNext()}
+                        onClick={handleNext}
                         className={`h-12 px-6 rounded-xl font-medium text-normal ${loading
                             ? 'bg-blue-300 text-blue-100 cursor-not-allowed'
                             : 'bg-blue-500 text-white'

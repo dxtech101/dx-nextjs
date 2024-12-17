@@ -11,14 +11,16 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; 
-import developerOnboardingReducer from './reducers/developerOnboarding';
-import developerProfileReducer from './reducers/developerProfile';
-import developerSalesforceIDReducer from './reducers/developerSalesforceId';
+import userProfileReducer from './reducers/userProfile';
+import userSalesforceIDReducer from './reducers/userSalesforceId';
+import userOnboardingReducer from './reducers/userOnboarding';
+import companyCreateProjectIDReducer from './reducers/companyCreateProject';
 
 const rootReducer = combineReducers({
-  developerOnboarding: developerOnboardingReducer,
-  developerProfile: developerProfileReducer,
-  developerSalesforceID: developerSalesforceIDReducer,
+  userProfile: userProfileReducer,
+  userSalesforceID: userSalesforceIDReducer,
+  userOnboarding: userOnboardingReducer,
+  companyCreateProject: companyCreateProjectIDReducer,
 });
 
 const persistConfig = {

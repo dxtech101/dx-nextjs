@@ -37,12 +37,12 @@ const JobListingCard = ({ title, location, salary, type }: any) => {
 }
 
 const page = () => {
-    const developerOnboarding = useSelector((state: any) => state.developerOnboarding)
-    const developerProfile = useSelector((state: any) => state.developerProfile);
+    const userOnboarding = useSelector((state: any) => state.userOnboarding["developerOnboarding"])
+    const userProfile = useSelector((state: any) => state.userProfile);
     const [visible, setVisible] = useState(true);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    const isDeveloperOnboarded = developerProfile.is_onboard;
+    const isUserOnboarded = userProfile.is_onboard;
 
     const getTimeOfDayGreeting = () => {
         const currentHour = new Date().getHours();
@@ -78,7 +78,7 @@ const page = () => {
 
     return (
         <div ref={containerRef} className='h-full overflow-y-scroll gap-6'>
-            {isDeveloperOnboarded ? (
+            {isUserOnboarded ? (
                 <>
                     <div className={`${visible ? "block" : "hidden"} absolute bottom-10 left-[40%] lg:left-[50%] text-xs flex items-center justify-center p-2 rounded-full bg-blue-100 border border-blue-600 text-blue-700 animate-bounce`}>
                         <ChevronsDown className='h-4' /> Scroll Down
@@ -87,7 +87,7 @@ const page = () => {
                     <div className='flex flex-col md:flex-row w-full gap-5'>
                         <div className={`bg-[url(/Good-Evening.png)] bg-bottom bg-cover bg-no-repeat text-white rounded-3xl flex-1 flex items-center justify-start`}>
                             <div className={`p-6 ${greeting === "Good-Evening" ? "text-white" : "text-black"}`}>
-                                <h2 className={`text-2xl font-semibold mb-2 capitalize`}>{greeting.split('-').join(' ')} {developerProfile.first_name}</h2>
+                                <h2 className={`text-2xl font-semibold mb-2 capitalize`}>{greeting.split('-').join(' ')} {userProfile.first_name}</h2>
                                 <p >Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, ducimus?</p>
                                 <button className="mt-4 bg-white/80 text-gray-600 px-4 py-2 rounded-lg">
                                     Review It
@@ -97,7 +97,7 @@ const page = () => {
                         <div className="hidden md:flex bg-white text-white rounded-3xl flex-row items-center justify-center px-6 p-4 gap-4">
                             <img className="h-28 w-28 rounded-full object-cover mr-2 object-right z-0" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80" alt="" />
                             <div className="text-black">
-                                <h2 className="text-2xl font-semibold mb-2 capitalize"> {developerProfile.first_name}  {developerProfile.last_name}</h2>
+                                <h2 className="text-2xl font-semibold mb-2 capitalize"> {userProfile.first_name}  {userProfile.last_name}</h2>
                                 <p className='text-gray-400 text-sm'>Software Developer</p>
                                 <button className="mt-4 w-full bg-blue-100 text-blue-600 px-4 text-sm hover:bg-blue-600 hover:text-white py-2 rounded-lg">
                                     Edit Profile
@@ -184,9 +184,9 @@ const page = () => {
                 </>
             ) : (
                 <>
-                    {developerOnboarding[0].isActive && <Certifications />}
-                    {developerOnboarding[1].isActive && <Skills />}
-                    {developerOnboarding[2].isActive && <WorkExperience />}
+                    {userOnboarding[0].isActive && <Certifications />}
+                    {userOnboarding[1].isActive && <Skills />}
+                    {userOnboarding[2].isActive && <WorkExperience />}
                 </>
             )}
         </div>

@@ -8,7 +8,8 @@ export const SIGN_IN_ENDPOINT = "/users/sign-in/";
 export const SIGN_UP_ENDPOINT = "/users/enroll-user/";
 export const TOKEN_VERIFICATION = "/users/token-verification/";
 export const USER_ONBOARDED = (id:any) => `/users/on-boarded/${id}`
-export const GET_USER_SALESFORCE_ID = `/users/contact-salesforce-id/`
+export const GET_USER_SALESFORCE_CONTACT_ID = `/users/contact-salesforce-id/`
+export const GET_USER_SALESFORCE_ACCOUNT_ID= `/users/account-salesforce-id/`
 
 //DEVELOPER ONBOARDING API's ENDPOINTS
 export const USER_PORTFOLIO = (sfid:any) => `portfolio/detailed-contact-view/${sfid}`
@@ -31,3 +32,37 @@ export const EDIT_WORK_EXPERIENCE = (sfid:any) => `/portfolio/update-work-experi
 export const DELETE_WORK_EXPERIENCE = (sfid:any) => `/portfolio/delete-work-experience/${sfid}`;
 //
 
+// COMPANY API'S ENDPOINTS
+// Projects
+export const GET_ALL_PROJECTS = `/project_resource/get-projects/`;
+export const GET_PROJECT_SFID_BY_NAME = (projectName:any) => `project_resource/get-sfid-project-name/${projectName}`
+export const GET_COMPANY_PROJECTS = (accountId:any) => `project_resource/get-company-projects/${accountId}`;
+export const GET_PROJECT = (sfid:any) => `/project_resource/get-projects-by-sfid/?sfid=${sfid}`;
+export const ADD_PROJECT = "/project_resource/create-projects/";
+export const EDIT_PROJECT = (sfid:any) => `/project_resource/update-projects/${sfid}`;
+export const DELETE_PROJECT = (sfid:any) => `/project_resource/delete-projects/${sfid}`;
+
+// Resources Request
+export const GET_ALL_RESOURCES_REQUEST = `/project_resource/view-resource-request/`;
+export const GET_COMPANY_RESOURCES = (accountId:any) => `/project_resource/get-company-resources/${accountId}`;
+export const GET_RESOURCES_REQUEST = (sfid:any) => `/project_resource/view-resource-request-by-sfid/?sfid=${sfid}`;
+export const ADD_RESOURCES_REQUEST = "/project_resource/resource-request/";
+export const EDIT_RESOURCES_REQUEST = (sfid:any) => `/project_resource/update-resource-request/${sfid}`;
+export const DELETE_RESOURCES_REQUEST = (sfid:any) => `/project_resource/delete-resource-request/${sfid}`;
+
+// Skill Requirements
+export const ADD_SKILL_REQUIRMENT = "/project_resource/create-skill-requirements/";
+export const GET_SKILL_REQUIREMENT = "/project_resource/view-skill-requirements/";
+export const GET_SKILL_REQUIREMENT_ID = (sfid:any) => `/project_resource/view-skill-requirements-by-sfid/${sfid}`;
+export const GET_SKILL_REQUIREMENT_BY_RESOURCE_SIFD = (sfid:any) => `/project_resource/get-skill-requirements-by-resource-request-sfid/${sfid}`;
+export const EDIT_SKILL_REQUIREMENT = (sfid:any) => `/project_resource/update-skill-requirements/${sfid}`;
+export const DELETE_SKILL_REQUIREMENT = (sfid:any) => `/project_resource/delete-skill-requirements/${sfid}`;
+
+//Certifications Requirements
+export const ADD_CERTIFICATIONS_REQUIREMENT = "/project_resource/create-certifications-requirements/";
+export const GET_CERTIFICATIONS_REQUIREMENT = "/project_resource/view-certifications-requirements/";
+export const GET_CERTIFICATIONS_REQUIREMENT_BY_RESOURCE_SIFD = (sfid:any) => `/project_resource/get-certifications-requirements-by-resource-request-sfid/${sfid}`;
+export const GET_CERTIFICATIONS_REQUIREMENT_ID = (sfid:any) => `/project_resource/view-certifications-requirements-by-sfid/${sfid}`;
+export const EDIT_CERTIFICATIONS_REQUIREMENT = (sfid:any) => `/project_resource/update-certifications-requirements/${sfid}`;        
+export const DELETE_CERTIFICATIONS_REQUIREMENT = (sfid:any) => `/project_resource/delete-certifications-requirements/${sfid}`;
+//
