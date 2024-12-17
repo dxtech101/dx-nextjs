@@ -1,10 +1,7 @@
 "use client";
 import * as Icons from 'lucide-react';
-import { ChevronDown } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { getCountries, getCountryCallingCode } from 'react-phone-number-input'
-import flags from 'react-phone-number-input/flags'
-import en from 'react-phone-number-input/locale/en'
+import { getCountries, getCountryCallingCode } from 'react-phone-number-input';
 
 
 const InputField = ({
@@ -38,10 +35,6 @@ const InputField = ({
       selectRef.current.focus();
     }
   };
-
-  useEffect(() => {
-    console.log("selectRef", selectRef.current?.focus());
-  }, [selectRef.current])
 
   const IconComponent = iconName ? iconMap[iconName] : null;
 

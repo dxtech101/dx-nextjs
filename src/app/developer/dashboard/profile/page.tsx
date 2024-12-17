@@ -2,9 +2,7 @@
 import DeveloperProfileCertification from '@/components/developer/profile/DeveloperProfileCertification'
 import DeveloperProfileDetails from '@/components/developer/profile/DeveloperProfileDetails'
 import DeveloperProfileExperience from '@/components/developer/profile/DeveloperProfileExperience'
-import DeveloperProfileIndustries from '@/components/developer/profile/DeveloperProfileIndustries'
 import DeveloperProfileSkills from '@/components/developer/profile/DeveloperProfileSkills'
-import DeveloperProfileTechnologies from '@/components/developer/profile/DeveloperProfileTechnologies'
 import { getUserPortfolio } from '@/lib/service/portfolio.service'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -16,7 +14,7 @@ const page = () => {
   const [workExperience, setWorkExperience] = useState([]);
   const [industries, setIndustries] = useState([]);
   const [technologies, setTechnologies] = useState([]);
-  const contactSfid = useSelector((state: any) => state.developerSalesforceID)
+  const contactSfid = useSelector((state: any) => state.userSalesforceID)
 
   const getUserPortoflioDetails = async () => {
     try {

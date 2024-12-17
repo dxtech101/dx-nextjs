@@ -74,7 +74,7 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({
                         selectedValues.map(value => (
                             <div
                                 key={value}
-                                className="flex items-center bg-blue-200 text-blue-700 text-sm font-semibold px-2 py-1 rounded-full"
+                                className="flex items-center bg-blue-200 text-blue-700 text-xs font-semibold px-2 py-1 rounded-full"
                             >
                                 <span>{options.find((opt: any) => opt.value === value)?.label}</span>
                                 <button
@@ -89,7 +89,7 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({
                             </div>
                         ))
                     ) : (
-                        <span className="text-gray-500">Select options...</span>
+                        <span className="text-gray-500 text-sm py-1">Select options...</span>
                     )}
 
                     <button

@@ -1,10 +1,10 @@
 import { addUserProfile } from '@/feature/reducers/userProfile';
 import { userOnBoarded } from '@/lib/service/user.service';
-import { LoaderCircle, X } from 'lucide-react'
+import { X, LoaderCircle } from 'lucide-react';
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-const ConfirmationModal = ({ setOpenConfirmModal }: any) => {
+const DeleteModal = ({ setOpenDeleteModal }: any) => {
     const [loading, setLoading] = useState(false);
     const userProfile = useSelector((state: any) => state.userProfile);
     const dispatch = useDispatch();
@@ -12,10 +12,10 @@ const ConfirmationModal = ({ setOpenConfirmModal }: any) => {
     const onClickHandler = async () => {
         setLoading(true);
         try {
-            const {results} = await userOnBoarded(userProfile.id);
+            const { results } = await userOnBoarded(userProfile.id);
             if (results) {
                 dispatch(addUserProfile(results));
-                setOpenConfirmModal(false);
+                setOpenDeleteModal(false);
             }
         } catch (error) {
             console.log(error);
@@ -24,12 +24,11 @@ const ConfirmationModal = ({ setOpenConfirmModal }: any) => {
             setLoading(false);
         }
     }
-
     return (
         <div className='absolute top-0 left-0 z-20 w-full h-full bg-black bg-opacity-65 text-black flex justify-center items-center'>
             <div className='absolute bg-white z-20 rounded-2xl w-1/2 h-fit p-6 xl:h-60 flex flex-col xl:flex-row gap-6 justify-center items-center'>
                 <img src='/confim.png' width={360} className='w-1/2 bottom-0' />
-                <button onClick={() => setOpenConfirmModal(false)} className='absolute right-2 top-2'>
+                <button onClick={() => setOpenDeleteModal(false)} className='absolute right-2 top-2'>
                     {!loading && <X className='w-5 h-5 text-black absolute right-2 top-2' strokeWidth={2} color='black' />}
                 </button>
                 <div className='flex flex-col gap-4'>
@@ -54,4 +53,4 @@ const ConfirmationModal = ({ setOpenConfirmModal }: any) => {
     )
 }
 
-export default ConfirmationModal
+export default DeleteModal

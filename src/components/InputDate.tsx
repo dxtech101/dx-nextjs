@@ -1,6 +1,6 @@
 "use client"
 
-const InputField = ({
+const InputDate = ({
     label,
     id,
     value,
@@ -9,7 +9,6 @@ const InputField = ({
     error,
     onChange,
 }: any) => {
-    console.log("error", error);
 
     return (
         <div className="relative flex flex-col justify-center items-start w-full gap-2">
@@ -28,11 +27,12 @@ const InputField = ({
                 value={value}
                 id={id}
                 type="date"
-                className={`h-12 pl-4 pr-4 text-black border ${error ? "border-red-400 bg-red-100" : "border-gray-400 bg-gray-50"} rounded-xl ${className}`}
+                placeholder="MM/YYYY"
+                className={`h-12 pl-4 pr-4 text-black border ${error ? "border-red-400 bg-red-100" : "border-gray-400 bg-gray-50"} appearance-none rounded-xl ${className}`}
                 onChange={onChange}
             />
         </div>
     );
 };
 
-export default InputField;
+export default InputDate;

@@ -1,4 +1,4 @@
-import { GET_USER_SALESFORCE_ID, SIGN_IN_ENDPOINT, TOKEN_VERIFICATION, USER_ONBOARDED } from "@/constants/api-routes";
+import { GET_USER_SALESFORCE_ACCOUNT_ID, GET_USER_SALESFORCE_CONTACT_ID, SIGN_IN_ENDPOINT, TOKEN_VERIFICATION, USER_ONBOARDED } from "@/constants/api-routes";
 import "@/lib/axios-configuration";
 import axios from "axios";
 import { setAuthenticationToken } from "../cookie";
@@ -12,7 +12,7 @@ export const tokenVerification = async (tokenVerificationData: any) => {
     }
 }
 
-export const developerSignIn = async(signInData: any) => {
+export const userSignIn = async(signInData: any) => {
     try {
         const response = await axios.post(SIGN_IN_ENDPOINT, signInData);
         setAuthenticationToken(response.data)
@@ -22,9 +22,18 @@ export const developerSignIn = async(signInData: any) => {
     }
 }
 
-export const getDeveloperSalesforceId = async(developerEmail:any) => {
+export const getDeveloperSalesforceContactId = async(developerEmail:any) => {
     try {
-        const response = await axios.post(GET_USER_SALESFORCE_ID, { email :developerEmail});
+        const response = await axios.post(GET_USER_SALESFORCE_CONTACT_ID, { email :developerEmail});
+        return response.data;
+    } catch (error: any) {
+        throw error;
+    }
+}
+
+export const getCompanySalesforceAccountId = async(developerEmail:any) => {
+    try {
+        const response = await axios.post(GET_USER_SALESFORCE_ACCOUNT_ID, { email :developerEmail});
         return response.data;
     } catch (error: any) {
         throw error;
