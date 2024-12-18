@@ -73,8 +73,8 @@ const CertificationCheckboxItem = ({ text, imageSrc, borderColor, textColor, che
 export const ResourceRequestCard = (props: any) => {
     const { resource } = props;
     return (
-        <div className='relative bg-gray-100 rounded-3xl flex flex-col gap-4 flex-1 p-6 w-full z-10'>
-            <CircleUserRound className='absolute right-0 top-0 h-16 w-16 m-4 text-gray-200' />
+        <div className='relative bg-gray-200 rounded-3xl flex flex-col gap-4 flex-1 p-6 w-full z-10'>
+            <CircleUserRound className='absolute right-0 top-0 h-16 w-16 m-4 text-gray-300' />
             <div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
                 <InfoLabel label="Resource Role Name" content={resource?.name} />
                 <InfoLabel label="Resource Role Required" content={resource?.role_required} />

@@ -86,7 +86,7 @@ export const handleFormDataChange = (e: any, setFormData: any, setErrors: any) =
 
 export const InfoLabel = ({ label, content }: any) => {
     return (
-        <span className="flex flex-col gap-1 z-20">
+        <span className="flex flex-col items-start gap-1 z-20">
             <span className="uppercase text-xs font-medium text-gray-500">{label}</span>
             <span className="line-clamp-1 hover:line-clamp-3">
                 {content?.split(';').join(", ")}
