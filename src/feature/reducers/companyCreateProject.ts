@@ -11,7 +11,7 @@ const companyCreateProjectIDSlice = createSlice({
       return action.payload;
     },
     
-    removeProjectId: (state, action) => {
+    removeProjectId: () => {
       return initialState;
     },
   },

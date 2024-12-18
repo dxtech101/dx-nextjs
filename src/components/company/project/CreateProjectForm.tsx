@@ -20,8 +20,8 @@ export const CompanyProjectCard = (props: any) => {
     const { project, index, openEditModal, deleteProjectRecord } = props;
 
     return (
-        <div className='relative bg-gray-100 rounded-3xl flex flex-col gap-4 flex-1 p-6 w-full z-10'>
-            <Briefcase className={`absolute ${!openEditModal && !deleteProjectRecord ? "right-0 bottom-0 mb-4 m-6" : "right-0 top-0 m-8"}  h-24 w-24  z-0 text-gray-200`} />
+        <div className='relative bg-gray-200 rounded-3xl flex flex-col gap-4 flex-1 p-6 w-full z-10'>
+            <Briefcase className={`absolute ${!openEditModal && !deleteProjectRecord ? "right-0 bottom-0 mb-4 m-6" : "right-0 top-0 m-8"}  h-24 w-24  z-0 text-gray-300`} />
             <div className='grid grid-cols-2 gap-4'>
                 <InfoLabel label="Project Name" content={project.project_name} />
                 <InfoLabel label="Industry" content={project.industry} />
@@ -57,6 +57,7 @@ export const CompanyProjectCard = (props: any) => {
 const CreateProjectForm = ({ loading, setLoading }: any) => {
     const dispatch = useDispatch();
     const accountSfid = useSelector((state: any) => state.userSalesforceID)
+    const projectId = useSelector((state: any) => state.companyCreateProject);
     const [projects, setProjects] = React.useState<any>([]);
     const [showForm, setShowForm] = React.useState<any>({
         type: "add",
@@ -245,7 +246,7 @@ const CreateProjectForm = ({ loading, setLoading }: any) => {
                         </div>
                     </form>
                 </> : <>
-                    {(projects?.length > 0) ?
+                    {(projects?.length > 0) && (!projectId) ?
                         <>
                             <div className='w-full sticky -top-4 lg:-top-6 p-2 md:p-4 z-20 border-b bg-white flex flex-col xl:flex-row justify-between gap-4 items-end xl:items-center'>
                                 <DashboardStepper role={"company"} />
