@@ -9,6 +9,7 @@ import { ShieldCheck, Sparkle, X } from 'lucide-react';
 import { skillsDetails } from '@/constants/data';
 import { getAllSalesforceSkills } from '@/lib/service/portfolio.service';
 import CompanyProjectModalLoader from '@/components/loaders/CompanyProjectModalLoader';
+import { removeProjectId } from '@/feature/reducers/companyCreateProject';
 
 const SkillItem = ({ name }: any) => {
     const [checkedItem, setCheckedItem] = useState<any>();
@@ -77,8 +78,6 @@ const DetailedView = ({ loading, setLoading, setOpenModal }: any) => {
             setLoadingCertifications((prev) => ({ ...prev, [resourceId]: false }));
         }
     };
-
-    console.log("certificationsMap::", certificationsMap);
 
     useEffect(() => {
         resources.forEach((resource: any) => {
@@ -157,7 +156,10 @@ const DetailedView = ({ loading, setLoading, setOpenModal }: any) => {
                             Previous
                         </button>
                         <button
-                            onClick={() => setOpenModal(false)}
+                            onClick={() => {
+                                dispatch(removeProjectId())
+                                setOpenModal(false)
+                            }}
                             type='button'
                             className='bg-blue-500 text-bold text-white font-bold h-12 px-6 rounded-xl'
                         >

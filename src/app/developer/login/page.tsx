@@ -36,7 +36,7 @@ export default function Login() {
 
         const loginData = new FormData();
         loginData.append('email', formData.email);
-        loginData.append('password', "Zuperscore@2023");
+        loginData.append('password', formData.password);
         loginData.append('medium', "email");
 
         try {
