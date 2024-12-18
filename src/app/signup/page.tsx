@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 
 
 const page = () => {
-    const [selected, setSelected] = useState('developer');
+    const [selected, setSelected] = useState('Individual');
     const [successModal, setSuccessModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [country, setCountry] = useState('US')
@@ -90,15 +90,15 @@ const page = () => {
                 <div className="relative w-full md:w-1/2 lg:p-8 h-fit">
                     <div className={`p-8 flex flex-col justify-start items-center h-fit lg:h-screen w-full`}>
                         <div className='shadow-inner bg-black/10 my-10 flex flex-row w-full lg:w-3/4 justify-around text-black items-center h-16 p-2 rounded-xl gap-2'>
-                            <button onClick={() => setSelected("developer")} className={`text-sm lg:text-base ${selected === "developer" ? "bg-white shadow-xl" : "bg-transparent text-slate-400 hover:text-slate-600 hover:bg-white/50"}  w-full h-full flex items-center justify-center gap-2 rounded-xl font-bold`}>
-                                <div className={`${selected === "developer" ? "bg-blue-100" : "bg-gray-200"} bg-blue-100 w-6 h-6 lg:w-8 lg:h-8 rounded-full flex items-center justify-center`}>
-                                    <CodeXml className='h-4 lg:h-6' color={selected === "developer" ? "#3b82fc" : "#4b5563"} strokeWidth={2} />
+                            <button onClick={() => setSelected("Individual")} className={`text-sm lg:text-base ${selected === "Individual" ? "bg-white shadow-xl" : "bg-transparent text-slate-400 hover:text-slate-600 hover:bg-white/50"}  w-full h-full flex items-center justify-center gap-2 rounded-xl font-bold`}>
+                                <div className={`${selected === "Individual" ? "bg-blue-100" : "bg-gray-200"} bg-blue-100 w-6 h-6 lg:w-8 lg:h-8 rounded-full flex items-center justify-center`}>
+                                    <CodeXml className='h-4 lg:h-6' color={selected === "Individual" ? "#3b82fc" : "#4b5563"} strokeWidth={2} />
                                 </div>
                                 Developer
                             </button>
-                            <button onClick={() => setSelected("company")} className={`text-sm lg:text-base ${selected === "company" ? "bg-white shadow-xl" : "bg-transparent text-slate-400 hover:text-slate-600 hover:bg-white/50"} group w-full h-full flex items-center justify-center gap-2 rounded-xl font-bold`}>
-                                <div className={`${selected === "company" ? "bg-blue-100" : "bg-gray-200 group-hover:bg-gray-100"} bg-blue-100 w-6 h-6 lg:w-8 lg:h-8 rounded-full flex items-center justify-center`}>
-                                    <Building2 className='h-4 lg:h-6' color={selected === "company" ? "#3b82fc" : "#4b5563"} strokeWidth={2} />
+                            <button onClick={() => setSelected("Company")} className={`text-sm lg:text-base ${selected === "Company" ? "bg-white shadow-xl" : "bg-transparent text-slate-400 hover:text-slate-600 hover:bg-white/50"} group w-full h-full flex items-center justify-center gap-2 rounded-xl font-bold`}>
+                                <div className={`${selected === "Company" ? "bg-blue-100" : "bg-gray-200 group-hover:bg-gray-100"} bg-blue-100 w-6 h-6 lg:w-8 lg:h-8 rounded-full flex items-center justify-center`}>
+                                    <Building2 className='h-4 lg:h-6' color={selected === "Company" ? "#3b82fc" : "#4b5563"} strokeWidth={2} />
                                 </div>
                                 Company
                             </button>
