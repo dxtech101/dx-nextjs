@@ -3,6 +3,7 @@ import DetailedView from '@/components/company/detailedView/DetailedView'
 import CreateProjectForm from '@/components/company/project/CreateProjectForm'
 import RaiseResourceRequestForm from '@/components/company/resourceRequest/RaiseResourceRequestForm'
 import ResourceMandatoryForm from '@/components/company/resourceRequest/ResourceMandatoryForm'
+import ResourceRequestCard from '@/components/company/ResourceRequestCard'
 import CompanyProjectTableLoader from '@/components/loaders/CompanyProjectTableLoader'
 import ResourseDataLoader from '@/components/loaders/ResourseDataLoader'
 import Modal from '@/components/modal/Modal'
@@ -34,22 +35,7 @@ const SkillItem = ({ name }: any) => {
   }
 };
 
-export const ResourceRequestCard = (props: any) => {
-  const { resource } = props;
-  return (
-    <div className='relative bg-gray-300 rounded-3xl flex flex-col gap-4 flex-1 p-6 w-full z-10'>
-      <CircleUserRound className='absolute right-0 top-0 h-16 w-16 m-4 text-gray-400' />
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-        <InfoLabel label="Resource Role Name" content={resource?.name} />
-        <InfoLabel label="Resource Role Required" content={resource?.role_required} />
-        <InfoLabel label="Start Date" content={resource?.start_date || "N/A"} />
-        <InfoLabel label="Daily hours required" content={resource?.daily_hours_required.split(".")[0] || "N/A"} />
-      </div>
-    </div >
-  )
-}
-
-export const page = () => {
+const page = () => {
   const router = useRouter()
   const [openModal, setOpenModal] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
@@ -318,9 +304,9 @@ export const page = () => {
         </Modal >
       )}
 
-
     </div>
 
   )
 }
 
+export default page;

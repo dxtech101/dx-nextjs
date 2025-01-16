@@ -20,8 +20,7 @@ const DashboardNavbar = ({ toggleSideBar, setToggleSideBar }: any) => {
             <div className="flex flex-col-reverse md:flex-row w-full gap-2 items-start lg:items-center justify-between">
                 {isUserOnboarded &&
                     <button className="hidden lg:block" onClick={() => { setToggleSideBar((prev: any) => !prev) }}>
-                        {/* {toggleSideBar ? <Image src={'/open.svg'} width={200} height={200} alt={'Hellp'}/> : <Sidebar className="w-full h-full" />} */}
-                        <Sidebar className="w-full h-full" />
+                        {toggleSideBar ? <Image src={'/sideOpen.svg'} width={26} height={26} alt="sideOpen" /> : <Image src={'/sideClosed.svg'} width={26} height={26} alt="sideClose" />}
                     </button>
                 }
 
