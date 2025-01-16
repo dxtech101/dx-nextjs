@@ -10,6 +10,7 @@ const initialState: any = {
     { stepId: 1, stepName: "Certifications", isActive: true, isCompleted: false },
     { stepId: 2, stepName: "Skills", isActive: false, isCompleted: false },
     { stepId: 3, stepName: "Work Experience", isActive: false, isCompleted: false },
+    { stepId: 4, stepName: "Work Preferences", isActive: false, isCompleted: false },
   ],
 };
 

@@ -5,7 +5,7 @@ const InputArea = ({
     id,
     placeHolder,
     label,
-    cols,
+    rows,
     value,
     onChange,
     maxLength,
@@ -34,7 +34,7 @@ const InputArea = ({
 
             <textarea
                 id={id}
-                rows={4}
+                rows={rows}
                 className={`h-auto pl-4 pr-4 py-2 text-black bg-gray-100 border border-gray-400 rounded-xl ${className}`}
                 placeholder={placeHolder}
                 value={value}

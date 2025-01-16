@@ -6,17 +6,32 @@ const Herosection = () => {
         <section className="relative">
             <div className="overflow-hidden pt-16 h-screen">
                 <div className="relative container px-4 mx-auto">
-                    <div className="flex flex-wrap -m-8">
+                    <div className="flex flex-col sm:flex-row flex-wrap -m-8">
                         <div className="w-full md:w-1/2 lg:w-4/12 xl:w-6/12 p-8">
-                            <h1 className="mb-9 text-6xl md:text-8xl lg:text-7xl font-bold font-heading md:max-w-7xl leading-none text-black">Hire smart minded people</h1>
+                            <h1 className="mb-9 text-7xl font-bold font-heading md:max-w-7xl leading-none text-black">
+                                Hire Top
+                                <br />
+                                <span className='inline-flex items-center gap-3'>
+                                    <img src="/salesforce-no-type-logo.svg" alt="Salesforce" className='w-24 z-0' />
+                                    <span className='z-10'>
+                                        Salesforce
+                                    </span>
+                                </span>
+                                <br />
+                                Talent
+                            </h1>
                             <div>
-                                <p className="mb-9 text-xl text-gray-900 font-medium md:max-w-sm">Get the best-in-classame group mentoring plans and professional benefits for your team</p>
+                                <p className="mb-9 text-lg text-gray-900 font-medium md:max-w-sm">
+                                    Trusted Salesforce Talent, Vetted for Excellence, Hired with Flexibility.
+                                </p>
                                 <div className="mb-12 md:inline-block">
-                                    <button className="py-4 px-6 w-full text-white font-semibold border border-indigo-700 rounded-xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200" type="button">Try 14 Days Free Trial</button>
+                                    <button className="py-4 px-6 w-full text-white font-semibold border border-indigo-700 rounded-xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200" type="button">
+                                        Sign up now
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                        <div className="w-full md:w-1/2 lg:w-8/12 xl:w-8/12 xl:absolute xl:right-0 xl:-bottom-32 p-8">
+                        <div className="w-full md:w-1/2 lg:w-8/12 xl:w-8/12 xl:absolute xl:right-0 xl:-bottom-16 p-8">
                             <div className="flex flex-wrap justify-center items-center lg:justify-end -m-3">
                                 <div className="w-auto lg:w-1/3 xl:pt-28 p-3">
                                     <div className="flex flex-wrap justify-end">

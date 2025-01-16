@@ -1,9 +1,13 @@
 "use client"
 import Certifications from '@/components/developer/onboarding/Certifications'
 import Skills from '@/components/developer/onboarding/Skills'
+import TimePreference from '@/components/developer/onboarding/TimePreference'
 import WorkExperience from '@/components/developer/onboarding/WorkExperience'
+import InputArea from '@/components/InputArea'
 import InputField from '@/components/InputField'
-import { ChevronRight, ChevronsDown, CornerUpRightIcon, DollarSign, MapPin } from 'lucide-react'
+import Modal from '@/components/modal/Modal'
+import { developerQuestions } from '@/constants/data'
+import { ArrowLeft, ArrowRight, Bookmark, ChevronRight, ChevronsDown, CornerUpRightIcon, DollarSign, MapPin } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -39,21 +43,44 @@ const JobListingCard = ({ title, location, salary, type }: any) => {
 const page = () => {
     const userOnboarding = useSelector((state: any) => state.userOnboarding["developerOnboarding"])
     const userProfile = useSelector((state: any) => state.userProfile);
+    const [greeting, setGreeting] = useState("Good-Evening");
     const [visible, setVisible] = useState(true);
+    const [submitExam, setSubmitExam] = useState(false);
+    const [testScreen, setTestScreen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
+    const [isUserExamConducted, setIsUserExamConducted] = useState(true);
 
     const isUserOnboarded = userProfile.is_onboard;
+    const [currentQuestion, setCurrentQuestion] = useState(1); // Track current question index
+
+    const totalQuestions = 8; // Adjust based on the total number of questions
+
+    const handlePrevious = () => {
+        if (currentQuestion > 1) {
+            setCurrentQuestion(currentQuestion - 1);
+        }
+    };
+
+    const handleNext = () => {
+        if (currentQuestion < totalQuestions) {
+            setCurrentQuestion(currentQuestion + 1);
+        }
+    };
 
     const getTimeOfDayGreeting = () => {
         const currentHour = new Date().getHours();
         if (currentHour < 12) {
-            return "Good-Morning";
+            setGreeting("Good-Morning");
         } else if (currentHour < 18) {
-            return "Good-Afternoon";
+            setGreeting("Good-Afternoon");
         } else {
-            return "Good-Evening";
+            setGreeting("Good-Evening");
         }
     };
+
+    const handleSubmit = () => {
+
+    }
 
     useEffect(() => {
         const handleScroll = () => {
@@ -66,15 +93,13 @@ const page = () => {
         if (container) {
             container.addEventListener('scroll', handleScroll);
         }
-
+        getTimeOfDayGreeting();
         return () => {
             if (container) {
                 container.removeEventListener('scroll', handleScroll);
             }
         };
     }, []);
-
-    const greeting = getTimeOfDayGreeting();
 
     return (
         <div ref={containerRef} className='h-full overflow-y-scroll gap-6'>
@@ -85,7 +110,7 @@ const page = () => {
                     </div>
 
                     <div className='flex flex-col md:flex-row w-full gap-5'>
-                        <div className={`bg-[url(/Good-Evening.png)] bg-bottom bg-cover bg-no-repeat text-white rounded-3xl flex-1 flex items-center justify-start`}>
+                        <div className={`bg-[url(/${greeting}.png)] bg-bottom bg-cover bg-no-repeat text-white rounded-3xl flex-1 flex items-center justify-start`}>
                             <div className={`p-6 ${greeting === "Good-Evening" ? "text-white" : "text-black"}`}>
                                 <h2 className={`text-2xl font-semibold mb-2 capitalize`}>{greeting.split('-').join(' ')} {userProfile.first_name}</h2>
                                 <p >Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, ducimus?</p>
@@ -95,7 +120,7 @@ const page = () => {
                             </div>
                         </div>
                         <div className="hidden md:flex bg-white text-white rounded-3xl flex-row items-center justify-center px-6 p-4 gap-4">
-                            <img className="h-28 w-28 rounded-full object-cover mr-2 object-right z-0" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80" alt="" />
+                            <img className="h-28 w-28 rounded-full object-cover mr-2 object-right z-0" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHxw-10=format&fit=crop&w=1050&q=80" alt="" />
                             <div className="text-black">
                                 <h2 className="text-2xl font-semibold mb-2 capitalize"> {userProfile.first_name}  {userProfile.last_name}</h2>
                                 <p className='text-gray-400 text-sm'>Software Developer</p>
@@ -181,12 +206,123 @@ const page = () => {
                             </div>
                         </div>
                     </div>
+                    {isUserExamConducted && (
+                        <div className='absolute top-14 left-1/2 -translate-x-1/2 z-[55] flex p-1 px-4 rounded-full bg-white justify-center items-center whitespace-nowrap'>
+                            <div className='w-4 h-4 bg-red-500 rounded-full absolute -top-1 -right-1'></div>
+                            <div className='w-4 h-4 bg-red-500 rounded-full absolute -top-1 -right-1 animate-ping'></div>
+                            As a part of Onboarding Process, you will be required to take a quiz to verify your skills and knowledge.
+                        </div>
+                    )}
+                    {isUserExamConducted && (
+                        <Modal
+                            isFooter={false}
+                            size="md"
+                            setModal={setTestScreen}
+                            loading={true}
+                        >
+                            <div className={`sticky -top-8 bg-white flex flex-row flex-wrap ${submitExam ? "justify-center" : "justify-between"}  items-center w-full border-b border-gray-200 py-3 mb-4 z-20`}>
+                                {submitExam ? <>
+                                    <div className='flex flex-col justify-center items-center'>
+                                        <div className='relative'>
+                                            <h3 className="text-2xl font-bold">{currentQuestion} / {totalQuestions} Questions attempted</h3>
+                                        </div>
+                                        <div className="flex flex-row gap-1 items-center justify-center w-full py-3">
+                                            {Array.from({ length: totalQuestions }).map((_, index) => (
+                                                <div
+                                                    key={index}
+                                                    className={`h-3 w-20 rounded-full bg-blue-400`}
+                                                />
+                                            ))}
+                                        </div>
+                                    </div>
+                                </> : <>
+                                    <div>
+                                        <div className='relative'>
+                                            <span className='absolute text-5xl top-0 font-black text-black opacity-10'>{'</>'}</span>
+                                            <h3 className="text-2xl font-bold">Question {currentQuestion}</h3>
+                                        </div>
+                                        <div className="flex flex-row gap-1 items-center justify-center w-full py-3">
+                                            {Array.from({ length: totalQuestions }).map((_, index) => (
+                                                <div
+                                                    key={index}
+                                                    className={`h-3 w-20 rounded-full ${index + 1 === currentQuestion
+                                                        ? "bg-green-400"
+                                                        : "bg-gray-200"
+                                                        }`}
+                                                />
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <div className='inline-flex gap-2 items-center justify-center my-4'>
+                                        <button
+                                            onClick={handlePrevious}
+                                            disabled={currentQuestion === 1}
+                                            className='bg-gray-300 text-sm text-gray-700 px-3 py-1 rounded-full inline-flex items-center gap-1'>
+                                            <ArrowLeft className='h-4 w-4' /> Previous
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                if (currentQuestion === totalQuestions) {
+                                                    setSubmitExam(true)
+                                                    handleSubmit()
+                                                } else {
+                                                    handleNext()
+                                                }
+                                            }}
+                                            className='bg-green-700 text-sm text-white px-3 py-1 rounded-full inline-flex items-center gap-1'>
+                                            Save & Next <ArrowRight className='h-4' />
+                                        </button>
+                                    </div>
+                                </>}
+
+                            </div>
+                            <div>
+                                {submitExam ? <>
+                                    <div className='flex flex-col items-center justify-center gap-2 p-6'>
+                                        <p className='text-center text-lg'>
+                                            Are you sure you want to submit your exam?
+                                            <p className='text-sm text-gray-500'>
+                                                You will not be able to edit your answers after submitting.
+                                            </p>
+                                        </p>
+
+                                        <div className='flex flex-row items-center justify-center gap-2 mt-4'>
+                                            <button onClick={() => setSubmitExam(false)} className='bg-red-500 text-sm text-white px-3 py-1 rounded-full inline-flex items-center gap-1'>
+                                                Cancel
+                                            </button>
+                                            <button
+                                                onClick={() => {
+                                                    setIsUserExamConducted(false)
+                                                }}
+                                                className='bg-blue-600 text-sm text-white px-3 py-1 rounded-xl inline-flex items-center gap-1'>
+                                                Submit <ArrowRight className='h-4' />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </> : <>
+                                    <p className="tracking-tight text-gray-500 text-sm">
+                                        Question
+                                    </p>
+                                    <p>
+                                        {developerQuestions[currentQuestion]}
+                                    </p>
+                                    <InputArea
+                                        className="w-full mt-2"
+                                        placeHolder="Type your answer here"
+                                        rows={"5"}
+                                    />
+                                </>}
+
+                            </div>
+                        </Modal>
+                    )}
                 </>
             ) : (
                 <>
                     {userOnboarding[0].isActive && <Certifications />}
                     {userOnboarding[1].isActive && <Skills />}
                     {userOnboarding[2].isActive && <WorkExperience />}
+                    {userOnboarding[3].isActive && <TimePreference />}
                 </>
             )}
         </div>

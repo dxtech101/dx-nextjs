@@ -18,7 +18,9 @@ const InputField = ({
   onChange,
   id,
   onFocus,
-  onMouseDown
+  onMouseDown,
+  checkedItems,
+  handleSuggestionSelect,
 }: any) => {
   const iconMap: any = {
     search: Icons.Search,
@@ -43,7 +45,7 @@ const InputField = ({
       {label && (
         <div className='w-full flex justify-between items-center'>
           <label className='text-sm font-bold text-gray-700 text-nowrap'>
-            {label}{isRequired && <>{" "}*</>}
+            {label}{isRequired && <span className='text-red-600'>{" "}*</span>}
           </label>
           {error && (
             <span className='text-xs text-red-500 font-bold'>
@@ -111,6 +113,27 @@ const InputField = ({
                     )
                   })}
                 </select>
+              </div>
+            </div>
+          )}
+          {checkedItems && (
+            <div className="absolute top-1.5 left-10 mt-1 w-fit sm:w-auto">
+              <div className="relative flex flex-row flex-wrap gap-2 mb-2">
+                {checkedItems.map((item: any) => (
+                  <div
+                    key={item?.sfid}
+                    className="flex items-center gap-1 bg-gray-200 px-3 py-1 rounded-full text-sm"
+                  >
+                    <span>{item?.name}</span>
+                    <button
+                      type="button"
+                      className="text-gray-600 hover:text-gray-800"
+                      onClick={() => handleSuggestionSelect(item)}
+                    >
+                      &times;
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
           )}

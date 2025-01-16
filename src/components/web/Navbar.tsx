@@ -32,7 +32,7 @@ const NavBar = () => {
                 <div className="container px-4 mx-auto">
                     <div className="flex items-center relative">
                         <Link className="inline-block text-lg font-bold" href="#">
-                            DX DIGITAL
+                            <img className="w-64 h-auto" src="/logo.png" alt="" />
                         </Link>
                         <div className="xl:hidden ml-auto">
                             <button
@@ -46,10 +46,10 @@ const NavBar = () => {
                             </button>
                         </div>
                         <ul className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden xl:flex lg:w-auto lg:space-x-12">
-                            <li><Link className="inline-block text-sm text-gray-900 hover:text-orange-900 font-medium" href="/">Home</Link></li>
-                            <li><Link className="inline-block text-sm text-gray-900 hover:text-orange-900 font-medium" href="#">Services</Link></li>
-                            <li><Link className="inline-block text-sm text-gray-900 hover:text-orange-900 font-medium" href="/about-us">About Us</Link></li>
-                            <li><Link className="inline-block text-sm text-gray-900 hover:text-orange-900 font-medium" href="/contact">Contact Us</Link></li>
+                            <li><Link className="inline-block text-md text-gray-900 hover:text-orange-900 font-medium" href="/">Home</Link></li>
+                            <li><Link className="inline-block text-md text-gray-900 hover:text-orange-900 font-medium" href="#">Services</Link></li>
+                            <li><Link className="inline-block text-md text-gray-900 hover:text-orange-900 font-medium" href="/about-us">About Us</Link></li>
+                            <li><Link className="inline-block text-md text-gray-900 hover:text-orange-900 font-medium" href="/contact">Contact Us</Link></li>
                         </ul>
                         <div className="hidden xl:block ml-auto">
                             <div className="flex group items-center">
@@ -80,7 +80,7 @@ const NavBar = () => {
                                             </div>
                                             <Link href="/signup" className='w-64 h-52 bg-blue-50 hover:bg-blue-100 border-[1px] border-blue-400 rounded-xl flex flex-col justify-start items-start p-6 relative'>
                                                 <span className='font-bold text-xl flex flex-col items-start text-blue-900 '>
-                                                        Sign Up
+                                                    Sign Up
                                                     <span className='text-xs font-normal text-gray-500 max-w-xl text-start'>
                                                         Register yourself as a Company or Developer
                                                     </span>
@@ -97,7 +97,7 @@ const NavBar = () => {
             </nav>
             <div className={`fixed ${!mobileNavOpen && "hidden"} top-0 left-0 z-40 bg-gray-800 w-screen h-screen opacity-25`}></div>
             <div className={`fixed top-0 left-0 w-full z-50 transition-transform duration-300 ease-in-out ${mobileNavOpen ? '-translate-x-0' : '-translate-x-full'}`}>
-                
+
                 <nav className="relative flex flex-col py-6 px-10 w-fit h-full bg-white border-r overflow-y-auto">
                     <div className="flex items-center mb-6">
                         <Link className="mr-auto text-2xl font-medium leading-none" href="#">

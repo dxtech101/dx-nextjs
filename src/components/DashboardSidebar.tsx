@@ -6,7 +6,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import Tooltip from './Tooltip';
 
 const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
-    const role: any = "company";
+    const pathName = usePathname();
+    const role: any = pathName.split('/')[1];    
     const router = useRouter();
 
     const SidebarItem = ({ href, icon: Icon, label }: any) => {

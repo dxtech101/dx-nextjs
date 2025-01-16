@@ -1,10 +1,19 @@
-import { InfoLabel } from '@/lib/helper';
-import { FileUser } from 'lucide-react';
-import React from 'react'
+import Dropdown from '@/components/Dropdown';
+import InputArea from '@/components/InputArea';
+import InputField from '@/components/InputField';
+import Modal from '@/components/modal/Modal';
+import MultiSelectDropdown from '@/components/MultiSelectDropdown';
+import { salesforce_technologies, industries } from '@/constants/data';
+import { handleFormDataChange, InfoLabel, validateForm } from '@/lib/helper';
+import { addWorkExperience, deleteWorkExperience, updateWorkExperience } from '@/lib/service/portfolio.service';
+import { FileUser, PencilIcon, Plus } from 'lucide-react';
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 
 const WorkExperienceCard = (props: any) => {
-    const { experience, index } = props;
-
+    const { experience, index, openEditModal, deleteWorkExperience } = props;
+    console.log(experience)
+    
     return (
         <div className='relative bg-gray-100 rounded-3xl flex flex-col gap-4 flex-1 p-6 w-full z-10'>
             <h1 className='absolute text-8xl top-0 right-0 font-bold p-5 text-gray-300 uppercase'>
@@ -23,31 +32,231 @@ const WorkExperienceCard = (props: any) => {
             </div>
 
             <InfoLabel label="Work Experience Summary" content={experience.project_description || "N/A"} />
+            <div className='absolute bottom-0 right-0 flex gap-2 z-10 p-4'>
+                <button
+                    onClick={() => openEditModal(experience)}
+                    className='bg-blue-200 border hover:border-blue-400 text-sm text-blue-600 font-medium h-8 px-4 rounded-full'
+                >
+                    Edit
+                </button>
+                <button
+                    onClick={() => deleteWorkExperience(experience.sfid)}
+                    className='bg-red-200 border hover:border-red-400 text-sm text-red-600 font-medium h-8 px-4 rounded-full'
+                >
+                    Delete
+                </button>
+            </div>
         </div >
     )
 }
 
-const DeveloperProfileExperience = ({ experience, loading }: any) => {
+const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any) => {
     console.log(experience)
+    const [showModal, setShowModal] = useState(false);
+    const [formData, setFormData] = useState<any>({
+        company_project_name: "",
+        start_date: "2024-02-02",
+        end_date: "2024-02-01",
+        industry: "",
+        job_title: "",
+        project_description: ""
+    });
+    const [errors, setErrors] = useState({
+        company_project_name: "",
+        industry: "",
+        job_title: "",
+    });
+    const [loadingUI, setLoadingUI] = useState(false)
+    const [type, setType] = useState("add")
+    const [editSFID, setEditSFID] = useState<any>(null);
+    const contactSfid = useSelector((state: any) => state.userSalesforceID)
+
+    const openEditModal = (experience: any) => {
+        setFormData({
+            company_project_name: experience.company_project_name || "",
+            start_date: experience.start_date || "",
+            end_date: experience.end_date || "",
+            industry: experience.industry || "",
+            job_title: experience.job_title || "",
+            project_description: experience.project_description || ""
+        });
+        setShowModal(true);
+        setType("edit")
+        setEditSFID(experience.sfid)
+    };
+
+    const deleteDeveloperWorkExperience = async (experienceId: string) => {
+        try {
+            setLoadingUI(true);
+            await deleteWorkExperience(experienceId);
+            updateDetails()
+        } catch (error) {
+            console.error("Error fetching certifications:", error);
+        } finally {
+            setLoadingUI(false);
+        }
+    }
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        // if (!validateForm(formData, setErrors)) {
+        //     return;
+        // }
+
+        const workExperienceData = {
+            company_project_name: formData.company_project_name,
+            contact: contactSfid,
+            start_date: "2024-02-02",
+            end_date: "2024-02-01",
+            industry: formData.industry,
+            job_title: formData.job_title,
+            project_description: formData.project_description,
+        };
+
+        try {
+            setLoadingUI(true);
+            if (type === "add") {
+                const response = await addWorkExperience(workExperienceData);
+                if (response) {
+                    updateDetails()
+                }
+            } else {
+                const response = await updateWorkExperience(editSFID, workExperienceData);
+                if (response) {
+                    updateDetails()
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching certifications:", error);
+        } finally {
+            setLoadingUI(false);
+            setShowModal(false)
+        }
+    };
+
+    useEffect(() => {
+        if (!showModal) {
+            updateDetails()
+        }
+    }, [showModal])
 
     return (
-        <div className='bg-gray-50 rounded-2xl w-full flex flex-col gap-6 p-6'>
-            <span className='text-2xl uppercase font-bold inline-flex items-center gap-2'>
-                <FileUser /> Experience Summary
-            </span>
-            {loading ? (
-                <div className='flex flex-row gap-6 w-full flex-nowrap lg:flex-wrap overflow-x-scroll'>
-                    <div className='animate-pulse w-1/2 flex-1 h-72 rounded-3xl bg-gray-200' />
-                    <div className='animate-pulse w-1/2 flex-1 h-72 rounded-3xl bg-gray-200' />
+        <>
+            <div className='bg-gray-50 rounded-2xl w-full flex flex-col gap-6 p-6'>
+                <div className='flex flex-row justify-between items-center'>
+                    <span className='text-2xl font-bold inline-flex items-center gap-2'>
+                        <FileUser /> Experience Summary
+                    </span>
+                    <button
+                        onClick={() => {
+                            setType("add")
+                            setShowModal(true)
+                        }}
+                        className='bg-gray-200 border border-gray-300 flex flex-row items-center justify-center gap-2 rounded-full text-gray-900 py-2 px-4 text-sm font-bold group'
+                    >
+                        <Plus className="w-4 h-4 cursor-pointer ml-2" />
+                        <span className="overflow-hidden whitespace-nowrap transition-all duration-700 ease-in-out opacity-0 w-0 group-hover:w-auto group-hover:opacity-100">
+                            Add Work Experience
+                        </span>
+                    </button>
                 </div>
-            ) : (
-                <div className='flex flex-row gap-3 w-full flex-nowrap lg:flex-wrap overflow-x-scroll'>
-                    {experience.map((item: any, index: any) => (
-                        <WorkExperienceCard key={index} experience={item} index={index} />
-                    ))}
-                </div>
-            )}
-        </div>
+                {loading ? (
+                    <div className='flex flex-row gap-6 w-full flex-nowrap lg:flex-wrap overflow-x-scroll'>
+                        <div className='animate-pulse w-1/2 flex-1 h-72 rounded-3xl bg-gray-200' />
+                        <div className='animate-pulse w-1/2 flex-1 h-72 rounded-3xl bg-gray-200' />
+                    </div>
+                ) : (
+                    <div className='grid grid-cols-2 gap-3 w-full flex-nowrap lg:flex-wrap overflow-x-scroll'>
+                        {experience?.length > 0 ? <>
+                            {experience?.map((item: any, index: any) => (
+                                <WorkExperienceCard
+                                    key={index}
+                                    experience={item}
+                                    index={index}
+                                    openEditModal={openEditModal}
+                                    deleteWorkExperience={deleteDeveloperWorkExperience}
+                                />
+                            ))}
+                        </> : (
+                            <div className='text-center text-black text-sm'>
+                                No experience found
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
+            {showModal && (
+                <Modal
+                    header="Edit Skills"
+                    setModal={setShowModal}
+                    loading={loadingUI}
+                    size="lg"
+                    onSubmit={handleSubmit}
+                >
+                    <form className='w-full flex flex-col gap-4'>
+                        <div className='flex flex-col lg:flex-row w-full gap-6'>
+                            <InputField
+                                label={"Project Name"}
+                                value={formData.company_project_name}
+                                type="text"
+                                className=" w-full"
+                                isRequired={true}
+                                onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
+                                id="company_project_name"
+                                error={errors.company_project_name}
+                            />
+                            <InputField
+                                label={"Your Role"}
+                                value={formData.job_title}
+                                type="text"
+                                className=" w-full"
+                                isRequired={true}
+                                onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
+                                id="job_title"
+                                error={errors.job_title}
+                            />
+                        </div>
+                        <div className='flex flex-col lg:flex-row w-full gap-6'>
+                            <InputArea
+                                id="project_description"
+                                label={"Description"}
+                                value={formData.project_description}
+                                onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
+                                className="w-full"
+                                cols={20}
+                                maxLength={1000}
+                            />
+                        </div>
+                        <div className='flex flex-col lg:flex-row w-full gap-6'>
+                            <Dropdown
+                                id="rates"
+                                label={"Duration"}
+                                className="w-full flex-1"
+                                options={[{ value: "0-5months", label: "<6 Months" }, { value: "6-12months", label: "6-12 Months" }, { value: "morethan12months", label: ">12 Months" }]}
+                            />
+                        </div>
+                        <div className='flex flex-col w-full gap-4 mt-2'>
+                            <MultiSelectDropdown
+                                id="salesforce_technologies"
+                                label={"Salesforce Technologies"}
+                                className="w-full"
+                                options={salesforce_technologies}
+                                onChange={(selectedValues) => setFormData({ ...formData, salesforce_technologies: selectedValues })}
+                            />
+                            <MultiSelectDropdown
+                                id="industry"
+                                label={"Industry"}
+                                className="w-full"
+                                options={industries}
+                                onChange={(selectedValues) => setFormData({ ...formData, industry: selectedValues })}
+                            />
+                        </div>
+                    </form>
+                </Modal>)
+            }
+        </>
+
     )
 }
 
