@@ -4,7 +4,7 @@ import InputArea from '@/components/InputArea'
 import InputDate from '@/components/InputDate'
 import InputField from '@/components/InputField'
 import Modal from '@/components/modal/Modal'
-import { onBoardingHandlePrevious } from '@/feature/reducers/userOnboarding'
+import { onBoardingHandleNext, onBoardingHandlePrevious } from '@/feature/reducers/userOnboarding'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleFormDataChange, validateForm } from '@/lib/helper'
@@ -12,6 +12,7 @@ import { addWorkExperience, deleteWorkExperience, getWorkExperience, updateWorkE
 import { Plus } from 'lucide-react'
 import ConfirmationModal from '@/components/modal/ConfirmationModal'
 import { industries, salesforce_technologies } from '@/constants/data'
+import Dropdown from '@/components/Dropdown'
 
 const InfoLabel = ({ label, content }: any) => {
     return (
@@ -133,6 +134,10 @@ const WorkExperience = () => {
         setEditSFID(experience.sfid)
     };
 
+    const handleNext = () => {
+        dispatch(onBoardingHandleNext({ role: "developer", stepperId: 3 }))
+    }
+
     const handlePrevious = () => {
         dispatch(onBoardingHandlePrevious({ role: "developer", stepperId: 3 }))
     }
@@ -181,7 +186,7 @@ const WorkExperience = () => {
                 <div className='w-full bg-white top-0 left-0 sticky py-6 flex flex-col gap-6 lg:flex-row justify-between items-start z-20 lg:items-center'>
                     <span>
                         <h1 className='text-start text-4xl md:text-5xl font-heading tracking-tight font-medium text-black'>
-                            Work Experience Details
+                            Complete your Profile
                         </h1>
                         <p className='pt-2 tracking-tight text-gray-600 max-w-sm inline-flex w-full'>
                             Enter the Core skills that you have
@@ -203,7 +208,7 @@ const WorkExperience = () => {
 
                         <button
                             disabled={loading}
-                            onClick={() => handlePrevious()}
+                            onClick={handlePrevious}
                             className={`h-12 px-6 rounded-xl font-normal text-normal ${loading
                                 ? 'bg-gray-300 text-gray-100 cursor-not-allowed'
                                 : 'bg-gray-200 text-gray-400'
@@ -211,7 +216,8 @@ const WorkExperience = () => {
                             Previous
                         </button>
                         <button
-                            onClick={() => setOpenConfirmModal(true)}
+                            onClick={handleNext}
+                            // onClick={() => setOpenConfirmModal(true)}
                             disabled={loading}
                             className={`h-12 px-6 rounded-xl font-medium text-normal ${loading
                                 ? 'bg-blue-300 text-blue-100 cursor-not-allowed'
@@ -297,25 +303,15 @@ const WorkExperience = () => {
                                 onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
                                 className="w-full"
                                 cols={20}
-                                maxLength={100}
+                                maxLength={1000}
                             />
                         </div>
                         <div className='flex flex-col lg:flex-row w-full gap-6'>
-                            <InputDate
-                                label={"Start Date"}
-                                value={formData.start_date}
-                                className=" w-full"
-                                onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
-                                id="start_date"
-                                error={errors.start_date}
-                            />
-                            <InputDate
-                                label={"End Date"}
-                                value={formData.end_date}
-                                className="w-full"
-                                onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
-                                id="end_date"
-                                error={errors.end_date}
+                            <Dropdown
+                                id="rates"
+                                label={"Duration"}
+                                className="w-full flex-1"
+                                options={[{ value: "0-5months", label: "<6 Months" }, { value: "6-12months", label: "6-12 Months" }, { value: "morethan12months", label: ">12 Months" }]}
                             />
                         </div>
                         <div className='flex flex-col w-full gap-4 mt-2'>

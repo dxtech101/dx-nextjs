@@ -75,3 +75,16 @@ export const skillsDetails = [
     { id: "a0lIo000000viJYIAY", text: 'AI', imageSrc: '/encop.webp', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
 ];
 
+export const developerQuestions = [
+    "What inspired you to start your journey in software development, and how have your skills and perspective evolved over the years through various experiences?",
+    "Which programming language do you enjoy the most, and can you elaborate on the features or use cases that make it your preferred choice for development?",
+    "Describe a complex issue or bug you faced in a project, the challenges involved, and how you approached troubleshooting and resolving it systematically.",
+    "How do you stay current with new advancements in technology, tools, and frameworks while managing the demands of ongoing development projects effectively?",
+    "What’s the most rewarding personal or open-source project you’ve worked on, and how did it help shape your understanding of development practices?",
+    "When debugging challenging code or solving performance issues, what tools, methodologies, or strategies have proven most effective for identifying and resolving problems quickly?",
+    "Which tools, libraries, or frameworks do you consider essential in your workflow, and what advantages have they provided in streamlining development tasks?",
+    "Share an experience where you optimized a slow application or process, detailing the changes made and the measurable impact on performance or efficiency.",
+    "What advice would you give to someone starting their software development career, emphasizing habits, practices, and skills essential for long-term growth and success?"
+  ];
+  
+

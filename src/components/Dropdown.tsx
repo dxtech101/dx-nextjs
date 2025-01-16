@@ -62,7 +62,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div
       ref={dropdownRef}
-      className={`relative ${className}`}
+      className={`relative ${className} flex flex-col gap-2`}
     >
       <label className="text-sm font-bold text-gray-700">{label}</label>
       <div
@@ -81,7 +81,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             toggleDropdown();
           }}
         >
-          {isOpen ? <ChevronUp /> : <ChevronDown />}
+          <ChevronUp className={`${isOpen ? `rotate-0` : `rotate-180`} duration-200`} />
         </button>
       </div>
 

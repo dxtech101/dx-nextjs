@@ -99,7 +99,7 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({
                             toggleDropdown();
                         }}
                     >
-                        {isOpen ? <ChevronUp /> : <ChevronDown />}
+                        <ChevronUp className={`${isOpen ? `rotate-0` : `rotate-180`} duration-200`} />
                     </button>
                 </div>
 
@@ -109,7 +109,7 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({
                             }`}
                     >
                         {options.map((option: any) => (
-                            <div key={option.value} className="flex items-center px-4 py-2">
+                            <div key={option.value} className="hover:bg-gray-100 flex items-center px-4 py-2">
                                 <input
                                     id={`checkbox-${option.value}`}
                                     type="checkbox"
@@ -119,7 +119,7 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({
                                 />
                                 <label
                                     htmlFor={`checkbox-${option.value}`}
-                                    className="text-gray-700"
+                                    className="text-gray-700 w-full"
                                 >
                                     {option.label}
                                 </label>

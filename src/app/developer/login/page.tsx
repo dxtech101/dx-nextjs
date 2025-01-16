@@ -80,7 +80,7 @@ export default function Login() {
                                 Sign in and Grow Your Career!
                             </h2>
                             <p className='text-gray-500 text-xl'>
-                                Join Us to Discover and Hire Exceptional Talent for Your Team Today!
+                                Unlock your potential with endless Salesforce opportunities tailored just for you.
                             </p>
                         </span>
                     </div>

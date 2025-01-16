@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 const StepperComponent = ({ active, title, step, completed }: any) => {
     return (
-        <button className={`flex items-center whitespace-nowrap ${active ? "bg-black" : completed ? "bg-green-100 border-2 border-green-500" : "bg-gray-200"} p-1 rounded-full`}>
+        <button className={`flex items-center whitespace-nowrap ${active ? "bg-black" : completed ? "bg-green-100 border-2 border-green-500" : "bg-gray-200 border-2"} p-1 rounded-full`}>
             <div className={`inline-flex w-5 h-5 md:w-7 md:h-7 text-xs md:text-sm justify-center items-center rounded-full border-2 ${active ? "bg-white text-black mr-2" : completed ? "bg-green-300 border-green-400 mr-0 md:mr-2" : "bg-gray-400 text-white mr-0 md:mr-2"} text-sm font-bold`}>
                 {completed ? <Check className="w-4 h-4" color='#166534' strokeWidth={4} /> : step}
             </div>

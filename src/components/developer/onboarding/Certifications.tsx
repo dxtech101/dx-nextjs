@@ -186,7 +186,7 @@ const Certifications = () => {
             <div className='w-full bg-white z-20 sticky top-0 left-0 py-6 flex flex-col gap-6 lg:flex-row justify-between items-start lg:items-center'>
                 <span>
                     <h1 className='text-start text-4xl md:text-5xl font-heading tracking-tight font-medium text-black'>
-                        Certification Details
+                        Complete your Profile
                     </h1>
                     <p className='pt-2 tracking-tight text-gray-600 max-w-sm'>
                         Select Salesforce Certifications that you hold

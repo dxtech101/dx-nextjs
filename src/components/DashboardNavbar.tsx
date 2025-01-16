@@ -5,19 +5,22 @@ import { useSelector } from 'react-redux';
 import DashbaordBreadcrumb from './DashboardBreadcrumb';
 import DashboardStepper from './DashboardStepper';
 import { removeAuthenticationToken } from '@/lib/cookie';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import Image from 'next/image';
 
-const DashboardNavbar = ({ setToggleSideBar }: any) => {
+const DashboardNavbar = ({ toggleSideBar, setToggleSideBar }: any) => {
     const userProfile = useSelector((state: any) => state.userProfile);
     const isUserOnboarded = userProfile.is_onboard;
     const router = useRouter();
-    const role: any = "developer";
+    const pathName = usePathname();
+    const role: any = pathName.split('/')[1];
 
     return (
         <section className="p-6 bg-white shadow-sm border border-gray-300 rounded-3xl w-full h-full inline-flex items-center">
             <div className="flex flex-col-reverse md:flex-row w-full gap-2 items-start lg:items-center justify-between">
                 {isUserOnboarded &&
                     <button className="hidden lg:block" onClick={() => { setToggleSideBar((prev: any) => !prev) }}>
+                        {/* {toggleSideBar ? <Image src={'/open.svg'} width={200} height={200} alt={'Hellp'}/> : <Sidebar className="w-full h-full" />} */}
                         <Sidebar className="w-full h-full" />
                     </button>
                 }
@@ -56,7 +59,7 @@ const DashboardNavbar = ({ setToggleSideBar }: any) => {
                                 <ChevronDown className="h-4 w-4 text-black mr-2" />
                                 <div className='text-black hidden group-hover:flex transition-all duration-300 ease-in-out absolute z-50 top-full right-0 w-fit'>
                                     <div className="w-full shadow-lg max-w-xl bg-white border border-gray-200 rounded-2xl flex flex-col">
-                                        <div className="-top-2 z-20 absolute right-6 w-4 h-4 rounded-sm bg-white border-l border-t border-gray-200 transform rotate-45"/>
+                                        <div className="-top-2 z-20 absolute right-6 w-4 h-4 rounded-sm bg-white border-l border-t border-gray-200 transform rotate-45" />
                                         <div className='z-30 w-full flex flex-col items-center gap-4 p-5 border-b border-gray-200 rounded-t-2xl'>
                                             <div className='flex flex-col items-start min-w-44'>
                                                 <h2 className="text-2xl font-semibold mb-1 capitalize">{userProfile.first_name} {userProfile.last_name}</h2>

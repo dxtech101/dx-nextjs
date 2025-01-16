@@ -2,6 +2,7 @@
 import InputField from '@/components/InputField';
 import ErrorToast from '@/components/toast/ErrorToast';
 import SuccessfulToast from '@/components/toast/SuccessfulToast';
+import { onBoardingHandleNext } from '@/feature/reducers/userOnboarding';
 import { addUserProfile } from '@/feature/reducers/userProfile';
 import { addSalesforceId } from '@/feature/reducers/userSalesforceId';
 import { handleFormDataChange, validateForm } from '@/lib/helper';
@@ -55,6 +56,7 @@ export default function Login() {
                 toast.custom((t) => (
                     <SuccessfulToast t={t} message={"Logged in successfully"} />
                 ));
+                dispatch(onBoardingHandleNext({ role: "developer", stepperId: 2 }))
                 router.push('/company/dashboard');
             }
         } catch (error: any) {
@@ -73,8 +75,8 @@ export default function Login() {
             <div className="relative flex flex-wrap h-full items-center justify-evenly">
                 <div className="relative w-full md:w-1/2 p-8 flex flex-col justify-center items-center">
                     <div className="md:max-w-xl mx-auto md:pb-32 text-black flex flex-col gap-20">
-                        <h1 className="text-3xl font-medium inline-flex items-center">
-                            <Link href='/' className='mr-2'>
+                        <h1 className="text-3xl font-medium inline-flex gap-4 items-center">
+                            <Link href='/' className='p-3 border border-gray-900 rounded-full'>
                                 <ArrowLeft />
                             </Link>
                             DX Digital
@@ -84,7 +86,7 @@ export default function Login() {
                                 Sign in and hire smart minded people today!
                             </h2>
                             <p className='text-gray-500 text-xl'>
-                                Unlock your potential with endless opportunities tailored just for you.
+                                Join Us to Discover and Hire Exceptional Salesforce Talent for Your Projects Today!
                             </p>
                         </span>
                     </div>
