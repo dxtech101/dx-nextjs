@@ -57,7 +57,11 @@ export default function Login() {
                     <SuccessfulToast t={t} message={"Logged in successfully"} />
                 ));
                 dispatch(onBoardingHandleNext({ role: "developer", stepperId: 2 }))
-                router.push('/company/dashboard');
+                if (response.user.role === "Individual") {
+                    router.push('/developer/dashboard');
+                } else if (response.user.role === "Company") {
+                    router.push('/company/dashboard');
+                }
             }
         } catch (error: any) {
             toast.custom((t) => (

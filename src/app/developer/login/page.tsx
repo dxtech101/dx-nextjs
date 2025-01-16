@@ -51,7 +51,11 @@ export default function Login() {
                 toast.custom((t) => (
                     <SuccessfulToast t={t} message={"Logged in successfully"} />
                 ));
-                router.push('/developer/dashboard');
+                if (response.user.role === "Individual") {
+                    router.push('/developer/dashboard');
+                } else if (response.user.role === "Company") {
+                    router.push('/company/dashboard');
+                }
             }
         } catch (error: any) {
             toast.custom((t) => (
