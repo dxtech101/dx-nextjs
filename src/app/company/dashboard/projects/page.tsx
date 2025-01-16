@@ -49,7 +49,7 @@ export const ResourceRequestCard = (props: any) => {
   )
 }
 
-const page = () => {
+export const page = () => {
   const router = useRouter()
   const [openModal, setOpenModal] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
@@ -324,4 +324,3 @@ const page = () => {
   )
 }
 
-export default page
