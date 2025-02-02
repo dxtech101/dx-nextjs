@@ -30,6 +30,12 @@ export const GET_WORK_EXPERIENCE = (contact_id:any) => `/portfolio/view-contact-
 export const ADD_WORK_EXPERIENCE = "/portfolio/add-contact-work-experience/ ";
 export const EDIT_WORK_EXPERIENCE = (sfid:any) => `/portfolio/update-work-experience/${sfid}`;
 export const DELETE_WORK_EXPERIENCE = (sfid:any) => `/portfolio/delete-work-experience/${sfid}`;
+
+//Work Preference
+export const GET_WORK_PREFERENCE = (contact_id:any) => `/portfolio/work-preferences/?contact_sfid=${contact_id}`;
+export const ADD_WORK_PREFERENCE = "/portfolio/work-preferences/";
+export const EDIT_WORK_PREFERENCE = (sfid:any) => `/portfolio/work-preferences/${sfid}`;
+export const DELETE_WORK_PREFERENCE = (sfid:any) => `/portfolio/work-preferences/${sfid}`;
 //
 
 // COMPANY API'S ENDPOINTS

@@ -8,7 +8,7 @@ import { onBoardingHandleNext, onBoardingHandlePrevious } from '@/feature/reduce
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleFormDataChange, validateForm } from '@/lib/helper'
-import { addWorkExperience, deleteWorkExperience, getWorkExperience, updateWorkExperience } from '@/lib/service/portfolio.service'
+import { WorkExperienceService } from '@/lib/service/portfolio.service'
 import { Plus } from 'lucide-react'
 import ConfirmationModal from '@/components/modal/ConfirmationModal'
 import { industries, salesforce_technologies } from '@/constants/data'
@@ -99,7 +99,7 @@ const WorkExperience = () => {
     const getDeveloperWorkExperienceDetails = async () => {
         try {
             setLoading(true);
-            const { results: contactWorkExperience } = await getWorkExperience(contactSfid);
+            const { results: contactWorkExperience } = await WorkExperienceService.getWorkExperience(contactSfid);
             setExperience(contactWorkExperience);
         } catch (error) {
             console.error("Error fetching certifications:", error);
@@ -111,7 +111,7 @@ const WorkExperience = () => {
     const deleteDeveloperWorkExperience = async (experienceId: string) => {
         try {
             setLoading(true);
-            await deleteWorkExperience(experienceId);
+            await WorkExperienceService.deleteWorkExperience(experienceId);
             getDeveloperWorkExperienceDetails()
         } catch (error) {
             console.error("Error fetching certifications:", error);
@@ -162,12 +162,12 @@ const WorkExperience = () => {
         try {
             setLoading(true);
             if (type === "add") {
-                const response = await addWorkExperience(workExperienceData);
+                const response = await WorkExperienceService.addWorkExperience(workExperienceData);
                 if (response) {
                     getDeveloperWorkExperienceDetails()
                 }
             } else {
-                const response = await updateWorkExperience(editSFID, workExperienceData);
+                const response = await WorkExperienceService.updateWorkExperience(editSFID, workExperienceData);
                 if (response) {
                     getDeveloperWorkExperienceDetails()
                 }
@@ -209,10 +209,7 @@ const WorkExperience = () => {
                         <button
                             disabled={loading}
                             onClick={handlePrevious}
-                            className={`h-12 px-6 rounded-xl font-normal text-normal ${loading
-                                ? 'bg-gray-300 text-gray-100 cursor-not-allowed'
-                                : 'bg-gray-200 text-gray-400'
-                                }`}>
+                            className={`h-12 px-6 rounded-xl font-normal text-normal bg-gray-200 text-gray-400`}>
                             Previous
                         </button>
                         <button

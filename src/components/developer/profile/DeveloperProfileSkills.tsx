@@ -256,67 +256,70 @@ const DeveloperProfileSkills = ({ skills, loading, updateDetails }: any) => {
                     size="xl"
                     isFooter={false}
                 >
-                    <div className='py-8 z-10'>
-                        <h2 className='text-sm uppercase font-semibold'>Search Skills</h2>
-                        <div ref={containerRef} className='relative mt-4'>
-                            {loadingUI ?
-                                <div className='animate-pulse w-full lg:w-1/2 h-12 rounded-xl bg-gray-200' /> :
-                                <InputField
-                                    className='w-full lg:w-1/2'
-                                    iconName='search'
-                                    placeHolder='Search your skills (Ex. Salesforce, Mulesoft, Heroku)'
-                                    value={inputValue}
-                                    onChange={(e: any) => setInputValue(e.target.value)}
-                                    onFocus={() => setShowSuggestions(true)}
-                                />
-                            }
+                    <div className='min-h-96 bg-[url(/noRecordBG2.png)] -m-6 px-10 bg-no-repeat bg-cover bg-right rounded-xl'>
+                        <div className='py-8 z-10'>
+                            <h2 className='text-sm uppercase font-semibold'>Search Skills</h2>
+                            <div ref={containerRef} className='relative mt-4'>
+                                {loadingUI ?
+                                    <div className='animate-pulse w-full lg:w-1/2 h-12 rounded-xl bg-gray-200' /> :
+                                    <InputField
+                                        className='w-full lg:w-1/2'
+                                        iconName='search'
+                                        placeHolder='Search your skills (Ex. Salesforce, Mulesoft, Heroku)'
+                                        value={inputValue}
+                                        onChange={(e: any) => setInputValue(e.target.value)}
+                                        onFocus={() => setShowSuggestions(true)}
+                                    />
+                                }
 
-                            {showSuggestions && (
-                                <div className='absolute bg-white border-2 left-0 border-gray-200 rounded-xl shadow-sm w-full lg:w-1/2 mt-1 max-h-48 overflow-y-auto z-20'>
-                                    {items.length > 0 ? (
-                                        items.map((item) => (
-                                            <div
-                                                key={item.sfid}
-                                                className='flex items-center gap-2 p-3 border border-b-0 cursor-pointer hover:bg-gray-100'
-                                                onMouseDown={() => handleSuggestionSelect(item)}
-                                            >
-                                                {/* <img className='w-8 h-auto' src={'/' + item.name + '.png'} alt={item.name} /> */}
-                                                <span className='font-normal text-gray-800 ml-4'>{item.name}</span>
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <div className='text-md text-gray-400 p-4'>No matching skills</div>
-                                    )}
-                                </div>
-                            )}
+                                {showSuggestions && (
+                                    <div className='absolute bg-white border-2 left-0 border-gray-200 rounded-xl shadow-sm w-full lg:w-1/2 mt-1 max-h-48 overflow-y-auto z-20'>
+                                        {items.length > 0 ? (
+                                            items.map((item) => (
+                                                <div
+                                                    key={item.sfid}
+                                                    className='flex items-center gap-2 p-3 border border-b-0 cursor-pointer hover:bg-gray-100'
+                                                    onMouseDown={() => handleSuggestionSelect(item)}
+                                                >
+                                                    {/* <img className='w-8 h-auto' src={'/' + item.name + '.png'} alt={item.name} /> */}
+                                                    <span className='font-normal text-gray-800 ml-4'>{item.name}</span>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <div className='text-md text-gray-400 p-4'>No matching skills</div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+
                         </div>
 
+                        <h2 className='text-sm uppercase font-semibold z-10'>Selected Skills</h2>
+                        <div className='pt-4 flex flex-row gap-4 flex-nowrap lg:flex-wrap z-40 overflow-x-auto w-full appearance-none'>
+                            {loadingUI ?
+                                <>
+                                    <div className={`animate-pulse inline-flex w-1/6 h-8 gap-2 items-center bg-gray-200 border p-2 pl-4 pr-4 rounded-full`} />
+                                    <div className={`animate-pulse inline-flex w-1/6 h-8 gap-2 items-center bg-gray-200 border p-2 pl-4 pr-4 rounded-full`} />
+                                </>
+                                :
+                                <>
+                                    {checkedItems.length > 0 ? checkedItems.map(item => (
+                                        <CheckboxItem
+                                            key={item.sfid}
+                                            id={item.sfid}
+                                            checked={checkedItems.some(checkedItem => checkedItem.sfid === item.sfid)}
+                                            onChange={() => handleCheckboxChange(item.sfid)}
+                                        />
+                                    )) : (
+                                        <span className="text-md font-normal text-gray-400 ml-2 z-10">
+                                            No Skills Selected...
+                                        </span>
+                                    )}
+                                </>
+                            }
+                        </div>
                     </div>
 
-                    <h2 className='text-sm uppercase font-semibold z-10'>Selected Skills</h2>
-                    <div className='pt-4 flex flex-row gap-4 flex-nowrap lg:flex-wrap z-40 overflow-x-auto w-full appearance-none'>
-                        {loadingUI ?
-                            <>
-                                <div className={`animate-pulse inline-flex w-1/6 h-8 gap-2 items-center bg-gray-200 border p-2 pl-4 pr-4 rounded-full`} />
-                                <div className={`animate-pulse inline-flex w-1/6 h-8 gap-2 items-center bg-gray-200 border p-2 pl-4 pr-4 rounded-full`} />
-                            </>
-                            :
-                            <>
-                                {checkedItems.length > 0 ? checkedItems.map(item => (
-                                    <CheckboxItem
-                                        key={item.sfid}
-                                        id={item.sfid}
-                                        checked={checkedItems.some(checkedItem => checkedItem.sfid === item.sfid)}
-                                        onChange={() => handleCheckboxChange(item.sfid)}
-                                    />
-                                )) : (
-                                    <span className="text-md font-normal text-gray-400 ml-2 z-10">
-                                        No Skills Selected...
-                                    </span>
-                                )}
-                            </>
-                        }
-                    </div>
                 </Modal>)}
         </>
 

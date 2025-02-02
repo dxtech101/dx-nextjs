@@ -1,5 +1,5 @@
 "use client"
-import { BellIcon, ChevronDown, HelpCircle, Layout, LogOut, MenuIcon, MessageCircle, Settings, Sidebar, User } from 'lucide-react';
+import { BellIcon, ChevronDown, CircleAlert, HelpCircle, Layout, LogOut, MenuIcon, MessageCircle, Settings, Shield, Sidebar, User } from 'lucide-react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import DashbaordBreadcrumb from './DashboardBreadcrumb';
@@ -65,9 +65,25 @@ const DashboardNavbar = ({ toggleSideBar, setToggleSideBar }: any) => {
                                                 <p className='text-gray-400 text-sm'>Software Developer</p>
                                             </div>
 
-                                            <Link href={`/${role}/dashboard/profile`} className='w-full bg-blue-100 text-blue-600 px-4 text-sm hover:bg-blue-600 hover:text-white py-2 transition-all duration-300 ease-in-out rounded-lg' >
+                                            <button
+                                                onClick={() => {
+                                                    if (userProfile.is_onboard) {
+                                                        router.push(`/${role}/dashboard/profile`)
+                                                    }
+                                                }}
+                                                className={`w-full relative bg-blue-100 text-blue-600 px-4 text-sm ${userProfile.is_onboard ? "hover:bg-blue-600 hover:text-white" : ""}  py-2 transition-all duration-300 ease-in-out rounded-lg`} >
                                                 Edit Profile
-                                            </Link>
+                                                {!userProfile.is_onboard && (
+                                                    <div className='absolute bottom-2 right-2 gap-2 text-xs p-0 -mt-4 text-red-600 font-semibold'>
+                                                        <div className='relative group/item'>
+                                                            <CircleAlert className='h-5 w-5 text-red-600 group/item bg-red-50 rounded-full' />
+                                                            <span className='hidden group-hover/item:flex absolute w-40 top-5 right-0 bg-red-50 p-1 border border-red-600 rounded-lg'>
+                                                                Complete your profile to access all features
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </button>
                                         </div>
                                         <Link href="/developer/dashboard/profile/demo" className='w-full inline-flex items-center gap-4 p-5 hover:bg-gray-100 transition-all duration-300 ease-in-out text-sm'>
                                             <Settings className='h-5' />

@@ -19,6 +19,7 @@ const InputField = ({
   id,
   onFocus,
   onMouseDown,
+  disabled,
   checkedItems,
   handleSuggestionSelect,
 }: any) => {
@@ -66,6 +67,7 @@ const InputField = ({
             placeholder={placeHolder}
             onFocus={onFocus}
             onMouseDown={onMouseDown}
+            disabled={disabled}
           />
           {IconComponent && (
             <IconComponent
@@ -107,9 +109,9 @@ const InputField = ({
                     ${error ? "bg-red-200 border-red-300 text-red-500" : "bg-gray-200 border-gray-300 text-neutral-500"} 
                     shadow-sm`}
                 >
-                  {customTag.options.map((option: any) => {
+                  {customTag.options.map((option: any, index: any) => {
                     return (
-                      <option value={option}>{option}</option>
+                      <option key={index} value={option}>{option}</option>
                     )
                   })}
                 </select>

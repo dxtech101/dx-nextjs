@@ -1,7 +1,7 @@
 "use client"
 import Certifications from '@/components/developer/onboarding/Certifications'
 import Skills from '@/components/developer/onboarding/Skills'
-import TimePreference from '@/components/developer/onboarding/TimePreference'
+import WorkPreference from '@/components/developer/onboarding/WorkPreference'
 import WorkExperience from '@/components/developer/onboarding/WorkExperience'
 import InputArea from '@/components/InputArea'
 import InputField from '@/components/InputField'
@@ -43,7 +43,7 @@ const JobListingCard = ({ title, location, salary, type }: any) => {
 const page = () => {
     const userOnboarding = useSelector((state: any) => state.userOnboarding["developerOnboarding"])
     const userProfile = useSelector((state: any) => state.userProfile);
-    const [greeting, setGreeting] = useState("Good-Evening");
+    const [greeting, setGreeting] = useState("");
     const [visible, setVisible] = useState(true);
     const [submitExam, setSubmitExam] = useState(false);
     const [testScreen, setTestScreen] = useState(false);
@@ -70,11 +70,11 @@ const page = () => {
     const getTimeOfDayGreeting = () => {
         const currentHour = new Date().getHours();
         if (currentHour < 12) {
-            setGreeting("Good-Morning");
+            setGreeting("GoodMorning");
         } else if (currentHour < 18) {
-            setGreeting("Good-Afternoon");
+            setGreeting("GoodAfternoon");
         } else {
-            setGreeting("Good-Evening");
+            setGreeting("GoodEvening");
         }
     };
 
@@ -101,6 +101,9 @@ const page = () => {
         };
     }, []);
 
+    console.log("Greeting", greeting);
+    
+
     return (
         <div ref={containerRef} className='h-full overflow-y-scroll gap-6'>
             {isUserOnboarded ? (
@@ -110,8 +113,9 @@ const page = () => {
                     </div>
 
                     <div className='flex flex-col md:flex-row w-full gap-5'>
-                        <div className={`bg-[url(/${greeting}.png)] bg-bottom bg-cover bg-no-repeat text-white rounded-3xl flex-1 flex items-center justify-start`}>
-                            <div className={`p-6 ${greeting === "Good-Evening" ? "text-white" : "text-black"}`}>
+                        <div className={`relative text-white rounded-3xl flex-1 flex items-center justify-start`}>
+                        <img src={`/${greeting}.png`} alt="" className='w-full h-full object-cover rounded-3xl z-0 absolute' />
+                            <div className={`p-6 ${greeting === "GoodEvening" ? "text-white" : "text-black"} z-10`}>
                                 <h2 className={`text-2xl font-semibold mb-2 capitalize`}>{greeting.split('-').join(' ')} {userProfile.first_name}</h2>
                                 <p >Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, ducimus?</p>
                                 <button className="mt-4 bg-white/80 text-gray-600 px-4 py-2 rounded-lg">
@@ -206,7 +210,7 @@ const page = () => {
                             </div>
                         </div>
                     </div>
-                    {isUserExamConducted && (
+                    {/* {isUserExamConducted && (
                         <div className='absolute top-14 left-1/2 -translate-x-1/2 z-[55] flex p-1 px-4 rounded-full bg-white justify-center items-center whitespace-nowrap'>
                             <div className='w-4 h-4 bg-red-500 rounded-full absolute -top-1 -right-1'></div>
                             <div className='w-4 h-4 bg-red-500 rounded-full absolute -top-1 -right-1 animate-ping'></div>
@@ -315,14 +319,14 @@ const page = () => {
 
                             </div>
                         </Modal>
-                    )}
+                    )} */}
                 </>
             ) : (
                 <>
                     {userOnboarding[0].isActive && <Certifications />}
                     {userOnboarding[1].isActive && <Skills />}
                     {userOnboarding[2].isActive && <WorkExperience />}
-                    {userOnboarding[3].isActive && <TimePreference />}
+                    {userOnboarding[3].isActive && <WorkPreference />}
                 </>
             )}
         </div>

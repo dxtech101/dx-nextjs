@@ -6,11 +6,11 @@ import { handleFormDataChange, validateForm } from '@/lib/helper';
 import axios from 'axios';
 import { ArrowLeft, Building2, CodeXml, LoaderCircle, ScrollText } from 'lucide-react';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import PhoneInput from 'react-phone-number-input';
-import 'react-phone-input-2/lib/style.css'
 import Modal from '@/components/modal/Modal';
+import 'react-phone-number-input/style.css'
 
 
 const page = () => {
@@ -18,6 +18,7 @@ const page = () => {
     const [successModal, setSuccessModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [showTermsConditions, setShowTermsConditions] = useState(false);
+    const [value, setValue] = useState<any>();
     const [formData, setFormData] = useState<any>({
         first_name: '',
         last_name: '',
@@ -73,8 +74,15 @@ const page = () => {
         }
     };
 
+    console.log("value::", formData.phone, value);
+
+
+    const handleFormDataChangePhone = (value: string) => {
+        setFormData((prev: any) => ({ ...prev, phone: value }));
+    };
+
     return (
-        <section className="relative bg-white overflow-scroll lg:overflow-hidden h-full md:h-screen">
+        <section className="relative bg-white overflow-scroll lg:overflow-hidden h-fit">
             <img className="absolute left-0 bottom-0 z-10 w-full h-full" src="https://static.shuffle.dev/components/preview/238eb578-e531-4cf4-a658-a1ff13c9b896/assets/public/flaro-assets/images/sign-up/gradient.svg" alt="" />
             <div className="relative z-10 flex flex-wrap m-0 lg:-m-8">
                 <div className="relative w-full md:w-1/2 p-8 lg:p-8 flex flex-col justify-center items-center">
@@ -175,25 +183,27 @@ const page = () => {
                                 error={errors.password}
                             />
 
-                            <InputField
-                                type="tel"
-                                label="Phone Number"
-                                isRequired={true}
-                                value={formData.phone}
-                                onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
-                                id="phone"
-                                className="w-full"
-                                placeholder="Enter phone number"
-                                error={errors.phone}
-                            />
+                            <div className='flex flex-col w-full gap-2'>
+                                <label className='text-sm font-bold text-gray-700 text-nowrap'>
+                                    Phone Number <span className='text-red-600'>{" "}*</span>
+                                </label>
+                                <PhoneInput
+                                    value={formData.phone} // Ensure `value` comes from formData
+                                    onChange={(value) => setFormData((prev: any) => ({ ...prev, phone: value }))} // Update formData.phone on change
+                                    defaultCountry="IN"
+                                    className="h-12 pl-4 pr-4 w-full text-black border border-gray-400 bg-gray-50 rounded-xl"
+                                />
+                            </div>
+
                             <div className='flex flex-row items-center justify-start gap-2 w-full'>
                                 <input type="checkbox" className="" name="terms" id="terms" required />
                                 <label htmlFor="terms" className="text-sm text-gray-700">
-                                    I agree to the <button
+                                    I agree to the{" "}
+                                    <button
                                         type='button'
                                         onClick={() => setShowTermsConditions(true)}
                                         className="text-blue-600 font-semibold">
-                                        Terms and Conditions
+                                        {" "}Terms and Conditions
                                     </button>
                                 </label>
                             </div>
@@ -240,7 +250,7 @@ const page = () => {
 
                         <h2 className="text-xl font-semibold mt-6 mb-2 text-gray-700">1. Introduction</h2>
                         <p className="text-gray-600 leading-relaxed">
-                            Welcome to <span className="font-medium">[Company Name]</span>! These terms and conditions outline the rules and regulations for using our website, located at
+                            Welcome to <span className="font-medium">DX Digital</span>! These terms and conditions outline the rules and regulations for using our website, located at
                             <span className="font-medium">[Website URL]</span>.
                         </p>
                         <p className="mt-4 text-gray-600 leading-relaxed">
@@ -250,7 +260,7 @@ const page = () => {
 
                         <h2 className="text-xl font-semibold mt-6 mb-2 text-gray-700">2. Intellectual Property Rights</h2>
                         <p className="text-gray-600 leading-relaxed">
-                            Unless otherwise stated, <span className="font-medium">[Company Name]</span> owns the intellectual property rights for all material on this website. All intellectual property rights are reserved. You may access this material for your own personal use, subject to restrictions set in these terms and conditions.
+                            Unless otherwise stated, <span className="font-medium">DX Digital</span> owns the intellectual property rights for all material on this website. All intellectual property rights are reserved. You may access this material for your own personal use, subject to restrictions set in these terms and conditions.
                         </p>
                         <ul className="list-disc ml-6 mt-4 text-gray-600">
                             <li>Republish material from <span className="font-medium">[Website Name]</span></li>
@@ -271,7 +281,7 @@ const page = () => {
 
                         <h2 className="text-xl font-semibold mt-6 mb-2 text-gray-700">4. Limitation of Liability</h2>
                         <p className="text-gray-600 leading-relaxed">
-                            <span className="font-medium">[Company Name]</span> will not be held responsible for any damages that arise from the use of our website. This includes, but is not limited to, direct, indirect, incidental, or consequential damages.
+                            <span className="font-medium">DX Digital</span> will not be held responsible for any damages that arise from the use of our website. This includes, but is not limited to, direct, indirect, incidental, or consequential damages.
                         </p>
 
                         <h2 className="text-xl font-semibold mt-6 mb-2 text-gray-700">5. Third-Party Links</h2>
@@ -282,12 +292,13 @@ const page = () => {
                         <h2 className="text-xl font-semibold mt-6 mb-2 text-gray-700">6. Privacy Policy</h2>
                         <p className="text-gray-600 leading-relaxed">
                             Your use of this website is also governed by our{" "}
-                            <a href="[Link to Privacy Policy]" className="text-blue-600 underline">{" "}Privacy Policy</a>, which explains how we collect, use, and protect your data.
+                            {/* <a href="[Link to Privacy Policy]" className="text-blue-600 underline">{" "}Privacy Policy</a>,  */}
+                            which explains how we collect, use, and protect your data.
                         </p>
 
                         <h2 className="text-xl font-semibold mt-6 mb-2 text-gray-700">7. Modifications to Terms</h2>
                         <p className="text-gray-600 leading-relaxed">
-                            <span className="font-medium">[Company Name]</span> reserves the right to update or modify these terms at any time. Continued use of the website after changes indicates your acceptance of the new terms.
+                            <span className="font-medium">DX Digital</span> reserves the right to update or modify these terms at any time. Continued use of the website after changes indicates your acceptance of the new terms.
                         </p>
 
                         <h2 className="text-xl font-semibold mt-6 mb-2 text-gray-700">8. Governing Law</h2>
@@ -299,10 +310,10 @@ const page = () => {
                         <p className="text-gray-600 leading-relaxed">
                             If you have any questions about these Terms and Conditions, please contact us at:
                         </p>
-                        <ul className="list-none mt-4 text-gray-600">
+                        {/* <ul className="list-none mt-4 text-gray-600">
                             <li>Email: <a href="mailto:[Email Address]" className="text-blue-600 underline">[Email Address]</a></li>
                             <li>Phone: <a href="tel:[Phone Number]" className="text-blue-600 underline">[Phone Number]</a></li>
-                        </ul>
+                        </ul> */}
                     </div>
                 </Modal>
             }

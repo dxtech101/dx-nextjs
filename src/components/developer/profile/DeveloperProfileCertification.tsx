@@ -276,7 +276,7 @@ const DeveloperProfileCertification = ({ certification, loading, updateDetails }
                     size="xl"
                     isFooter={false}
                 >
-                    <div className='py-6'>
+                    <div className='py-6 min-h-96 bg-[url(/noRecordBG2.png)] -m-6 px-10 bg-no-repeat bg-fixed bottom-0 bg-contain bg-bottom rounded-2xl'>
                         <h2 className='font-semibold mb-4 uppercase text-sm'>Search Certifications</h2>
                         <div ref={containerRef} className='relative mt-4'>
                             {loadingUI ?

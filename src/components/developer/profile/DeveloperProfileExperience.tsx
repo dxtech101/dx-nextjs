@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 const WorkExperienceCard = (props: any) => {
     const { experience, index, openEditModal, deleteWorkExperience } = props;
     console.log(experience)
-    
+
     return (
         <div className='relative bg-gray-100 rounded-3xl flex flex-col gap-4 flex-1 p-6 w-full z-10'>
             <h1 className='absolute text-8xl top-0 right-0 font-bold p-5 text-gray-300 uppercase'>
@@ -179,8 +179,8 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
                                 />
                             ))}
                         </> : (
-                            <div className='text-center text-black text-sm'>
-                                No experience found
+                            <div className='text-start text-black text-sm'>
+                                No Experience Summary found
                             </div>
                         )}
                     </div>
