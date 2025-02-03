@@ -5,7 +5,7 @@ const InputArea = ({
     id,
     placeHolder,
     label,
-    cols,
+    rows,
     value,
     onChange,
     maxLength,
@@ -27,14 +27,14 @@ const InputArea = ({
                 </label>
                 {maxLength &&
                     <label className={`text-sm font-bold text-gray-700 ${isMaxLengthReached && "text-red-500"}`}>
-                        {value.length} / {maxLength} characters
+                        {value?.length} / {maxLength} characters
                     </label>
                 }
             </div>
 
             <textarea
                 id={id}
-                rows={4}
+                rows={rows}
                 className={`h-auto pl-4 pr-4 py-2 text-black bg-gray-100 border border-gray-400 rounded-xl ${className}`}
                 placeholder={placeHolder}
                 value={value}

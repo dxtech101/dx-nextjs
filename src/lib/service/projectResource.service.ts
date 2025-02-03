@@ -1,4 +1,4 @@
-import { ADD_CERTIFICATIONS_REQUIREMENT, ADD_PROJECT, ADD_RESOURCES_REQUEST, ADD_SKILL_REQUIRMENT, DELETE_CERTIFICATIONS_REQUIREMENT, DELETE_PROJECT, DELETE_RESOURCES_REQUEST, DELETE_SKILL_REQUIREMENT, EDIT_CERTIFICATIONS_REQUIREMENT, EDIT_PROJECT, EDIT_RESOURCES_REQUEST, EDIT_SKILL_REQUIREMENT, GET_ALL_PROJECTS, GET_ALL_RESOURCES_REQUEST, GET_CERTIFICATIONS_REQUIREMENT, GET_CERTIFICATIONS_REQUIREMENT_BY_RESOURCE_SIFD, GET_CERTIFICATIONS_REQUIREMENT_ID, GET_COMPANY_PROJECTS, GET_COMPANY_RESOURCES, GET_PROJECT, GET_PROJECT_SFID_BY_NAME, GET_RESOURCES_REQUEST, GET_SKILL_REQUIREMENT, GET_SKILL_REQUIREMENT_BY_RESOURCE_SIFD, GET_SKILL_REQUIREMENT_ID } from "@/constants/api-routes";
+import { ADD_CERTIFICATIONS_REQUIREMENT, ADD_PROJECT, ADD_RESOURCES_REQUEST, ADD_SKILL_REQUIRMENT, DELETE_CERTIFICATIONS_REQUIREMENT, DELETE_PROJECT, DELETE_RESOURCES_REQUEST, DELETE_SKILL_REQUIREMENT, EDIT_CERTIFICATIONS_REQUIREMENT, EDIT_PROJECT, EDIT_RESOURCES_REQUEST, EDIT_SKILL_REQUIREMENT, GET_ALL_PROJECTS, GET_ALL_RESOURCES_REQUEST, GET_CERTIFICATIONS_REQUIREMENT, GET_CERTIFICATIONS_REQUIREMENT_BY_RESOURCE_SIFD, GET_CERTIFICATIONS_REQUIREMENT_ID, GET_COMPANY_PROJECTS, GET_COMPANY_RESOURCES, GET_PROJECT, GET_PROJECT_SFID_BY_NAME, GET_RESOURCES_REQUEST, GET_SHORTLISTED_RESOURCES, GET_SKILL_REQUIREMENT, GET_SKILL_REQUIREMENT_BY_RESOURCE_SIFD, GET_SKILL_REQUIREMENT_ID, SHORTLIST_RESOURCE, UPDATE_SHORTLISTED_RESOURCES } from "@/constants/api-routes";
 import "@/lib/axios-configuration";
 import axios from "axios";
 
@@ -11,9 +11,9 @@ export const getAllProjects = async () => {
     }
 }
 
-export const getProject = async (sfid: any) => {
+export const getProject = async (id: any) => {
     try {
-        const response = await axios.get(GET_PROJECT(sfid));
+        const response = await axios.get(GET_PROJECT(id));
         return response.data;
     } catch (error: any) {
         throw error;
@@ -221,6 +221,33 @@ export const editCertificationsRequirement = async (sfid: any, certificationsReq
 export const deleteCertificationsRequirement = async (sfid: string) => {
     try {
         const response = await axios.delete(DELETE_CERTIFICATIONS_REQUIREMENT(sfid));
+        return response.data;
+    } catch (error: any) {
+        throw error;
+    }
+}
+
+export const shortlistResourceRequest = async (shortlistResourceData: any) => {
+    try {
+        const response = await axios.post(SHORTLIST_RESOURCE, shortlistResourceData);
+        return response.data;
+    } catch (error: any) {
+        throw error;
+    }
+}
+
+export const getShortlistedResources = async (contactId: any) => {
+    try {
+        const response = await axios.get(GET_SHORTLISTED_RESOURCES(contactId));
+        return response.data;
+    } catch (error: any) {
+        throw error;
+    }
+}
+
+export const updateShortlistedResources = async (contactId: any) => {
+    try {
+        const response = await axios.put(UPDATE_SHORTLISTED_RESOURCES(contactId), {});
         return response.data;
     } catch (error: any) {
         throw error;

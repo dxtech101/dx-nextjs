@@ -1,14 +1,11 @@
 "use client";
-import DetailedView from '@/components/company/detailedView/DetailedView';
 import { CompanyProjectCard } from '@/components/company/project/CreateProjectForm';
 import { ResourceRequestCard } from '@/components/company/resourceRequest/ResourceMandatoryForm';
 import { skillsDetails } from '@/constants/data';
-import { getAllSalesforceSkills } from '@/lib/service/portfolio.service';
-import { getSkillRequirementByResourceRequest, getCertificationsRequirementByResourceRequest, getCompanyProjects, getAllResourceRequest } from '@/lib/service/projectResource.service';
+import { getAllResourceRequest, getProject, getSkillRequirementByResourceRequest } from '@/lib/service/projectResource.service';
 import { ArrowLeft, Pencil, Sparkle } from 'lucide-react';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 const SkillItem = ({ name }: any) => {
     const [checkedItem, setCheckedItem] = useState<any>();
@@ -30,10 +27,8 @@ const SkillItem = ({ name }: any) => {
 };
 
 const page = ({ params }: any) => {
-    const projectID = params.project_sfid
+    const projectID = params.project_id
 
-    const dispatch = useDispatch();
-    const accountSfid = useSelector((state: any) => state.userSalesforceID)
     const [projects, setProjects] = useState<any>([]);
     const [resources, setResources] = useState<any>([]);
     const [skills, setSkills] = useState<any>([]);
@@ -61,12 +56,11 @@ const page = ({ params }: any) => {
         });
     }, [resources]);
 
-    const getCompanyProjectsData = async () => {
+    const getProjectsData = async () => {
         try {
             setLoading(true);
-            const { results: contactProjects } = await getCompanyProjects(accountSfid);
-            const filteredProject = contactProjects.filter((project: any) => project.sfid === projectID);
-            setProjects(filteredProject);
+            const { results: projects } = await getProject(projectID);
+            setProjects(projects);
         } catch (error) {
             console.error("Error fetching certifications:", error);
         } finally {
@@ -94,22 +88,9 @@ const page = ({ params }: any) => {
         }
     }
 
-    const getSkillsDetails = async () => {
-        try {
-            setLoading(true);
-            const { results: allSkills } = await getAllSalesforceSkills();
-            setSkills(allSkills);
-        } catch (error) {
-            console.error("Error fetching certifications:", error);
-        } finally {
-            setLoading(false);
-        }
-    }
-
     useEffect(() => {
         getCompanyResourcesData();
-        getCompanyProjectsData();
-        getSkillsDetails()
+        getProjectsData();
     }, [])
 
     console.log("skillsMap::", skillsMap);
@@ -151,7 +132,7 @@ const page = ({ params }: any) => {
                     </div>
                 </div>
                 <div className='flex justify-between gap-6 w-full py-4'>
-                    {projects?.map((project: any, index: any) => (
+                    {projects && projects.length > 0 && projects?.map((project: any, index: any) => (
                         <CompanyProjectCard
                             index={index}
                             project={project}

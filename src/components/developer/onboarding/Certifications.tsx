@@ -4,13 +4,13 @@ import ErrorToast from '@/components/toast/ErrorToast'
 import SuccessfulToast from '@/components/toast/SuccessfulToast'
 import { filterby } from '@/constants/data'
 import { onBoardingHandleNext } from '@/feature/reducers/userOnboarding'
-import { assignCertification, deleteAssignedCertifications, getAllAssignedCertifications, getAllSalesforceCertifications } from '@/lib/service/portfolio.service'
+import { CertificationsService, getAllSalesforceCertifications } from '@/lib/service/portfolio.service'
 import { X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
-const CheckboxItem = ({ text, imageSrc, borderColor, textColor, checked, onChange }: any) => {
+const CheckboxItem = ({ text, imageSrc, borderColor, textColor, checked, onChange, loadingUI }: any) => {
     return (
         <div className={`inline-flex gap-2 items-center bg-white border ${borderColor} p-2 pl-4 pr-4 rounded-full relative z-10 whitespace-nowrap min-w-max`}>
             <img className='w-auto h-16' src={'/' + imageSrc.split(' ').join('-') + '.png'} alt={text} />
@@ -18,6 +18,7 @@ const CheckboxItem = ({ text, imageSrc, borderColor, textColor, checked, onChang
                 {text.replace(/salesforce/i, '')}
             </span>
             <input
+                disabled={loadingUI}
                 type="checkbox"
                 className={`w-6 h-6 ${textColor} bg-gray-100 border-2 border-blue-500 rounded-xl appearance-none `}
                 checked={checked}
@@ -25,6 +26,7 @@ const CheckboxItem = ({ text, imageSrc, borderColor, textColor, checked, onChang
             />
             {checked && (
                 <button
+                    disabled={loadingUI}
                     className={`absolute right-[1.12rem] w-5 h-5 flex items-center justify-center bg-blue-400 rounded-full cursor-pointer`}
                     onClick={onChange}
                 >
@@ -47,13 +49,14 @@ const Certifications = () => {
     const [selectedTags, setSelectedTags] = useState<any>([]);
     const containerRef: any = useRef(null);
     const [loading, setLoading] = useState(false);
+    const [loadingUI, setLoadingUI] = useState(false);
     const contactSfid = useSelector((state: any) => state.userSalesforceID)
 
     const getCertificationDetails = async () => {
         try {
             setLoading(true);
             const { results: allCertifications } = await getAllSalesforceCertifications();
-            const { results: assignedCertifications } = await getAllAssignedCertifications(contactSfid);
+            const { results: assignedCertifications } = await CertificationsService.getAllAssignedCertifications(contactSfid);
             const assignedCertificationIds = assignedCertifications.map((cert: any) => cert.certification);
             setInitialItems(allCertifications)
             setInitialCheckedItems(assignedCertifications)
@@ -92,42 +95,26 @@ const Certifications = () => {
             "certification_sfids": [sfid]
         }
         try {
-            setLoading(true)
-            const response = await assignCertification(body);
-            console.log(response);
-
-            if (response) {
-                toast.custom((t) => (
-                    <SuccessfulToast t={t} message={"Certification added Successfully"} />
-                ));
-            }
+            setLoadingUI(true)
+            return await CertificationsService.assignCertification(body);
         } catch (error: any) {
-            toast.custom((t) => (
-                <ErrorToast t={t} message={error?.response?.data?.error} />
-            ))
+            return false;
         }
         finally {
-            setLoading(false)
+            setLoadingUI(false)
         }
     }
 
     const deleteCertification = async (sfid: string) => {
         try {
-            setLoading(true)
+            setLoadingUI(true)
             const id = initialCheckedItems.find((item) => item.certification === sfid)?.sfid;
-            const response = await deleteAssignedCertifications(id);
-            if (response) {
-                toast.custom((t) => (
-                    <SuccessfulToast t={t} message={"Certification Deleted Successfully"} />
-                ));
-            }
+            return await CertificationsService.deleteAssignedCertifications(id);
         } catch (error: any) {
-            toast.custom((t) => (
-                <ErrorToast t={t} message={error?.response?.data?.error} />
-            ))
+            return false;
         }
         finally {
-            setLoading(false)
+            setLoadingUI(false)
         }
     }
 
@@ -139,20 +126,38 @@ const Certifications = () => {
         } else setItems(initialItems)
     }, [inputValue]);
 
-    const handleCheckboxChange = (id: any) => {
+    const handleCheckboxChange = async (id: any) => {
         const isChecked = checkedItems.find((i: any) => i.sfid === id);
         const item = initialItems.find((i: any) => i.sfid === id);
         if (isChecked) {
             const uncheckedItem = checkedItems.find(i => i.sfid === id);
             if (uncheckedItem) {
-                setItems([...items, uncheckedItem]);
-                setCheckedItems(checkedItems.filter(i => i.sfid !== id));
-                deleteCertification(id)
+                const response = await deleteCertification(id)
+                if (response) {
+                    setItems([...items, uncheckedItem]);
+                    setCheckedItems(checkedItems.filter(i => i.sfid !== id));
+                    toast.custom((t) => (
+                        <SuccessfulToast t={t} message={"Certification deleted Successfully"} />
+                    ));
+                } else {
+                    toast.custom((t) => (
+                        <ErrorToast t={t} message={"Certification deleted Failed"} />
+                    ))
+                }
             }
         } else {
-            setCheckedItems([...checkedItems, item]);
-            setItems(items.filter((i: any) => i.sfid !== id));
-            addCertification(id)
+            const response = await addCertification(id)
+            if (response) {
+                setCheckedItems([...checkedItems, item]);
+                setItems(items.filter((i: any) => i.sfid !== id));
+                toast.custom((t) => (
+                    <SuccessfulToast t={t} message={"Certification added Successfully"} />
+                ));
+            } else {
+                toast.custom((t) => (
+                    <ErrorToast t={t} message={"Certification added Failed"} />
+                ))
+            }
         }
     };
 
@@ -186,7 +191,7 @@ const Certifications = () => {
             <div className='w-full bg-white z-20 sticky top-0 left-0 py-6 flex flex-col gap-6 lg:flex-row justify-between items-start lg:items-center'>
                 <span>
                     <h1 className='text-start text-4xl md:text-5xl font-heading tracking-tight font-medium text-black'>
-                        Certification Details
+                        Complete your Profile
                     </h1>
                     <p className='pt-2 tracking-tight text-gray-600 max-w-sm'>
                         Select Salesforce Certifications that you hold
@@ -194,7 +199,7 @@ const Certifications = () => {
                 </span>
                 <div className='flex flex-row gap-2 justify-center items-end lg:items-center'>
                     <button
-                        disabled={loading}
+                        disabled={loading || loadingUI}
                         onClick={handleNext}
                         className={`h-12 px-6 rounded-xl font-medium text-normal ${loading
                             ? 'bg-blue-300 text-blue-100 cursor-not-allowed'
@@ -217,11 +222,12 @@ const Certifications = () => {
                             onChange={(e: any) => {
                                 setInputValue(e.target.value)
                             }}
+                            disabled={loadingUI}
                             onFocus={() => setShowSuggestions(true)}
                         />
                     }
 
-                    {showSuggestions && (
+                    {showSuggestions && !loadingUI && (
                         <div className='absolute overflow-x-scroll bg-white border-2 left-0 border-gray-100 rounded-xl w-full lg:w-1/2 mt-1 max-h-56 overflow-y-auto z-20'>
                             <div className='sticky top-0 w-full flex items-center gap-2 bg-white p-2 px-4 whitespace-nowrap'>
                                 <span className='text-sm'>
@@ -276,6 +282,7 @@ const Certifications = () => {
                                     imageSrc={item.name}
                                     checked={checkedItems.some(checkedItem => checkedItem.sfid === item.sfid)}
                                     onChange={() => handleCheckboxChange(item.sfid)}
+                                    loadingUI={loadingUI}
                                 />
                             )) : (
                                 <span className="text-md font-normal text-gray-400 ml-2">

@@ -7,24 +7,32 @@ const Modal = ({
     onSubmit,
     children,
     loading,
+    classname,
     size = "sm",
     ristricted = false,
-    isFooter = true
+    isFooter = true,
+    submitButtonText,
 }: any) => {
-    
+
     return (
-        <div className='absolute top-0 left-0 z-50 w-full h-full bg-black bg-opacity-65 text-black flex justify-center items-center'>
-            <div className={`bg-white rounded-2xl w-11/12 lg:w-${size === "xl" ? "11/12" : size === "lg" ? "h-1/5" : "1/2"} flex flex-col justify-center items-start`}>
-                <div className='w-full flex flex-row justify-between items-center border-b border-0 p-4'>
-                    <span className='font-bold text-xl'>
-                        {header}
-                    </span>
-                    {(!loading || ristricted) && (
-                        <button onClick={() => setModal(false)}>
-                            <X className='w-8 h-8' strokeWidth={2} color='black' />
-                        </button>
-                    )}
-                </div>
+        <div
+            onClick={() => setModal(false)}
+            className={`absolute top-0 left-0 z-50 w-full h-full bg-black bg-opacity-65 text-black flex justify-center items-center ${classname}`}>
+            <div
+                onClick={(e) => e.stopPropagation()}
+                className={`bg-white rounded-2xl w-11/12 lg:w-${size === "xl" ? "11/12" : size === "lg" ? "h-1/5" : "1/2"} flex flex-col justify-center items-start`}>
+                {header && (
+                    <div className='w-full flex flex-row justify-between items-center border-b border-0 p-4'>
+                        <span className='font-bold text-xl'>
+                            {header}
+                        </span>
+                        {(!loading || ristricted) && (
+                            <button onClick={() => setModal(false)}>
+                                <X className='w-8 h-8' strokeWidth={2} color='black' />
+                            </button>
+                        )}
+                    </div>
+                )}
                 <div className='relative p-3 lg:p-6 w-full overflow-y-auto max-h-[80vh]'>
                     {children}
                 </div>
@@ -41,7 +49,7 @@ const Modal = ({
                             onClick={onSubmit}
                             className='bg-black text-bold text-white font-bold h-12 px-6 rounded-xl'
                         >
-                            Save
+                            {submitButtonText || "Save"}
                         </button>
                     </div>
                 )}

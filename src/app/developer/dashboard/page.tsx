@@ -1,12 +1,18 @@
 "use client"
 import Certifications from '@/components/developer/onboarding/Certifications'
 import Skills from '@/components/developer/onboarding/Skills'
+import WorkPreference from '@/components/developer/onboarding/WorkPreference'
 import WorkExperience from '@/components/developer/onboarding/WorkExperience'
+import InputArea from '@/components/InputArea'
 import InputField from '@/components/InputField'
-import { ChevronRight, ChevronsDown, CornerUpRightIcon, DollarSign, MapPin } from 'lucide-react'
+import Modal from '@/components/modal/Modal'
+import { developerQuestions } from '@/constants/data'
+import { ArrowLeft, ArrowRight, Bookmark, ChevronRight, ChevronsDown, CornerUpRightIcon, DollarSign, MapPin } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useRouter } from 'next/navigation'
+import authWrapper from '@/lib/hoc/AuthWrapper'
 
 const JobListingCard = ({ title, location, salary, type }: any) => {
     const color = type === "Remote" ? "green" : type === "Full Time" ? "orange" : "purple";
@@ -39,19 +45,35 @@ const JobListingCard = ({ title, location, salary, type }: any) => {
 const page = () => {
     const userOnboarding = useSelector((state: any) => state.userOnboarding["developerOnboarding"])
     const userProfile = useSelector((state: any) => state.userProfile);
+    const [greeting, setGreeting] = useState("");
     const [visible, setVisible] = useState(true);
+    const [isUserExamConducted, setIsUserExamConducted] = useState(true);
+    const router = useRouter();
+
     const containerRef = useRef<HTMLDivElement>(null);
 
     const isUserOnboarded = userProfile.is_onboard;
 
+
+    const handleQuizStart = () => {
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen().then(() => {
+                router.push("/developer/assessment");
+            });
+        } else {
+            router.push("/developer/assessment");
+        }
+    };
+
+
     const getTimeOfDayGreeting = () => {
         const currentHour = new Date().getHours();
         if (currentHour < 12) {
-            return "Good-Morning";
+            setGreeting("Good-Morning");
         } else if (currentHour < 18) {
-            return "Good-Afternoon";
+            setGreeting("Good-Afternoon");
         } else {
-            return "Good-Evening";
+            setGreeting("Good-Evening");
         }
     };
 
@@ -66,7 +88,7 @@ const page = () => {
         if (container) {
             container.addEventListener('scroll', handleScroll);
         }
-
+        getTimeOfDayGreeting();
         return () => {
             if (container) {
                 container.removeEventListener('scroll', handleScroll);
@@ -74,7 +96,6 @@ const page = () => {
         };
     }, []);
 
-    const greeting = getTimeOfDayGreeting();
 
     return (
         <div ref={containerRef} className='h-full overflow-y-scroll gap-6'>
@@ -85,17 +106,18 @@ const page = () => {
                     </div>
 
                     <div className='flex flex-col md:flex-row w-full gap-5'>
-                        <div className={`bg-[url(/Good-Evening.png)] bg-bottom bg-cover bg-no-repeat text-white rounded-3xl flex-1 flex items-center justify-start`}>
-                            <div className={`p-6 ${greeting === "Good-Evening" ? "text-white" : "text-black"}`}>
+                        <div className={`relative text-white rounded-3xl flex-1 flex items-center justify-start`}>
+                            <img src={`/${greeting}.png`} alt="" className='w-full h-full object-cover rounded-3xl z-0 absolute' />
+                            <div className={`p-6 ${greeting === "GoodEvening" ? "text-white" : "text-black"} z-10`}>
                                 <h2 className={`text-2xl font-semibold mb-2 capitalize`}>{greeting.split('-').join(' ')} {userProfile.first_name}</h2>
-                                <p >Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, ducimus?</p>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, ducimus?</p>
                                 <button className="mt-4 bg-white/80 text-gray-600 px-4 py-2 rounded-lg">
                                     Review It
                                 </button>
                             </div>
                         </div>
                         <div className="hidden md:flex bg-white text-white rounded-3xl flex-row items-center justify-center px-6 p-4 gap-4">
-                            <img className="h-28 w-28 rounded-full object-cover mr-2 object-right z-0" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80" alt="" />
+                            <img className="h-28 w-28 rounded-full object-cover mr-2 object-right z-0" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHxw-10=format&fit=crop&w=1050&q=80" alt="" />
                             <div className="text-black">
                                 <h2 className="text-2xl font-semibold mb-2 capitalize"> {userProfile.first_name}  {userProfile.last_name}</h2>
                                 <p className='text-gray-400 text-sm'>Software Developer</p>
@@ -181,16 +203,61 @@ const page = () => {
                             </div>
                         </div>
                     </div>
+                    {isUserExamConducted && (
+                        <Modal
+                            isFooter={false}
+                            size="lg"
+                            loading={true}
+                        >
+                            <div className='h-96 relative w-full flex flex-col items-end justify-center'>
+                                <img
+                                    src="/welcome.svg"
+                                    alt=""
+                                    className='h-96 -m-6 bottom-0 left-10 object-contain rounded-3xl z-0 absolute'
+                                />
+                                <div className='flex flex-col gap-6 p-6 max-w-2xl'>
+                                    <div>
+                                        <h2 className='text-4xl font-bold mb-2 capitalize'>Welcome to DX Digital</h2>
+                                        <p className='text-gray-400 text-md'>
+                                            We are excited to have you onboard to DX Digital. <br /> Please take a moment to review the following information.
+                                        </p>
+                                    </div>
+
+                                    <div className='flex flex-row gap-4 items-center bg-gray-100 p-6 rounded-xl'>
+                                        <span className='text-5xl font-extrabold text-gray-300'>
+                                            {"</>"}
+                                        </span>
+                                        <p className='text-gray-500 text-sm'>
+                                            As a part of Onboarding Process, you will be required to take a quiz to verify your skills and knowledge.
+                                        </p>
+                                    </div>
+
+                                    <button
+                                        onClick={handleQuizStart}
+                                        className='bg-blue-500 text-white px-4 py-2 rounded-xl inline-flex items-center justify-center gap-2 w-1/2'>
+                                        Take Quiz
+                                    </button>
+                                </div>
+                            </div>
+                        </Modal>
+                    )}
                 </>
             ) : (
                 <>
                     {userOnboarding[0].isActive && <Certifications />}
                     {userOnboarding[1].isActive && <Skills />}
                     {userOnboarding[2].isActive && <WorkExperience />}
+                    {userOnboarding[3].isActive && <WorkPreference />}
                 </>
             )}
         </div>
     )
 }
 
-export default page
+export default authWrapper(page, {
+    authRequired: true,
+    role: [
+        "Individual",
+    ],
+});
+

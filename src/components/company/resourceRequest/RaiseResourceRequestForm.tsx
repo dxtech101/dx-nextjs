@@ -102,7 +102,7 @@ const RaiseResourceRequestForm = ({ loading, setLoading, setResourceDetails, set
 
         const resourceRequestData = {
             resource_name: formData.resource_name,
-            project: project?.sfid,
+            project_id: project?.id,
             start_date: formData.start_date,
             daily_hours_required: parseInt(formData.daily_hours_required),
             role_required: "Developer"

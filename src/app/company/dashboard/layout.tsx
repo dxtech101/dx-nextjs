@@ -17,13 +17,13 @@ const geistMono = localFont({
     weight: "100 900",
 });
 
-export default function DeveloperDashboardLayout({
+export default function CompanyDashboardLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
     const userProfile = useSelector((state: any) => state.userProfile);
-    const [toggleSideBar, setToggleSideBar] = useState();
+    const [toggleSideBar, setToggleSideBar] = useState("true");
 
     const isUserOnboarded = userProfile.is_onboard;
 
@@ -40,7 +40,7 @@ export default function DeveloperDashboardLayout({
                 )}
 
                 <div className={`${isUserOnboarded ? `col-span-12 col-start-1 ${toggleSideBar ? "lg:col-span-10 lg:col-start-3" : "lg:col-span-11 lg:col-start-2"}` : "col-span-12"} row-span-2 row-start-1 w-full`}>
-                    <Navbar setToggleSideBar={setToggleSideBar} />
+                    <Navbar toggleSideBar={toggleSideBar} setToggleSideBar={setToggleSideBar} />
                 </div>
                 <main className={`${isUserOnboarded ? `col-span-12 col-start-1 ${toggleSideBar ? "lg:col-span-10 lg:col-start-3" : "lg:col-span-11 lg:col-start-2"} ` : "col-span-12"} row-span-10 row-start-3 w-full h-full overflow-y-scroll`}>
                     {children}

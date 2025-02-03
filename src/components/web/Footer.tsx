@@ -9,7 +9,7 @@ const Footer = () => {
                     <div className="flex flex-wrap items-start justify-between text-gray-900">
                         <div className="w-full lg:w-1/5 mb-6 lg:mb-0">
                             <Link className="inline-block mb-5 text-gray-900 text-lg font-semibold" href="#">
-                                {/* <img className="h-7" src="zeus-assets/logo/logo-zeus-red.svg" alt="" width="auto"> */}
+                                <img className="w-64 h-auto" src="/logo.png" alt="" />
                             </Link>
                         </div>
                         <div className="w-full lg:w-auto">

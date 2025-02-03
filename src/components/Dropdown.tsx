@@ -6,19 +6,28 @@ interface DropdownProps {
   label: string;
   className?: string;
   options?: { value: string; label: string }[];
+  defaultValue?: string;
   onChange?: (value: string) => void;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
+  id,
   label,
   className = '',
   options = [],
+  defaultValue,
   onChange,
 }: DropdownProps) => {
   const [selectedValue, setSelectedValue] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [dropdownDirection, setDropdownDirection] = useState<'down' | 'up'>('down');
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if(defaultValue){
+      setSelectedValue(defaultValue)
+    }
+  },[defaultValue])
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -62,10 +71,11 @@ const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div
       ref={dropdownRef}
-      className={`relative ${className}`}
+      className={`relative ${className} flex flex-col gap-2`}
     >
       <label className="text-sm font-bold text-gray-700">{label}</label>
       <div
+        id={id}
         className="flex items-center justify-between px-4 py-2 bg-gray-100 border border-gray-400 rounded-xl cursor-pointer"
         onClick={toggleDropdown}
       >
@@ -81,7 +91,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             toggleDropdown();
           }}
         >
-          {isOpen ? <ChevronUp /> : <ChevronDown />}
+          <ChevronUp className={`${isOpen ? `rotate-0` : `rotate-180`} duration-200`} />
         </button>
       </div>
 
