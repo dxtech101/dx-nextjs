@@ -11,6 +11,8 @@ import { ArrowLeft, ArrowRight, Bookmark, ChevronRight, ChevronsDown, CornerUpRi
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useRouter } from 'next/navigation'
+import authWrapper from '@/lib/hoc/AuthWrapper'
 
 const JobListingCard = ({ title, location, salary, type }: any) => {
     const color = type === "Remote" ? "green" : type === "Full Time" ? "orange" : "purple";
@@ -45,42 +47,35 @@ const page = () => {
     const userProfile = useSelector((state: any) => state.userProfile);
     const [greeting, setGreeting] = useState("");
     const [visible, setVisible] = useState(true);
-    const [submitExam, setSubmitExam] = useState(false);
-    const [testScreen, setTestScreen] = useState(false);
-    const containerRef = useRef<HTMLDivElement>(null);
     const [isUserExamConducted, setIsUserExamConducted] = useState(true);
+    const router = useRouter();
+
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const isUserOnboarded = userProfile.is_onboard;
-    const [currentQuestion, setCurrentQuestion] = useState(1); // Track current question index
 
-    const totalQuestions = 8; // Adjust based on the total number of questions
 
-    const handlePrevious = () => {
-        if (currentQuestion > 1) {
-            setCurrentQuestion(currentQuestion - 1);
+    const handleQuizStart = () => {
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen().then(() => {
+                router.push("/developer/assessment");
+            });
+        } else {
+            router.push("/developer/assessment");
         }
     };
 
-    const handleNext = () => {
-        if (currentQuestion < totalQuestions) {
-            setCurrentQuestion(currentQuestion + 1);
-        }
-    };
 
     const getTimeOfDayGreeting = () => {
         const currentHour = new Date().getHours();
         if (currentHour < 12) {
-            setGreeting("GoodMorning");
+            setGreeting("Good-Morning");
         } else if (currentHour < 18) {
-            setGreeting("GoodAfternoon");
+            setGreeting("Good-Afternoon");
         } else {
-            setGreeting("GoodEvening");
+            setGreeting("Good-Evening");
         }
     };
-
-    const handleSubmit = () => {
-
-    }
 
     useEffect(() => {
         const handleScroll = () => {
@@ -101,8 +96,6 @@ const page = () => {
         };
     }, []);
 
-    console.log("Greeting", greeting);
-    
 
     return (
         <div ref={containerRef} className='h-full overflow-y-scroll gap-6'>
@@ -114,10 +107,10 @@ const page = () => {
 
                     <div className='flex flex-col md:flex-row w-full gap-5'>
                         <div className={`relative text-white rounded-3xl flex-1 flex items-center justify-start`}>
-                        <img src={`/${greeting}.png`} alt="" className='w-full h-full object-cover rounded-3xl z-0 absolute' />
+                            <img src={`/${greeting}.png`} alt="" className='w-full h-full object-cover rounded-3xl z-0 absolute' />
                             <div className={`p-6 ${greeting === "GoodEvening" ? "text-white" : "text-black"} z-10`}>
                                 <h2 className={`text-2xl font-semibold mb-2 capitalize`}>{greeting.split('-').join(' ')} {userProfile.first_name}</h2>
-                                <p >Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, ducimus?</p>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, ducimus?</p>
                                 <button className="mt-4 bg-white/80 text-gray-600 px-4 py-2 rounded-lg">
                                     Review It
                                 </button>
@@ -210,116 +203,44 @@ const page = () => {
                             </div>
                         </div>
                     </div>
-                    {/* {isUserExamConducted && (
-                        <div className='absolute top-14 left-1/2 -translate-x-1/2 z-[55] flex p-1 px-4 rounded-full bg-white justify-center items-center whitespace-nowrap'>
-                            <div className='w-4 h-4 bg-red-500 rounded-full absolute -top-1 -right-1'></div>
-                            <div className='w-4 h-4 bg-red-500 rounded-full absolute -top-1 -right-1 animate-ping'></div>
-                            As a part of Onboarding Process, you will be required to take a quiz to verify your skills and knowledge.
-                        </div>
-                    )}
                     {isUserExamConducted && (
                         <Modal
                             isFooter={false}
-                            size="md"
-                            setModal={setTestScreen}
+                            size="lg"
                             loading={true}
                         >
-                            <div className={`sticky -top-8 bg-white flex flex-row flex-wrap ${submitExam ? "justify-center" : "justify-between"}  items-center w-full border-b border-gray-200 py-3 mb-4 z-20`}>
-                                {submitExam ? <>
-                                    <div className='flex flex-col justify-center items-center'>
-                                        <div className='relative'>
-                                            <h3 className="text-2xl font-bold">{currentQuestion} / {totalQuestions} Questions attempted</h3>
-                                        </div>
-                                        <div className="flex flex-row gap-1 items-center justify-center w-full py-3">
-                                            {Array.from({ length: totalQuestions }).map((_, index) => (
-                                                <div
-                                                    key={index}
-                                                    className={`h-3 w-20 rounded-full bg-blue-400`}
-                                                />
-                                            ))}
-                                        </div>
-                                    </div>
-                                </> : <>
+                            <div className='h-96 relative w-full flex flex-col items-end justify-center'>
+                                <img
+                                    src="/welcome.svg"
+                                    alt=""
+                                    className='h-96 -m-6 bottom-0 left-10 object-contain rounded-3xl z-0 absolute'
+                                />
+                                <div className='flex flex-col gap-6 p-6 max-w-2xl'>
                                     <div>
-                                        <div className='relative'>
-                                            <span className='absolute text-5xl top-0 font-black text-black opacity-10'>{'</>'}</span>
-                                            <h3 className="text-2xl font-bold">Question {currentQuestion}</h3>
-                                        </div>
-                                        <div className="flex flex-row gap-1 items-center justify-center w-full py-3">
-                                            {Array.from({ length: totalQuestions }).map((_, index) => (
-                                                <div
-                                                    key={index}
-                                                    className={`h-3 w-20 rounded-full ${index + 1 === currentQuestion
-                                                        ? "bg-green-400"
-                                                        : "bg-gray-200"
-                                                        }`}
-                                                />
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <div className='inline-flex gap-2 items-center justify-center my-4'>
-                                        <button
-                                            onClick={handlePrevious}
-                                            disabled={currentQuestion === 1}
-                                            className='bg-gray-300 text-sm text-gray-700 px-3 py-1 rounded-full inline-flex items-center gap-1'>
-                                            <ArrowLeft className='h-4 w-4' /> Previous
-                                        </button>
-                                        <button
-                                            onClick={() => {
-                                                if (currentQuestion === totalQuestions) {
-                                                    setSubmitExam(true)
-                                                    handleSubmit()
-                                                } else {
-                                                    handleNext()
-                                                }
-                                            }}
-                                            className='bg-green-700 text-sm text-white px-3 py-1 rounded-full inline-flex items-center gap-1'>
-                                            Save & Next <ArrowRight className='h-4' />
-                                        </button>
-                                    </div>
-                                </>}
-
-                            </div>
-                            <div>
-                                {submitExam ? <>
-                                    <div className='flex flex-col items-center justify-center gap-2 p-6'>
-                                        <p className='text-center text-lg'>
-                                            Are you sure you want to submit your exam?
-                                            <p className='text-sm text-gray-500'>
-                                                You will not be able to edit your answers after submitting.
-                                            </p>
+                                        <h2 className='text-4xl font-bold mb-2 capitalize'>Welcome to DX Digital</h2>
+                                        <p className='text-gray-400 text-md'>
+                                            We are excited to have you onboard to DX Digital. <br /> Please take a moment to review the following information.
                                         </p>
-
-                                        <div className='flex flex-row items-center justify-center gap-2 mt-4'>
-                                            <button onClick={() => setSubmitExam(false)} className='bg-red-500 text-sm text-white px-3 py-1 rounded-full inline-flex items-center gap-1'>
-                                                Cancel
-                                            </button>
-                                            <button
-                                                onClick={() => {
-                                                    setIsUserExamConducted(false)
-                                                }}
-                                                className='bg-blue-600 text-sm text-white px-3 py-1 rounded-xl inline-flex items-center gap-1'>
-                                                Submit <ArrowRight className='h-4' />
-                                            </button>
-                                        </div>
                                     </div>
-                                </> : <>
-                                    <p className="tracking-tight text-gray-500 text-sm">
-                                        Question
-                                    </p>
-                                    <p>
-                                        {developerQuestions[currentQuestion]}
-                                    </p>
-                                    <InputArea
-                                        className="w-full mt-2"
-                                        placeHolder="Type your answer here"
-                                        rows={"5"}
-                                    />
-                                </>}
 
+                                    <div className='flex flex-row gap-4 items-center bg-gray-100 p-6 rounded-xl'>
+                                        <span className='text-5xl font-extrabold text-gray-300'>
+                                            {"</>"}
+                                        </span>
+                                        <p className='text-gray-500 text-sm'>
+                                            As a part of Onboarding Process, you will be required to take a quiz to verify your skills and knowledge.
+                                        </p>
+                                    </div>
+
+                                    <button
+                                        onClick={handleQuizStart}
+                                        className='bg-blue-500 text-white px-4 py-2 rounded-xl inline-flex items-center justify-center gap-2 w-1/2'>
+                                        Take Quiz
+                                    </button>
+                                </div>
                             </div>
                         </Modal>
-                    )} */}
+                    )}
                 </>
             ) : (
                 <>
@@ -333,4 +254,10 @@ const page = () => {
     )
 }
 
-export default page
+export default authWrapper(page, {
+    authRequired: true,
+    role: [
+        "Individual",
+    ],
+});
+

@@ -27,7 +27,7 @@ const InputArea = ({
                 </label>
                 {maxLength &&
                     <label className={`text-sm font-bold text-gray-700 ${isMaxLengthReached && "text-red-500"}`}>
-                        {value.length} / {maxLength} characters
+                        {value?.length} / {maxLength} characters
                     </label>
                 }
             </div>

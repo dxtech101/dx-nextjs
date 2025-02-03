@@ -3,7 +3,7 @@ import Modal from '@/components/modal/Modal';
 import ErrorToast from '@/components/toast/ErrorToast';
 import SuccessfulToast from '@/components/toast/SuccessfulToast';
 import { skillsDetails } from '@/constants/data';
-import { assignSkills, deleteAssignedSkills, getAllAssignedSkills, getAllSalesforceSkills } from '@/lib/service/portfolio.service';
+import { getAllSalesforceSkills, SkillsService } from '@/lib/service/portfolio.service';
 import { PencilIcon, Sparkle, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -94,8 +94,8 @@ const DeveloperProfileSkills = ({ skills, loading, updateDetails }: any) => {
         try {
             setLoadingUI(true);
             const { results: allSkills } = await getAllSalesforceSkills();
-            const { results: assignedSkills } = await getAllAssignedSkills(contactSfid);
-            const assignedSkillsIds = assignedSkills.map((skill: any) => skill.skill);
+            const { results: assignedSkills } = await SkillsService.getAllAssignedSkills(contactSfid);
+            const assignedSkillsIds = assignedSkills.map((skill: any) => skill.skill.sfid);
             console.log("assignedSkillsIds::", assignedSkillsIds)
             console.log("allSkills::", allSkills)
             console.log("assignedSkills::", allSkills.filter((item: any) => assignedSkillsIds.includes(item.sfid)))
@@ -132,7 +132,7 @@ const DeveloperProfileSkills = ({ skills, loading, updateDetails }: any) => {
         }
         try {
             setLoadingUI(true)
-            const response = await assignSkills(body);
+            const response = await SkillsService.assignSkills(body);
             if (response) {
                 toast.custom((t) => (
                     <SuccessfulToast t={t} message={"Salesforce Skill added Successfully"} />
@@ -152,7 +152,7 @@ const DeveloperProfileSkills = ({ skills, loading, updateDetails }: any) => {
         try {
             setLoadingUI(true)
             const id = initialCheckedItems.find((item: any) => item.skill === sfid)?.sfid;
-            const response = await deleteAssignedSkills(id);
+            const response = await SkillsService.deleteAssignedSkills(id);
             if (response) {
                 toast.custom((t) => (
                     <SuccessfulToast t={t} message={"Salesforce Skill Deleted Successfully"} />

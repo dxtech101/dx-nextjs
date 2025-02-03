@@ -16,7 +16,7 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
 
         return (
             <Tooltip popupContent={label} show={toggleSideBar}>
-                <Link href={href} onClick={() => setToggleSideBar(false)} className={`flex items-center ${toggleSideBar ? "justify-start pl-6" : "justify-center"} h-20 md:h-14 xl:h-16 ${isActive ? 'text-white bg-gray-800' : 'text-gray-600 bg-gray-100 hover:bg-gray-200'} gap-4 rounded-xl mb-4`}>
+                <Link href={href} className={`flex items-center ${toggleSideBar ? "justify-start pl-6" : "justify-center"} h-20 md:h-14 xl:h-16 ${isActive ? 'text-white bg-gray-800' : 'text-gray-600 bg-gray-100 hover:bg-gray-200'} gap-4 rounded-xl mb-4`}>
                     <Icon className={`h-5 w-5 ${isActive ? 'text-white' : 'text-gray-600'}`} />
                     {toggleSideBar && <span className=" text-sm font-medium">{label}</span>}
                 </Link>

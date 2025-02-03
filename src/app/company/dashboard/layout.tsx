@@ -17,13 +17,13 @@ const geistMono = localFont({
     weight: "100 900",
 });
 
-export default function DeveloperDashboardLayout({
+export default function CompanyDashboardLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
     const userProfile = useSelector((state: any) => state.userProfile);
-    const [toggleSideBar, setToggleSideBar] = useState();
+    const [toggleSideBar, setToggleSideBar] = useState("true");
 
     const isUserOnboarded = userProfile.is_onboard;
 

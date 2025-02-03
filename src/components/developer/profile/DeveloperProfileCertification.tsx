@@ -1,14 +1,12 @@
 "use client"
-import Modal from '@/components/modal/Modal';
-import { PencilIcon, ShieldCheck, X } from 'lucide-react';
-import React, { useEffect, useRef, useState } from 'react'
-import Certifications from '../onboarding/Certifications';
 import InputField from '@/components/InputField';
+import Modal from '@/components/modal/Modal';
 import ErrorToast from '@/components/toast/ErrorToast';
 import SuccessfulToast from '@/components/toast/SuccessfulToast';
 import { filterby } from '@/constants/data';
-import { onBoardingHandleNext } from '@/feature/reducers/userOnboarding';
-import { getAllSalesforceCertifications, getAllAssignedCertifications, assignCertification, deleteAssignedCertifications } from '@/lib/service/portfolio.service';
+import { CertificationsService, getAllSalesforceCertifications } from '@/lib/service/portfolio.service';
+import { PencilIcon, ShieldCheck, X } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -92,7 +90,7 @@ const DeveloperProfileCertification = ({ certification, loading, updateDetails }
         try {
             setLoadingUI(true);
             const { results: allCertifications } = await getAllSalesforceCertifications();
-            const { results: assignedCertifications } = await getAllAssignedCertifications(contactSfid);
+            const { results: assignedCertifications } = await CertificationsService.getAllAssignedCertifications(contactSfid);
             const assignedCertificationIds = assignedCertifications.map((cert: any) => cert.certification);
             setInitialItems(allCertifications)
             setInitialCheckedItems(assignedCertifications)
@@ -134,7 +132,7 @@ const DeveloperProfileCertification = ({ certification, loading, updateDetails }
         }
         try {
             setLoadingUI(true)
-            const response = await assignCertification(body);
+            const response = await CertificationsService.assignCertification(body);
             console.log(response);
 
             if (response) {
@@ -156,7 +154,7 @@ const DeveloperProfileCertification = ({ certification, loading, updateDetails }
         try {
             setLoadingUI(true)
             const id = initialCheckedItems.find((item) => item.certification === sfid)?.sfid;
-            const response = await deleteAssignedCertifications(id);
+            const response = await CertificationsService.deleteAssignedCertifications(id);
             if (response) {
                 toast.custom((t) => (
                     <SuccessfulToast t={t} message={"Certification Deleted Successfully"} />
