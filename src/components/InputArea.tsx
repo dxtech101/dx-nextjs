@@ -8,8 +8,9 @@ const InputArea = ({
     rows,
     value,
     onChange,
-    maxLength,
-    className = ''
+    maxLength = 1000,
+    className = '',
+    disabled = false
 }: any) => {
 
     const isMaxLengthReached = value?.length >= maxLength;
@@ -39,6 +40,7 @@ const InputArea = ({
                 placeholder={placeHolder}
                 value={value}
                 onChange={handleChange}
+                disabled={disabled}
             />
         </div>
     );

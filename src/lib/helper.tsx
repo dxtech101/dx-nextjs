@@ -68,7 +68,7 @@ export const validateForm = (
     return Object.keys(newErrors).length === 0;
 };
 
-export const handleFormDataChange = (e: any, setFormData: any, setErrors: any) => {
+export const handleFormDataChange = (e: any, setFormData: any, setErrors?: any) => {
     const { id, value } = e.target;
     console.log("id::", id,"value::", value);
     
