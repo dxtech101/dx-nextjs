@@ -23,8 +23,8 @@ export default function DeveloperDashboardLayout({
     children: React.ReactNode;
 }>) {
     const userProfile = useSelector((state: any) => state.userProfile);
-    const [toggleSideBar, setToggleSideBar] = useState();
-
+    const [toggleSideBar, setToggleSideBar] = useState("true");
+    
     const isUserOnboarded = userProfile.is_onboard;
 
     return (

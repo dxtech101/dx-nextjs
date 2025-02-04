@@ -132,7 +132,7 @@ const page = ({ params }: any) => {
                     </div>
                 </div>
                 <div className='flex justify-between gap-6 w-full py-4'>
-                    {projects?.map((project: any, index: any) => (
+                    {projects && projects.length > 0 && projects?.map((project: any, index: any) => (
                         <CompanyProjectCard
                             index={index}
                             project={project}

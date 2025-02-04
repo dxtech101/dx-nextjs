@@ -46,6 +46,8 @@ export const industries = [
     { value: 'Utilities', label: 'Utilities' }
 ];
 
+export const skill_level = ["JUNIOR", "MIDDLE", "EXPERT"];
+
 export const filterby = [
     "Admin",
     "Developer", 
@@ -59,6 +61,21 @@ export const filterby = [
     "Heroku",
     "Mulesoft"
 ];
+
+export const prefered_hourly_rates = [
+    { value: "$5-10/hr", label: "$5-10/hr" }, 
+    { value: "$10-20/hr", label: "$10-20/hr" }, 
+    { value: "$20-40/hr", label: "$20-40/hr" }, 
+    { value: "$40-60/hr", label: "$40-60/hr" }
+]
+
+export const available_hours = [
+    { value: "0-5hrs", label: "0-5 hrs" }, 
+    { value: "5-10hrs", label: "5-10 hrs" }, 
+    { value: "10-20hrs", label: "10-20 hrs" }, 
+    { value: "20-40hrs", label: "20-40 hrs" }, 
+    { value: "40-60hrs", label: "40-60 hrs" }
+]
 
 export const skillsDetails = [
     { id: "a0lIo000000viJPIAY", text: 'Salesforce', imageSrc: '/Salesforce.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },

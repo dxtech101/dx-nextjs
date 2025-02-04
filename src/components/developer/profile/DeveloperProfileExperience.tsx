@@ -5,7 +5,7 @@ import Modal from '@/components/modal/Modal';
 import MultiSelectDropdown from '@/components/MultiSelectDropdown';
 import { salesforce_technologies, industries } from '@/constants/data';
 import { handleFormDataChange, InfoLabel, validateForm } from '@/lib/helper';
-import { addWorkExperience, deleteWorkExperience, updateWorkExperience } from '@/lib/service/portfolio.service';
+import { WorkExperienceService } from '@/lib/service/portfolio.service';
 import { FileUser, PencilIcon, Plus } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 const WorkExperienceCard = (props: any) => {
     const { experience, index, openEditModal, deleteWorkExperience } = props;
     console.log(experience)
-    
+
     return (
         <div className='relative bg-gray-100 rounded-3xl flex flex-col gap-4 flex-1 p-6 w-full z-10'>
             <h1 className='absolute text-8xl top-0 right-0 font-bold p-5 text-gray-300 uppercase'>
@@ -27,8 +27,7 @@ const WorkExperienceCard = (props: any) => {
             </div>
 
             <div className='grid grid-cols-2 gap-4'>
-                <InfoLabel label="Start Date" content={experience.start_date || "N/A"} />
-                <InfoLabel label="End Date" content={experience.end_date || "N/A"} />
+                <InfoLabel label="Duration" content={experience.duration || "N/A"} />
             </div>
 
             <InfoLabel label="Work Experience Summary" content={experience.project_description || "N/A"} />
@@ -55,8 +54,7 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState<any>({
         company_project_name: "",
-        start_date: "2024-02-02",
-        end_date: "2024-02-01",
+        duration: "",
         industry: "",
         job_title: "",
         project_description: ""
@@ -74,8 +72,7 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
     const openEditModal = (experience: any) => {
         setFormData({
             company_project_name: experience.company_project_name || "",
-            start_date: experience.start_date || "",
-            end_date: experience.end_date || "",
+            duration: experience.duration || "",
             industry: experience.industry || "",
             job_title: experience.job_title || "",
             project_description: experience.project_description || ""
@@ -88,7 +85,7 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
     const deleteDeveloperWorkExperience = async (experienceId: string) => {
         try {
             setLoadingUI(true);
-            await deleteWorkExperience(experienceId);
+            await WorkExperienceService.deleteWorkExperience(experienceId);
             updateDetails()
         } catch (error) {
             console.error("Error fetching certifications:", error);
@@ -107,8 +104,7 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
         const workExperienceData = {
             company_project_name: formData.company_project_name,
             contact: contactSfid,
-            start_date: "2024-02-02",
-            end_date: "2024-02-01",
+            duration: formData.duration,
             industry: formData.industry,
             job_title: formData.job_title,
             project_description: formData.project_description,
@@ -117,12 +113,12 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
         try {
             setLoadingUI(true);
             if (type === "add") {
-                const response = await addWorkExperience(workExperienceData);
+                const response = await WorkExperienceService.addWorkExperience(workExperienceData);
                 if (response) {
                     updateDetails()
                 }
             } else {
-                const response = await updateWorkExperience(editSFID, workExperienceData);
+                const response = await WorkExperienceService.updateWorkExperience(editSFID, workExperienceData);
                 if (response) {
                     updateDetails()
                 }
@@ -179,8 +175,8 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
                                 />
                             ))}
                         </> : (
-                            <div className='text-center text-black text-sm'>
-                                No experience found
+                            <div className='text-start text-black text-sm'>
+                                No Experience Summary found
                             </div>
                         )}
                     </div>
@@ -233,6 +229,7 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
                                 id="rates"
                                 label={"Duration"}
                                 className="w-full flex-1"
+                                onChange={(value) => setFormData({ ...formData, duration: value })}
                                 options={[{ value: "0-5months", label: "<6 Months" }, { value: "6-12months", label: "6-12 Months" }, { value: "morethan12months", label: ">12 Months" }]}
                             />
                         </div>

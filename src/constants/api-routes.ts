@@ -30,6 +30,12 @@ export const GET_WORK_EXPERIENCE = (contact_id:any) => `/portfolio/view-contact-
 export const ADD_WORK_EXPERIENCE = "/portfolio/add-contact-work-experience/ ";
 export const EDIT_WORK_EXPERIENCE = (sfid:any) => `/portfolio/update-work-experience/${sfid}`;
 export const DELETE_WORK_EXPERIENCE = (sfid:any) => `/portfolio/delete-work-experience/${sfid}`;
+
+//Work Preference
+export const GET_WORK_PREFERENCE = (contact_id:any) => `/portfolio/work-preferences/?contact_sfid=${contact_id}`;
+export const ADD_WORK_PREFERENCE = "/portfolio/work-preferences/";
+export const EDIT_WORK_PREFERENCE = (sfid:any) => `/portfolio/work-preferences/${sfid}`;
+export const DELETE_WORK_PREFERENCE = (sfid:any) => `/portfolio/work-preferences/${sfid}`;
 //
 
 // COMPANY API'S ENDPOINTS
@@ -72,3 +78,8 @@ export const SHORTLIST_RESOURCE = `/project_resource/shortlisted-resources/ `;
 export const GET_SHORTLISTED_RESOURCES = (contactId:any) => `/project_resource/check-shortlisted-resources/?contact_id=${contactId}`;
 export const UPDATE_SHORTLISTED_RESOURCES = (contactId:any) => `/project_resource/update-shortlisted-resources/${contactId}`;   
 //
+
+//DEVELOPER ASSESSMENT API's ENDPOINTS
+export const GET_DEVELOPER_ASSESSMENT_QUESTIONS_ANSWERS = (developer_id:any, question_id:any) => `/developer_test/developer-answers/?developer_id=${developer_id}&question_id=${question_id}`;
+export const SUBMIT_DEVELOPER_ASSESSMENT_ANSWERS = "/developer_test/onboarding-test-submission/";
+export const GET_ALL_DEVELOPER_ASSESSMENT_QUESTIONS = "/developer_test/test/"

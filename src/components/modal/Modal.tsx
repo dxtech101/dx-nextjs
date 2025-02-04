@@ -15,8 +15,12 @@ const Modal = ({
 }: any) => {
 
     return (
-        <div className={`absolute top-0 left-0 z-50 w-full h-full bg-black bg-opacity-65 text-black flex justify-center items-center ${classname}`}>
-            <div className={`bg-white rounded-2xl w-11/12 lg:w-${size === "xl" ? "11/12" : size === "lg" ? "h-1/5" : "1/2"} flex flex-col justify-center items-start`}>
+        <div
+            onClick={() => setModal(false)}
+            className={`absolute top-0 left-0 z-50 w-full h-full bg-black bg-opacity-65 text-black flex justify-center items-center ${classname}`}>
+            <div
+                onClick={(e) => e.stopPropagation()}
+                className={`bg-white rounded-2xl w-11/12 lg:w-${size === "xl" ? "11/12" : size === "lg" ? "h-1/5" : "1/2"} flex flex-col justify-center items-start`}>
                 {header && (
                     <div className='w-full flex flex-row justify-between items-center border-b border-0 p-4'>
                         <span className='font-bold text-xl'>

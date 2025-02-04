@@ -19,7 +19,7 @@ const DeveloperProfileDetails = () => {
             </div>
             <div className='w-full h-full flex flex-col xl:flex-row items-center justify-between gap-6'>
                 <img
-                    className="h-1/2 w-1/2 lg:h-1/4 lg:w-1/4 aspect-square rounded-full object-cover object-right relative"
+                    className="h-1/2 w-1/2 lg:h-1/12 lg:w-1/12 aspect-square rounded-full object-cover object-right relative"
                     src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"
                     alt=""
                 />
