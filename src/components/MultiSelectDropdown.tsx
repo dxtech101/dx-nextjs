@@ -8,6 +8,7 @@ interface DropdownProps {
     className?: string;
     options?: { value: string; label: string }[];
     onChange?: (value: string) => void;
+    defaultValues?: string;
 }
 
 const MultiSelectDropdown: React.FC<DropdownProps> = ({
@@ -16,11 +17,35 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({
     className = '',
     options,
     onChange,
+    defaultValues,
 }: any) => {
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [dropdownDirection, setDropdownDirection] = useState<'down' | 'up'>('down');
     const dropdownRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (defaultValues) {
+            console.log("defaultValues::", defaultValues);
+            setSelectedValues(defaultValues)
+        }
+    }, [defaultValues])
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        };
+
+        // Adding the event listener when the component mounts
+        document.addEventListener('click', handleClickOutside);
+
+        // Cleaning up the event listener when the component unmounts
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
 
 
     const handleSelectionChange = (value: string) => {
@@ -42,7 +67,6 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({
         setSelectedValues(prev => prev.filter(v => v !== value));
     };
 
-    // Check available space to decide dropdown direction
     useEffect(() => {
         if (isOpen && dropdownRef.current) {
             const rect = dropdownRef.current.getBoundingClientRect();
@@ -93,6 +117,7 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({
                     )}
 
                     <button
+                        type='button'
                         className="absolute right-0 top-1/2 transform -translate-y-1/2 text-gray-600 focus:outline-none px-4"
                         onClick={(e) => {
                             e.stopPropagation();

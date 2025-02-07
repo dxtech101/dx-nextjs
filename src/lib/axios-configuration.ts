@@ -1,10 +1,8 @@
 
 import axios from "axios";
-// constants
-import { BASE_STAGING, BASE_LOCAL, BASE_PROD } from "@/constants/api-routes";
 // cookie helpers
 import Cookies from "js-cookie";
-import { logout, getAuthenticationToken, getRefreshToken, setAccessToken } from "./cookie";
+import { getAuthenticationToken } from "./cookie";
 
 axios.defaults.baseURL = "https://dx-digital-94bdac14721f.herokuapp.com/"
 axios.defaults.maxRedirects = 0;
@@ -39,9 +37,8 @@ axios.interceptors.request.use(
     const token = Cookies.get("userToken");
     const access_token = token ? JSON.parse(token)?.access_token : null;
 
-    // Do not set the Authorization header for specific URLs
-    const excludedUrls = ["/users/sign-in"]; // Add URLs to this array
-
+    const excludedUrls = ["/users/enroll-user/"]; 
+    
     if (!excludedUrls.some((url) => config.url?.includes(url)) && access_token) {
       axios.defaults.headers.common["Authorization"] = `JWT ${access_token}`;
     }

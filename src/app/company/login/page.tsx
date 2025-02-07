@@ -32,7 +32,7 @@ export default function Login() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!validateForm(formData, setErrors)) {
+        if (!validateForm(formData, errors, setErrors)) {
             return;
         }
 

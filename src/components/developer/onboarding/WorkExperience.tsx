@@ -19,7 +19,7 @@ const InfoLabel = ({ label, content }: any) => {
         <span className="flex flex-col gap-1">
             <span className="uppercase text-xs font-medium text-gray-500">{label}</span>
             <span className="line-clamp-1 hover:line-clamp-3">
-                {content.split(';').join(", ")}
+                {content?.split(';').join(", ")}
             </span>
         </span>
     );
@@ -37,12 +37,11 @@ const WorkExperienceCard = (props: any) => {
 
             <div className='grid grid-cols-2 gap-4'>
                 <InfoLabel label="Salesforce Cloud(s)" content="Sales Cloud, Service Cloud" />
-                <InfoLabel label="Industry" content={experience.industry} />
+                <InfoLabel label="Industry" content={experience.industry || "N/A"} />
             </div>
 
             <div className='grid grid-cols-2 gap-4'>
-                <InfoLabel label="Start Date" content={experience.start_date || "N/A"} />
-                <InfoLabel label="End Date" content={experience.end_date || "N/A"} />
+                <InfoLabel label="Duration" content={experience.duration || "N/A"} />
             </div>
 
             <InfoLabel label="Work Experience Summary" content={experience.project_description || "N/A"} />
@@ -76,19 +75,14 @@ const WorkExperience = () => {
     const [openConfirmModal, setOpenConfirmModal] = useState(false);
     const [formData, setFormData] = useState<any>({
         company_project_name: "",
-        start_date: "",
-        end_date: "",
+        duration: "",
         industry: "",
         job_title: "",
         project_description: ""
     });
     const [errors, setErrors] = useState({
         company_project_name: "",
-        start_date: "",
-        end_date: "",
-        industry: "",
         job_title: "",
-        project_description: ""
     });
     const contactSfid = useSelector((state: any) => state.userSalesforceID)
 
@@ -123,8 +117,7 @@ const WorkExperience = () => {
     const openEditModal = (experience: any) => {
         setFormData({
             company_project_name: experience.company_project_name || "",
-            start_date: experience.start_date || "",
-            end_date: experience.end_date || "",
+            duration: experience.duration || "",
             industry: experience.industry || "",
             job_title: experience.job_title || "",
             project_description: experience.project_description || ""
@@ -134,6 +127,8 @@ const WorkExperience = () => {
         setEditSFID(experience.sfid)
     };
 
+    console.log("editSFID===>>>", editSFID);
+
     const handleNext = () => {
         dispatch(onBoardingHandleNext({ role: "developer", stepperId: 3 }))
     }
@@ -141,19 +136,19 @@ const WorkExperience = () => {
     const handlePrevious = () => {
         dispatch(onBoardingHandlePrevious({ role: "developer", stepperId: 3 }))
     }
+    console.log("errors", errors);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!validateForm(formData, setErrors)) {
+        if (!validateForm(formData, errors, setErrors)) {
             return;
         }
 
         const workExperienceData = {
             company_project_name: formData.company_project_name,
             contact: contactSfid,
-            start_date: formData.start_date,
-            end_date: formData.end_date,
+            duration: formData.duration,
             industry: formData.industry,
             job_title: formData.job_title,
             project_description: formData.project_description,
@@ -308,7 +303,9 @@ const WorkExperience = () => {
                                 id="rates"
                                 label={"Duration"}
                                 className="w-full flex-1"
-                                options={[{ value: "0-5months", label: "<6 Months" }, { value: "6-12months", label: "6-12 Months" }, { value: "morethan12months", label: ">12 Months" }]}
+                                defaultValue={type === "edit" ? formData?.duration : ""}
+                                onChange={(value: any) => setFormData({ ...formData, duration: value })}
+                                options={[{ value: "<6 Months", label: "<6 Months" }, { value: "6-12 months", label: "6-12 Months" }, { value: ">12 Months", label: ">12 Months" }]}
                             />
                         </div>
                         <div className='flex flex-col w-full gap-4 mt-2'>
@@ -316,6 +313,7 @@ const WorkExperience = () => {
                                 id="salesforce_technologies"
                                 label={"Salesforce Technologies"}
                                 className="w-full"
+                                defaultValues={formData.salesforce_technologies}
                                 options={salesforce_technologies}
                                 onChange={(selectedValues) => setFormData({ ...formData, salesforce_technologies: selectedValues })}
                             />
@@ -323,6 +321,7 @@ const WorkExperience = () => {
                                 id="industry"
                                 label={"Industry"}
                                 className="w-full"
+                                defaultValues={type === "edit" ? formData?.industry?.split(";") : ""}
                                 options={industries}
                                 onChange={(selectedValues) => setFormData({ ...formData, industry: selectedValues })}
                             />

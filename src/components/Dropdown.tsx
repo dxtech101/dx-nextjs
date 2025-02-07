@@ -24,10 +24,10 @@ const Dropdown: React.FC<DropdownProps> = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if(defaultValue){
+    if (defaultValue) {
       setSelectedValue(defaultValue)
     }
-  },[defaultValue])
+  }, [defaultValue])
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -85,6 +85,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             : 'Select an option...'}
         </span>
         <button
+          type='button'
           className="text-gray-600 focus:outline-none"
           onClick={(e) => {
             e.stopPropagation();
