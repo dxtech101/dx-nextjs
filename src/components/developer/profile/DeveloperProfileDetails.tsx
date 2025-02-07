@@ -11,7 +11,7 @@ const DeveloperProfileDetails = () => {
     const developerProfile = useSelector((state: any) => state.userProfile)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedPicture, setSelectedPicture] = useState<any>(null);
-    const [previewUrl, setPreviewUrl] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState<any>(null);
     const [loading, setLoading] = useState(false);
 
     const uploadProfilePic = async (e: any) => {
