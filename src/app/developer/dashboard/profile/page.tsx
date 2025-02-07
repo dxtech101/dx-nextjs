@@ -20,9 +20,6 @@ const page = () => {
     try {
       setLoading(true);
       const { results } = await getUserPortfolio(contactSfid);
-      console.log("skills::", results.skills)
-      console.log("certifications::", results.certifications)
-      console.log("work_experience::", results.work_experience)
       setSkills(results.skills);
       setCertifications(results.certifications);
       setWorkExperience(results.work_experience);

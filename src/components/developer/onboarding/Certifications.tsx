@@ -41,6 +41,7 @@ const Certifications = () => {
 
     const dispatch = useDispatch();
     const [items, setItems] = useState<any[]>([]);
+    const [filteredItems, setFilteredItems] = useState<any[]>([]);
     const [inputValue, setInputValue] = useState('');
     const [checkedItems, setCheckedItems] = useState<any[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -61,6 +62,7 @@ const Certifications = () => {
             setInitialItems(allCertifications)
             setInitialCheckedItems(assignedCertifications)
             setItems(allCertifications.filter((item: any) => !assignedCertificationIds.includes(item.sfid)));
+            setFilteredItems(allCertifications.filter((item: any) => !assignedCertificationIds.includes(item.sfid)))
             setCheckedItems(allCertifications.filter((item: any) => assignedCertificationIds.includes(item.sfid)));
         } catch (error) {
             console.error("Error fetching certifications:", error);
@@ -121,9 +123,9 @@ const Certifications = () => {
     useEffect(() => {
         let tempInputValue = inputValue.trim()
         if (tempInputValue) {
-            const filtered = initialItems.filter(item => item.name.toLowerCase().includes(inputValue.toLowerCase()));
-            setItems(filtered);
-        } else setItems(initialItems)
+            const filtered = items.filter(item => item.name.toLowerCase().includes(inputValue.toLowerCase()));
+            setFilteredItems(filtered);
+        } else setFilteredItems(items)
     }, [inputValue]);
 
     const handleCheckboxChange = async (id: any) => {
@@ -135,6 +137,7 @@ const Certifications = () => {
                 const response = await deleteCertification(id)
                 if (response) {
                     setItems([...items, uncheckedItem]);
+                    setFilteredItems([...filteredItems, uncheckedItem]);
                     setCheckedItems(checkedItems.filter(i => i.sfid !== id));
                     toast.custom((t) => (
                         <SuccessfulToast t={t} message={"Certification deleted Successfully"} />
@@ -150,6 +153,7 @@ const Certifications = () => {
             if (response) {
                 setCheckedItems([...checkedItems, item]);
                 setItems(items.filter((i: any) => i.sfid !== id));
+                setFilteredItems(filteredItems.filter((i: any) => i.sfid !== id));
                 toast.custom((t) => (
                     <SuccessfulToast t={t} message={"Certification added Successfully"} />
                 ));
@@ -160,6 +164,8 @@ const Certifications = () => {
             }
         }
     };
+
+    console.log("filteredItems", filteredItems);
 
     const handleSuggestionSelect = (item: any) => {
         setInputValue(item.text);
@@ -173,16 +179,16 @@ const Certifications = () => {
             const updatedTags = selectedTags.filter((tag: any) => tag !== category);
             setSelectedTags(updatedTags);
             if (updatedTags.length === 0) {
-                setItems(initialItems);
+                setFilteredItems(items);
             } else {
                 const filtered = initialItems.filter(item => updatedTags.includes(item.type));
-                setItems(filtered);
+                setFilteredItems(filtered);
             }
         } else {
             const updatedTags = [...selectedTags, category];
             setSelectedTags(updatedTags);
             const filtered = initialItems.filter(item => updatedTags.includes(item.type));
-            setItems(filtered);
+            setFilteredItems(filtered);
         }
     };
 
@@ -245,8 +251,8 @@ const Certifications = () => {
                                     })}
                                 </div>
                             </div>
-                            {items.length > 0 ? (
-                                items.map((item) => (
+                            {filteredItems.length > 0 ? (
+                                filteredItems.map((item) => (
                                     <div
                                         key={item.sfid}
                                         className='flex items-center justify-between gap-2 p-3 border border-b-0 cursor-pointer hover:bg-gray-100'

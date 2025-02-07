@@ -2,11 +2,12 @@
 import InputArea from '@/components/InputArea';
 import AssessmentLoader from '@/components/loaders/AssessmentLoader';
 import { developerQuestions } from '@/constants/data';
-import { getAllQuestions, getAnswer, submitAnswer } from '@/lib/service/developerTest.service';
+import { addUserProfile } from '@/feature/reducers/userProfile';
+import { getAllQuestions, getAnswer, submitAnswer, submitAssessment } from '@/lib/service/developerTest.service';
 import { ArrowLeft, ArrowRight, CircleAlert, DoorOpen, EllipsisVertical, HandHelping } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
@@ -17,12 +18,13 @@ const page = () => {
     const [answerLoading, setAnswerLoading] = useState(true);
     const [currentQuestion, setCurrentQuestion] = useState(1);
     const [assessmentQuestions, setAssessmentQuestions] = useState<any>([]);
-    const [isUserExamConducted, setIsUserExamConducted] = useState(true);
+    const [totalQuestions, setTotalQuestions] = useState(0);
     const [showFullscreenWarning, setShowFullscreenWarning] = useState(true);
     const [formData, setFormData] = useState<any>({});
     const router = useRouter();
-    const totalQuestions = developerQuestions?.length;
     const contactSfid = useSelector((state: any) => state.userSalesforceID)
+    const userProfile = useSelector((state: any) => state.userProfile);
+    const dispatch = useDispatch();
 
     const getAllQuestionsData = async () => {
         try {
@@ -30,6 +32,7 @@ const page = () => {
             const { results: questions } = await getAllQuestions();
             if (questions) {
                 setAssessmentQuestions(questions);
+                setTotalQuestions(questions.length);
             }
         } catch (error) {
             console.log("error", error);
@@ -115,14 +118,17 @@ const page = () => {
         }
     };
 
-
-    const handleFormDataChange = (e: any, setFormData: any, questionId: string) => {
-        setFormData((prev: any) => ({
-            ...prev,
-            [questionId]: e.target.value
-        }));
+    const handleSubmitAssessment = async () => {
+        try {
+            const {results} = await submitAssessment(userProfile.id);
+            if (results) {
+                dispatch(addUserProfile(results));
+                router.push('/developer/dashboard');
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
     };
-
 
     return (
         <div>
@@ -150,16 +156,7 @@ const page = () => {
             {loading ? <AssessmentLoader /> : <>
                 <div className={`sticky bg-white flex flex-row flex-wrap ${submitExam ? "justify-center" : "justify-between"}  items-center w-full border-b border-gray-200 py-3 mb-4 z-20`}>
                     {submitExam ? (
-                        <div className='flex flex-col justify-center items-center'>
-                            <div className='relative'>
-                                <h3 className="text-2xl font-bold">{currentQuestion} / {totalQuestions} Questions attempted</h3>
-                            </div>
-                            <div className="flex flex-row gap-1 items-center justify-center w-full py-3">
-                                {Array.from({ length: totalQuestions }).map((_, index) => (
-                                    <div key={index} className="h-3 w-20 rounded-full bg-blue-400" />
-                                ))}
-                            </div>
-                        </div>
+                        <></>
                     ) : (
                         <div className='p-6 flex flex-row items-center justify-between w-full'>
                             <div>
@@ -167,15 +164,17 @@ const page = () => {
                                     <span className='absolute text-5xl top-0 font-black text-black opacity-10'>{'</>'}</span>
                                     <h3 className="text-2xl font-bold">Question {currentQuestion}</h3>
                                 </div>
-                                <div className="flex flex-row gap-1 items-center justify-center w-full py-3">
+                                <div className="flex flex-row gap-3 items-center justify-center w-full py-3">
                                     {Array.from({ length: totalQuestions }).map((_, index) => (
                                         <div
                                             key={index}
-                                            className={`h-3 w-20 rounded-full ${index + 1 === currentQuestion
+                                            className={`w-fit p-4 rounded-xl ${index + 1 === currentQuestion
                                                 ? "bg-green-400"
                                                 : "bg-gray-200"
                                                 }`}
-                                        />
+                                        >
+                                            {index + 1}
+                                        </div>
                                     ))}
                                 </div>
                             </div>
@@ -189,7 +188,6 @@ const page = () => {
                                     </button>
                                     <button
                                         onClick={() => {
-
                                             router.push("/developer/dashboard")
                                         }}
                                         className='flex z-30 flex-row gap-2 items-center w-full p-3 px-5 hover:bg-gray-100'>
@@ -204,7 +202,19 @@ const page = () => {
 
                 <div className='flex flex-col gap-2 p-6'>
                     {submitExam ? (
-                        <div className='flex flex-col items-center justify-center gap-2 p-6'>
+                        <div className='w-full h-full flex flex-col items-center justify-center gap-2 p-6'>
+                            <div className='flex flex-col justify-center items-center'>
+                                <div className='relative'>
+                                    <h3 className="text-2xl font-bold">{currentQuestion} / {totalQuestions} Questions attempted</h3>
+                                </div>
+                                <div className="flex flex-row gap-1 items-center justify-center w-full py-3">
+                                    {Array.from({ length: totalQuestions }).map((_, index) => (
+                                        <div key={index} className="w-fit p-4 rounded-xl bg-blue-400" >
+                                            {index + 1}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                             <p className='text-center text-lg'>
                                 Are you sure you want to submit your exam?
                                 <p className='text-sm text-gray-500'>
@@ -213,13 +223,14 @@ const page = () => {
                             </p>
 
                             <div className='flex flex-row items-center justify-center gap-2 mt-4'>
-                                <button onClick={() => setSubmitExam(false)} className='bg-red-500 text-sm text-white px-3 py-1 rounded-full inline-flex items-center gap-1'>
+                                <button
+                                    type='button'
+                                    onClick={() => setSubmitExam(false)}
+                                    className='bg-red-500 text-sm text-white px-3 py-1 rounded-full inline-flex items-center gap-1'>
                                     Cancel
                                 </button>
                                 <button
-                                    onClick={() => {
-                                        setIsUserExamConducted(false);
-                                    }}
+                                    onClick={handleSubmitAssessment}
                                     className='bg-blue-600 text-sm text-white px-3 py-1 rounded-xl inline-flex items-center gap-1'>
                                     Submit <ArrowRight className='h-4' />
                                 </button>
@@ -231,7 +242,7 @@ const page = () => {
                                 <p className="tracking-tight text-gray-500 text-sm">
                                     Question
                                 </p>
-                                <p className="" dangerouslySetInnerHTML={{ __html: assessmentQuestions[currentQuestion]?.question }} />
+                                <p dangerouslySetInnerHTML={{ __html: assessmentQuestions[currentQuestion]?.question }} />
                             </div>
                             <div className='flex-1 flex-col gap-2'>
                                 <p className="tracking-tight text-gray-500 text-sm">

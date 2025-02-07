@@ -57,6 +57,7 @@ const Skills = () => {
     const [initialItems, setInitialItems] = useState<any[]>([]);
     const [initialCheckedItems, setInitialCheckedItems] = useState<any[]>([]);
     const [items, setItems] = useState<any[]>([]);
+    const [filteredItems, setFilteredItems] = useState<any[]>([]);
     const [checkedItems, setCheckedItems] = useState<any[]>([]);
     const [inputValue, setInputValue] = useState('');
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -76,22 +77,21 @@ const Skills = () => {
             const { results: assignedSkills } = await SkillsService.getAllAssignedSkills(contactSfid);
             console.log("assignedSkills::", assignedSkills);
 
-            const assignedCertificationIds = assignedSkills.map((skill: any) => skill.skill.sfid);
+            const assignedSkillsIds = assignedSkills.map((skill: any) => skill.skill.sfid);
 
             setInitialItems(allSkills)
             setInitialCheckedItems(assignedSkills)
-            setItems(allSkills.filter((item: any) => !assignedCertificationIds.includes(item.sfid)));
+            setItems(allSkills.filter((item: any) => !assignedSkillsIds.includes(item.sfid)));
+            setFilteredItems(allSkills.filter((item: any) => !assignedSkillsIds.includes(item.sfid)))
             setCheckedItems(assignedSkills);
         } catch (error) {
-            console.error("Error fetching cert  `12323434aifications:", error);
+            console.error("Error fetching cert ====>", error);
         } finally {
             setLoading(false);
         }
     }
 
-    console.log("checkedItems::", checkedItems);
-    console.log("items::", items);
-
+    console.log("FilteredItems::", filteredItems);
 
     useEffect(() => {
         getSkillsDetails();
@@ -150,6 +150,8 @@ const Skills = () => {
         }
     }
 
+    console.log("checkedItems::", checkedItems);
+
     const handleCheckboxChange = async (id: any) => {
         const isChecked = checkedItems.find((i: any) => i.skill.sfid === id);
         const item = initialItems.find((i: any) => i.sfid === id);
@@ -161,7 +163,8 @@ const Skills = () => {
                 const response = await deleteSkills(id)
                 if (response) {
                     setItems([...items, uncheckedItem]);
-                    setCheckedItems(checkedItems.filter(i => i.sfid !== id));
+                    setFilteredItems([...filteredItems, uncheckedItem]);
+                    setCheckedItems(checkedItems.filter(i => i.skill.sfid !== id));
                     toast.custom((t) => (
                         <SuccessfulToast t={t} message={"Salesforce Skill deleted Successfully"} />
                     ));
@@ -176,6 +179,7 @@ const Skills = () => {
             if (response) {
                 setCheckedItems([...checkedItems, item]);
                 setItems(items.filter((i: any) => i.sfid !== id));
+                setFilteredItems(items.filter((i: any) => i.sfid !== id));
                 toast.custom((t) => (
                     <SuccessfulToast t={t} message={"Salesforce Skill added Successfully"} />
                 ));
@@ -188,11 +192,11 @@ const Skills = () => {
     };
 
     useEffect(() => {
-        if (inputValue.trim()) {
+        let tempInputValue = inputValue.trim()
+        if (tempInputValue) {
             const filtered = items.filter(item => item.name.toLowerCase().includes(inputValue.toLowerCase()));
-            setItems(filtered);
-            setShowSuggestions(true);
-        } else setItems(initialItems)
+            setFilteredItems(filtered);
+        } else setFilteredItems(items)
     }, [inputValue]);
 
     const handleSuggestionSelect = (item: any) => {
@@ -251,8 +255,8 @@ const Skills = () => {
 
                         {showSuggestions && !loadingUI && (
                             <div className='absolute bg-white border-2 left-0 rounded-xl shadow-sm w-full lg:w-1/2 mt-1 max-h-48 overflow-y-auto z-20'>
-                                {items.length > 0 ? (
-                                    items.map((item) => (
+                                {filteredItems.length > 0 ? (
+                                    filteredItems.map((item) => (
                                         <div className={showSkillLevel === item.sfid ? "bg-gray-50" : ""}>
                                             <div
                                                 key={item.sfid}
@@ -260,12 +264,12 @@ const Skills = () => {
                                                 onMouseDown={() => handleSkillSelected(item.sfid)}
                                             >
                                                 {/* <img className='w-8 h-auto' src={'/' + item.name + '.png'} alt={item.name} /> */}
-                                                <span className='font-bold text-gray-800'>{item.name}</span>
+                                                <span className='font-bold text-gray-800'>{item?.name || item?.skill?.name}</span>
                                                 {showSkillLevel === item.sfid && (
                                                     <button
                                                         onClick={() => handleSuggestionSelect(item)}
                                                         className='flex bg-green-200 hover:bg-green-600 font-bold text-green-600 hover:text-green-200 duration-200 py-0.5 px-4 rounded-full flex-row text-sm justify-between items-center'>
-                                                        Save
+                                                        Add Skill
                                                     </button>
                                                 )}
                                             </div>
@@ -315,7 +319,7 @@ const Skills = () => {
                             {checkedItems.length > 0 ? checkedItems.map(item => (
                                 <CheckboxItem
                                     key={item.sfid}
-                                    id={item.skill.sfid || item.sfid}
+                                    id={item?.skill?.sfid || item?.sfid}
                                     checked={checkedItems.some(checkedItem => checkedItem.sfid === item.sfid)}
                                     onChange={() => handleCheckboxChange(item.skill.sfid || item.sfid)}
                                     skill_level={item.skill_level}

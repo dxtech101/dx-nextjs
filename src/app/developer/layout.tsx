@@ -4,7 +4,6 @@ import "../globals.css";
 import "@/lib/axios-configuration"
 import { Toaster } from "react-hot-toast";
 
-
 export default function DeveloperLayout({
   children,
 }: {
@@ -18,6 +17,9 @@ export default function DeveloperLayout({
       <Toaster
         position="top-center"
         reverseOrder={false}
+        toastOptions={{
+          duration: 1000,
+        }}
       />
     </section>
   )

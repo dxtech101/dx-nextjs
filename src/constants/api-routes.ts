@@ -83,3 +83,4 @@ export const UPDATE_SHORTLISTED_RESOURCES = (contactId:any) => `/project_resourc
 export const GET_DEVELOPER_ASSESSMENT_QUESTIONS_ANSWERS = (developer_id:any, question_id:any) => `/developer_test/developer-answers/?developer_id=${developer_id}&question_id=${question_id}`;
 export const SUBMIT_DEVELOPER_ASSESSMENT_ANSWERS = "/developer_test/onboarding-test-submission/";
 export const GET_ALL_DEVELOPER_ASSESSMENT_QUESTIONS = "/developer_test/test/"
+export const SUBMIT_DEVELOPER_ASSESSMENT = (id:any) => `/developer_test/developer-answers-submission/${id}/`
