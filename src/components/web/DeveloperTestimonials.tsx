@@ -38,7 +38,7 @@ const DeveloperTestimonials = () => {
     return (
         <section className="py-12 md:py-24 container mx-auto flex flex-col justify-center items-start">
             <h1 className="mb-16 font-semibold text-6xl sm:text-6xl xl:text-11xl font-heading">
-                Work with anyone. Anywhere.
+                Work with Anyone. Anywhere.
             </h1>
             <div className="flex w-full justify-evenly flex-wrap -m-2.5">
                 <div className="w-full md:w-1/2 lg:w-1/3 p-2.5">

@@ -6,7 +6,7 @@ const Herosection = () => {
         <section className="relative">
             <div className="overflow-hidden pt-16 h-screen">
                 <div className="relative container px-4 mx-auto">
-                    <div className="flex flex-col sm:flex-row flex-wrap -m-8">
+                    <div className="flex flex-col sm:flex-row flex-wrap -mt-8">
                         <div className="w-full md:w-1/2 lg:w-4/12 xl:w-6/12 p-8">
                             <h1 className="mb-9 text-7xl font-bold font-heading md:max-w-7xl leading-none text-black">
                                 Hire Top
@@ -25,9 +25,9 @@ const Herosection = () => {
                                     Trusted Salesforce Talent, Vetted for Excellence, Hired with Flexibility.
                                 </p>
                                 <div className="mb-12 md:inline-block">
-                                    <button className="py-4 px-6 w-full text-white font-semibold border border-indigo-700 rounded-xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200" type="button">
+                                    <Link href={"/signup"} className="py-4 px-6 w-full text-white font-semibold border border-indigo-700 rounded-xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200" type="button">
                                         Sign up now
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

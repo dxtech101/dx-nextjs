@@ -82,7 +82,7 @@ const page = () => {
     };
 
     return (
-        <section className="relative bg-white overflow-scroll lg:overflow-hidden h-fit">
+        <section className="relative bg-white overflow-scroll lg:overflow-hidden min-h-screen">
             <img className="absolute left-0 bottom-0 z-10 w-full h-full" src="https://static.shuffle.dev/components/preview/238eb578-e531-4cf4-a658-a1ff13c9b896/assets/public/flaro-assets/images/sign-up/gradient.svg" alt="" />
             <div className="relative z-10 flex flex-wrap m-0 lg:-m-8">
                 <div className="relative w-full md:w-1/2 p-8 lg:p-8 flex flex-col justify-center items-center">

@@ -17,7 +17,17 @@ export const setAxiosHeader = (token: string) => {
 
 (function () {
   let authToken: any = getAuthenticationToken();
-  authToken = authToken ? JSON.parse(authToken) : null;
+  // authToken = authToken ? JSON?.parse(authToken) : null;
+  // if (authToken && authToken.access_token) setAxiosHeader(authToken.access_token);
+
+  // Ensure it's a valid JSON string before parsing
+  try {
+    authToken = authToken && typeof authToken === "string" ? JSON.parse(authToken) : null;
+  } catch (error) {
+    console.error("Invalid JSON token:", authToken);
+    authToken = null;
+  }
+
   if (authToken && authToken.access_token) setAxiosHeader(authToken.access_token);
 })();
 
