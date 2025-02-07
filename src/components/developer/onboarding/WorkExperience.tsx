@@ -54,7 +54,7 @@ const WorkExperienceCard = (props: any) => {
                     Edit
                 </button>
                 <button
-                    onClick={() => deleteWorkExperience(experience.sfid)}
+                    onClick={() => deleteWorkExperience(experience.id)}
                     className='bg-red-200 border hover:border-red-400 text-sm text-red-600 font-medium h-8 px-4 rounded-full'
                 >
                     Delete
@@ -71,7 +71,7 @@ const WorkExperience = () => {
     const [openModal, setOpenModal] = useState<any>(false)
     const [loading, setLoading] = useState(false);
     const [type, setType] = useState<any>("add");
-    const [editSFID, setEditSFID] = useState<any>(null);
+    const [editID, setEditID] = useState<any>(null);
     const [openConfirmModal, setOpenConfirmModal] = useState(false);
     const [formData, setFormData] = useState<any>({
         company_project_name: "",
@@ -124,10 +124,9 @@ const WorkExperience = () => {
         });
         setOpenModal(true);
         setType("edit")
-        setEditSFID(experience.sfid)
+        setEditID(experience.id)
     };
 
-    console.log("editSFID===>>>", editSFID);
 
     const handleNext = () => {
         dispatch(onBoardingHandleNext({ role: "developer", stepperId: 3 }))
@@ -136,7 +135,6 @@ const WorkExperience = () => {
     const handlePrevious = () => {
         dispatch(onBoardingHandlePrevious({ role: "developer", stepperId: 3 }))
     }
-    console.log("errors", errors);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -162,7 +160,7 @@ const WorkExperience = () => {
                     getDeveloperWorkExperienceDetails()
                 }
             } else {
-                const response = await WorkExperienceService.updateWorkExperience(editSFID, workExperienceData);
+                const response = await WorkExperienceService.updateWorkExperience(editID, workExperienceData);
                 if (response) {
                     getDeveloperWorkExperienceDetails()
                 }
@@ -200,7 +198,6 @@ const WorkExperience = () => {
                         }
                     </span>
                     <div className='flex flex-row gap-4'>
-
                         <button
                             disabled={loading}
                             onClick={handlePrevious}

@@ -10,6 +10,7 @@ export const TOKEN_VERIFICATION = "/users/token-verification/";
 export const USER_ONBOARDED = (id:any) => `/users/on-boarded/${id}`
 export const GET_USER_SALESFORCE_CONTACT_ID = `/users/contact-salesforce-id/`
 export const GET_USER_SALESFORCE_ACCOUNT_ID= `/users/account-salesforce-id/`
+export const PROFILE_UPLOAD = `/users/profile-picture/`
 
 //DEVELOPER ONBOARDING API's ENDPOINTS
 export const USER_PORTFOLIO = (sfid:any) => `portfolio/detailed-contact-view/${sfid}`

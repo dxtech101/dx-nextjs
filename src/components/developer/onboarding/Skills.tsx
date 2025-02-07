@@ -43,7 +43,7 @@ const CheckboxItem = ({ id, checked, onChange, loadingUI, skill_level }: any) =>
                     )}
                 </div>
 
-                <div className='text-xs text-black'>
+                <div className='text-xs text-black normal-case'>
                     Skill Level: {skill_level}
                 </div>
             </div>
@@ -70,9 +70,10 @@ const Skills = () => {
 
     const dispatch = useDispatch();
 
-    const getSkillsDetails = async () => {
+    const getSkillsDetails = async (reloadType: any) => {
         try {
-            setLoading(true);
+            if (reloadType === "initial") setLoading(true);
+            else if (reloadType === "update") setLoadingUI(true);
             const { results: allSkills } = await getAllSalesforceSkills();
             const { results: assignedSkills } = await SkillsService.getAllAssignedSkills(contactSfid);
             console.log("assignedSkills::", assignedSkills);
@@ -87,14 +88,14 @@ const Skills = () => {
         } catch (error) {
             console.error("Error fetching cert ====>", error);
         } finally {
-            setLoading(false);
+            if (reloadType === "initial") setLoading(false);
+            else if (reloadType === "update") setLoadingUI(false);
         }
     }
 
-    console.log("FilteredItems::", filteredItems);
 
     useEffect(() => {
-        getSkillsDetails();
+        getSkillsDetails("initial");
 
         const handleClickOutside = (event: any) => {
             if (containerRef.current && !containerRef.current.contains(event.target)) {
@@ -116,6 +117,8 @@ const Skills = () => {
     }
 
     const addSkills = async (id: any) => {
+        console.log(id);
+
         const body: any = {
             "contact_sfid": contactSfid,
             "skills": {
@@ -137,10 +140,9 @@ const Skills = () => {
     }
 
 
-    const deleteSkills = async (sfid: string) => {
+    const deleteSkills = async (id: string) => {
         try {
             setLoadingUI(true)
-            const id = initialCheckedItems.find((item: any) => item.skill.sfid === sfid)?.sfid;
             return await SkillsService.deleteAssignedSkills(id);
         } catch (error: any) {
             return false;
@@ -150,24 +152,20 @@ const Skills = () => {
         }
     }
 
-    console.log("checkedItems::", checkedItems);
 
-    const handleCheckboxChange = async (id: any) => {
-        const isChecked = checkedItems.find((i: any) => i.skill.sfid === id);
-        const item = initialItems.find((i: any) => i.sfid === id);
+    const handleCheckboxChange = async (sfid: any, id: any) => {
+        const isChecked = checkedItems.find((i: any) => i?.id === id);
 
-        console.log("isChecked::", isChecked);
         if (isChecked) {
-            const uncheckedItem = checkedItems.find(i => i.skill.sfid === id);
+            const uncheckedItem = checkedItems.find((i: any) => i?.id === id);
             if (uncheckedItem) {
                 const response = await deleteSkills(id)
                 if (response) {
-                    setItems([...items, uncheckedItem]);
-                    setFilteredItems([...filteredItems, uncheckedItem]);
-                    setCheckedItems(checkedItems.filter(i => i.skill.sfid !== id));
-                    toast.custom((t) => (
-                        <SuccessfulToast t={t} message={"Salesforce Skill deleted Successfully"} />
-                    ));
+                    getSkillsDetails("update").then(response => {
+                        toast.custom((t) => (
+                            <SuccessfulToast t={t} message={"Salesforce Skill deleted Successfully"} />
+                        ));
+                    })
                 } else {
                     toast.custom((t) => (
                         <ErrorToast t={t} message={"Salesforce Skill deleted Failed"} />
@@ -175,14 +173,13 @@ const Skills = () => {
                 }
             }
         } else {
-            const response = await addSkills(id)
+            const response = await addSkills(sfid)
             if (response) {
-                setCheckedItems([...checkedItems, item]);
-                setItems(items.filter((i: any) => i.sfid !== id));
-                setFilteredItems(items.filter((i: any) => i.sfid !== id));
-                toast.custom((t) => (
-                    <SuccessfulToast t={t} message={"Salesforce Skill added Successfully"} />
-                ));
+                getSkillsDetails("update").then(response => {
+                    toast.custom((t) => (
+                        <SuccessfulToast t={t} message={"Salesforce Skill added Successfully"} />
+                    ));
+                })
             } else {
                 toast.custom((t) => (
                     <ErrorToast t={t} message={"Salesforce Skill added Failed"} />
@@ -201,7 +198,7 @@ const Skills = () => {
 
     const handleSuggestionSelect = (item: any) => {
         setInputValue(item.text);
-        handleCheckboxChange(item.sfid);
+        handleCheckboxChange(item?.skill?.sfid || item?.sfid, item.id);
         setShowSuggestions(false);
         setInputValue("")
     }
@@ -319,9 +316,9 @@ const Skills = () => {
                             {checkedItems.length > 0 ? checkedItems.map(item => (
                                 <CheckboxItem
                                     key={item.sfid}
-                                    id={item?.skill?.sfid || item?.sfid}
+                                    id={item?.skill?.sfid ? item?.skill?.sfid : item?.sfid}
                                     checked={checkedItems.some(checkedItem => checkedItem.sfid === item.sfid)}
-                                    onChange={() => handleCheckboxChange(item.skill.sfid || item.sfid)}
+                                    onChange={() => handleCheckboxChange(item?.skill?.sfid, item?.id)}
                                     skill_level={item.skill_level}
                                     loadingUI={loadingUI}
                                 />

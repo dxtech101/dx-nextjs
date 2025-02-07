@@ -53,26 +53,38 @@ const Certifications = () => {
     const [loadingUI, setLoadingUI] = useState(false);
     const contactSfid = useSelector((state: any) => state.userSalesforceID)
 
-    const getCertificationDetails = async () => {
+    const getCertificationDetails = async (reloadType: any) => {
         try {
-            setLoading(true);
+            if (reloadType === "initial") setLoading(true);
+            else if (reloadType === "update") setLoadingUI(true);
+
             const { results: allCertifications } = await getAllSalesforceCertifications();
             const { results: assignedCertifications } = await CertificationsService.getAllAssignedCertifications(contactSfid);
+            console.log("assignedCertifications::", assignedCertifications);
+
             const assignedCertificationIds = assignedCertifications.map((cert: any) => cert.certification);
             setInitialItems(allCertifications)
             setInitialCheckedItems(assignedCertifications)
             setItems(allCertifications.filter((item: any) => !assignedCertificationIds.includes(item.sfid)));
             setFilteredItems(allCertifications.filter((item: any) => !assignedCertificationIds.includes(item.sfid)))
-            setCheckedItems(allCertifications.filter((item: any) => assignedCertificationIds.includes(item.sfid)));
+            setCheckedItems(
+                allCertifications
+                    .filter((item: any) => assignedCertificationIds.includes(item.sfid))
+                    .map((item: any) => {
+                        const assignedCert = assignedCertifications.find((cert: any) => cert.certification === item.sfid);
+                        return { ...item, id: assignedCert?.id };
+                    })
+            );
         } catch (error) {
             console.error("Error fetching certifications:", error);
         } finally {
-            setLoading(false);
+            if (reloadType === "initial") setLoading(false);
+            else if (reloadType === "update") setLoadingUI(false);
         }
     };
 
     useEffect(() => {
-        getCertificationDetails();
+        getCertificationDetails("initial");
 
         const handleClickOutside = (event: MouseEvent) => {
             if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -107,10 +119,9 @@ const Certifications = () => {
         }
     }
 
-    const deleteCertification = async (sfid: string) => {
+    const deleteCertification = async (id: string) => {
         try {
             setLoadingUI(true)
-            const id = initialCheckedItems.find((item) => item.certification === sfid)?.sfid;
             return await CertificationsService.deleteAssignedCertifications(id);
         } catch (error: any) {
             return false;
@@ -128,20 +139,27 @@ const Certifications = () => {
         } else setFilteredItems(items)
     }, [inputValue]);
 
-    const handleCheckboxChange = async (id: any) => {
-        const isChecked = checkedItems.find((i: any) => i.sfid === id);
-        const item = initialItems.find((i: any) => i.sfid === id);
+    const handleCheckboxChange = async (id: any, sfid: any) => {
+        console.log("id::", id);
+        console.log("sfid::", sfid);
+
+        const isChecked = checkedItems.find((i: any) => i.id === id);
+        const item = initialItems.find((i: any) => i.sfid === sfid);
+        console.log("item::", item);
+        console.log("isChecked::", isChecked);
+
         if (isChecked) {
-            const uncheckedItem = checkedItems.find(i => i.sfid === id);
+            const uncheckedItem = checkedItems.find(i => i.id === id);
+            console.log("uncheckedItem::", uncheckedItem);
+
             if (uncheckedItem) {
                 const response = await deleteCertification(id)
                 if (response) {
-                    setItems([...items, uncheckedItem]);
-                    setFilteredItems([...filteredItems, uncheckedItem]);
-                    setCheckedItems(checkedItems.filter(i => i.sfid !== id));
-                    toast.custom((t) => (
-                        <SuccessfulToast t={t} message={"Certification deleted Successfully"} />
-                    ));
+                    getCertificationDetails("update").then(response => {
+                        toast.custom((t) => (
+                            <SuccessfulToast t={t} message={"Certification deleted Successfully"} />
+                        ));
+                    })
                 } else {
                     toast.custom((t) => (
                         <ErrorToast t={t} message={"Certification deleted Failed"} />
@@ -149,14 +167,13 @@ const Certifications = () => {
                 }
             }
         } else {
-            const response = await addCertification(id)
+            const response = await addCertification(sfid)
             if (response) {
-                setCheckedItems([...checkedItems, item]);
-                setItems(items.filter((i: any) => i.sfid !== id));
-                setFilteredItems(filteredItems.filter((i: any) => i.sfid !== id));
-                toast.custom((t) => (
-                    <SuccessfulToast t={t} message={"Certification added Successfully"} />
-                ));
+                getCertificationDetails("update").then(response => {
+                    toast.custom((t) => (
+                        <SuccessfulToast t={t} message={"Certification added Successfully"} />
+                    ));
+                })
             } else {
                 toast.custom((t) => (
                     <ErrorToast t={t} message={"Certification added Failed"} />
@@ -165,11 +182,10 @@ const Certifications = () => {
         }
     };
 
-    console.log("filteredItems", filteredItems);
 
     const handleSuggestionSelect = (item: any) => {
         setInputValue(item.text);
-        handleCheckboxChange(item.sfid);
+        handleCheckboxChange(item.id, item.sfid);
         setShowSuggestions(false);
         setInputValue("")
     }
@@ -287,7 +303,7 @@ const Certifications = () => {
                                     text={item.name}
                                     imageSrc={item.name}
                                     checked={checkedItems.some(checkedItem => checkedItem.sfid === item.sfid)}
-                                    onChange={() => handleCheckboxChange(item.sfid)}
+                                    onChange={() => handleCheckboxChange(item.id, item.sfid)}
                                     loadingUI={loadingUI}
                                 />
                             )) : (

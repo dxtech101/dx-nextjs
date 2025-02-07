@@ -115,7 +115,7 @@ const page = () => {
                             </div>
                         </div>
                         <div className="hidden md:flex bg-white text-white rounded-3xl flex-row items-center justify-center px-6 p-4 gap-4">
-                            <img className="h-28 w-28 rounded-full object-cover mr-2 object-right z-0" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHxw-10=format&fit=crop&w=1050&q=80" alt="" />
+                            <img className="h-28 w-28 rounded-full object-cover mr-2 object-right z-0" src={userProfile?.profile_picture || "https://www.tech101.in/wp-content/uploads/2018/07/blank-profile-picture.png"} alt="" />
                             <div className="text-black">
                                 <h2 className="text-2xl font-semibold mb-2 capitalize"> {userProfile.first_name}  {userProfile.last_name}</h2>
                                 <p className='text-gray-400 text-sm'>Software Developer</p>
