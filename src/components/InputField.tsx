@@ -63,7 +63,7 @@ const InputField = ({
             value={value}
             id={id}
             onChange={onChange}
-            className={`h-12 pl-4 ${iconName && "pl-[2.5rem]"} ${customTag ? "pl-[4.5rem]" : ""} ${type === "tel" ? "pl-[5rem]" : ""} pr-4 text-black border ${type === "password" && !showPassword && "text-2xl leading-loose"} ${error ? "border-red-400 bg-red-100" : "border-gray-400 bg-gray-50"} rounded-xl ${className}`}
+            className={`h-12 pl-4 ${iconName && "pl-[2.5rem]"} ${customTag ? "pl-[4.5rem]" : ""}  pr-4 text-black border ${type === "password" && !showPassword && "text-2xl leading-loose"} ${error ? "border-red-400 bg-red-100" : "border-gray-400 bg-white"} rounded-xl ${className}`}
             placeholder={placeHolder}
             onFocus={onFocus}
             onMouseDown={onMouseDown}
@@ -136,25 +136,6 @@ const InputField = ({
                     </button>
                   </div>
                 ))}
-              </div>
-            </div>
-          )}
-          {type === "tel" && (
-            <div className="absolute top-1.5 left-2 mt-1 w-fit sm:w-auto">
-              <div className="relative h-full">
-                <select
-                  value={country}
-                  onChange={event => setCountry(event.target.value)}
-                  className={`p-1 text-sm font-medium max-w-fit h-full bg-light outline-none cursor-pointer rounded-full border 
-                  ${error ? "bg-red-200 border-red-300 text-red-500" : "bg-gray-200 border-gray-300 text-neutral-500"} 
-                  shadow-sm`}
-                >
-                  {getCountries().map((country) => (
-                    <option key={country} value={country}>
-                      +{getCountryCallingCode(country)}
-                    </option>
-                  ))}
-                </select>
               </div>
             </div>
           )}

@@ -10,6 +10,7 @@ export const TOKEN_VERIFICATION = "/users/token-verification/";
 export const USER_ONBOARDED = (id:any) => `/users/on-boarded/${id}`
 export const GET_USER_SALESFORCE_CONTACT_ID = `/users/contact-salesforce-id/`
 export const GET_USER_SALESFORCE_ACCOUNT_ID= `/users/account-salesforce-id/`
+export const PROFILE_UPLOAD = `/users/profile-picture/`
 
 //DEVELOPER ONBOARDING API's ENDPOINTS
 export const USER_PORTFOLIO = (sfid:any) => `portfolio/detailed-contact-view/${sfid}`
@@ -83,3 +84,4 @@ export const UPDATE_SHORTLISTED_RESOURCES = (contactId:any) => `/project_resourc
 export const GET_DEVELOPER_ASSESSMENT_QUESTIONS_ANSWERS = (developer_id:any, question_id:any) => `/developer_test/developer-answers/?developer_id=${developer_id}&question_id=${question_id}`;
 export const SUBMIT_DEVELOPER_ASSESSMENT_ANSWERS = "/developer_test/onboarding-test-submission/";
 export const GET_ALL_DEVELOPER_ASSESSMENT_QUESTIONS = "/developer_test/test/"
+export const SUBMIT_DEVELOPER_ASSESSMENT = (id:any) => `/developer_test/developer-answers-submission/${id}/`

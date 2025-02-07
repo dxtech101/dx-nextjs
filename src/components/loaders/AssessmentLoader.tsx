@@ -11,7 +11,6 @@ const AssessmentLoader = () => {
                     This may take upto a minute. Please dont refresh the page or close the window.
                 </div>
             </span>
-
         </div>
     )
 }

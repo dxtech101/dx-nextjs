@@ -16,6 +16,9 @@ export default function RootLayout({
         <Toaster
           position="top-center"
           reverseOrder={false}
+          toastOptions={{
+            duration: 1000,
+          }}
         />
       </body>
     </html>

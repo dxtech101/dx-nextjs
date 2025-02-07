@@ -19,13 +19,12 @@ const WorkPreference = () => {
         preferred_hourly_rates: "",
         available_hours: ""
     });
+    const contactSfid = useSelector((state: any) => state.userSalesforceID)
 
     const getWorkPerferenceDetails = async () => {
         try {
             setLoading(true);
-            const contactWorkPreference = await WorkPreferencesService.getWorkPreference(contactSfid);
-            console.log("contactWorkPreference::", contactWorkPreference[0].preferred_hourly_rates);
-            
+            const contactWorkPreference = await WorkPreferencesService.getWorkPreference(contactSfid);            
             setFormData({
                 preferred_hourly_rates: contactWorkPreference[0].preferred_hourly_rates,
                 available_hours: contactWorkPreference[0].available_hours
@@ -40,8 +39,6 @@ const WorkPreference = () => {
     useEffect(() => {
         getWorkPerferenceDetails();
     }, [])
-
-    const contactSfid = useSelector((state: any) => state.userSalesforceID)
 
     const handleSubmit = async () => {
         const WorkPreferencesData = {

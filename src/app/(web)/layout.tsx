@@ -32,7 +32,13 @@ export default function WebLayout({
         <StateProvider>
           {children}
         </StateProvider>
-        <Toaster />
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+          toastOptions={{
+            duration: 1000,
+          }}
+        />
       </div>
       <Footer />
     </>

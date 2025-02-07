@@ -1,18 +1,16 @@
 "use client"
 import Certifications from '@/components/developer/onboarding/Certifications'
 import Skills from '@/components/developer/onboarding/Skills'
-import WorkPreference from '@/components/developer/onboarding/WorkPreference'
 import WorkExperience from '@/components/developer/onboarding/WorkExperience'
-import InputArea from '@/components/InputArea'
+import WorkPreference from '@/components/developer/onboarding/WorkPreference'
 import InputField from '@/components/InputField'
 import Modal from '@/components/modal/Modal'
-import { developerQuestions } from '@/constants/data'
-import { ArrowLeft, ArrowRight, Bookmark, ChevronRight, ChevronsDown, CornerUpRightIcon, DollarSign, MapPin } from 'lucide-react'
+import authWrapper from '@/lib/hoc/AuthWrapper'
+import { ChevronRight, ChevronsDown, CornerUpRightIcon, DollarSign, MapPin } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useRouter } from 'next/navigation'
-import authWrapper from '@/lib/hoc/AuthWrapper'
 
 const JobListingCard = ({ title, location, salary, type }: any) => {
     const color = type === "Remote" ? "green" : type === "Full Time" ? "orange" : "purple";
@@ -47,13 +45,13 @@ const page = () => {
     const userProfile = useSelector((state: any) => state.userProfile);
     const [greeting, setGreeting] = useState("");
     const [visible, setVisible] = useState(true);
-    const [isUserExamConducted, setIsUserExamConducted] = useState(true);
     const router = useRouter();
 
     const containerRef = useRef<HTMLDivElement>(null);
 
-    const isUserOnboarded = userProfile.is_onboard;
-
+    const isUserOnboarded = userProfile?.is_onboard;
+    const isUserAssessmentConducted = userProfile?.is_test_conducted;
+    
 
     const handleQuizStart = () => {
         if (document.documentElement.requestFullscreen) {
@@ -117,7 +115,7 @@ const page = () => {
                             </div>
                         </div>
                         <div className="hidden md:flex bg-white text-white rounded-3xl flex-row items-center justify-center px-6 p-4 gap-4">
-                            <img className="h-28 w-28 rounded-full object-cover mr-2 object-right z-0" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHxw-10=format&fit=crop&w=1050&q=80" alt="" />
+                            <img className="h-28 w-28 rounded-full object-cover mr-2 object-right z-0" src={userProfile?.profile_picture || "https://www.tech101.in/wp-content/uploads/2018/07/blank-profile-picture.png"} alt="" />
                             <div className="text-black">
                                 <h2 className="text-2xl font-semibold mb-2 capitalize"> {userProfile.first_name}  {userProfile.last_name}</h2>
                                 <p className='text-gray-400 text-sm'>Software Developer</p>
@@ -203,7 +201,7 @@ const page = () => {
                             </div>
                         </div>
                     </div>
-                    {isUserExamConducted && (
+                    {!isUserAssessmentConducted && (
                         <Modal
                             isFooter={false}
                             size="lg"
@@ -213,9 +211,9 @@ const page = () => {
                                 <img
                                     src="/welcome.svg"
                                     alt=""
-                                    className='h-96 -m-6 bottom-0 left-10 object-contain rounded-3xl z-0 absolute'
+                                    className='hidden md:flex h-64 lg:h-96 -m-6 bottom-0 left-2 object-contain rounded-3xl z-0 absolute'
                                 />
-                                <div className='flex flex-col gap-6 p-6 max-w-2xl'>
+                                <div className='flex flex-col gap-6 p-6 max-w-lg lg:max-w-2xl'>
                                     <div>
                                         <h2 className='text-4xl font-bold mb-2 capitalize'>Welcome to DX Digital</h2>
                                         <p className='text-gray-400 text-md'>
