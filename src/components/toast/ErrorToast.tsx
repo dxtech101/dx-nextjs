@@ -2,12 +2,6 @@ import React, { useEffect } from 'react'
 import toast, { ErrorIcon } from 'react-hot-toast'
 
 const ErrorToast = ({ t, message }: any) => {
-    console.log("t", t);
-
-    useEffect(() => {
-      toast.dismiss()
-    },[])
-
     return (
         <div
             className={`${t.visible ? 'animate-enter' : 'animate-leave'

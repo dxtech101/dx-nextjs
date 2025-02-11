@@ -16,7 +16,7 @@ const page = () => {
   const [technologies, setTechnologies] = useState([]);
   const contactSfid = useSelector((state: any) => state.userSalesforceID)
 
-   const getUserPortoflioDetails = async () => {
+  const getUserPortoflioDetails = async () => {
     try {
       setLoading(true);
       const { results } = await getUserPortfolio(contactSfid);
@@ -31,6 +31,8 @@ const page = () => {
     }
   }
 
+
+
   useEffect(() => {
     getUserPortoflioDetails()
   }, [])
@@ -39,12 +41,12 @@ const page = () => {
     <div className='bg-white border border-gray-300 rounded-3xl flex flex-col items-start justify-center gap-6 p-6'>
       <DeveloperProfileDetails />
       <div className='w-full h-full flex flex-col lg:flex-row items-start justify-center gap-4'>
-        <DeveloperProfileSkills loading={loading} skills={skills} updateDetails={getUserPortoflioDetails}/>
+        <DeveloperProfileSkills loading={loading} skills={skills} updateDetails={getUserPortoflioDetails} />
         {/* <DeveloperProfileTechnologies loading={loading} technologies={technologies} /> */}
       </div>
       {/* <DeveloperProfileIndustries loading={loading} industries={industries}/> */}
-      <DeveloperProfileCertification loading={loading} certification={certifications} updateDetails={getUserPortoflioDetails}/>
-      <DeveloperProfileExperience loading={loading} experience={workExperience} updateDetails={getUserPortoflioDetails}/>
+      <DeveloperProfileCertification loading={loading} certification={certifications} updateDetails={getUserPortoflioDetails} />
+      <DeveloperProfileExperience loading={loading} experience={workExperience} updateDetails={getUserPortoflioDetails} />
     </div>
   )
 }
