@@ -51,7 +51,7 @@ const page = () => {
 
     const isUserOnboarded = userProfile?.is_onboard;
     const isUserAssessmentConducted = userProfile?.is_test_conducted;
-    
+
 
     const handleQuizStart = () => {
         if (document.documentElement.requestFullscreen) {
@@ -145,7 +145,11 @@ const page = () => {
                             </div>
                         </div>
 
-                        <div className='mt-6 w-full flex flex-col md:flex-row items-center justify-center gap-4'>
+                        <div className='mt-6 w-full flex flex-col md:flex-row items-center justify-center gap-4 relative'>
+                            <div className='absolute w-full h-full flex flex-col items-center justify-center bg-black/1 border border-black/2 backdrop-blur-lg z-20 p-12 rounded-xl' />
+                            <span className='text-gray-700 text-4xl uppercase font-extrabold z-20 absolute'>
+                                Coming Soon
+                            </span>
                             <InputField
                                 className='w-full z-10 float-start'
                                 iconName='search'
@@ -167,7 +171,7 @@ const page = () => {
                         </div>
                     </div>
                     <div className='flex flex-col md:flex-row w-full h-full gap-5'>
-                        <div className={`h-fit bg-white  border border-gray-300 text-black rounded-3xl w-full flex flex-col gap-6 items-start justify-start p-6`}>
+                        <div className={`h-fit bg-white border border-gray-300 text-black rounded-3xl w-full flex flex-col gap-6 items-start justify-start p-6`}>
                             <span className=''>
                                 <h1 className="font-heading tracking-tight text-3xl md:text-4xl font-medium mb-1">
                                     Recommended Jobs
@@ -176,7 +180,11 @@ const page = () => {
                                     Apply for a position that fits your skills and interests.
                                 </p>
                             </span>
-                            <div className='w-full'>
+                            <div className='w-full h-full relative items-center justify-center'>
+                                <div className='absolute w-full h-full flex flex-col items-center justify-center bg-black/1 border border-black/2 backdrop-blur-lg z-20 p-12 rounded-xl' />
+                                <span className='text-gray-700 text-4xl uppercase font-extrabold z-20 absolute'>
+                                    Coming Soon
+                                </span>
                                 <JobListingCard title="Product Designer" type="Remote" location="New York" salary="$60k - $72k" />
                                 <JobListingCard title="Senior UX Designer" type="Full Time" location="New York" salary="$120k - $150k" />
                                 <JobListingCard title="Senior UX Designer" type="Part Time" location="New York" salary="$120k - $150k" />
@@ -187,7 +195,7 @@ const page = () => {
                                 </Link>
                             </div>
                         </div>
-                        <div className="bg-white border border-gray-300 text-black mb-6 rounded-3xl w-full flex flex-col items-start justify-between p-6 gap-4">
+                        <div className={`h-fit bg-white border border-gray-300 text-black rounded-3xl w-full flex flex-col gap-6 items-start justify-start p-6`}>
                             <span className=''>
                                 <h1 className="font-heading tracking-tight text-3xl md:text-4xl font-medium mb-1">
                                     Applied Jobs
@@ -196,7 +204,11 @@ const page = () => {
                                     Apply for a position that fits your skills and interests.
                                 </p>
                             </span>
-                            <div className='flex items-center w-full justify-center'>
+                            <div className='flex items-center w-full justify-center relative'>
+                                <div className='absolute w-full h-full flex flex-col items-center justify-center bg-black/1 border border-black/2 backdrop-blur-lg z-20 p-12 rounded-xl' />
+                                <span className='text-gray-700 text-4xl uppercase font-extrabold z-20 absolute'>
+                                    Coming Soon
+                                </span>
                                 <img src="/noRecords3.png" alt="" className='w-1/2' />
                             </div>
                         </div>

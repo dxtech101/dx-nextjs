@@ -90,8 +90,8 @@ const page = () => {
         src="https://static.shuffle.dev/components/preview/238eb578-e531-4cf4-a658-a1ff13c9b896/assets/public/flaro-assets/images/sign-up/gradient.svg"
         alt=""
       />
-      <div className="relative z-10 flex flex-wrap justify-start min-h-screen items-center gap-6 m-0 lg:-m-8">
-        <div className="relative w-full flex flex-col justify-start items-start md:max-w-lg mx-auto md:pb-32 text-black gap-4 md:gap-20">
+      <div className="relative z-10 flex flex-wrap justify-center min-h-screen items-center gap-6 m-0 xl:-m-8">
+        <div className="relative w-full flex flex-col justify-start items-start lg:max-w-3xl xl:max-w-lg mx-auto lg:pb-12 xl:pb-32 text-black gap-4 xl:gap-20">
           <h1 className="text-3xl font-medium inline-flex gap-4 items-center">
             <Link href="/" className="p-3 border border-gray-900 rounded-full">
               <ArrowLeft />
@@ -102,7 +102,7 @@ const page = () => {
             Create an account & get started.
           </h2>
         </div>
-        <div className="relative w-full md:w-1/2 flex flex-col justify-center items-center">
+        <div className="relative w-full xl:w-1/2 flex flex-col justify-center items-center">
           {/* <div className='shadow-inner bg-black/10 my-10 flex flex-row w-full lg:w-3/4 justify-around text-black items-center h-16 p-2 rounded-xl gap-2'>
                             <button onClick={() => setSelected("Individual")} className={`text-sm lg:text-base ${selected === "Individual" ? "bg-white shadow-xl" : "bg-transparent text-slate-400 hover:text-slate-600 hover:bg-white/50"}  w-full h-full flex items-center justify-center gap-2 rounded-xl font-bold`}>
                                 <div className={`${selected === "Individual" ? "bg-blue-100" : "bg-gray-200"} bg-blue-100 w-6 h-6 lg:w-8 lg:h-8 rounded-full flex items-center justify-center`}>
@@ -214,11 +214,10 @@ const page = () => {
                   setFormData((prev: any) => ({ ...prev, phone: value }))
                 }
                 defaultCountry="IN"
-                className={`h-12 pl-4 pr-4 w-full text-black border ${
-                  errors.phone
+                className={`h-12 pl-4 pr-4 w-full text-black border ${errors.phone
                     ? "border-red-400 bg-red-100"
                     : "border-gray-400 bg-white"
-                } rounded-xl`}
+                  } rounded-xl`}
               />
             </div>
 
@@ -272,9 +271,8 @@ const page = () => {
           <div className="text-sm text-black float-start">
             Already have an account?{" "}
             <Link
-              href={`/${
-                selected === "Company" ? "company" : "developer"
-              }/login`}
+              href={`/${selected === "Company" ? "company" : "developer"
+                }/login`}
               className="font-bold text-blue-600"
             >
               SignIn

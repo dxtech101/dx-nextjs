@@ -63,11 +63,11 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
                                         icon={LayoutDashboard}
                                         label="Dashboard"
                                     />
-                                    <SidebarItem
+                                    {/* <SidebarItem
                                         href="/developer/dashboard/job-listing"
                                         icon={BriefcaseBusiness}
                                         label="Job Listing"
-                                    />
+                                    /> */}
                                 </>
                             }
                         </ul>

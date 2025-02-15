@@ -64,22 +64,25 @@ const DeveloperProfileDetails = () => {
                             Edit
                         </span>
                     </button>
-                    <button
-                        onClick={() => setIsModalOpen(true)}
-                        className='bg-gray-200 border border-gray-300 flex flex-row items-center justify-center gap-2 rounded-full text-gray-900 py-2 px-4 text-sm font-bold group'
-                    >
-                        <Upload className="w-5 h-5" />
-                        <span className="overflow-hidden whitespace-nowrap transition-all duration-700 ease-in-out opacity-0 w-0 group-hover:w-auto group-hover:opacity-100">
-                            Upload
-                        </span>
-                    </button>
+
                 </div>
-                <div className='w-full h-full flex flex-col xl:flex-row items-center justify-between gap-6'>
-                    <img
-                        className="h-1/2 w-1/2 lg:h-1/6 lg:w-1/6 aspect-square rounded-full object-cover object-right relative"
-                        src={developerProfile?.profile_picture || "https://www.tech101.in/wp-content/uploads/2018/07/blank-profile-picture.png"}
-                        alt=""
-                    />
+                <div className='w-full h-full flex flex-col xl:flex-row items-center justify-between gap-10'>
+                    <div className="h-1/2 w-1/2 lg:h-1/3 lg:w-1/3 relative rounded-full">
+                        <img
+                            className='rounded-full aspect-square object-cover object-right border border-gray-300 overflow-hidden'
+                            src={developerProfile?.profile_picture || "https://www.tech101.in/wp-content/uploads/2018/07/blank-profile-picture.png"}
+                            alt=""
+                        />
+                        <button
+                            onClick={() => setIsModalOpen(true)}
+                            className='absolute bottom-0 left-1/2 -translate-x-1/2 bg-gray-200 w-full border border-gray-300 flex flex-row items-center justify-center gap-2 rounded-full text-gray-900 py-4 px-4 text-sm font-bold group'
+                        >
+                            <Upload className="w-5 h-5" />
+                            <span className="transition-all duration-700 ease-in-out opacity-100">
+                                Upload
+                            </span>
+                        </button>
+                    </div>
 
                     <div className='w-full flex flex-col gap-6 justify-between h-full'>
                         <div className='flex flex-col gap-2'>

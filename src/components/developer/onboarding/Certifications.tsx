@@ -174,8 +174,7 @@ const Certifications = () => {
                         <SuccessfulToast t={t} message={"Certification added Successfully"} />
                     ));
                 })
-            } else {
-                toast.custom((t) => (
+            } else { toast.custom((t) => (
                     <ErrorToast t={t} message={"Certification added Failed"} />
                 ))
             }
