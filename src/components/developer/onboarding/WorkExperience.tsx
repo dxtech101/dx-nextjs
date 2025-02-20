@@ -308,7 +308,7 @@ const WorkExperience = () => {
                         <div className='flex flex-col w-full gap-4 mt-2'>
                             <MultiSelectDropdown
                                 id="salesforce_technologies"
-                                label={"Salesforce Technologies"}
+                                label={"Salesforce Skills"}
                                 className="w-full"
                                 defaultValues={formData.salesforce_technologies}
                                 options={salesforce_technologies}

@@ -1,17 +1,21 @@
 "use client"
+import { useEffect, useState } from 'react'
+import { getUserPortfolio } from '@/lib/service/portfolio.service'
+import { useSelector } from 'react-redux'
 import DeveloperProfileCertification from '@/components/developer/profile/DeveloperProfileCertification'
 import DeveloperProfileDetails from '@/components/developer/profile/DeveloperProfileDetails'
 import DeveloperProfileExperience from '@/components/developer/profile/DeveloperProfileExperience'
 import DeveloperProfileSkills from '@/components/developer/profile/DeveloperProfileSkills'
-import { getUserPortfolio } from '@/lib/service/portfolio.service'
-import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import DeveloperProfileVideoSummary from '@/components/developer/profile/DeveloperProfileVideoSummary'
+import DeveloperProfileAISummary from '@/components/developer/profile/DeveloperProfileAISummary'
+
 
 const page = () => {
   const [loading, setLoading] = useState(true);
   const [skills, setSkills] = useState([]);
   const [certifications, setCertifications] = useState([]);
   const [workExperience, setWorkExperience] = useState([]);
+  const [personalDetails, setPersonalDetails] = useState([]);
   const [industries, setIndustries] = useState([]);
   const [technologies, setTechnologies] = useState([]);
   const contactSfid = useSelector((state: any) => state.userSalesforceID)
@@ -23,6 +27,7 @@ const page = () => {
       setSkills(results.skills);
       setCertifications(results.certifications);
       setWorkExperience(results.work_experience);
+      setPersonalDetails(results.personal_details);
     } catch (error) {
       console.error("Error fetching certifications:", error);
     }
@@ -39,7 +44,9 @@ const page = () => {
 
   return (
     <div className='bg-white border border-gray-300 rounded-3xl flex flex-col items-start justify-center gap-6 p-6'>
-      <DeveloperProfileDetails />
+      <DeveloperProfileDetails personalDetails={personalDetails} />
+      <DeveloperProfileVideoSummary />
+      <DeveloperProfileAISummary />
       <div className='w-full h-full flex flex-col lg:flex-row items-start justify-center gap-4'>
         <DeveloperProfileSkills loading={loading} skills={skills} updateDetails={getUserPortoflioDetails} />
         {/* <DeveloperProfileTechnologies loading={loading} technologies={technologies} /> */}
@@ -47,6 +54,7 @@ const page = () => {
       {/* <DeveloperProfileIndustries loading={loading} industries={industries}/> */}
       <DeveloperProfileCertification loading={loading} certification={certifications} updateDetails={getUserPortoflioDetails} />
       <DeveloperProfileExperience loading={loading} experience={workExperience} updateDetails={getUserPortoflioDetails} />
+      
     </div>
   )
 }

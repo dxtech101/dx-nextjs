@@ -52,7 +52,7 @@ const CheckboxItem = ({ id, checked, onChange, loadingUI, skill_level }: any) =>
 
 };
 
-const Skills = () => {
+const Skills = ({ type = "add" }: any) => {
 
     const [initialItems, setInitialItems] = useState<any[]>([]);
     const [initialCheckedItems, setInitialCheckedItems] = useState<any[]>([]);
@@ -162,28 +162,28 @@ const Skills = () => {
                 const response = await deleteSkills(id)
                 if (response) {
                     getSkillsDetails("update").then(response => {
-                        toast.custom((t) => (
-                            <SuccessfulToast t={t} message={"Salesforce Skill deleted Successfully"} />
-                        ));
+                        // toast.custom((t) => (
+                        //     <SuccessfulToast t={t} message={"Salesforce Skill deleted Successfully"} />
+                        // ));
                     })
                 } else {
-                    toast.custom((t) => (
-                        <ErrorToast t={t} message={"Salesforce Skill deleted Failed"} />
-                    ));
+                    // toast.custom((t) => (
+                    //     <ErrorToast t={t} message={"Salesforce Skill deleted Failed"} />
+                    // ));
                 }
             }
         } else {
             const response = await addSkills(sfid)
             if (response) {
                 getSkillsDetails("update").then(response => {
-                    toast.custom((t) => (
-                        <SuccessfulToast t={t} message={"Salesforce Skill added Successfully"} />
-                    ));
+                    // toast.custom((t) => (
+                    //     <SuccessfulToast t={t} message={"Salesforce Skill added Successfully"} />
+                    // ));
                 })
             } else {
-                toast.custom((t) => (
-                    <ErrorToast t={t} message={"Salesforce Skill added Failed"} />
-                ));
+                // toast.custom((t) => (
+                //     <ErrorToast t={t} message={"Salesforce Skill added Failed"} />
+                // ));
             }
         }
     };
@@ -209,31 +209,34 @@ const Skills = () => {
 
     return (
         <>
-            <div className='bg-[url(/noRecordBG2.png)] bg-contain bg-no-repeat bg-bottom bg-white rounded-3xl border border-gray-300 overflow-clip w-full h-full relative px-5 lg:px-10'>
-                <div className='w-full bg-white top-0 left-0 sticky py-6 flex flex-col gap-6 lg:flex-row justify-between items-start lg:items-center'>
-                    <span>
-                        <h1 className='text-start text-4xl md:text-5xl font-heading tracking-tight font-medium text-black'>
-                            Complete your Profile
-                        </h1>
-                        <p className='pt-2 tracking-tight text-gray-600 max-w-sm'>
-                            Enter the Core skills that you have
-                        </p>
-                    </span>
-                    <div className='flex flex-row gap-4'>
-                        <button
-                            disabled={loading || loadingUI}
-                            onClick={handlePrevious}
-                            className={`h-12 px-6 rounded-xl font-normal text-normal bg-gray-200 text-gray-400`}>
-                            Previous
-                        </button>
-                        <button
-                            disabled={loading || loadingUI}
-                            onClick={handleNext}
-                            className={`h-12 px-6 rounded-xl font-medium text-normal bg-blue-500 text-white`}>
-                            Save & Next
-                        </button>
+            <div className={`${type === "add" && "bg-[url(/noRecordBG2.png)] bg-contain bg-no-repeat bg-bottom bg-white rounded-3xl border border-gray-300 overflow-clip w-full h-full relative px-5 lg:px-10"}`}>
+                {type === "add" && (
+                    <div className='w-full bg-white top-0 left-0 sticky py-6 flex flex-col gap-6 lg:flex-row justify-between items-start lg:items-center'>
+                        <span>
+                            <h1 className='text-start text-4xl md:text-5xl font-heading tracking-tight font-medium text-black'>
+                                Complete your Profile
+                            </h1>
+                            <p className='pt-2 tracking-tight text-gray-600 max-w-sm'>
+                                Enter the Core skills that you have
+                            </p>
+                        </span>
+                        <div className='flex flex-row gap-4'>
+                            <button
+                                disabled={loading || loadingUI}
+                                onClick={handlePrevious}
+                                className={`h-12 px-6 rounded-xl font-normal text-normal bg-gray-200 text-gray-400`}>
+                                Previous
+                            </button>
+                            <button
+                                disabled={loading || loadingUI}
+                                onClick={handleNext}
+                                className={`h-12 px-6 rounded-xl font-medium text-normal bg-blue-500 text-white`}>
+                                Save & Next
+                            </button>
+                        </div>
                     </div>
-                </div>
+                )}
+
                 <div className='py-8 z-10'>
                     <h2 className='text-sm uppercase font-semibold'>Search Skills</h2>
                     <div ref={containerRef} className='relative mt-4'>

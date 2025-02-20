@@ -1,29 +1,65 @@
 "use client"
 import { removeAuthenticationToken } from '@/lib/cookie';
-import { BriefcaseBusiness, ChevronLeft, FolderOpenDot, LayoutDashboard, LogOut, UserRoundSearch } from 'lucide-react';
+import { BriefcaseBusiness, ChevronLeft, LayoutDashboard, LogOut, UserRoundSearch } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { useSelector } from 'react-redux';
 import Tooltip from './Tooltip';
+import DashboardProfileCard from './developer/portal/DashboardProfileCard';
+
+
+const SidebarItem = ({ href, icon: Icon, label, toggleSideBar }: any) => {
+    const router = usePathname();
+    const isActive = router === href;
+
+    return (
+        <Tooltip popupContent={label} show={toggleSideBar}>
+            <Link href={href} className={`flex items-center ${toggleSideBar ? "justify-start pl-6" : "justify-center"} h-20 md:h-14 xl:h-16 ${isActive ? 'text-white bg-gray-800' : 'text-gray-600 bg-gray-100 hover:bg-gray-200'} gap-4 rounded-xl mb-4`}>
+                <Icon className={`h-5 w-5 ${isActive ? 'text-white' : 'text-gray-600'}`} />
+                {toggleSideBar && <span className=" text-sm font-medium">{label}</span>}
+            </Link>
+        </Tooltip>
+    );
+};
 
 const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
-    const pathName = usePathname();
-    const role: any = pathName.split('/')[1];    
     const router = useRouter();
+    const currentUser = useSelector((state: any) => state.userProfile);
+    const userRole: any = currentUser ? currentUser?.role : null;
 
-    const SidebarItem = ({ href, icon: Icon, label }: any) => {
-        const router = usePathname();
-        const isActive = router === href;
+    const developerNavigationLinks = [
+        {
+            href: "/developer/dashboard",
+            icon: LayoutDashboard,
+            label: "Dashboard"
+        },
+    ];
+    const companyNavigationLinks = [
+        {
+            href: "/developer/dashboard",
+            icon: LayoutDashboard,
+            label: "Dashboard"
+        },
+        {
+            href: "/developer/dashboard/job-listing",
+            icon: BriefcaseBusiness,
+            label: "Job Listing"
+        },
+        {
+            href: "/developer/dashboard/profile",
+            icon: UserRoundSearch,
+            label: "Profile"
+        },
+    ];
 
-        return (
-            <Tooltip popupContent={label} show={toggleSideBar}>
-                <Link href={href} className={`flex items-center ${toggleSideBar ? "justify-start pl-6" : "justify-center"} h-20 md:h-14 xl:h-16 ${isActive ? 'text-white bg-gray-800' : 'text-gray-600 bg-gray-100 hover:bg-gray-200'} gap-4 rounded-xl mb-4`}>
-                    <Icon className={`h-5 w-5 ${isActive ? 'text-white' : 'text-gray-600'}`} />
-                    {toggleSideBar && <span className=" text-sm font-medium">{label}</span>}
-                </Link>
-            </Tooltip>
-        );
+    const renderNavigationLinks = () => {
+        const roleToNavigationMap: any = {
+            Individual: developerNavigationLinks,
+            Company: companyNavigationLinks,
+        };
+
+        return roleToNavigationMap[userRole];
     };
-
 
     return (
         <>
@@ -39,37 +75,15 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
                             <div className="h-7" />
                         </a>
                         <ul>
-                            {role === "company" ?
-                                <>
-                                    <SidebarItem
-                                        href="/company/dashboard"
-                                        icon={LayoutDashboard}
-                                        label="Dashboard"
-                                    />
-                                    <SidebarItem
-                                        href="/company/dashboard/developers"
-                                        icon={UserRoundSearch}
-                                        label="Developers"
-                                    />
-                                    <SidebarItem
-                                        href="/company/dashboard/projects"
-                                        icon={FolderOpenDot}
-                                        label="Projects"
-                                    />
-                                </> :
-                                <>
-                                    <SidebarItem
-                                        href="/developer/dashboard"
-                                        icon={LayoutDashboard}
-                                        label="Dashboard"
-                                    />
-                                    <SidebarItem
-                                        href="/developer/dashboard/job-listing"
-                                        icon={BriefcaseBusiness}
-                                        label="Job Listing"
-                                    />
-                                </>
-                            }
+                            {renderNavigationLinks().map((item: any, index: any) => (
+                                <SidebarItem
+                                    key={index}
+                                    href={item.href}
+                                    icon={item.icon}
+                                    label={item.label}
+                                    toggleSideBar={toggleSideBar}
+                                />
+                            ))}
                         </ul>
                     </div>
                 </nav>
@@ -93,7 +107,7 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
                         transition: "all 0.3s ease-in-out",
                     }}
                 >
-                    <div className="bg-white absolute top-0 left-0 w-full p-1 border border-gray-300 flex items-center justify-between">
+                    <div className="bg-white absolute top-0 left-0 w-full p-1 border-b border-gray-300 flex items-center justify-between">
                         <div className="flex items-center justify-center p-4 text-gray-900 rounded-xl">
                             <span className="text-xl font-medium">DX {toggleSideBar && "Digital"}</span>
                         </div>
@@ -106,37 +120,16 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
                             <div className="h-10" />
                         </a>
                         <ul>
-                            {role === "company" ?
-                                <>
-                                    <SidebarItem
-                                        href="/company/dashboard"
-                                        icon={LayoutDashboard}
-                                        label="Dashboard"
-                                    />
-                                    <SidebarItem
-                                        href="/company/dashboard/developers"
-                                        icon={UserRoundSearch}
-                                        label="Developers"
-                                    />
-                                    <SidebarItem
-                                        href="/company/dashboard/projects"
-                                        icon={FolderOpenDot}
-                                        label="Projects"
-                                    />
-                                </> :
-                                <>
-                                    <SidebarItem
-                                        href="/developer/dashboard"
-                                        icon={LayoutDashboard}
-                                        label="Dashboard"
-                                    />
-                                    <SidebarItem
-                                        href="/developer/dashboard/job-listing"
-                                        icon={BriefcaseBusiness}
-                                        label="Job Listing"
-                                    />
-                                </>
-                            }
+                            <DashboardProfileCard userProfile={currentUser} className="border border-gray-200 mb-4" />
+                            {renderNavigationLinks().map((item: any, index: any) => (
+                                <SidebarItem
+                                    key={index}
+                                    href={item.href}
+                                    icon={item.icon}
+                                    label={item.label}
+                                    toggleSideBar={toggleSideBar}
+                                />
+                            ))}
                         </ul>
                     </div>
                     <div className="bg-white absolute bottom-0 left-0 w-full p-1 group hover:bg-gray-800 border border-gray-300">

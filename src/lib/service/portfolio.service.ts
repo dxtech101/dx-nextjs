@@ -1,4 +1,4 @@
-import { ADD_WORK_EXPERIENCE, ADD_WORK_PREFERENCE, ASSIGN_CERTIFICATION, ASSIGN_SKILLS, DELETE_ASSIGNED_CERTIFICATION, DELETE_ASSIGNED_SKILL, DELETE_WORK_EXPERIENCE, DELETE_WORK_PREFERENCE, EDIT_WORK_EXPERIENCE, EDIT_WORK_PREFERENCE, GET_ALL_ASSIGNED_CERTIFICATION, GET_ALL_ASSIGNED_SKILLS, GET_ALL_SALESFORCE_CERTIFICATIONS, GET_ALL_SALESFORCE_SKILLS, GET_SKILLS_RELATED_DEVELOPERS, GET_WORK_EXPERIENCE, GET_WORK_PREFERENCE, USER_PORTFOLIO } from "@/constants/api-routes";
+import { ADD_WORK_EXPERIENCE, ADD_WORK_PREFERENCE, ASSIGN_CERTIFICATION, ASSIGN_SKILLS, DELETE_ASSIGNED_CERTIFICATION, DELETE_ASSIGNED_SKILL, DELETE_WORK_EXPERIENCE, DELETE_WORK_PREFERENCE, EDIT_WORK_EXPERIENCE, EDIT_WORK_PREFERENCE, GET_ALL_ASSIGNED_CERTIFICATION, GET_ALL_ASSIGNED_SKILLS, GET_ALL_SALESFORCE_CERTIFICATIONS, GET_ALL_SALESFORCE_SKILLS, GET_EXPERIENCE_SUMMARY, GET_SKILLS_RELATED_DEVELOPERS, GET_WORK_EXPERIENCE, GET_WORK_PREFERENCE, USER_PORTFOLIO } from "@/constants/api-routes";
 import "@/lib/axios-configuration";
 import axios from "axios";
 
@@ -32,6 +32,15 @@ export const getUserPortfolio = async (sfid: string) => {
 export const getSkillsRelatedDevelopers = async (skills: string) => {
     try {
         const response = await axios.get(GET_SKILLS_RELATED_DEVELOPERS(skills));
+        return response.data;
+    } catch (error: any) {
+        throw error;
+    }
+}
+
+export const getExperienceSummary = async (account_id: any) => {
+    try {
+        const response = await axios.post(GET_EXPERIENCE_SUMMARY(account_id));
         return response.data;
     } catch (error: any) {
         throw error;

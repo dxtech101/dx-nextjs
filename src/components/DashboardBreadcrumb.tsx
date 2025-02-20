@@ -62,7 +62,7 @@ const DashboardBreadcrumb = ({ type }: { type: string }) => {
                     <span className='inline-block mr-1'>
                         <HomeIcon color='#000' className='h-5' />
                     </span>
-                    <span className='text-gray-600'>Dashboard</span>
+                    <span className='hidden lg:flex text-gray-600'>Dashboard</span>
                 </Link>
                 {breadCrumbArray.length > 0 && (
                     <>

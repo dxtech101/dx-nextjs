@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 import "../../globals.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import authWrapper from "@/lib/hoc/AuthWrapper";
 
 const geistSans = localFont({
     src: "../../fonts/GeistVF.woff",
@@ -17,7 +18,7 @@ const geistMono = localFont({
     weight: "100 900",
 });
 
-export default function DeveloperDashboardLayout({
+function DeveloperDashboardLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
@@ -49,3 +50,10 @@ export default function DeveloperDashboardLayout({
         </section>
     );
 }
+
+export default authWrapper(DeveloperDashboardLayout, {
+    authRequired: true,
+    role: [
+        "Individual",
+    ],
+});

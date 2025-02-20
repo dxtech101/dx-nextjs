@@ -31,6 +31,22 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({
         }
     }, [defaultValues])
 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        };
+
+        // Adding the event listener when the component mounts
+        document.addEventListener('click', handleClickOutside);
+
+        // Cleaning up the event listener when the component unmounts
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
+
 
     const handleSelectionChange = (value: string) => {
         setSelectedValues(prev => {

@@ -98,12 +98,6 @@ const page = () => {
                                     </div>
                                 </div>
                                 <div className="flex flex-wrap justify-between items-center -m-4">
-                                    <div className="w-full md:flex-1 p-4">
-                                        <label className="relative flex flex-wrap items-center gap-4">
-                                            <input className="h-8 w-8 rounded-full" type="checkbox" name="field-checkbox" value="checkbox-value" />
-                                            <span className="text-neutral-500 text-lg font-medium tracking-tight">I accept the terms and privacy policy.</span>
-                                        </label>
-                                    </div>
                                     <div className="w-full md:w-auto p-4">
                                         <button className="inline-flex justify-center items-center text-center h-16 p-5 font-semibold tracking-tight text-lg text-white bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200" type="submit">Send a message</button>
                                     </div>

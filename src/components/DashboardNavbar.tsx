@@ -1,12 +1,12 @@
 "use client"
-import { BellIcon, ChevronDown, CircleAlert, HelpCircle, Layout, LogOut, MenuIcon, MessageCircle, Settings, Shield, Sidebar, User } from 'lucide-react';
+import { removeAuthenticationToken } from '@/lib/cookie';
+import { ChevronDown, CircleAlert, HelpCircle, LogOut, MenuIcon, Settings } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import DashbaordBreadcrumb from './DashboardBreadcrumb';
 import DashboardStepper from './DashboardStepper';
-import { removeAuthenticationToken } from '@/lib/cookie';
-import { usePathname, useRouter } from 'next/navigation';
-import Image from 'next/image';
 
 const DashboardNavbar = ({ toggleSideBar, setToggleSideBar }: any) => {
     const userProfile = useSelector((state: any) => state.userProfile);
@@ -17,7 +17,7 @@ const DashboardNavbar = ({ toggleSideBar, setToggleSideBar }: any) => {
 
     return (
         <section className="p-6 bg-white shadow-sm border border-gray-300 rounded-3xl w-full h-full inline-flex items-center">
-            <div className="flex flex-col-reverse md:flex-row w-full gap-2 items-start lg:items-center justify-between">
+            <div className="flex flex-row-reverse lg:flex-row w-full gap-2 items-center justify-between">
                 {isUserOnboarded &&
                     <button className="hidden lg:block" onClick={() => { setToggleSideBar((prev: any) => !prev) }}>
                         {toggleSideBar ? <Image src={'/sideOpen.svg'} width={26} height={26} alt="sideOpen" /> : <Image src={'/sideClosed.svg'} width={26} height={26} alt="sideClose" />}
@@ -27,7 +27,7 @@ const DashboardNavbar = ({ toggleSideBar, setToggleSideBar }: any) => {
                 <div className='block md:hidden'>
                     {isUserOnboarded ? <DashbaordBreadcrumb type={role} /> : <DashboardStepper role={role} />}
                 </div>
-                <div className="flex items-center justify-between w-full">
+                <div className="flex flex-row items-center justify-between w-full">
                     {isUserOnboarded &&
                         <button className="block lg:hidden text-gray-200 hover:text-gray-300 mr-4" onClick={() => { setToggleSideBar((prev: any) => !prev) }}>
                             <MenuIcon className="h-5 w-5" strokeWidth={2} color='#000' />
@@ -36,7 +36,7 @@ const DashboardNavbar = ({ toggleSideBar, setToggleSideBar }: any) => {
                     <div className='hidden md:block'>
                         {isUserOnboarded ? <DashbaordBreadcrumb type={role} /> : <DashboardStepper role={role} />}
                     </div>
-                    <div className='flex items-center justify-end w-full space-x-2'>
+                    <div className='hidden lg:flex items-center justify-end w-full space-x-2'>
                         {/* {isUserOnboarded &&
                             <>
                                 <a className="relative text-gray-200 hover:text-gray-300 p-3" href="#">
@@ -84,11 +84,11 @@ const DashboardNavbar = ({ toggleSideBar, setToggleSideBar }: any) => {
                                             )}
                                         </button>
                                     </div>
-                                    <Link href="/developer/dashboard/profile/demo" className='w-full inline-flex items-center gap-4 p-5 hover:bg-gray-100 transition-all duration-300 ease-in-out text-sm'>
+                                    <Link href="#" className='w-full inline-flex items-center gap-4 p-5 hover:bg-gray-100 transition-all duration-300 ease-in-out text-sm'>
                                         <Settings className='h-5' />
                                         Settings
                                     </Link>
-                                    <Link href="/developer/dashboard/profile/demo" className='w-full inline-flex items-center gap-4 p-5 hover:bg-gray-100 transition-all duration-300 ease-in-out text-sm'>
+                                    <Link href="#" className='w-full inline-flex items-center gap-4 p-5 hover:bg-gray-100 transition-all duration-300 ease-in-out text-sm'>
                                         <HelpCircle className='h-5' />
                                         Help
                                     </Link>
