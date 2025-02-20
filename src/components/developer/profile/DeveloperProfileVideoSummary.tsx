@@ -2,15 +2,17 @@ import FileUpload from '@/components/FileUpload';
 import Modal from '@/components/modal/Modal';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
-const DeveloperVideoProfile = ({ videoProfile }: any) => {
+const DeveloperVideoProfile = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const userProfile = useSelector((state: any) => state.userProfile)
 
     return (
         <>
             <div className='w-full h-fit p-8 flex flex-col lg:flex-row items-start md:items-center justify-between bg-pink-50 border border-pink-200 rounded-2xl relative'>
-                {!videoProfile ? <>
-                    <div className='w-full md:max-w-lg flex flex-col gap-4 items-start'>
+                {userProfile?.intro_video ? <>
+                    <div className='w-full xl:max-w-lg flex flex-col mb-6 gap-4 items-start'>
                         <h1 className='font-bold text-3xl'>Your Video Profile</h1>
                         <p className='text-sm text-gray-800'>Showcase your personality and skills with a short video introduction. Upload your video profile to make a lasting impression!</p>
                         <button
@@ -20,8 +22,8 @@ const DeveloperVideoProfile = ({ videoProfile }: any) => {
                         </button>
                     </div>
                     <iframe
-                        className='w-full h-full lg:h-80 lg:w-1/2 rounded-2xl'
-                        src='https://www.youtube.com/embed/dQw4w9WgXcQ'
+                        className='w-full h-80 lg:h-80 lg:w-1/2 rounded-2xl'
+                        src={userProfile?.intro_video}
                         title='YouTube video player'
                         frameBorder='0'
                         allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'

@@ -1,8 +1,29 @@
 import { BrainCircuit, PencilIcon, ScanLine, ShieldCheck } from 'lucide-react'
-import React from 'react'
+import React, { use, useEffect, useState } from 'react'
 import DeveloperProfileCardHeader from './DeveloperProfileCardHeader'
+import { useSelector } from 'react-redux'
+import { getExperienceSummary } from '@/lib/service/portfolio.service'
 
 const DeveloperAISummary = () => {
+    const [story, setStory] = useState<any>(null)
+    const accountId = useSelector((state: any) => state.userSalesforceID)
+
+    const getExperienceSummaryData = async () => {
+        try {
+            const { story } = await getExperienceSummary(accountId);
+            setStory(story)
+        } catch (error) {
+            console.error("Error fetching experience summary:", error);
+        }
+    }
+
+    console.log(story)
+
+
+    useEffect(() => {
+        getExperienceSummaryData()
+    }, [accountId])
+
     return (
         <div className='bg-blue-50 border border-blue-200 rounded-2xl w-full p-4 lg:p-6 flex flex-col gap-6'>
             <DeveloperProfileCardHeader
@@ -19,7 +40,9 @@ const DeveloperAISummary = () => {
             />
 
             <div className='flex flex-col gap-2 items-start'>
-                <p className='text-base text-gray-800'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero, vel commodi. Earum itaque voluptates hic quasi eligendi, dicta, est blanditiis adipisci, iure eum illo delectus libero impedit perspiciatis facere minima aliquid dignissimos doloremque aliquam officia nostrum sunt nesciunt facilis quod. Delectus, blanditiis corrupti! Inventore cupiditate placeat similique, commodi adipisci earum quod suscipit perferendis ut, ipsa labore rerum molestiae sed quae laboriosam voluptatibus, dolor harum repellat natus id praesentium vero eos aut. Nulla, eos aliquid consequuntur reiciendis dolor fuga tenetur sint qui, enim placeat omnis voluptatibus architecto quis facilis libero, facere itaque culpa? Quibusdam error in facilis numquam saepe vitae repellat.</p>
+                <div style={{ whiteSpace: "pre-wrap" }} className='text-sm text-gray-800' >
+                    {story}
+                </div>
             </div>
         </div>
     )

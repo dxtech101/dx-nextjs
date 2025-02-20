@@ -6,6 +6,7 @@ const FileUpload = ({
     loading,
     handleUpload,
     submitButtonLabel,
+    submitButton = false,
     onFileSelect
 }: any) => {
     const [selectedPicture, setSelectedPicture] = useState<any>(null);
@@ -32,7 +33,7 @@ const FileUpload = ({
         <div className="flex flex-col items-center justify-center w-full">
             <label
                 htmlFor="dropzone-file"
-                className={`flex flex-col items-center justify-center w-full h-64  ${!selectedPicture && "border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"}`}
+                className={`flex flex-col items-center justify-center w-full h-72  ${!selectedPicture && "border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"}`}
             >
                 {selectedPicture ?
                     <>
@@ -75,13 +76,16 @@ const FileUpload = ({
                     onChange={handleFileChange}
                 />
             </label>
-            <button
-                disabled={!selectedPicture || loading}
-                onClick={handleUpload}
-                className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
-            >
-                {loading ? "Loading..." : `${submitButtonLabel || "Upload"}`}
-            </button>
+            {submitButton && (
+                <button
+                    disabled={!selectedPicture || loading}
+                    onClick={handleUpload}
+                    className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+                >
+                    {loading ? "Loading..." : `${submitButtonLabel || "Upload"}`}
+                </button>
+            )}
+
         </div>
     )
 }

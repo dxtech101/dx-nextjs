@@ -1,10 +1,8 @@
-import { Loader, X } from 'lucide-react'
-import React from 'react'
+import { X } from 'lucide-react';
 
 const Modal = ({
     header,
     setModal,
-    onSubmit,
     children,
     loading,
     classname,
@@ -12,7 +10,10 @@ const Modal = ({
     ristricted = false,
     isFooter = true,
     submitButtonText,
+    onSubmit,
+    formRef
 }: any) => {
+    console.log(formRef);
 
     return (
         <div
@@ -33,12 +34,13 @@ const Modal = ({
                         )}
                     </div>
                 )}
-                <div className='relative p-3 lg:p-6 w-full overflow-y-auto max-h-[80vh]'>
+                <div className='relative p-3 lg:p-6 w-full overflow-y-auto max-h-[75vh]'>
                     {children}
                 </div>
                 {isFooter && (
                     <div className='w-full flex flex-row justify-end gap-4 items-center border-t border-0 p-4'>
                         <button
+                            disabled={loading}
                             onClick={() => setModal(false)}
                             className='bg-gray-200 text-gray-400 text-bold font-bold h-12 px-6 rounded-xl'
                         >
@@ -46,10 +48,18 @@ const Modal = ({
                         </button>
                         <button
                             type='submit'
-                            onClick={onSubmit}
+                            onClick={(e) => {
+                                e.preventDefault()
+                                if (formRef) {
+                                    formRef?.current?.requestSubmit()
+                                } else {
+                                    onSubmit()
+                                }
+                            }}
+                            disabled={loading}
                             className='bg-black text-bold text-white font-bold h-12 px-6 rounded-xl'
                         >
-                            {submitButtonText || "Save"}
+                            {loading ? "Loading..." : submitButtonText || "Save"}
                         </button>
                     </div>
                 )}

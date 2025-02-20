@@ -79,10 +79,6 @@ const page = () => {
     }
   };
 
-  console.log("formData::", formData);
-  console.log("errors::", errors);
-  console.log(Salutation);
-
   return (
     <section className="relative bg-white overflow-scroll lg:overflow-hidden min-h-screen p-8">
       <img
@@ -215,8 +211,8 @@ const page = () => {
                 }
                 defaultCountry="IN"
                 className={`h-12 pl-4 pr-4 w-full text-black border ${errors.phone
-                    ? "border-red-400 bg-red-100"
-                    : "border-gray-400 bg-white"
+                  ? "border-red-400 bg-red-100"
+                  : "border-gray-400 bg-white"
                   } rounded-xl`}
               />
             </div>
