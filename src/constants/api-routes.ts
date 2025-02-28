@@ -10,6 +10,8 @@ export const TOKEN_VERIFICATION = "/users/token-verification/";
 export const USER_ONBOARDED = (id:any) => `/users/on-boarded/${id}`
 export const GET_USER_SALESFORCE_CONTACT_ID = `/users/contact-salesforce-id/`
 export const GET_USER_SALESFORCE_ACCOUNT_ID= `/users/account-salesforce-id/`
+export const PROFILE_UPLOAD = `/users/profile-picture/`
+export const PROFILE_UPDATE = `/users/profile-update/`
 
 //DEVELOPER ONBOARDING API's ENDPOINTS
 export const USER_PORTFOLIO = (sfid:any) => `portfolio/detailed-contact-view/${sfid}`
@@ -36,6 +38,9 @@ export const GET_WORK_PREFERENCE = (contact_id:any) => `/portfolio/work-preferen
 export const ADD_WORK_PREFERENCE = "/portfolio/work-preferences/";
 export const EDIT_WORK_PREFERENCE = (sfid:any) => `/portfolio/work-preferences/${sfid}`;
 export const DELETE_WORK_PREFERENCE = (sfid:any) => `/portfolio/work-preferences/${sfid}`;
+
+//Experience Summary
+export const GET_EXPERIENCE_SUMMARY = (account_id:any) => `/portfolio/ai-engine/${account_id}/`;
 //
 
 // COMPANY API'S ENDPOINTS
@@ -83,3 +88,4 @@ export const UPDATE_SHORTLISTED_RESOURCES = (contactId:any) => `/project_resourc
 export const GET_DEVELOPER_ASSESSMENT_QUESTIONS_ANSWERS = (developer_id:any, question_id:any) => `/developer_test/developer-answers/?developer_id=${developer_id}&question_id=${question_id}`;
 export const SUBMIT_DEVELOPER_ASSESSMENT_ANSWERS = "/developer_test/onboarding-test-submission/";
 export const GET_ALL_DEVELOPER_ASSESSMENT_QUESTIONS = "/developer_test/test/"
+export const SUBMIT_DEVELOPER_ASSESSMENT = (id:any) => `/developer_test/developer-answers-submission/${id}/`

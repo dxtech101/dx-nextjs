@@ -1,4 +1,4 @@
-import { GET_USER_SALESFORCE_ACCOUNT_ID, GET_USER_SALESFORCE_CONTACT_ID, SIGN_IN_ENDPOINT, TOKEN_VERIFICATION, USER_ONBOARDED } from "@/constants/api-routes";
+import { GET_USER_SALESFORCE_ACCOUNT_ID, GET_USER_SALESFORCE_CONTACT_ID, PROFILE_UPDATE, PROFILE_UPLOAD, SIGN_IN_ENDPOINT, TOKEN_VERIFICATION, USER_ONBOARDED } from "@/constants/api-routes";
 import "@/lib/axios-configuration";
 import axios from "axios";
 import { setAuthenticationToken } from "../cookie";
@@ -45,6 +45,24 @@ export const userOnBoarded = async(id:any) => {
         const response = await axios.put(USER_ONBOARDED(id), {is_onboard : true});
         return response.data;
     } catch (error: any) {
+        throw error;
+    }
+}
+
+export const uploadProfilePicture = async(formData: any) => {
+    try {
+        const response = await axios.post(PROFILE_UPLOAD, formData)
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const updateProfile = async(formData: any) => {
+    try {
+        const response = await axios.post(PROFILE_UPDATE, formData)
+        return response.data;
+    } catch (error) {
         throw error;
     }
 }

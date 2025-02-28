@@ -9,19 +9,19 @@ import { WorkExperienceService } from '@/lib/service/portfolio.service';
 import { FileUser, PencilIcon, Plus } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
+import DeveloperProfileCardHeader from './DeveloperProfileCardHeader';
 
 const WorkExperienceCard = (props: any) => {
     const { experience, index, openEditModal, deleteWorkExperience } = props;
-    console.log(experience)
 
     return (
         <div className='relative bg-gray-100 rounded-3xl flex flex-col gap-4 flex-1 p-6 w-full z-10'>
-            <h1 className='absolute text-8xl top-0 right-0 font-bold p-5 text-gray-300 uppercase'>
+            <h1 className='absolute text-6xl lg:text-8xl top-0 right-0 font-bold p-5 text-gray-300 uppercase'>
                 {index + 1}
             </h1>
             <InfoLabel label="Project Name" content={experience.company_project_name} />
 
-            <div className='grid grid-cols-2 gap-4'>
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
                 <InfoLabel label="Salesforce Cloud(s)" content="Sales Cloud, Service Cloud" />
                 <InfoLabel label="Industry" content={experience.industry} />
             </div>
@@ -79,7 +79,7 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
         });
         setShowModal(true);
         setType("edit")
-        setEditSFID(experience.sfid)
+        setEditSFID(experience.id)
     };
 
     const deleteDeveloperWorkExperience = async (experienceId: string) => {
@@ -97,9 +97,9 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // if (!validateForm(formData, setErrors)) {
-        //     return;
-        // }
+        if (!validateForm(formData, errors, setErrors)) {
+            return;
+        }
 
         const workExperienceData = {
             company_project_name: formData.company_project_name,
@@ -140,30 +140,32 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
     return (
         <>
             <div className='bg-gray-50 rounded-2xl w-full flex flex-col gap-6 p-6'>
-                <div className='flex flex-row justify-between items-center'>
-                    <span className='text-2xl font-bold inline-flex items-center gap-2'>
-                        <FileUser /> Experience Summary
-                    </span>
-                    <button
-                        onClick={() => {
-                            setType("add")
-                            setShowModal(true)
-                        }}
-                        className='bg-gray-200 border border-gray-300 flex flex-row items-center justify-center gap-2 rounded-full text-gray-900 py-2 px-4 text-sm font-bold group'
-                    >
-                        <Plus className="w-4 h-4 cursor-pointer ml-2" />
-                        <span className="overflow-hidden whitespace-nowrap transition-all duration-700 ease-in-out opacity-0 w-0 group-hover:w-auto group-hover:opacity-100">
-                            Add Work Experience
-                        </span>
-                    </button>
-                </div>
+                <DeveloperProfileCardHeader
+                    headerIcon={<FileUser />}
+                    headerTitle={"Work Experience"}
+                    headerContent={
+                        <button
+                            onClick={() => {
+                                setType("add")
+                                setShowModal(true)
+                            }}
+                            className='bg-gray-200 border border-gray-300 flex flex-row items-center justify-center gap-2 rounded-full text-gray-900 py-2 px-4 text-sm font-bold group'
+                        >
+                            <Plus className="w-4 h-4 cursor-pointer ml-2" />
+                            <span className="overflow-hidden whitespace-nowrap transition-all duration-700 ease-in-out opacity-0 w-0 group-hover:w-auto group-hover:opacity-100">
+                                Add Work Experience
+                            </span>
+                        </button>
+                    }
+                />
+
                 {loading ? (
                     <div className='flex flex-row gap-6 w-full flex-nowrap lg:flex-wrap overflow-x-scroll'>
                         <div className='animate-pulse w-1/2 flex-1 h-72 rounded-3xl bg-gray-200' />
                         <div className='animate-pulse w-1/2 flex-1 h-72 rounded-3xl bg-gray-200' />
                     </div>
                 ) : (
-                    <div className='grid grid-cols-2 gap-3 w-full flex-nowrap lg:flex-wrap overflow-x-scroll'>
+                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-3 w-full flex-nowrap lg:flex-wrap overflow-x-scroll'>
                         {experience?.length > 0 ? <>
                             {experience?.map((item: any, index: any) => (
                                 <WorkExperienceCard

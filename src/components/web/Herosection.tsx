@@ -4,15 +4,15 @@ import React from 'react'
 const Herosection = () => {
     return (
         <section className="relative">
-            <div className="overflow-hidden pt-16 h-screen">
+            <div className="overflow-hidden pt-16 min-h-screen">
                 <div className="relative container px-4 mx-auto">
-                    <div className="flex flex-col sm:flex-row flex-wrap -m-8">
-                        <div className="w-full md:w-1/2 lg:w-4/12 xl:w-6/12 p-8">
-                            <h1 className="mb-9 text-7xl font-bold font-heading md:max-w-7xl leading-none text-black">
+                    <div className="flex flex-col lg:flex-row flex-wrap -mt-8">
+                        <div className="w-full lg:w-4/12 xl:w-6/12 p-8">
+                            <h1 className="mb-9 text-3xl sm:text-6xl md:text-7xl font-bold font-heading md:max-w-7xl leading-none text-black">
                                 Hire Top
                                 <br />
                                 <span className='inline-flex items-center gap-3'>
-                                    <img src="/salesforce-no-type-logo.svg" alt="Salesforce" className='w-24 z-0' />
+                                    <img src="/salesforce-no-type-logo.svg" alt="Salesforce" className='w-16 md:w-24 z-0' />
                                     <span className='z-10'>
                                         Salesforce
                                     </span>
@@ -25,37 +25,35 @@ const Herosection = () => {
                                     Trusted Salesforce Talent, Vetted for Excellence, Hired with Flexibility.
                                 </p>
                                 <div className="mb-12 md:inline-block">
-                                    <button className="py-4 px-6 w-full text-white font-semibold border border-indigo-700 rounded-xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200" type="button">
+                                    <Link href={"/signup"} className="py-4 px-6 w-full text-white font-semibold border border-indigo-700 rounded-xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200" type="button">
                                         Sign up now
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
-                        <div className="w-full md:w-1/2 lg:w-8/12 xl:w-8/12 xl:absolute xl:right-0 xl:-bottom-16 p-8">
-                            <div className="flex flex-wrap justify-center items-center lg:justify-end -m-3">
+                        <div className="w-full lg:w-8/12 xl:w-8/12 xl:absolute xl:right-0 xl:-bottom-16 p-2 md:p-8">
+                            <div className="flex justify-center items-center lg:justify-end -m-3">
                                 <div className="w-auto lg:w-1/3 xl:pt-28 p-3">
-                                    <div className="flex flex-wrap justify-end">
-                                        <div className="w-auto">
+                                    <div className="flex justify-end -m-3">
+                                        <div className="w-auto p-1 sm:p-3">
                                             <img className="mx-auto rounded-3xl " src="/herosection1.png" alt="" />
                                         </div>
                                     </div>
                                 </div>
                                 <div className="w-auto lg:w-1/3 p-3">
                                     <div className="flex flex-wrap justify-center -m-3">
-                                        <div className="w-auto p-3">
-                                            <Link href="#">
-                                                <img className="mx-auto rounded-3xl" src="/herosection2.png" alt="" />
-                                            </Link>
+                                        <div className="w-auto p-1 sm:p-3">
+                                            <img className="mx-auto rounded-3xl" src="/herosection2.png" alt="" />
                                         </div>
-                                        <div className="w-auto p-3">
-                                            <img className="mx-auto " src="https://static.shuffle.dev/components/preview/238eb578-e531-4cf4-a658-a1ff13c9b896/assets/public/flaro-assets/images/headers/people2.png" alt="" />
+                                        <div className="w-auto p-1 sm:p-3">
+                                            <img className="mx-auto rounded-3xl" src="https://static.shuffle.dev/components/preview/238eb578-e531-4cf4-a658-a1ff13c9b896/assets/public/flaro-assets/images/headers/people2.png" alt="" />
                                         </div>
                                     </div>
                                 </div>
                                 <div className="w-auto lg:w-1/3 p-3">
-                                    <div className="flex flex-wrap">
-                                        <div className="w-auto">
-                                            <img className="mx-auto " src="https://static.shuffle.dev/components/preview/238eb578-e531-4cf4-a658-a1ff13c9b896/assets/public/flaro-assets/images/headers/people3.png" alt="" />
+                                    <div className="flex flex-wrap justify-center -m-3">
+                                        <div className="w-32 sm:w-44 md:w-48 lg:w-auto p-1 sm:p-3">
+                                            <img className="mx-auto rounded-3xl" src="https://static.shuffle.dev/components/preview/238eb578-e531-4cf4-a658-a1ff13c9b896/assets/public/flaro-assets/images/headers/people3.png" alt="" />
                                         </div>
                                     </div>
                                 </div>

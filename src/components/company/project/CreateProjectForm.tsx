@@ -102,7 +102,7 @@ const CreateProjectForm = ({ loading, setLoading }: any) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!validateForm(formData, setErrors)) {
+        if (!validateForm(formData, errors, setErrors)) {
             return;
         }
 

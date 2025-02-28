@@ -13,8 +13,8 @@ import { useDispatch, useSelector } from 'react-redux'
 const CheckboxItem = ({ text, imageSrc, borderColor, textColor, checked, onChange, loadingUI }: any) => {
     return (
         <div className={`inline-flex gap-2 items-center bg-white border ${borderColor} p-2 pl-4 pr-4 rounded-full relative z-10 whitespace-nowrap min-w-max`}>
-            <img className='w-auto h-16' src={'/' + imageSrc.split(' ').join('-') + '.png'} alt={text} />
-            <span className={`font-bold text-sm ${textColor}`}>
+            <img className='w-auto h-10 lg:h-16' src={imageSrc} alt={text} />
+            <span className={`font-bold text-xs lg:text-sm ${textColor}`}>
                 {text.replace(/salesforce/i, '')}
             </span>
             <input
@@ -37,10 +37,11 @@ const CheckboxItem = ({ text, imageSrc, borderColor, textColor, checked, onChang
     );
 };
 
-const Certifications = () => {
+const Certifications = ({ type = "add" }: any) => {
 
     const dispatch = useDispatch();
     const [items, setItems] = useState<any[]>([]);
+    const [filteredItems, setFilteredItems] = useState<any[]>([]);
     const [inputValue, setInputValue] = useState('');
     const [checkedItems, setCheckedItems] = useState<any[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -52,25 +53,45 @@ const Certifications = () => {
     const [loadingUI, setLoadingUI] = useState(false);
     const contactSfid = useSelector((state: any) => state.userSalesforceID)
 
-    const getCertificationDetails = async () => {
+    const getCertificationDetails = async (reloadType: any) => {
         try {
-            setLoading(true);
+            if (reloadType === "initial") setLoading(true);
+            else if (reloadType === "update") setLoadingUI(true);
+
             const { results: allCertifications } = await getAllSalesforceCertifications();
             const { results: assignedCertifications } = await CertificationsService.getAllAssignedCertifications(contactSfid);
+            console.log("assignedCertifications::", assignedCertifications);
+
             const assignedCertificationIds = assignedCertifications.map((cert: any) => cert.certification);
             setInitialItems(allCertifications)
             setInitialCheckedItems(assignedCertifications)
             setItems(allCertifications.filter((item: any) => !assignedCertificationIds.includes(item.sfid)));
-            setCheckedItems(allCertifications.filter((item: any) => assignedCertificationIds.includes(item.sfid)));
+            setFilteredItems(allCertifications.filter((item: any) => !assignedCertificationIds.includes(item.sfid)))
+            setCheckedItems(
+                allCertifications
+                    .filter((item: any) => assignedCertificationIds.includes(item.sfid))
+                    .map((item: any) => {
+                        const assignedCert = assignedCertifications.find((cert: any) => cert.certification === item.sfid);
+                        return { ...item, id: assignedCert?.id };
+                    })
+            );
+
         } catch (error) {
             console.error("Error fetching certifications:", error);
         } finally {
-            setLoading(false);
+            if (reloadType === "initial") setLoading(false);
+            else if (reloadType === "update") setLoadingUI(false);
         }
     };
 
+    console.log("initialItems::", initialItems);
+    console.log("initialCheckedItems::", initialCheckedItems);
+    console.log("items::", items);
+    console.log("filtered Items", filteredItems);
+    console.log("checkedItems::", checkedItems);
+
     useEffect(() => {
-        getCertificationDetails();
+        getCertificationDetails("initial");
 
         const handleClickOutside = (event: MouseEvent) => {
             if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -105,10 +126,9 @@ const Certifications = () => {
         }
     }
 
-    const deleteCertification = async (sfid: string) => {
+    const deleteCertification = async (id: string) => {
         try {
             setLoadingUI(true)
-            const id = initialCheckedItems.find((item) => item.certification === sfid)?.sfid;
             return await CertificationsService.deleteAssignedCertifications(id);
         } catch (error: any) {
             return false;
@@ -121,49 +141,58 @@ const Certifications = () => {
     useEffect(() => {
         let tempInputValue = inputValue.trim()
         if (tempInputValue) {
-            const filtered = initialItems.filter(item => item.name.toLowerCase().includes(inputValue.toLowerCase()));
-            setItems(filtered);
-        } else setItems(initialItems)
+            const filtered = items.filter(item => item.name.toLowerCase().includes(inputValue.toLowerCase()));
+            setFilteredItems(filtered);
+        } else setFilteredItems(items)
     }, [inputValue]);
 
-    const handleCheckboxChange = async (id: any) => {
-        const isChecked = checkedItems.find((i: any) => i.sfid === id);
-        const item = initialItems.find((i: any) => i.sfid === id);
+    const handleCheckboxChange = async (id: any, sfid: any) => {
+        console.log("id::", id);
+        console.log("sfid::", sfid);
+
+        const isChecked = checkedItems.find((i: any) => i.id === id);
+        const item = initialItems.find((i: any) => i.sfid === sfid);
+        console.log("item::", item);
+        console.log("isChecked::", isChecked);
+
         if (isChecked) {
-            const uncheckedItem = checkedItems.find(i => i.sfid === id);
+            const uncheckedItem = checkedItems.find(i => i.id === id);
+            console.log("uncheckedItem::", uncheckedItem);
+
             if (uncheckedItem) {
                 const response = await deleteCertification(id)
                 if (response) {
-                    setItems([...items, uncheckedItem]);
-                    setCheckedItems(checkedItems.filter(i => i.sfid !== id));
-                    toast.custom((t) => (
-                        <SuccessfulToast t={t} message={"Certification deleted Successfully"} />
-                    ));
+                    getCertificationDetails("update").then(response => {
+                        // toast.custom((t) => (
+                        //     <SuccessfulToast t={t} message={"Certification deleted Successfully"} />
+                        // ));
+                    })
                 } else {
-                    toast.custom((t) => (
-                        <ErrorToast t={t} message={"Certification deleted Failed"} />
-                    ))
+                    // toast.custom((t) => (
+                    //     <ErrorToast t={t} message={"Certification deleted Failed"} />
+                    // ))
                 }
             }
         } else {
-            const response = await addCertification(id)
+            const response = await addCertification(sfid)
             if (response) {
-                setCheckedItems([...checkedItems, item]);
-                setItems(items.filter((i: any) => i.sfid !== id));
-                toast.custom((t) => (
-                    <SuccessfulToast t={t} message={"Certification added Successfully"} />
-                ));
+                getCertificationDetails("update").then(response => {
+                    // toast.custom((t) => (
+                    //     <SuccessfulToast t={t} message={"Certification added Successfully"} />
+                    // ));
+                })
             } else {
-                toast.custom((t) => (
-                    <ErrorToast t={t} message={"Certification added Failed"} />
-                ))
+                // toast.custom((t) => (
+                //     <ErrorToast t={t} message={"Certification added Failed"} />
+                // ))
             }
         }
     };
 
+
     const handleSuggestionSelect = (item: any) => {
         setInputValue(item.text);
-        handleCheckboxChange(item.sfid);
+        handleCheckboxChange(item.id, item.sfid);
         setShowSuggestions(false);
         setInputValue("")
     }
@@ -173,42 +202,45 @@ const Certifications = () => {
             const updatedTags = selectedTags.filter((tag: any) => tag !== category);
             setSelectedTags(updatedTags);
             if (updatedTags.length === 0) {
-                setItems(initialItems);
+                setFilteredItems(items);
             } else {
                 const filtered = initialItems.filter(item => updatedTags.includes(item.type));
-                setItems(filtered);
+                setFilteredItems(filtered);
             }
         } else {
             const updatedTags = [...selectedTags, category];
             setSelectedTags(updatedTags);
             const filtered = initialItems.filter(item => updatedTags.includes(item.type));
-            setItems(filtered);
+            setFilteredItems(filtered);
         }
     };
 
     return (
-        <div className='bg-white rounded-3xl border border-gray-300 relative px-5 lg:px-10 bg-[url(https://wp.sfdcdigital.com/en-in/wp-content/uploads/sites/21/2023/03/pb-hp-products-bg-2.png?resize=2048,410)] bg-contain min-h-full bg-fixed bg-no-repeat bg-bottom'>
-            <div className='w-full bg-white z-20 sticky top-0 left-0 py-6 flex flex-col gap-6 lg:flex-row justify-between items-start lg:items-center'>
-                <span>
-                    <h1 className='text-start text-4xl md:text-5xl font-heading tracking-tight font-medium text-black'>
-                        Complete your Profile
-                    </h1>
-                    <p className='pt-2 tracking-tight text-gray-600 max-w-sm'>
-                        Select Salesforce Certifications that you hold
-                    </p>
-                </span>
-                <div className='flex flex-row gap-2 justify-center items-end lg:items-center'>
-                    <button
-                        disabled={loading || loadingUI}
-                        onClick={handleNext}
-                        className={`h-12 px-6 rounded-xl font-medium text-normal ${loading
-                            ? 'bg-blue-300 text-blue-100 cursor-not-allowed'
-                            : 'bg-blue-500 text-white'
-                            }`}>
-                        Save & Next
-                    </button>
+        <div className={`${type === "add" && "bg-white rounded-3xl border border-gray-300 relative px-5 lg:px-10 bg-[url(https://wp.sfdcdigital.com/en-in/wp-content/uploads/sites/21/2023/03/pb-hp-products-bg-2.png?resize=2048,410)] bg-contain min-h-full bg-fixed bg-no-repeat bg-bottom"}`}>
+            {type === "add" && (
+                <div className='w-full bg-white z-20 sticky top-0 left-0 py-6 flex flex-col gap-6 lg:flex-row justify-between items-start lg:items-center'>
+                    <span>
+                        <h1 className='text-start text-4xl md:text-5xl font-heading tracking-tight font-medium text-black'>
+                            Complete your Profile
+                        </h1>
+                        <p className='pt-2 tracking-tight text-gray-600 max-w-sm'>
+                            Select Salesforce Certifications that you hold
+                        </p>
+                    </span>
+                    <div className='flex flex-row gap-2 justify-center items-end lg:items-center'>
+                        <button
+                            disabled={loading || loadingUI}
+                            onClick={handleNext}
+                            className={`h-12 px-6 rounded-xl font-medium text-normal ${loading
+                                ? 'bg-blue-300 text-blue-100 cursor-not-allowed'
+                                : 'bg-blue-500 text-white'
+                                }`}>
+                            Save & Next
+                        </button>
+                    </div>
                 </div>
-            </div>
+            )}
+
             <div className='py-6'>
                 <h2 className='font-semibold mb-4 uppercase text-sm'>Search Certifications</h2>
                 <div ref={containerRef} className='relative mt-4'>
@@ -245,15 +277,15 @@ const Certifications = () => {
                                     })}
                                 </div>
                             </div>
-                            {items.length > 0 ? (
-                                items.map((item) => (
+                            {filteredItems.length > 0 ? (
+                                filteredItems.map((item) => (
                                     <div
                                         key={item.sfid}
                                         className='flex items-center justify-between gap-2 p-3 border border-b-0 cursor-pointer hover:bg-gray-100'
                                         onMouseDown={() => handleSuggestionSelect(item)}
                                     >
                                         <div className='inline-flex items-center gap-2'>
-                                            <img className='w-8 h-auto' src={'/' + item.name.split(' ').join('-') + '.png'} alt={item.text} />
+                                            <img className='w-8 h-auto' src={item.url} alt={item.text} />
                                             <span className='font-bold text-gray-800 ml-4'>{item.name}</span>
                                         </div>
 
@@ -267,7 +299,7 @@ const Certifications = () => {
                     )}
                 </div>
                 <h2 className='text-sm uppercase font-semibold mt-6'>Selected Certifications</h2>
-                <div className='mt-2 flex flex-row gap-4 flex-nowrap lg:flex-wrap z-40 overflow-x-auto w-full appearance-none'>
+                <div className='mt-2 flex flex-row gap-4 flex-wrap z-40 overflow-x-auto w-full appearance-none'>
                     {loading ?
                         <>
                             <div className={`animate-pulse inline-flex w-1/3 h-20 gap-2 items-center bg-gray-200 border p-2 pl-4 pr-4 rounded-full`} />
@@ -279,9 +311,9 @@ const Certifications = () => {
                                 <CheckboxItem
                                     key={item.sfid}
                                     text={item.name}
-                                    imageSrc={item.name}
+                                    imageSrc={item.url}
                                     checked={checkedItems.some(checkedItem => checkedItem.sfid === item.sfid)}
-                                    onChange={() => handleCheckboxChange(item.sfid)}
+                                    onChange={() => handleCheckboxChange(item.id, item.sfid)}
                                     loadingUI={loadingUI}
                                 />
                             )) : (

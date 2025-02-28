@@ -43,7 +43,7 @@ const CheckboxItem = ({ id, checked, onChange, loadingUI, skill_level }: any) =>
                     )}
                 </div>
 
-                <div className='text-xs text-black'>
+                <div className='text-xs text-black normal-case'>
                     Skill Level: {skill_level}
                 </div>
             </div>
@@ -52,11 +52,12 @@ const CheckboxItem = ({ id, checked, onChange, loadingUI, skill_level }: any) =>
 
 };
 
-const Skills = () => {
+const Skills = ({ type = "add" }: any) => {
 
     const [initialItems, setInitialItems] = useState<any[]>([]);
     const [initialCheckedItems, setInitialCheckedItems] = useState<any[]>([]);
     const [items, setItems] = useState<any[]>([]);
+    const [filteredItems, setFilteredItems] = useState<any[]>([]);
     const [checkedItems, setCheckedItems] = useState<any[]>([]);
     const [inputValue, setInputValue] = useState('');
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -69,32 +70,32 @@ const Skills = () => {
 
     const dispatch = useDispatch();
 
-    const getSkillsDetails = async () => {
+    const getSkillsDetails = async (reloadType: any) => {
         try {
-            setLoading(true);
+            if (reloadType === "initial") setLoading(true);
+            else if (reloadType === "update") setLoadingUI(true);
             const { results: allSkills } = await getAllSalesforceSkills();
             const { results: assignedSkills } = await SkillsService.getAllAssignedSkills(contactSfid);
             console.log("assignedSkills::", assignedSkills);
 
-            const assignedCertificationIds = assignedSkills.map((skill: any) => skill.skill.sfid);
+            const assignedSkillsIds = assignedSkills.map((skill: any) => skill.skill.sfid);
 
             setInitialItems(allSkills)
             setInitialCheckedItems(assignedSkills)
-            setItems(allSkills.filter((item: any) => !assignedCertificationIds.includes(item.sfid)));
+            setItems(allSkills.filter((item: any) => !assignedSkillsIds.includes(item.sfid)));
+            setFilteredItems(allSkills.filter((item: any) => !assignedSkillsIds.includes(item.sfid)))
             setCheckedItems(assignedSkills);
         } catch (error) {
-            console.error("Error fetching cert  `12323434aifications:", error);
+            console.error("Error fetching cert ====>", error);
         } finally {
-            setLoading(false);
+            if (reloadType === "initial") setLoading(false);
+            else if (reloadType === "update") setLoadingUI(false);
         }
     }
 
-    console.log("checkedItems::", checkedItems);
-    console.log("items::", items);
-
 
     useEffect(() => {
-        getSkillsDetails();
+        getSkillsDetails("initial");
 
         const handleClickOutside = (event: any) => {
             if (containerRef.current && !containerRef.current.contains(event.target)) {
@@ -116,6 +117,8 @@ const Skills = () => {
     }
 
     const addSkills = async (id: any) => {
+        console.log(id);
+
         const body: any = {
             "contact_sfid": contactSfid,
             "skills": {
@@ -137,10 +140,9 @@ const Skills = () => {
     }
 
 
-    const deleteSkills = async (sfid: string) => {
+    const deleteSkills = async (id: string) => {
         try {
             setLoadingUI(true)
-            const id = initialCheckedItems.find((item: any) => item.skill.sfid === sfid)?.sfid;
             return await SkillsService.deleteAssignedSkills(id);
         } catch (error: any) {
             return false;
@@ -150,54 +152,53 @@ const Skills = () => {
         }
     }
 
-    const handleCheckboxChange = async (id: any) => {
-        const isChecked = checkedItems.find((i: any) => i.skill.sfid === id);
-        const item = initialItems.find((i: any) => i.sfid === id);
 
-        console.log("isChecked::", isChecked);
+    const handleCheckboxChange = async (sfid: any, id: any) => {
+        const isChecked = checkedItems.find((i: any) => i?.id === id);
+
         if (isChecked) {
-            const uncheckedItem = checkedItems.find(i => i.skill.sfid === id);
+            const uncheckedItem = checkedItems.find((i: any) => i?.id === id);
             if (uncheckedItem) {
                 const response = await deleteSkills(id)
                 if (response) {
-                    setItems([...items, uncheckedItem]);
-                    setCheckedItems(checkedItems.filter(i => i.sfid !== id));
-                    toast.custom((t) => (
-                        <SuccessfulToast t={t} message={"Salesforce Skill deleted Successfully"} />
-                    ));
+                    getSkillsDetails("update").then(response => {
+                        // toast.custom((t) => (
+                        //     <SuccessfulToast t={t} message={"Salesforce Skill deleted Successfully"} />
+                        // ));
+                    })
                 } else {
-                    toast.custom((t) => (
-                        <ErrorToast t={t} message={"Salesforce Skill deleted Failed"} />
-                    ));
+                    // toast.custom((t) => (
+                    //     <ErrorToast t={t} message={"Salesforce Skill deleted Failed"} />
+                    // ));
                 }
             }
         } else {
-            const response = await addSkills(id)
+            const response = await addSkills(sfid)
             if (response) {
-                setCheckedItems([...checkedItems, item]);
-                setItems(items.filter((i: any) => i.sfid !== id));
-                toast.custom((t) => (
-                    <SuccessfulToast t={t} message={"Salesforce Skill added Successfully"} />
-                ));
+                getSkillsDetails("update").then(response => {
+                    // toast.custom((t) => (
+                    //     <SuccessfulToast t={t} message={"Salesforce Skill added Successfully"} />
+                    // ));
+                })
             } else {
-                toast.custom((t) => (
-                    <ErrorToast t={t} message={"Salesforce Skill added Failed"} />
-                ));
+                // toast.custom((t) => (
+                //     <ErrorToast t={t} message={"Salesforce Skill added Failed"} />
+                // ));
             }
         }
     };
 
     useEffect(() => {
-        if (inputValue.trim()) {
+        let tempInputValue = inputValue.trim()
+        if (tempInputValue) {
             const filtered = items.filter(item => item.name.toLowerCase().includes(inputValue.toLowerCase()));
-            setItems(filtered);
-            setShowSuggestions(true);
-        } else setItems(initialItems)
+            setFilteredItems(filtered);
+        } else setFilteredItems(items)
     }, [inputValue]);
 
     const handleSuggestionSelect = (item: any) => {
         setInputValue(item.text);
-        handleCheckboxChange(item.sfid);
+        handleCheckboxChange(item?.skill?.sfid || item?.sfid, item.id);
         setShowSuggestions(false);
         setInputValue("")
     }
@@ -208,31 +209,34 @@ const Skills = () => {
 
     return (
         <>
-            <div className='bg-[url(/noRecordBG2.png)] bg-contain bg-no-repeat bg-bottom bg-white rounded-3xl border border-gray-300 overflow-clip w-full h-full relative px-5 lg:px-10'>
-                <div className='w-full bg-white top-0 left-0 sticky py-6 flex flex-col gap-6 lg:flex-row justify-between items-start lg:items-center'>
-                    <span>
-                        <h1 className='text-start text-4xl md:text-5xl font-heading tracking-tight font-medium text-black'>
-                            Complete your Profile
-                        </h1>
-                        <p className='pt-2 tracking-tight text-gray-600 max-w-sm'>
-                            Enter the Core skills that you have
-                        </p>
-                    </span>
-                    <div className='flex flex-row gap-4'>
-                        <button
-                            disabled={loading || loadingUI}
-                            onClick={handlePrevious}
-                            className={`h-12 px-6 rounded-xl font-normal text-normal bg-gray-200 text-gray-400`}>
-                            Previous
-                        </button>
-                        <button
-                            disabled={loading || loadingUI}
-                            onClick={handleNext}
-                            className={`h-12 px-6 rounded-xl font-medium text-normal bg-blue-500 text-white`}>
-                            Save & Next
-                        </button>
+            <div className={`${type === "add" && "bg-[url(/noRecordBG2.png)] bg-contain bg-no-repeat bg-bottom bg-white rounded-3xl border border-gray-300 overflow-clip w-full h-full relative px-5 lg:px-10"}`}>
+                {type === "add" && (
+                    <div className='w-full bg-white top-0 left-0 sticky py-6 flex flex-col gap-6 lg:flex-row justify-between items-start lg:items-center'>
+                        <span>
+                            <h1 className='text-start text-4xl md:text-5xl font-heading tracking-tight font-medium text-black'>
+                                Complete your Profile
+                            </h1>
+                            <p className='pt-2 tracking-tight text-gray-600 max-w-sm'>
+                                Enter the Core skills that you have
+                            </p>
+                        </span>
+                        <div className='flex flex-row gap-4'>
+                            <button
+                                disabled={loading || loadingUI}
+                                onClick={handlePrevious}
+                                className={`h-12 px-6 rounded-xl font-normal text-normal bg-gray-200 text-gray-400`}>
+                                Previous
+                            </button>
+                            <button
+                                disabled={loading || loadingUI}
+                                onClick={handleNext}
+                                className={`h-12 px-6 rounded-xl font-medium text-normal bg-blue-500 text-white`}>
+                                Save & Next
+                            </button>
+                        </div>
                     </div>
-                </div>
+                )}
+
                 <div className='py-8 z-10'>
                     <h2 className='text-sm uppercase font-semibold'>Search Skills</h2>
                     <div ref={containerRef} className='relative mt-4'>
@@ -251,8 +255,8 @@ const Skills = () => {
 
                         {showSuggestions && !loadingUI && (
                             <div className='absolute bg-white border-2 left-0 rounded-xl shadow-sm w-full lg:w-1/2 mt-1 max-h-48 overflow-y-auto z-20'>
-                                {items.length > 0 ? (
-                                    items.map((item) => (
+                                {filteredItems.length > 0 ? (
+                                    filteredItems.map((item) => (
                                         <div className={showSkillLevel === item.sfid ? "bg-gray-50" : ""}>
                                             <div
                                                 key={item.sfid}
@@ -260,12 +264,12 @@ const Skills = () => {
                                                 onMouseDown={() => handleSkillSelected(item.sfid)}
                                             >
                                                 {/* <img className='w-8 h-auto' src={'/' + item.name + '.png'} alt={item.name} /> */}
-                                                <span className='font-bold text-gray-800'>{item.name}</span>
+                                                <span className='font-bold text-gray-800'>{item?.name || item?.skill?.name}</span>
                                                 {showSkillLevel === item.sfid && (
                                                     <button
                                                         onClick={() => handleSuggestionSelect(item)}
                                                         className='flex bg-green-200 hover:bg-green-600 font-bold text-green-600 hover:text-green-200 duration-200 py-0.5 px-4 rounded-full flex-row text-sm justify-between items-center'>
-                                                        Save
+                                                        Add Skill
                                                     </button>
                                                 )}
                                             </div>
@@ -315,9 +319,9 @@ const Skills = () => {
                             {checkedItems.length > 0 ? checkedItems.map(item => (
                                 <CheckboxItem
                                     key={item.sfid}
-                                    id={item.skill.sfid || item.sfid}
+                                    id={item?.skill?.sfid ? item?.skill?.sfid : item?.sfid}
                                     checked={checkedItems.some(checkedItem => checkedItem.sfid === item.sfid)}
-                                    onChange={() => handleCheckboxChange(item.skill.sfid || item.sfid)}
+                                    onChange={() => handleCheckboxChange(item?.skill?.sfid, item?.id)}
                                     skill_level={item.skill_level}
                                     loadingUI={loadingUI}
                                 />

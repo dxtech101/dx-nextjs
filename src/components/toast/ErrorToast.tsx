@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import toast, { ErrorIcon } from 'react-hot-toast'
 
 const ErrorToast = ({ t, message }: any) => {
@@ -19,14 +19,12 @@ const ErrorToast = ({ t, message }: any) => {
                     </div>
                 </div>
             </div>
-            <div className="flex ">
-                <button
-                    onClick={() => toast.dismiss(t.id)}
-                    className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-bold text-red-600 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500"
-                >
-                    Close
-                </button>
-            </div>
+            <button
+                onClick={() => toast.dismiss(t.id)}
+                className="border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-bold text-red-600 hover:text-red-500 hover:bg-red-200"
+            >
+                Close
+            </button>
         </div>
     )
 }

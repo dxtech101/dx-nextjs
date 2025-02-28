@@ -1,14 +1,21 @@
 import React from 'react'
+import clsx from 'clsx'
 
-const Button = ({ loading, onClick, children }: any) => {
-    console.log("loadiing", loading);
+const Button = ({
+    variant,
+    loading,
+    onClick,
+    className,
+    label,
+}: any) => {
 
     return (
         <button
             disabled={loading}
             onClick={onClick}
-            className={`${loading ? "opacity-45" : "opacity-100"}bg-blue-500 text-white font-normal h-12 px-4 rounded-xl whitespace-nowrap`}>
-            {children}
+            className={clsx(`bg-blue-500 text-white font-normal h-12 px-4 rounded-xl whitespace-nowrap ${className}`)}
+        >
+            {loading ? "Loading..." : label}
         </button>
     )
 }

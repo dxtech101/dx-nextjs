@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import toast, { CheckmarkIcon } from 'react-hot-toast'
 
 const SuccessfulToast = ({ t, message }: any) => {
+
+    useEffect(() => {
+        toast.dismiss()
+      },[])
     return (
         <div
             className={`${t.visible ? 'animate-enter' : 'animate-leave'

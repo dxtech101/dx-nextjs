@@ -1,3 +1,4 @@
+import { resetOnboarding } from '@/feature/reducers/userOnboarding';
 import { addUserProfile } from '@/feature/reducers/userProfile';
 import { userOnBoarded } from '@/lib/service/user.service';
 import { LoaderCircle, X } from 'lucide-react'
@@ -12,9 +13,10 @@ const ConfirmationModal = ({ setOpenConfirmModal }: any) => {
     const onClickHandler = async () => {
         setLoading(true);
         try {
-            const {results} = await userOnBoarded(userProfile.id);
+            const { results } = await userOnBoarded(userProfile.id);
             if (results) {
                 dispatch(addUserProfile(results));
+                dispatch(resetOnboarding({ role: "developer" }))
                 setOpenConfirmModal(false);
             }
         } catch (error) {

@@ -1,4 +1,4 @@
-import { GET_ALL_DEVELOPER_ASSESSMENT_QUESTIONS, GET_DEVELOPER_ASSESSMENT_QUESTIONS_ANSWERS, SUBMIT_DEVELOPER_ASSESSMENT_ANSWERS } from "@/constants/api-routes";
+import { GET_ALL_DEVELOPER_ASSESSMENT_QUESTIONS, GET_DEVELOPER_ASSESSMENT_QUESTIONS_ANSWERS, SUBMIT_DEVELOPER_ASSESSMENT, SUBMIT_DEVELOPER_ASSESSMENT_ANSWERS } from "@/constants/api-routes";
 import axios from "axios";
 
 interface answerDataType {
@@ -28,6 +28,15 @@ export const getAnswer = async (developerId:string,questionId: string) => {
 export const submitAnswer = async (answerData: answerDataType) => {
     try {
         const response = await axios.post(SUBMIT_DEVELOPER_ASSESSMENT_ANSWERS,answerData);
+        return response.data;
+    } catch (error: any) {
+        throw error;
+    }      
+}
+
+export const submitAssessment = async (id:any) => {
+    try {
+        const response = await axios.post(SUBMIT_DEVELOPER_ASSESSMENT(id), {"is_test_conducted" : true});
         return response.data;
     } catch (error: any) {
         throw error;

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 
 const Footer = () => {
+    const CurrentYear =  new Date().getFullYear();
     return (
         <section className="py-20">
             <div className="container mx-auto px-4">
@@ -24,7 +25,7 @@ const Footer = () => {
                 </div>
                 <div>
                     <div className="flex flex-wrap justify-between items-center">
-                        <p className="text-sm text-gray-500 mt-8">All rights reserved © DX Digital Corporation 2024</p>
+                        <p className="text-sm text-gray-500 mt-8">All rights reserved © DX Digital Corporation {CurrentYear}</p>
                         <div className="flex order-first sm:order-last mt-8">
                             <Link className="flex justify-center items-center w-10 h-10 mr-4 bg-gray-50 rounded-full" href="#">
                                 <svg className="text-gray-500" width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">

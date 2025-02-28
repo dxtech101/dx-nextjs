@@ -8,6 +8,8 @@ interface DropdownProps {
   options?: { value: string; label: string }[];
   defaultValue?: string;
   onChange?: (value: string) => void;
+  isRequired?: boolean;
+  error?: string;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -17,6 +19,8 @@ const Dropdown: React.FC<DropdownProps> = ({
   options = [],
   defaultValue,
   onChange,
+  isRequired = false,
+  error
 }: DropdownProps) => {
   const [selectedValue, setSelectedValue] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -24,10 +28,10 @@ const Dropdown: React.FC<DropdownProps> = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if(defaultValue){
+    if (defaultValue) {
       setSelectedValue(defaultValue)
     }
-  },[defaultValue])
+  }, [defaultValue])
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -73,7 +77,12 @@ const Dropdown: React.FC<DropdownProps> = ({
       ref={dropdownRef}
       className={`relative ${className} flex flex-col gap-2`}
     >
-      <label className="text-sm font-bold text-gray-700">{label}</label>
+      <label className="text-sm font-bold text-gray-700">{label}{isRequired && <span className='text-red-600'>{" "}*</span>}</label>
+      {error && (
+        <span className='text-xs text-red-500 font-bold'>
+          {error}
+        </span>
+      )}
       <div
         id={id}
         className="flex items-center justify-between px-4 py-2 bg-gray-100 border border-gray-400 rounded-xl cursor-pointer"
@@ -85,6 +94,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             : 'Select an option...'}
         </span>
         <button
+          type='button'
           className="text-gray-600 focus:outline-none"
           onClick={(e) => {
             e.stopPropagation();
