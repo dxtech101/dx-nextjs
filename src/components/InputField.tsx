@@ -22,8 +22,8 @@ const InputField = ({
   disabled,
   checkedItems,
   handleSuggestionSelect,
-  salutation ="",
-  setSalutation = () => {},
+  salutation = "",
+  setSalutation = () => { },
 }: any) => {
   const iconMap: any = {
     search: Icons.Search,

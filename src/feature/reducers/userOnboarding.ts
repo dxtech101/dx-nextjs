@@ -51,8 +51,12 @@ const onboardingSlice = createSlice({
         previousStep.isCompleted = false;
       }
     },
+    resetOnboarding: (state, action) => {
+      const { role } = action.payload;
+      state[`${role}Onboarding`] = initialState[`${role}Onboarding`];
+    },
   },
 });
 
-export const { onBoardingHandleNext, onBoardingHandlePrevious } = onboardingSlice.actions;
+export const { onBoardingHandleNext, onBoardingHandlePrevious, resetOnboarding } = onboardingSlice.actions;
 export default onboardingSlice.reducer;
