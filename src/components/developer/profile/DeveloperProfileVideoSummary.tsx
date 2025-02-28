@@ -1,12 +1,34 @@
 import FileUpload from '@/components/FileUpload';
 import Modal from '@/components/modal/Modal';
+import { addUserProfile } from '@/feature/reducers/userProfile';
+import { updateProfile } from '@/lib/service/user.service';
 import Image from 'next/image';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const DeveloperVideoProfile = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const dispatch = useDispatch();
     const userProfile = useSelector((state: any) => state.userProfile)
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedFile, setSelectedFile] = useState<any>(null);
+    const [loading, setLoading] = useState(false);
+
+
+    const handleUploadVideo = async (file: any) => {
+        const profileUpdateData = new FormData();
+        profileUpdateData.append("intro_video", file);
+        setLoading(true);
+        try {
+            const { results } = await updateProfile(profileUpdateData);
+            if (results) {
+                dispatch(addUserProfile(results));
+            }
+        } catch (error) {
+            console.error("Error uploading profile picture:", error);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <>
@@ -46,8 +68,16 @@ const DeveloperVideoProfile = () => {
                     header={"Upload Video Profile"}
                     setModal={setIsModalOpen}
                     isFooter={false}
+                    loading={loading}
                 >
-                    <FileUpload uploadType="video" />
+                    <FileUpload
+                        uploadType={"video"}
+                        submitButton={true}
+                        loading={loading}
+                        onFileSelect={setSelectedFile}
+                        submitButtonLabel={"Upload Video Profile"}
+                        handleUpload={handleUploadVideo}
+                    />
                 </Modal>
             )}
         </>

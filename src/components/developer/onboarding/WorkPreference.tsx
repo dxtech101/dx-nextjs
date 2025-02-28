@@ -2,7 +2,7 @@ import Dropdown from "@/components/Dropdown";
 import ConfirmationModal from "@/components/modal/ConfirmationModal";
 import { available_hours, prefered_hourly_rates } from "@/constants/data";
 import { onBoardingHandleNext, onBoardingHandlePrevious } from "@/feature/reducers/userOnboarding";
-import { handleFormDataChange } from "@/lib/helper";
+import { handleFormDataChange, validateForm } from "@/lib/helper";
 import { WorkPreferencesService } from "@/lib/service/portfolio.service";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +24,7 @@ const WorkPreference = () => {
     const getWorkPerferenceDetails = async () => {
         try {
             setLoading(true);
-            const contactWorkPreference = await WorkPreferencesService.getWorkPreference(contactSfid);            
+            const contactWorkPreference = await WorkPreferencesService.getWorkPreference(contactSfid);
             setFormData({
                 preferred_hourly_rates: contactWorkPreference[0].preferred_hourly_rates,
                 available_hours: contactWorkPreference[0].available_hours
@@ -41,6 +41,10 @@ const WorkPreference = () => {
     }, [])
 
     const handleSubmit = async () => {
+        if (!validateForm(formData, errors, setErrors)) {
+            return;
+        }
+
         const WorkPreferencesData = {
             "contact_sfid": contactSfid,
             "preferred_hourly_rates": formData.preferred_hourly_rates,
@@ -94,17 +98,21 @@ const WorkPreference = () => {
                         id="preferred_hourly_rates"
                         label={"Preferred Hourly Rates ($USD)"}
                         className="w-full flex-1"
+                        isRequired={true}
                         defaultValue={formData.preferred_hourly_rates}
                         options={prefered_hourly_rates}
                         onChange={(value: any) => setFormData({ ...formData, preferred_hourly_rates: value })}
+                        error={errors.preferred_hourly_rates}
                     />
                     <Dropdown
                         id="available_hours"
                         label={"Available Hours / Week"}
                         className="w-full flex-1"
+                        isRequired={true}
                         defaultValue={formData.available_hours}
                         options={available_hours}
                         onChange={(value: any) => setFormData({ ...formData, available_hours: value })}
+                        error={errors.available_hours}
                     />
                 </form>
             </div >

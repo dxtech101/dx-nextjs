@@ -13,30 +13,33 @@ export const setAxiosHeader = (token: string) => {
   else axios.defaults.headers.common["Authorization"] = "";
 };
 
-(function () {
-  let authToken: any = getAuthenticationToken();
-  try {
-    authToken = authToken && typeof authToken === "string" ? JSON.parse(authToken) : null;
-  } catch (error) {
-    console.error("Invalid JSON token:", authToken);
-    authToken = null;
-  }
+// (function () {
+//   let authToken: any = getAuthenticationToken();
+//   try {
+//     authToken = authToken && typeof authToken === "string" ? JSON.parse(authToken) : null;
+//   } catch (error) {
+//     console.error("Invalid JSON token:", authToken);
+//     authToken = null;
+//   }
 
-  if (authToken && authToken.access_token) setAxiosHeader(authToken.access_token);
-})();
+//   if (authToken && authToken.access_token) setAxiosHeader(authToken.access_token);
+// })();
 
-const UNAUTHORIZED = [401];
+// const UNAUTHORIZED = [401];
 
 // Add Axios request interceptor
 axios.interceptors.request.use(
   (config) => {
     const token = Cookies.get("userToken");
     const access_token = token ? JSON.parse(token)?.access_token : null;
-
-    const excludedUrls = ["/users/enroll-user/"]; 
+   
+    const excludedUrls = ["/users/enroll-user/", "/users/sign-in/"]; 
+    console.log(access_token);
+    console.log(!excludedUrls.some((url) => config.url?.includes(url)));
     
-    if (!excludedUrls.some((url) => config.url?.includes(url)) && access_token) {
-      axios.defaults.headers.common["Authorization"] = `JWT ${access_token}`;
+    if (!excludedUrls.some((url) => config.url?.includes(url)) && access_token) {    
+      config.headers.Authorization = `JWT ${access_token}`;
+      // axios.defaults.headers.common["Authorization"] = `JWT ${access_token}`;
     }
 
     return config;
