@@ -74,7 +74,7 @@ const Certifications = ({ type = "add" }: any) => {
                         const assignedCert = assignedCertifications.find((cert: any) => cert.certification === item.sfid);
                         return { ...item, id: assignedCert?.id };
                     })
-            );
+            );            
 
         } catch (error) {
             console.error("Error fetching certifications:", error);
@@ -84,11 +84,8 @@ const Certifications = ({ type = "add" }: any) => {
         }
     };
 
-    console.log("initialItems::", initialItems);
-    console.log("initialCheckedItems::", initialCheckedItems);
-    console.log("items::", items);
-    console.log("filtered Items", filteredItems);
-    console.log("checkedItems::", checkedItems);
+    console.log("Checked Items", checkedItems);
+
 
     useEffect(() => {
         getCertificationDetails("initial");
@@ -147,13 +144,8 @@ const Certifications = ({ type = "add" }: any) => {
     }, [inputValue]);
 
     const handleCheckboxChange = async (id: any, sfid: any) => {
-        console.log("id::", id);
-        console.log("sfid::", sfid);
-
         const isChecked = checkedItems.find((i: any) => i.id === id);
         const item = initialItems.find((i: any) => i.sfid === sfid);
-        console.log("item::", item);
-        console.log("isChecked::", isChecked);
 
         if (isChecked) {
             const uncheckedItem = checkedItems.find(i => i.id === id);

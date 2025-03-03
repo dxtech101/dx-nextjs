@@ -90,6 +90,20 @@ const WorkExperience = () => {
         getDeveloperWorkExperienceDetails();
     }, [])
 
+    const resetForm = () => {
+        setFormData({
+            company_project_name: "",
+            duration: "",
+            industry: "",
+            job_title: "",
+            project_description: ""
+        });
+        setErrors({
+            company_project_name: "",
+            job_title: "",
+        });
+    }
+
     const getDeveloperWorkExperienceDetails = async () => {
         try {
             setLoading(true);
@@ -137,7 +151,6 @@ const WorkExperience = () => {
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
 
         if (!validateForm(formData, errors, setErrors)) {
             return;
@@ -157,12 +170,14 @@ const WorkExperience = () => {
             if (type === "add") {
                 const response = await WorkExperienceService.addWorkExperience(workExperienceData);
                 if (response) {
-                    getDeveloperWorkExperienceDetails()
+                    getDeveloperWorkExperienceDetails();
+                    resetForm();
                 }
             } else {
                 const response = await WorkExperienceService.updateWorkExperience(editID, workExperienceData);
                 if (response) {
-                    getDeveloperWorkExperienceDetails()
+                    getDeveloperWorkExperienceDetails();
+                    resetForm()
                 }
             }
         } catch (error) {

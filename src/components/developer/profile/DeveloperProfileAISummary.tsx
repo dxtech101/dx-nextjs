@@ -125,7 +125,7 @@ const DeveloperAISummary = () => {
                     </div>
                 }
             />
-            {loading ?
+            {!loading ?
                 <CardSkeletonContainer>
                     <Skeleton />
                 </CardSkeletonContainer> :

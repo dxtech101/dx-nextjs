@@ -54,7 +54,7 @@ const DeveloperProfileDetails = ({ personalDetails }: any) => {
     }, {
         icon: <CakeIcon className='w-5 h-5 text-purple-900' />,
         label: "DOB",
-        value: personalDetails?.country || "N/A"
+        value: personalDetails?.birthdate || "N/A"
     }]
 
     return (
