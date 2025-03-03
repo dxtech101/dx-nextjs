@@ -26,7 +26,7 @@ const SuccessModal = ({ email }: any) => {
         <div className='absolute top-0 left-0 z-20 w-full h-full bg-black bg-opacity-65 text-black flex justify-center items-center'>
             <div className='absolute bg-white z-20 rounded-2xl w-1/2 h-fit p-6 xl:h-60 flex flex-col xl:flex-row gap-6 justify-center items-center'>
                 <img src='/mail.png' width={360} className='w-1/2' />
-                <Link href='/'>
+                <Link href='/developer/login'>
                     <X className='w-5 h-5 text-black absolute right-2 top-2' strokeWidth={2} color='black' />
                 </Link>
                 <div className='flex flex-col gap-4'>
@@ -38,12 +38,12 @@ const SuccessModal = ({ email }: any) => {
                             We have sent you a confirmation mail on your mail <span className='font-bold text-gray-700'>{email}</span>
                         </p>
                     </span>
-                    <button
+                    {/* <button
                         onClick={handleOpenMailbox}
                         className='relative inline-block py-3 px-4 text-sm font-semibold text-green-500 hover:text-green-50 bg-green-100 hover:bg-green-600 rounded-md transition duration-300'
                     >
                         Open Mail Box
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </div>
