@@ -3,11 +3,11 @@ import Modal from '@/components/modal/Modal';
 import { addUserProfile } from '@/feature/reducers/userProfile';
 import { uploadProfilePicture } from '@/lib/service/user.service';
 import { BriefcaseBusiness, CakeIcon, CodeIcon, MailIcon, MapPinned, PencilIcon, Phone, PinIcon, ShieldCheck } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DeveloperProfileDetailsForm from './DeveloperProfileDetailsForm';
 
-const DeveloperProfileDetails = ({ personalDetails }: any) => {
+const DeveloperProfileDetails = ({ personalDetails, updateDetails }: any) => {
     const dispatch = useDispatch();
     const formRef = useRef<HTMLFormElement>(null)
     const userProfile = useSelector((state: any) => state.userProfile)
@@ -15,25 +15,11 @@ const DeveloperProfileDetails = ({ personalDetails }: any) => {
     const [loading, setLoading] = useState(false);
     const [selectedFile, setSelectedFile] = useState<any>(null);
 
-    const uploadProfilePic = async (e: any) => {
-        if (!selectedFile) return;
-
-        const formData = new FormData();
-        formData.append("profile_picture", selectedFile);
-        try {
-            setLoading(true);
-            const { results } = await uploadProfilePicture(formData);
-            if (results) {
-                dispatch(addUserProfile(results));
-            }
-        } catch (error) {
-            console.error("Error uploading profile picture:", error);
-        } finally {
-            setLoading(false);
+    useEffect(() => {
+        if (!editModal) {
+            updateDetails()
         }
-    };
-
-
+    }, [editModal])
 
     const profileDetails = [{
         icon: <MailIcon className='w-5 h-5 text-purple-900' />,
@@ -87,7 +73,7 @@ const DeveloperProfileDetails = ({ personalDetails }: any) => {
                             <div className='flex flex-wrap gap-2 text-sm'>
                                 <span className='shadow-inner inline-flex items-center gap-2 bg-purple-100 border border-purple-300 text-purple-900 w-fit rounded-full py-0.5 px-4'>
                                     <CodeIcon className='w-5 h-5' />
-                                    Senior Developer
+                                    {personalDetails?.job_title}
                                 </span>
                                 <span className='inline-flex shadow-inner items-center gap-2 bg-amber-100 border border-amber-300 text-amber-900 w-fit rounded-full py-0.5 px-4'>
                                     <ShieldCheck className='w-5 h-5' />

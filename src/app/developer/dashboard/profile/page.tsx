@@ -61,11 +61,11 @@ const page = () => {
 
   useEffect(() => {
     getUserPortoflioDetails();
-  }, [getUserPortoflioDetails]); // Only runs if `contactSfid` changes
+  }, [getUserPortoflioDetails]);
 
   return (
     <div className='bg-white border border-gray-300 rounded-3xl flex flex-col items-start justify-center gap-6 p-6'>
-      <DeveloperProfileDetails personalDetails={profileData?.personalDetails} />
+      <DeveloperProfileDetails personalDetails={profileData?.personalDetails} updateDetails={getUserPortoflioDetails} />
       <DeveloperProfileVideoSummary />
       <DeveloperProfileAISummary />
       <div className='w-full h-full flex flex-col lg:flex-row items-start justify-center gap-4'>

@@ -37,7 +37,7 @@ const DeveloperProfileDetailsForm = forwardRef(({
             "first_name": personalDetails?.first_name || "",
             "last_name": personalDetails?.last_name || "",
             "phone": personalDetails?.phone || "",
-            "birth_date": personalDetails?.birth_date || "",
+            "birth_date": personalDetails?.birthdate || "",
             "job_title": personalDetails?.job_title || "",
             "work_experience": personalDetails?.work_experience || "",
             "industry_experience": personalDetails?.industry_experience || "",

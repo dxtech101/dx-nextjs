@@ -71,7 +71,7 @@ const WorkPreference = () => {
                             Complete your Profile
                         </h1>
                         <p className='pt-2 tracking-tight text-gray-600 max-w-sm inline-flex w-full'>
-                            Enter the Core skills that you have
+                            Enter your work Time and Hour peferences
                         </p>
                     </span>
                     <div className='flex flex-row gap-4'>
