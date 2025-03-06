@@ -2,15 +2,15 @@ import Link from 'next/link'
 import React from 'react'
 
 const Footer = () => {
-    const CurrentYear =  new Date().getFullYear();
+    const CurrentYear = new Date().getFullYear();
     return (
         <section className="py-20">
             <div className="container mx-auto px-4">
                 <div className="pb-6 lg:pb-10 border-b border-gray-100">
                     <div className="flex flex-wrap items-start justify-between text-gray-900">
                         <div className="w-full lg:w-1/5 mb-6 lg:mb-0">
-                            <Link className="inline-block mb-5 text-gray-900 text-lg font-semibold" href="#">
-                                <img className="w-64 h-auto" src="/logo.png" alt="" />
+                            <Link className="inline-block mb-5 text-gray-900 text-xl font-bold" href="#">
+                                <span>D<span className='text-blue-800'>X</span> | Developer Exchange</span>
                             </Link>
                         </div>
                         <div className="w-full lg:w-auto">

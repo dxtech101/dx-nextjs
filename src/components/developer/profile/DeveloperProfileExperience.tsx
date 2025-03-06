@@ -3,16 +3,17 @@ import InputArea from '@/components/InputArea';
 import InputField from '@/components/InputField';
 import Modal from '@/components/modal/Modal';
 import MultiSelectDropdown from '@/components/MultiSelectDropdown';
-import { salesforce_technologies, industries } from '@/constants/data';
+import { industries, salesforce_technologies } from '@/constants/data';
 import { handleFormDataChange, InfoLabel, validateForm } from '@/lib/helper';
 import { WorkExperienceService } from '@/lib/service/portfolio.service';
-import { FileUser, PencilIcon, Plus } from 'lucide-react';
-import React, { useEffect, useState } from 'react'
+import { FileUser, Plus } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import DeveloperProfileCardHeader from './DeveloperProfileCardHeader';
 
 const WorkExperienceCard = (props: any) => {
     const { experience, index, openEditModal, deleteWorkExperience } = props;
+    console.log("experience===>>>", experience)
 
     return (
         <div className='relative bg-gray-100 rounded-3xl flex flex-col gap-4 flex-1 p-6 w-full z-10'>
@@ -39,7 +40,7 @@ const WorkExperienceCard = (props: any) => {
                     Edit
                 </button>
                 <button
-                    onClick={() => deleteWorkExperience(experience.sfid)}
+                    onClick={() => deleteWorkExperience(experience.id)}
                     className='bg-red-200 border hover:border-red-400 text-sm text-red-600 font-medium h-8 px-4 rounded-full'
                 >
                     Delete

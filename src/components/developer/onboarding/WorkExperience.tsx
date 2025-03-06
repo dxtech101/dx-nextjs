@@ -197,7 +197,7 @@ const WorkExperience = () => {
                             Complete your Profile
                         </h1>
                         <p className='pt-2 tracking-tight text-gray-600 max-w-sm inline-flex w-full'>
-                            Enter the Core skills that you have
+                            Enter your experience(s) that you have
                         </p>
                         {experience?.length > 0 &&
                             <button

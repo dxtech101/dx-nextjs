@@ -211,9 +211,9 @@ const page = () => {
                 }
                 defaultCountry="IN"
                 className={`h-12 pl-4 pr-4 w-full text-black border ${errors.phone
-                  ? "border-red-400 bg-red-100"
-                  : "border-gray-400 bg-white"
-                  } rounded-xl`}
+                  ? "border-red-400 border-2"
+                  : "border-gray-400"
+                  } bg-white rounded-xl`}
               />
             </div>
 

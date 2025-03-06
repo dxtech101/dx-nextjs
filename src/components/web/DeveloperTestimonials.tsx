@@ -34,81 +34,56 @@ const SkillItem = ({ name }: any) => {
     }
 };
 
+const DeveloperTestimonialsCard = ({ imgUrl, details, skills }: any) => {
+    return (
+        <div className="w-full flex flex-col gap-4 justify-between h-full p-4 border bg-white rounded-2xl relative">
+            <img
+                src={imgUrl}
+                alt="herosection1"
+                className='rounded-xl'
+            />
+            <div className='flex flex-col justify-between px-3'>
+                <h4 className="mb-4 text-3xl font-bold text-black tracking-tight font-heading">
+                    Lorem ipsum.
+                    <p className='text-lg font-normal text-gray-700 '>Certified Technical Architect</p>
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                    {skills && skills.map((skill: any, index: any) => {
+                        return (
+                            <SkillItem key={index} name={skill} />
+                        )
+                    })}
+                </div>
+            </div>
+            <button className='w-full mt-4 py-2 px-6 text-white font-semibold border border-indigo-700 rounded-xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200'>
+                See More
+            </button>
+        </div>
+    )
+}
+
 const DeveloperTestimonials = () => {
     return (
         <section className="py-12 md:py-24 container mx-auto flex flex-col justify-center items-start">
             <h1 className="mb-16 font-semibold text-6xl sm:text-6xl xl:text-11xl font-heading">
                 Work with Anyone. Anywhere.
             </h1>
-            <div className="flex w-full justify-evenly flex-wrap -m-2.5">
-                <div className="w-full md:w-1/2 lg:w-1/3 p-2.5">
-                    <div className="h-full p-4 border bg-white rounded-2xl relative">
-                        <img
-                            src="https://static.shuffle.dev/components/preview/2f808e47-944e-42cf-b821-2358251e0600/assets/public/saturn-assets/images/team/large-photo-color2.png"
-                            alt="herosection1"
-                            className='rounded-xl'
-                        />
-                        <div className='p-6'>
-                            <h4 className="mb-4 text-3xl font-bold text-black tracking-tight font-heading">
-                                Lorem ipsum.
-                                <p className='text-lg font-normal text-gray-700 '>Certified Technical Architect</p>
-                            </h4>
-                            <div className="flex flex-wrap gap-2">
-                                <SkillItem name={"Salesforce"} />
-                                <SkillItem name={"Mulesoft"} />
-                                <SkillItem name={"Heroku"} />
-                                <SkillItem name={"Marketing Cloud"} />
-                            </div>
-                        </div>
-                        <button className='w-full mt-4 py-2 px-6 text-white font-semibold border border-indigo-700 rounded-xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200'>
-                            See More
-                        </button>
-                    </div>
-                </div>
-                <div className="w-full md:w-1/2 lg:w-1/3 p-2.5">
-                    <div className="h-full p-4 border bg-white rounded-2xl relative">
-                        <img
-                            src="https://static.shuffle.dev/components/preview/2f808e47-944e-42cf-b821-2358251e0600/assets/public/saturn-assets/images/team/large-photo-color3.png"
-                            alt="herosection1"
-                            className='rounded-xl'
-                        />
-                        <div className='p-6'>
-                            <h4 className="mb-4 text-3xl font-bold text-black tracking-tight font-heading">
-                                Lorem ipsum.
-                                <p className='text-lg font-normal text-gray-700 '>Certified Technical Architect</p>
-                            </h4>
-                            <div className="flex flex-wrap gap-2">
-                                <SkillItem name={"B2B Commerce Cloud"} />
-                                <SkillItem name={"Experience Cloud"} />
-                            </div>
-                        </div>
-                        <button className='w-full mt-4 py-2 px-6 text-white font-semibold border border-indigo-700 rounded-xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200'>
-                            See More
-                        </button>
-                    </div>
-                </div>
-                <div className="w-full md:w-1/2 lg:w-1/3 p-2.5">
-                    <div className="h-full p-4 border bg-white rounded-2xl relative">
-                        <img
-                            src="https://static.shuffle.dev/components/preview/2f808e47-944e-42cf-b821-2358251e0600/assets/public/saturn-assets/images/team/large-photo-color1.png"
-                            alt="herosection1"
-                            className='rounded-xl'
-                        />
-                        <div className='p-6'>
-                            <h4 className="mb-4 text-3xl font-bold text-black tracking-tight font-heading">
-                                Lorem ipsum.
-                                <p className='text-lg font-normal text-gray-700 '>Certified Technical Architect</p>
-                            </h4>
-                            <div className="flex flex-wrap gap-2">
-                                <SkillItem name={"Mulesoft"} />
-                                <SkillItem name={"Industry Cloud"} />
-                            </div>
-                        </div>
-                        <button className='w-full mt-4 py-2 px-6 text-white font-semibold border border-indigo-700 rounded-xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200'>
-                            See More
-                        </button>
-                    </div>
-                </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 -m-2.5">
+                <DeveloperTestimonialsCard
+                    imgUrl="https://static.shuffle.dev/components/preview/2f808e47-944e-42cf-b821-2358251e0600/assets/public/saturn-assets/images/team/large-photo-color3.png"
+                    details={"Lorem ipsum."}
+                    skills={["B2B Commerce Cloud", "Salesforce", "Marketing Cloud"]}
+                />
+                <DeveloperTestimonialsCard
+                    imgUrl="https://static.shuffle.dev/components/preview/2f808e47-944e-42cf-b821-2358251e0600/assets/public/saturn-assets/images/team/large-photo-color1.png"
+                    details={"Lorem ipsum."}
+                    skills={["Mulesoft", "B2C Commerce Cloud", "Experience Cloud"]}
+                />
+                <DeveloperTestimonialsCard
+                    imgUrl="https://static.shuffle.dev/components/preview/2f808e47-944e-42cf-b821-2358251e0600/assets/public/saturn-assets/images/team/large-photo-color2.png"
+                    details={"Lorem ipsum."}
+                    skills={["Mulesoft", "Industry Cloud", "AI"]}
+                />
             </div>
         </section>
     )

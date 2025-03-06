@@ -6,7 +6,7 @@ const Services = () => {
         <section className="py-12 md:py-24 bg-gradient-to-b from-blue-100 from-1% rounded-t-[3rem] mx-6">
             <div className="container mx-auto px-4">
                 <div className="mb-12 text-center max-w-6xl mx-auto text-black">
-                    <h1 className="mb-16 font-semibold text-3xl sm:text-4xl md:text-7xl xl:text-11xl font-heading">
+                    <h1 className="mb-16 font-semibold text-3xl sm:text-4xl md:text-5xl xl:text-11xl font-heading">
                         <span>Your trusted Platform for
                             <span className='flex flex-row items-center justify-center pt-4 gap-2'>
                                 <img src="/Salesforce.png" alt="Salesforce" className='w-20 md:w-32 z-0' />

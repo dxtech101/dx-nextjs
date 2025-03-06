@@ -28,11 +28,11 @@ const NavBar = () => {
 
     return (
         <div>
-            <nav className={`fixed top-0 w-full py-6 bg-white z-30 tansition-transform duration-300 ${visible ? "translate-y-0" : "-translate-y-full"}`}>
+            <nav className={`fixed top-0 w-full py-6 bg-white z-30 border-b border-gray-100 tansition-transform duration-300 ${visible ? "translate-y-0" : "-translate-y-full"}`}>
                 <div className="container px-4 mx-auto">
                     <div className="flex items-center relative">
-                        <Link className="inline-block text-lg font-bold" href="#">
-                            <img className="w-64 h-auto" src="/logo.png" alt="" />
+                        <Link className="inline-block text-xl font-bold" href="#">
+                            <span>D<span className='text-blue-800'>X</span> | Developer Exchange</span>
                         </Link>
                         <div className="xl:hidden ml-auto">
                             <button
