@@ -88,7 +88,12 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
                     </div>
                 </nav>
                 <div className="bg-white absolute bottom-0 left-0 w-full p-1 rounded-b-3xl group hover:bg-gray-800 border border-gray-300">
-                    <a className="flex relative items-center justify-center w-full p-4 text-gray-300 rounded-xl" href="#">
+                    <button
+                        onClick={() => {
+                            removeAuthenticationToken()
+                            router.push("/")
+                        }}
+                        className="flex relative items-center justify-center w-full p-4 text-gray-300 rounded-xl">
                         <div className={`${toggleSideBar ? "block" : "hidden"} transition-opacity duration-300 ease-in-out`}>
                             <img src="/Einstein.png" alt="bgImage" className='absolute bottom-0 left-2 h-32 object-left-bottom object-cover z-0' />
                             <span className="ml-8 text-sm font-semibold group-hover:text-gray-100 text-gray-600">
@@ -96,7 +101,7 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
                             </span>
                         </div>
                         {!toggleSideBar && <LogOut className='h-5 w-5 text-gray-700 group-hover:text-gray-50' />}
-                    </a>
+                    </button>
                 </div>
             </div>
             <>

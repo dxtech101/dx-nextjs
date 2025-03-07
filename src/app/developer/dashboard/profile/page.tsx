@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux'
 
 const page = () => {
   const [loading, setLoading] = useState(true);
-  const [profileData ,setProfileData] = useState<any>({
+  const [profileData, setProfileData] = useState<any>({
     skills: [],
     certifications: [],
     workExperience: [],
@@ -59,13 +59,16 @@ const page = () => {
     }
   }, [contactSfid]);
 
+  console.log("certifications", certifications);
+
+
   useEffect(() => {
     getUserPortoflioDetails();
   }, [getUserPortoflioDetails]);
 
   return (
     <div className='bg-white border border-gray-300 rounded-3xl flex flex-col items-start justify-center gap-6 p-6'>
-      <DeveloperProfileDetails personalDetails={profileData?.personalDetails} updateDetails={getUserPortoflioDetails} />
+      <DeveloperProfileDetails personalDetails={profileData?.personalDetails} certificationCount={checkedCertificates.length} updateDetails={getUserPortoflioDetails} />
       <DeveloperProfileVideoSummary />
       <DeveloperProfileAISummary />
       <div className='w-full h-full flex flex-col lg:flex-row items-start justify-center gap-4'>
