@@ -1,4 +1,5 @@
 "use client"
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 
 const SkillItem = ({ name }: any) => {
@@ -40,7 +41,7 @@ const DeveloperTestimonialsCard = ({ imgUrl, details, skills }: any) => {
             <img
                 src={imgUrl}
                 alt="herosection1"
-                className='rounded-xl'
+                className='rounded-xl h-50 w-auto'
             />
             <div className='flex flex-col justify-between px-3'>
                 <h4 className="mb-4 text-3xl font-bold text-black tracking-tight font-heading">
@@ -55,17 +56,19 @@ const DeveloperTestimonialsCard = ({ imgUrl, details, skills }: any) => {
                     })}
                 </div>
             </div>
-            <button className='w-full mt-4 py-2 px-6 text-white font-semibold border border-indigo-700 rounded-xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200'>
+            <Link 
+                href='/developer/login'
+            className='w-full mt-4 py-2 px-6 text-white font-semibold border border-indigo-700 rounded-xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200'>
                 See More
-            </button>
+            </Link>
         </div>
     )
 }
 
 const DeveloperTestimonials = () => {
     return (
-        <section className="py-12 md:py-24 container mx-auto flex flex-col justify-center items-start">
-            <h1 className="mb-16 font-semibold text-6xl sm:text-6xl xl:text-11xl font-heading">
+        <section className="py-12 md:py-24 mx-10 flex flex-col justify-center items-start">
+            <h1 className="mb-16 font-semibold text-4xl sm:text-6xl xl:text-11xl font-heading">
                 Work with Anyone. Anywhere.
             </h1>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 -m-2.5">
