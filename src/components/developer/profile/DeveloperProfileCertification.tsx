@@ -53,6 +53,10 @@ const DeveloperProfileCertification = ({ certification, loading, updateDetails }
         setVisibleCount(showAll ? 6 : certification.length);
     };
 
+    useEffect(() => {
+        updateDetails()
+    },[showModal])
+
     return (
         <>
             <div className='bg-gray-50 rounded-2xl w-full p-4 lg:p-6'>

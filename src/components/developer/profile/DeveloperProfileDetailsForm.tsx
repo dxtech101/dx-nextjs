@@ -11,6 +11,7 @@ const DeveloperProfileDetailsForm = forwardRef(({
     personalDetails,
     loading,
     setLoading,
+    setEditModal
 }: any, ref: any) => {
     const dispatch = useDispatch();
     const [salutation, setSalutation] = useState<any>("")
@@ -57,7 +58,7 @@ const DeveloperProfileDetailsForm = forwardRef(({
         if (formData.last_name) profileUpdateData.append("lastname", formData.last_name);
         if (formData.birth_date) profileUpdateData.append("birthdate", formData.birth_date);
         if (formData.job_title) profileUpdateData.append("job_title_c", formData.job_title);
-        if (formData.work_experience) profileUpdateData.append("work_experience", formData.work_experience);
+        if (formData.work_year_experience) profileUpdateData.append("work_experience", formData.work_experience);
         if (formData.industry_experience) profileUpdateData.append("industry_experience_c", formData.industry_experience);
         if (formData.country) profileUpdateData.append("country_c", formData.country);
         if (formData.preferred_time_zone) profileUpdateData.append("preferred_timezone_c", formData.preferred_time_zone);
@@ -69,6 +70,7 @@ const DeveloperProfileDetailsForm = forwardRef(({
             const { results } = await updateProfile(profileUpdateData);
             if (results) {
                 dispatch(addUserProfile(results));
+                setEditModal(false)
             }
         } catch (error) {
             console.error("Error uploading profile picture:", error);

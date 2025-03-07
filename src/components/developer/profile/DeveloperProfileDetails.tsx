@@ -1,19 +1,15 @@
 "use client"
 import Modal from '@/components/modal/Modal';
-import { addUserProfile } from '@/feature/reducers/userProfile';
-import { uploadProfilePicture } from '@/lib/service/user.service';
-import { BriefcaseBusiness, CakeIcon, CodeIcon, MailIcon, MapPinned, PencilIcon, Phone, PinIcon, ShieldCheck } from 'lucide-react';
+import { BriefcaseBusiness, CakeIcon, CodeIcon, MailIcon, MapPinned, PencilIcon, Phone, ShieldCheck } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import DeveloperProfileDetailsForm from './DeveloperProfileDetailsForm';
 
-const DeveloperProfileDetails = ({ personalDetails, updateDetails }: any) => {
-    const dispatch = useDispatch();
+const DeveloperProfileDetails = ({ personalDetails, updateDetails, certificationCount }: any) => {
     const formRef = useRef<HTMLFormElement>(null)
     const userProfile = useSelector((state: any) => state.userProfile)
     const [editModal, setEditModal] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [selectedFile, setSelectedFile] = useState<any>(null);
 
     useEffect(() => {
         if (!editModal) {
@@ -24,23 +20,19 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails }: any) => {
     const profileDetails = [{
         icon: <MailIcon className='w-5 h-5 text-purple-900' />,
         label: "Email",
-        value: personalDetails?.email || "N/A"
+        value: personalDetails?.email
     }, {
         icon: <Phone className='w-5 h-5 text-purple-900' />,
         label: "Phone",
-        value: personalDetails?.phone || "N/A"
-    }, {
-        icon: <PinIcon className='w-5 h-5 text-purple-900' />,
-        label: "Address",
-        value: personalDetails?.address || "N/A"
+        value: personalDetails?.phone
     }, {
         icon: <MapPinned className='w-5 h-5 text-purple-900' />,
         label: "Country",
-        value: personalDetails?.country || "N/A"
+        value: personalDetails?.country
     }, {
         icon: <CakeIcon className='w-5 h-5 text-purple-900' />,
         label: "DOB",
-        value: personalDetails?.birthdate || "N/A"
+        value: personalDetails?.birthdate
     }]
 
     return (
@@ -71,18 +63,26 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails }: any) => {
                         <div className='flex flex-col gap-2'>
                             <span className='text-3xl lg:text-4xl font-bold capitalize'>{personalDetails?.name}</span>
                             <div className='flex flex-wrap gap-2 text-sm'>
-                                <span className='shadow-inner inline-flex items-center gap-2 bg-purple-100 border border-purple-300 text-purple-900 w-fit rounded-full py-0.5 px-4'>
-                                    <CodeIcon className='w-5 h-5' />
-                                    {personalDetails?.job_title}
-                                </span>
-                                <span className='inline-flex shadow-inner items-center gap-2 bg-amber-100 border border-amber-300 text-amber-900 w-fit rounded-full py-0.5 px-4'>
-                                    <ShieldCheck className='w-5 h-5' />
-                                    16 Certification
-                                </span>
-                                <span className='inline-flex items-center shadow-inner gap-2 bg-blue-100 border border-blue-300 text-blue-900 w-fit rounded-full py-0.5 px-4'>
-                                    <BriefcaseBusiness className='w-5 h-5' />
-                                    7+ Years Experience
-                                </span>
+                                {personalDetails?.job_title && (
+                                    <span className='shadow-inner inline-flex items-center gap-2 bg-purple-100 border border-purple-300 text-purple-900 w-fit rounded-full py-0.5 px-4'>
+                                        <CodeIcon className='w-5 h-5' />
+                                        {personalDetails?.job_title}
+                                    </span>
+                                )}
+                                {certificationCount && (
+                                    <span className='inline-flex shadow-inner items-center gap-2 bg-amber-100 border border-amber-300 text-amber-900 w-fit rounded-full py-0.5 px-4'>
+                                        <ShieldCheck className='w-5 h-5' />
+                                        {certificationCount} Certification
+                                    </span>
+                                )}
+
+                                {personalDetails?.work_year_experience && (
+                                    <span className='inline-flex items-center shadow-inner gap-2 bg-blue-100 border border-blue-300 text-blue-900 w-fit rounded-full py-0.5 px-4'>
+                                        <BriefcaseBusiness className='w-5 h-5' />
+                                        {personalDetails?.work_year_experience}+ Years Experience
+                                    </span>
+                                )}
+
                             </div>
                         </div>
 
@@ -91,10 +91,14 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails }: any) => {
                             {profileDetails?.map((item: any, index: any) => {
                                 return (
                                     <>
-                                        <span key={index} className='inline-flex items-center gap-2 font-semibold'>
-                                            {item?.icon}{item?.label}
-                                        </span>
-                                        <span className='text-gray-800'>{item?.value}</span>
+                                        {item?.value && (
+                                            <>
+                                                <span key={index} className='inline-flex items-center gap-2 font-semibold'>
+                                                    {item?.icon}{item?.label}
+                                                </span>
+                                                <span className='text-gray-800'>{item?.value}</span>
+                                            </>
+                                        )}
                                     </>
                                 )
                             })}
@@ -116,6 +120,7 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails }: any) => {
                         personalDetails={personalDetails}
                         loading={loading}
                         setLoading={setLoading}
+                        setEditModal={setEditModal}
                     />
                 </Modal>
             )}

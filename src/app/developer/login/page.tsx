@@ -6,10 +6,10 @@ import { addUserProfile } from '@/feature/reducers/userProfile';
 import { addSalesforceId } from '@/feature/reducers/userSalesforceId';
 import { handleFormDataChange, validateForm } from '@/lib/helper';
 import { getDeveloperSalesforceContactId, userSignIn } from '@/lib/service/user.service';
-import { ArrowLeft, LoaderCircle } from 'lucide-react';
+import { ArrowLeft, ArrowRight, EllipsisVertical, LoaderCircle, Mail, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 
@@ -26,6 +26,14 @@ export default function Login() {
         email: '',
         password: ''
     });
+    const [rememberMe, setRememberMe] = useState<any>(false);
+    const [savedUserDetails, setSavedUserDetails] = useState<any>([]);
+
+    useEffect(() => {
+        if(localStorage.getItem("savedUserDetails")){
+            setSavedUserDetails(JSON.parse(localStorage.getItem("savedUserDetails") || "[]"));
+        }
+    }, [])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -55,6 +63,21 @@ export default function Login() {
                     router.push('/developer/dashboard');
                 } else if (response.user.role === "Company") {
                     router.push('/company/dashboard');
+                }
+                if (rememberMe) {
+                    const existingData = JSON.parse(localStorage.getItem("savedUserDetails") || "[]");
+
+                    const updatedData = Array.isArray(existingData) ? existingData : [];
+
+                    updatedData.push({
+                        email: formData.email,
+                        password: formData.password,
+                        profile_picture: response.user.profile_picture,
+                        first_name: response.user.first_name,
+                        last_name: response.user.last_name,
+                    });
+
+                    localStorage.setItem("savedUserDetails", JSON.stringify(updatedData));
                 }
             }
         } catch (error: any) {
@@ -109,10 +132,16 @@ export default function Login() {
                             className="w-full"
                             isRequired={true}
                         />
-                        <div className="flex flex-wrap justify-between -m-2 mb-4">
+                        <div className="flex flex-wrap justify-between -m-2">
                             <div className="w-auto p-2">
                                 <div className="flex items-center">
-                                    <input className="w-4 h-4" id="default-checkbox" type="checkbox" value="" />
+                                    <input
+                                        className="w-4 h-4"
+                                        id="default-checkbox"
+                                        type="checkbox"
+                                        value={rememberMe}
+                                        onChange={() => setRememberMe(!rememberMe)}
+                                    />
                                     <label className="ml-2 text-sm text-gray-900 font-medium" htmlFor="default-checkbox">Remember Me</label>
                                 </div>
                             </div>
@@ -121,19 +150,62 @@ export default function Login() {
                                     Forgot Password?
                                 </Link>
                             </div>
-                            <button
-                                disabled={loading}
-                                className="mt-8 py-4 px-9 w-full text-white font-semibold border border-indigo-700 rounded-xl shadow-4xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200"
-                                type="submit"
-                            >
-                                {loading ?
-                                    <div className="flex items-center justify-center">
-                                        <LoaderCircle className="animate-spin h-6 w-auto mr-2" />
-                                        Loading...
-                                    </div>
-                                    : "Login"}
-                            </button>
                         </div>
+                        <div className='w-8/12 lg:w-full mx-auto'>
+                            {savedUserDetails && savedUserDetails.length > 0 && (
+                                <h3 className='text-xs font-medium'>Saved User Details</h3>
+                            )}
+                            {savedUserDetails && savedUserDetails.map((userDetail: any, index: any) => {
+                                return (
+                                    <div className='relative flex flex-row group justify-between hover:bg-gray-100 border border-black/20 rounded-lg p-4 mt-2'>
+                                        <button
+                                            type='button'
+                                            onClick={() => {
+                                                localStorage.removeItem("savedUserDetails");
+                                                setSavedUserDetails([]);
+                                            }}
+                                            className='bg-red-600 hidden group-hover:flex rounded-full p-2 text-white absolute -top-3 -right-3'>
+                                            <Trash2 className='w-4 h-4 text-white' strokeWidth={2} />
+                                        </button>
+                                        <div className='flex flex-row gap-6 items-center'>
+                                            <div className='w-16 h-16 bg-gray-400 rounded-full'>
+                                                <img src={userDetail?.profile_picture} alt='profile' className='w-full h-full rounded-full' />
+                                            </div>
+
+                                            <div className='flex flex-col gap-1'>
+                                                <span className='text-2xl font-bold'>{userDetail?.first_name}{" "}{userDetail?.last_name}</span>
+                                                <span className='text-sm inline-flex gap-2 items-center text-gray-700'><Mail className='w-4 h-4' />{userDetail?.email}</span>
+                                            </div>
+                                        </div>
+                                        <button
+                                            type='submit'
+                                            onClick={() => {
+                                                setFormData({
+                                                    ...formData,
+                                                    email: userDetail?.email,
+                                                    password: userDetail?.password,
+                                                })
+                                            }}
+                                            className='bg-gray-200 rounded-lg px-4'>
+                                            <ArrowRight />
+                                        </button>
+                                    </div>
+                                )
+                            })}
+
+                        </div>
+                        <button
+                            disabled={loading}
+                            className="mt-2 py-4 px-9 w-full text-white font-semibold border border-indigo-700 rounded-xl shadow-4xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200"
+                            type="submit"
+                        >
+                            {loading ?
+                                <div className="flex items-center justify-center">
+                                    <LoaderCircle className="animate-spin h-6 w-auto mr-2" />
+                                    Loading...
+                                </div>
+                                : "Login"}
+                        </button>
 
                     </form>
                 </div>
