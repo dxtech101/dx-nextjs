@@ -4,7 +4,7 @@ import React from 'react'
 const Herosection = () => {
     return (
         <div className="flex flex-col items-center justify-evenly xl:justify-around xl:flex-row h-screen">
-            <div className="w-8/12 xl:w-4/12 p-0 lg:p-6">
+            <div className="w-10/12 xl:w-4/12 p-0 lg:p-6">
                 <h1 className="mb-9 text-3xl sm:text-6xl md:text-7xl font-bold font-heading w-full xl:w-full leading-none text-black">
                     Hire Top
                     <br />
@@ -28,7 +28,7 @@ const Herosection = () => {
                     </div>
                 </div>
             </div>
-            <div className="w-8/12 lg:w-7/12 p-0 lg:p-8">
+            <div className="w-10/12 lg:w-7/12 p-0 lg:p-8">
                 <div className='flex flex-row justify-end items-center gap-4'>
                     <div className='w-1/3 h-1/3'>
                         <img className="mx-auto h-full object-cover rounded-3xl" src="/herosection1.png" alt="" />

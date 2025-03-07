@@ -7,7 +7,7 @@ import { industries, salesforce_technologies } from '@/constants/data';
 import { handleFormDataChange, InfoLabel, validateForm } from '@/lib/helper';
 import { WorkExperienceService } from '@/lib/service/portfolio.service';
 import { FileUser, Plus } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import DeveloperProfileCardHeader from './DeveloperProfileCardHeader';
 
@@ -51,7 +51,7 @@ const WorkExperienceCard = (props: any) => {
 }
 
 const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any) => {
-    console.log(experience)
+    const formRef = useRef<HTMLFormElement>(null)
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState<any>({
         company_project_name: "",
@@ -187,13 +187,14 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
             </div>
             {showModal && (
                 <Modal
-                    header="Edit Skills"
+                    header={`${type === "edit" ? "Edit" : "Add"} Experience`}
                     setModal={setShowModal}
                     loading={loadingUI}
                     size="lg"
                     onSubmit={handleSubmit}
+                    formRef={formRef}
                 >
-                    <form className='w-full flex flex-col gap-4'>
+                    <form onSubmit={handleSubmit} className='w-full flex flex-col gap-4' ref={formRef}>
                         <div className='flex flex-col lg:flex-row w-full gap-6'>
                             <InputField
                                 label={"Project Name"}

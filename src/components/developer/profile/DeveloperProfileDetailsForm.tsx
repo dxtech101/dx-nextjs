@@ -40,7 +40,7 @@ const DeveloperProfileDetailsForm = forwardRef(({
             "phone": personalDetails?.phone || "",
             "birth_date": personalDetails?.birthdate || "",
             "job_title": personalDetails?.job_title || "",
-            "work_experience": personalDetails?.work_experience || "",
+            "work_year_experience": personalDetails?.work_experience || "",
             "industry_experience": personalDetails?.industry_experience || "",
             "country": personalDetails?.country || "",
             "preferred_time_zone": personalDetails?.preferred_time_zone || ""
@@ -58,12 +58,11 @@ const DeveloperProfileDetailsForm = forwardRef(({
         if (formData.last_name) profileUpdateData.append("lastname", formData.last_name);
         if (formData.birth_date) profileUpdateData.append("birthdate", formData.birth_date);
         if (formData.job_title) profileUpdateData.append("job_title_c", formData.job_title);
-        if (formData.work_year_experience) profileUpdateData.append("work_experience", formData.work_experience);
+        if (formData.work_year_experience) profileUpdateData.append("work_experience", formData.work_year_experience);
         if (formData.industry_experience) profileUpdateData.append("industry_experience_c", formData.industry_experience);
         if (formData.country) profileUpdateData.append("country_c", formData.country);
         if (formData.preferred_time_zone) profileUpdateData.append("preferred_timezone_c", formData.preferred_time_zone);
         if (selectedFile) profileUpdateData.append("profile_picture", selectedFile);
-        if (selectedFile) profileUpdateData.append("intro_video", selectedFile);
 
         setLoading(true);
         try {
@@ -164,14 +163,14 @@ const DeveloperProfileDetailsForm = forwardRef(({
                     />
                     <InputField
                         type="number"
-                        label="Work Year Experience"
-                        value={formData.work_experience}
+                        label="Work Experience (in years)"
+                        value={formData.work_year_experience}
                         onChange={(e: any) =>
                             handleFormDataChange(e, setFormData, setErrors)
                         }
-                        id="work_experience"
+                        id="work_year_experience"
                         className="w-full"
-                        error={errors.work_experience}
+                        error={errors.work_year_experience}
                     />
                     <InputField
                         type="text"
