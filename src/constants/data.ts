@@ -48,32 +48,41 @@ export const industries = [
 
 export const skill_level = ["JUNIOR", "MIDDLE", "EXPERT"];
 
-export const filterby = [
+export const filterbyCertificates = [
     "Admin",
-    "Developer", 
-    "Consultant", 
+    "Developer",
+    "Consultant",
     "Architect",
     "Marketing",
     "Commerce",
     "Industry Cloud",
     "Designer",
-    "CRM Analytics", 
+    "CRM Analytics",
     "Heroku",
     "Mulesoft"
 ];
 
+export const filterbySkills = [
+    "Salesforce",
+    "Front-end",
+    "Back-end",
+    "Integration",
+    "Business Analysis",
+    "Database"
+];
+
 export const prefered_hourly_rates = [
-    { value: "$5-10/hr", label: "$5-10/hr" }, 
-    { value: "$10-20/hr", label: "$10-20/hr" }, 
-    { value: "$20-40/hr", label: "$20-40/hr" }, 
+    { value: "$5-10/hr", label: "$5-10/hr" },
+    { value: "$10-20/hr", label: "$10-20/hr" },
+    { value: "$20-40/hr", label: "$20-40/hr" },
     { value: "$40-60/hr", label: "$40-60/hr" }
 ]
 
 export const available_hours = [
-    { value: "0-5hrs", label: "0-5 hrs" }, 
-    { value: "5-10hrs", label: "5-10 hrs" }, 
-    { value: "10-20hrs", label: "10-20 hrs" }, 
-    { value: "20-40hrs", label: "20-40 hrs" }, 
+    { value: "0-5hrs", label: "0-5 hrs" },
+    { value: "5-10hrs", label: "5-10 hrs" },
+    { value: "10-20hrs", label: "10-20 hrs" },
+    { value: "20-40hrs", label: "20-40 hrs" },
     { value: "40-60hrs", label: "40-60 hrs" }
 ]
 
@@ -90,6 +99,35 @@ export const skillsDetails = [
     { id: "a0lIo000000viJRIAY", text: 'Industry Cloud', imageSrc: '/Salesforce.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
     { id: "a0lIo000000viJZIAY", text: 'Einstein Copilot', imageSrc: '/encop.webp', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
     { id: "a0lIo000000viJYIAY", text: 'AI', imageSrc: '/encop.webp', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000viJYIAY", text: 'AI', imageSrc: '/encop.webp', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDvkIAE", text: "React.js", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDvpIAE", text: "Next.js", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDvqIAE", text: "Vue.js", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDvuIAE", text: "Angular", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDvzIAE", text: "Tailwind CSS", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDw4IAE", text: "Bootstrap", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDw9IAE", text: "Node.js", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDvlIAE", text: "Express.js", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDw5IAE", text: "Django", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDw6IAE", text: "Flask", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDw7IAE", text: "Spring Boot", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDwEIAU", text: "ASP.NET Core", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDwJIAU", text: "Ruby on Rails", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDwOIAU", text: "PostgreSQL", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDwTIAU", text: "MySQL", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDwYIAU", text: "MongoDB", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDwdIAE", text: "DynamoDB", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDwiIAE", text: "Redis", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDwjIAE", text: "Apache Kafka", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDwKIAU", text: "Google Cloud Pub/Sub", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDweIAE", text: "AWS Step Functions", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDvrIAE", text: "Jira", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDvsIAE", text: "Confluence", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDwUIAU", text: "Microsoft Power BI", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDwnIAE", text: "Tableau", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDwsIAE", text: "Lucidchart", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDwkIAE", text: "Google Analytics", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDwoIAE", text: "Excel", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' }
 ];
 
 export const developerQuestions = [
@@ -102,6 +140,6 @@ export const developerQuestions = [
     "Which tools, libraries, or frameworks do you consider essential in your workflow, and what advantages have they provided in streamlining development tasks?",
     "Share an experience where you optimized a slow application or process, detailing the changes made and the measurable impact on performance or efficiency.",
     "What advice would you give to someone starting their software development career, emphasizing habits, practices, and skills essential for long-term growth and success?"
-  ];
-  
+];
+
 

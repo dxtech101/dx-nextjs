@@ -26,6 +26,13 @@ const NavBar = () => {
         return () => window.removeEventListener("scroll", toggleVisible);
     }, [prevOffset]);
 
+    const navLinks = [
+        { href: "/", label: "Home" },
+        { href: "/services", label: "Services" },
+        { href: "/about-us", label: "About Us" },
+        { href: "/contact", label: "Contact Us" },
+    ]
+
     return (
         <div>
             <nav className={`fixed top-0 w-full py-6 bg-white z-30 border-b border-gray-100 tansition-transform duration-300 ${visible ? "translate-y-0" : "-translate-y-full"}`}>
@@ -36,7 +43,7 @@ const NavBar = () => {
                     <div className="xl:hidden">
                         <button
                             onClick={() => setMobileNavOpen(!mobileNavOpen)}
-                            className="flex w-12 h-12 items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-md transition duration-200">
+                            className="flex w-12 h-12 items-center justify-center rounded-md transition duration-200">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M3 12H21" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                 <path d="M3 6H21" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
@@ -45,10 +52,13 @@ const NavBar = () => {
                         </button>
                     </div>
                     <ul className="hidden xl:flex lg:w-auto lg:space-x-12">
-                        <li><Link className="inline-block text-md text-gray-900 hover:text-orange-900 font-medium" href="/">Home</Link></li>
-                        <li><Link className="inline-block text-md text-gray-900 hover:text-orange-900 font-medium" href="#">Services</Link></li>
-                        <li><Link className="inline-block text-md text-gray-900 hover:text-orange-900 font-medium" href="/about-us">About Us</Link></li>
-                        <li><Link className="inline-block text-md text-gray-900 hover:text-orange-900 font-medium" href="/contact">Contact Us</Link></li>
+                        {navLinks && navLinks?.map((navLink, index) => {
+                            return (
+                                <Link className="inline-block text-md text-gray-900 hover:text-orange-900 font-medium" href={navLink.href} key={index}>
+                                    {navLink.label}
+                                </Link>
+                            )
+                        })}
                     </ul>
                     <div className="hidden xl:block">
                         <div className="flex group items-center">
@@ -82,33 +92,38 @@ const NavBar = () => {
                     </div>
                 </div>
             </nav>
-            <div className={`fixed ${!mobileNavOpen && "hidden"} top-0 left-0 z-40 bg-gray-800 w-screen h-screen opacity-25`}></div>
-            <div className={`fixed top-0 left-0 w-full z-50 transition-transform duration-300 ease-in-out ${mobileNavOpen ? '-translate-x-0' : '-translate-x-full'}`}>
+            <div
+                className={`fixed ${!mobileNavOpen && "hidden"} top-0 left-0 z-40 bg-gray-800 w-screen h-screen opacity-25`}></div>
+            <div className={`fixed top-0 w-full z-50 transition-transform duration-300 ease-in-out ${mobileNavOpen ? 'translate-x-0' : '-translate-x-full'}`}>
 
-                <nav className="relative flex flex-col py-6 px-10 w-fit h-full bg-white border-r overflow-y-auto">
+                <nav className="relative flex flex-col py-6 px-6 w-fit h-full bg-white border-l">
                     <div className="flex items-center mb-6">
-                        <Link className="mr-auto text-2xl font-medium leading-none" href="#">
-                            DX DIGITAL
+                        <Link className="mr-auto text-lg font-bold leading-none" href="#">
+                            <span>D<span className='text-blue-800'>X</span> | Developer Exchange</span>
                         </Link>
                         <button onClick={() => setMobileNavOpen(!mobileNavOpen)}>
                             <X />
                         </button>
                     </div>
-                    <div className='flex flex-col items-start justify-start gap-6 h-screen'>
-                        <ul className="mb-2">
-                            <li><Link className="block py-4 px-5 text-gray-900 hover:bg-orange-50 rounded-lg" href="#">Home</Link></li>
-                            <li><Link className="block py-4 px-5 text-gray-900 hover:bg-orange-50 rounded-lg" href="#">Services</Link></li>
-                            <li><Link className="block py-4 px-5 text-gray-900 hover:bg-orange-50 rounded-lg" href="/about-us">About Us</Link></li>
-                            <li><Link className="block py-4 px-5 text-gray-900 hover:bg-orange-50 rounded-lg" href="/contact">Contact Us</Link></li>
-                        </ul>
-                        <Link href="/developer/login" className='w-64 h-24 bg-purple-100 hover:bg-purple-200 border-[1px] border-purple-400 rounded-xl flex justify-around items-center relative'>
+                    <div className='flex flex-col items-start justify-start gap-3 h-screen'>
+                        <div className='font-medium'>
+                            {navLinks && navLinks.map((navLink, index) => {
+                                return (
+                                    <Link onClick={() => setMobileNavOpen(false)} className="block py-4 text-gray-900"
+                                        href={navLink.href} key={index}>
+                                        {navLink.label}
+                                    </Link>
+                                )
+                            })}
+                        </div>
+                        <Link href="/developer/login" className='w-64 h-24 bg-purple-100 hover:bg-purple-200 p-3 rounded-xl flex justify-around items-center relative'>
                             <span className='font-extrabold flex flex-col text-purple-900'>
                                 Developer
-                                <span className='text-xs text-gray-500'>
-                                    Login as developer
+                                <span className='text-xs font-normal text-gray-500 text-start'>
+                                    Access your account & continue exploring!
                                 </span>
                             </span>
-                            <Image src="/developer.png" alt="Developer" width={100} height={100} className='' />
+                            <Image src="/developer.png" alt="Developer" width={80} height={80} className='' />
                         </Link>
                         {/* <Link href="/company/login" className='w-64 h-24 bg-amber-50 hover:bg-amber-100 border-[1px] border-amber-400 rounded-xl flex justify-around items-center relative'>
                             <span className='font-extrabold flex flex-col text-amber-900'>
@@ -119,14 +134,14 @@ const NavBar = () => {
                             </span>
                             <Image src="/company.png" alt="Developer" width={100} height={100} className='' />
                         </Link> */}
-                        <Link href="/signup" className='w-64 h-24 bg-blue-50 hover:bg-blue-100 border-[1px] border-blue-400 rounded-xl flex justify-around items-center relative'>
+                        <Link href="/signup" className='w-64 h-24 bg-blue-50 hover:bg-blue-100 p-3 rounded-xl flex justify-around items-center relative'>
                             <span className='font-extrabold flex flex-col text-blue-900'>
                                 Sign Up
-                                {/* <span className='text-xs text-gray-500'>
-                                    Register yourself as a Company or Developer
-                                </span> */}
+                                <span className='text-xs font-normal text-gray-500 text-start'>
+                                    Join us today and start your journey!
+                                </span>
                             </span>
-                            <Image src="/company.png" alt="Developer" width={100} height={100} className='' />
+                            <Image src="/company.png" alt="Developer" width={80} height={80} className='' />
                         </Link>
                     </div>
                 </nav>

@@ -1,7 +1,7 @@
 import InputField from '@/components/InputField';
 import ErrorToast from '@/components/toast/ErrorToast';
 import SuccessfulToast from '@/components/toast/SuccessfulToast';
-import { filterby, skillsDetails } from '@/constants/data';
+import { filterbyCertificates, skillsDetails } from '@/constants/data';
 import { InfoLabel } from '@/lib/helper';
 import { getAllSalesforceSkills, getAllSalesforceCertifications } from '@/lib/service/portfolio.service';
 import { addCertificationsRequirement, addSkillRequirement, deleteCertificationsRequirement, deleteSkillRequirement, getAllResourceRequest, getCertificationsRequirementByResourceRequest, getSkillRequirementByResourceRequest } from '@/lib/service/projectResource.service';
@@ -493,7 +493,7 @@ const ResourceMandatoryForm = ({ loading, setLoading, resourceDetails, setMandat
                                                     Filter by:
                                                 </span>
                                                 <div className='flex overflow-x-scroll no-scrollbar gap-2 items-center'>
-                                                    {filterby.map((item: any, index: number) => {
+                                                    {filterbyCertificates.map((item: any, index: number) => {
                                                         return (
                                                             <button key={index} onClick={() => filterbyCategory(item)}
                                                                 className={`px-2 py-1 rounded-full text-xs ${selectedTags.includes(item) ? 'bg-blue-500 text-white' : 'bg-gray-100'}`}
