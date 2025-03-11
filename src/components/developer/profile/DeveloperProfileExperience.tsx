@@ -32,7 +32,7 @@ const WorkExperienceCard = (props: any) => {
             </div>
 
             <InfoLabel label="Work Experience Summary" content={experience.project_description || "N/A"} />
-            <div className='absolute bottom-0 right-0 flex gap-2 z-10 p-4'>
+            <div className='absolute bottom-0 right-0 flex gap-2 z-20 p-4'>
                 <button
                     onClick={() => openEditModal(experience)}
                     className='bg-blue-200 border hover:border-blue-400 text-sm text-blue-600 font-medium h-8 px-4 rounded-full'

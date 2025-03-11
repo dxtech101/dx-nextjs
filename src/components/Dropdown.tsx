@@ -75,7 +75,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div
       ref={dropdownRef}
-      className={`relative ${className} flex flex-col gap-2`}
+      className={`relative ${className} h-full flex flex-col gap-2`}
     >
       <div className='w-full flex justify-between items-center'>
         <label className="text-sm font-bold text-gray-700">{label}{isRequired && <span className='text-red-600'>{" "}*</span>}</label>
@@ -90,7 +90,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         className="flex items-center justify-between px-4 py-2 bg-gray-100 border border-gray-400 rounded-xl cursor-pointer"
         onClick={toggleDropdown}
       >
-        <span className={selectedValue ? 'text-gray-700' : 'text-gray-500'}>
+        <span className={`${selectedValue ? 'text-gray-700' : 'text-gray-500'} whitespace-nowrap truncate`}>
           {selectedValue
             ? options.find((option) => option.value === selectedValue)?.label
             : 'Select an option...'}

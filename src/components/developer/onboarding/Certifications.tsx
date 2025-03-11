@@ -2,7 +2,7 @@
 import InputField from '@/components/InputField'
 import ErrorToast from '@/components/toast/ErrorToast'
 import SuccessfulToast from '@/components/toast/SuccessfulToast'
-import { filterby } from '@/constants/data'
+import { filterbyCertificates } from '@/constants/data'
 import { onBoardingHandleNext } from '@/feature/reducers/userOnboarding'
 import { CertificationsService, getAllSalesforceCertifications } from '@/lib/service/portfolio.service'
 import { X } from 'lucide-react'
@@ -74,7 +74,7 @@ const Certifications = ({ type = "add" }: any) => {
                         const assignedCert = assignedCertifications.find((cert: any) => cert.certification === item.sfid);
                         return { ...item, id: assignedCert?.id };
                     })
-            );            
+            );
 
         } catch (error) {
             console.error("Error fetching certifications:", error);
@@ -207,6 +207,8 @@ const Certifications = ({ type = "add" }: any) => {
         }
     };
 
+
+
     return (
         <div className={`${type === "add" && "bg-white rounded-3xl border border-gray-300 relative px-5 lg:px-10 bg-[url(https://wp.sfdcdigital.com/en-in/wp-content/uploads/sites/21/2023/03/pb-hp-products-bg-2.png?resize=2048,410)] bg-contain min-h-full bg-fixed bg-no-repeat bg-bottom"}`}>
             {type === "add" && (
@@ -258,7 +260,7 @@ const Certifications = ({ type = "add" }: any) => {
                                     Filter by:
                                 </span>
                                 <div className='flex overflow-x-scroll no-scrollbar gap-2 items-center'>
-                                    {filterby.map((item: any, index: number) => {
+                                    {filterbyCertificates.map((item: any, index: number) => {
                                         return (
                                             <button key={index} onClick={() => filterbyCategory(item)}
                                                 className={`px-2 py-1 rounded-full text-xs ${selectedTags.includes(item) ? 'bg-blue-500 text-white' : 'bg-gray-100'}`}

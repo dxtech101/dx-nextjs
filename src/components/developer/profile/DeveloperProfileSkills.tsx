@@ -5,7 +5,7 @@ import Skills from '../onboarding/Skills';
 import Tooltip from '@/components/Tooltip';
 import DeveloperProfileCardHeader from './DeveloperProfileCardHeader';
 
-const ProfileSkillComponent = ({ name }: any) => {
+const ProfileSkillComponent = ({ name, skill_level }: any) => {
     const [checkedItem, setCheckedItem] = useState<any>();
     const initialItems = [
         { text: 'Salesforce', imageSrc: '/Salesforce.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
@@ -33,11 +33,9 @@ const ProfileSkillComponent = ({ name }: any) => {
                 <span className={`font-bold text-xs lg:text-base ${checkedItem.textColor}`}>
                     {name}
                 </span>
-                <Tooltip popupContent={"Middle"} show={false}>
-                    <div className='cursor-pointer bg-white w-6 h-6 lg:w-8 lg:h-8 text-sm lg:text-xl flex items-center justify-center rounded-full'>
-                        🏆
-                    </div>
-                </Tooltip>
+                <div className='cursor-pointer bg-white w-6 h-6 lg:w-8 lg:h-8 text-sm lg:text-xl flex items-center justify-center rounded-full'>
+                    {skill_level === "Junior" ? "📖" : skill_level === "Middle" ? "🏅" : "🏆"}
+                </div>
             </div>
         );
     }
@@ -45,6 +43,8 @@ const ProfileSkillComponent = ({ name }: any) => {
 
 const DeveloperProfileSkills = ({ skills, loading, updateDetails }: any) => {
     const [showModal, setShowModal] = useState(false);
+    console.log(skills)
+    
 
     useEffect(() => {
         if (!showModal) {
@@ -117,7 +117,7 @@ const DeveloperProfileSkills = ({ skills, loading, updateDetails }: any) => {
                         {skills?.length > 0 ? (
                             <>
                                 {skills?.map((item: any, index: any) => (
-                                    <ProfileSkillComponent key={index} name={item.skill_name} />
+                                    <ProfileSkillComponent key={index} name={item.skill_name} skill_level={item.skill_level} />
                                 ))}
                             </>
                         ) : (

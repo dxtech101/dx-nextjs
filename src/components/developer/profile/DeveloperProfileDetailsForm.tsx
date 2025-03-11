@@ -1,11 +1,21 @@
+import Dropdown from '@/components/Dropdown'
 import FileUpload from '@/components/FileUpload'
 import InputDate from '@/components/InputDate'
 import InputField from '@/components/InputField'
+import MultiSelectDropdown from '@/components/MultiSelectDropdown'
+import { industries } from '@/constants/data'
 import { addUserProfile } from '@/feature/reducers/userProfile'
 import { handleFormDataChange, validateForm } from '@/lib/helper'
 import { updateProfile } from '@/lib/service/user.service'
 import { forwardRef, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { allTimezones, useTimezoneSelect } from "react-timezone-select"
+
+const labelStyle = "original"
+const timezones = {
+    ...allTimezones,
+    "Europe/Berlin": "Frankfurt",
+}
 
 const DeveloperProfileDetailsForm = forwardRef(({
     personalDetails,
@@ -32,6 +42,10 @@ const DeveloperProfileDetailsForm = forwardRef(({
         "first_name": "",
         "last_name": "",
     })
+
+    const { options, parseTimezone } = useTimezoneSelect({ labelStyle, timezones })
+
+    console.log("Options", options);
 
     useEffect(() => {
         setFormData({
@@ -89,7 +103,7 @@ const DeveloperProfileDetailsForm = forwardRef(({
                     />
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-3 w-full justify-between gap-4">
-                    <InputField
+                    {/* <InputField
                         type="text"
                         isRequired={true}
                         label="First Name"
@@ -115,7 +129,7 @@ const DeveloperProfileDetailsForm = forwardRef(({
                         id="last_name"
                         className="w-full"
                         error={errors.last_name}
-                    />
+                    /> */}
                     {/* <div className="flex flex-col gap-2">
                         <div className="w-full flex justify-between items-center">
                             <label className="text-sm font-bold text-gray-700 text-nowrap">
@@ -139,6 +153,17 @@ const DeveloperProfileDetailsForm = forwardRef(({
                                 } rounded-xl`}
                         />
                     </div> */}
+                    <InputField
+                        type="text"
+                        label="Job Title"
+                        value={formData.job_title}
+                        onChange={(e: any) =>
+                            handleFormDataChange(e, setFormData, setErrors)
+                        }
+                        id="job_title"
+                        className="w-full"
+                        error={errors.job_title}
+                    />
                     <InputDate
                         type="date"
                         label="Birth Date"
@@ -152,15 +177,38 @@ const DeveloperProfileDetailsForm = forwardRef(({
                     />
                     <InputField
                         type="text"
-                        label="Job Title"
-                        value={formData.job_title}
+                        label="Country"
+                        value={formData.country}
                         onChange={(e: any) =>
                             handleFormDataChange(e, setFormData, setErrors)
                         }
-                        id="job_title"
+                        id="country"
                         className="w-full"
-                        error={errors.job_title}
+                        error={errors.country}
                     />
+                    <div className='col-span-2'>
+                        <MultiSelectDropdown
+                            id={'industry_experience'}
+                            label={'Industry Experience'}
+                            options={industries}
+                            className=''
+                            // defaultValues={formData.industry_experience}
+                            onChange={(selectedValues) => setFormData({ ...formData, industry_experience: selectedValues })}
+                        />
+                    </div>
+
+                    <Dropdown
+                        label="Preferred Time Zone"
+                        defaultValue={formData.preferred_time_zone}
+                        onChange={(selectedValues) =>
+                            setFormData({ ...formData, industry_experience: selectedValues })
+                        }
+                        options={options}
+                        id="preferred_time_zone"
+                        className="w-full"
+                        error={errors.preferred_time_zone}
+                    />
+
                     <InputField
                         type="number"
                         label="Work Experience (in years)"
@@ -172,39 +220,6 @@ const DeveloperProfileDetailsForm = forwardRef(({
                         className="w-full"
                         error={errors.work_year_experience}
                     />
-                    <InputField
-                        type="text"
-                        label="Industry Experience"
-                        value={formData.industry_experience}
-                        onChange={(e: any) =>
-                            handleFormDataChange(e, setFormData, setErrors)
-                        }
-                        id="industry_experience"
-                        className="w-full"
-                        error={errors.industry_experience}
-                    />
-                    <InputField
-                        type="text"
-                        label="Country"
-                        value={formData.country}
-                        onChange={(e: any) =>
-                            handleFormDataChange(e, setFormData, setErrors)
-                        }
-                        id="country"
-                        className="w-full"
-                        error={errors.country}
-                    />
-                    <InputField
-                        type="text"
-                        label="Preferred Time Zone"
-                        value={formData.preferred_time_zone}
-                        onChange={(e: any) =>
-                            handleFormDataChange(e, setFormData, setErrors)
-                        }
-                        id="preferred_time_zone"
-                        className="w-full"
-                        error={errors.preferred_time_zone}
-                    />
                 </div>
             </div>
         </form>
@@ -212,3 +227,5 @@ const DeveloperProfileDetailsForm = forwardRef(({
 })
 
 export default DeveloperProfileDetailsForm
+
+

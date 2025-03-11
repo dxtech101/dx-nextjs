@@ -67,11 +67,11 @@ const DeveloperTestimonialsCard = ({ imgUrl, details, skills }: any) => {
 
 const DeveloperTestimonials = () => {
     return (
-        <section className="py-12 md:py-24 mx-10 flex flex-col justify-center items-start">
+        <section className="py-12 md:py-24 mx-4 lg:mx-10 flex flex-col justify-center items-start">
             <h1 className="mb-16 font-semibold text-4xl sm:text-6xl xl:text-11xl font-heading">
                 Work with Anyone. Anywhere.
             </h1>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 -m-2.5">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
                 <DeveloperTestimonialsCard
                     imgUrl="https://static.shuffle.dev/components/preview/2f808e47-944e-42cf-b821-2358251e0600/assets/public/saturn-assets/images/team/large-photo-color3.png"
                     details={"Lorem ipsum."}
