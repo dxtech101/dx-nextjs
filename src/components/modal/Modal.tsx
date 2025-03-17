@@ -11,6 +11,7 @@ const Modal = ({
     isFooter = true,
     submitButtonText,
     onSubmit,
+    onClose,
     formRef
 }: any) => {
     console.log(formRef);
@@ -28,7 +29,10 @@ const Modal = ({
                             {header}
                         </span>
                         {(!loading || ristricted) && (
-                            <button onClick={() => setModal(false)}>
+                            <button onClick={() => {
+                                setModal(false)
+                                onClose() 
+                            }}>
                                 <X className='w-8 h-8' strokeWidth={2} color='black' />
                             </button>
                         )}

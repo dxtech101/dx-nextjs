@@ -21,14 +21,13 @@ const DeveloperProfileDetailsForm = forwardRef(({
     personalDetails,
     loading,
     setLoading,
-    setEditModal
+    setEditModal,
+    updateDetails
 }: any, ref: any) => {
     const dispatch = useDispatch();
     const [salutation, setSalutation] = useState<any>("")
     const [selectedFile, setSelectedFile] = useState()
     const [formData, setFormData] = useState<any>({
-        "first_name": "",
-        "last_name": "",
         "birth_date": "",
         "job_title": "",
         "work_experience": "",
@@ -39,13 +38,10 @@ const DeveloperProfileDetailsForm = forwardRef(({
     })
 
     const [errors, setErrors] = useState<any>({
-        "first_name": "",
-        "last_name": "",
+
     })
 
     const { options, parseTimezone } = useTimezoneSelect({ labelStyle, timezones })
-
-    console.log("Options", options);
 
     useEffect(() => {
         setFormData({
@@ -57,7 +53,7 @@ const DeveloperProfileDetailsForm = forwardRef(({
             "work_year_experience": personalDetails?.work_experience || "",
             "industry_experience": personalDetails?.industry_experience || "",
             "country": personalDetails?.country || "",
-            "preferred_time_zone": personalDetails?.preferred_time_zone || ""
+            "preferred_time_zone": personalDetails?.preferred_timezone || ""
         })
     }, [personalDetails])
 
@@ -67,6 +63,7 @@ const DeveloperProfileDetailsForm = forwardRef(({
         if (!validateForm(formData, errors, setErrors)) return;
 
         const profileUpdateData = new FormData();
+        console.log("formData.preferred_time_zone===>>>", formData.preferred_time_zone);
 
         if (formData.first_name) profileUpdateData.append("firstname", formData.first_name);
         if (formData.last_name) profileUpdateData.append("lastname", formData.last_name);
@@ -82,8 +79,9 @@ const DeveloperProfileDetailsForm = forwardRef(({
         try {
             const { results } = await updateProfile(profileUpdateData);
             if (results) {
-                dispatch(addUserProfile(results));
+                dispatch(addUserProfile(results.user));
                 setEditModal(false)
+                updateDetails()
             }
         } catch (error) {
             console.error("Error uploading profile picture:", error);
@@ -91,6 +89,9 @@ const DeveloperProfileDetailsForm = forwardRef(({
             setLoading(false);
         }
     };
+
+    console.log("FormData===>>>", formData);
+
 
     return (
         <form ref={ref} onSubmit={handleSubmit} className='flex flex-col gap-4 mt-4'>
@@ -201,12 +202,11 @@ const DeveloperProfileDetailsForm = forwardRef(({
                         label="Preferred Time Zone"
                         defaultValue={formData.preferred_time_zone}
                         onChange={(selectedValues) =>
-                            setFormData({ ...formData, industry_experience: selectedValues })
+                            setFormData({ ...formData, preferred_time_zone: selectedValues })
                         }
                         options={options}
                         id="preferred_time_zone"
                         className="w-full"
-                        error={errors.preferred_time_zone}
                     />
 
                     <InputField

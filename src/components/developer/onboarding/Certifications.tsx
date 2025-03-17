@@ -196,13 +196,13 @@ const Certifications = ({ type = "add" }: any) => {
             if (updatedTags.length === 0) {
                 setFilteredItems(items);
             } else {
-                const filtered = initialItems.filter(item => updatedTags.includes(item.type));
+                const filtered = filteredItems.filter(item => updatedTags.includes(item.type));
                 setFilteredItems(filtered);
             }
         } else {
             const updatedTags = [...selectedTags, category];
             setSelectedTags(updatedTags);
-            const filtered = initialItems.filter(item => updatedTags.includes(item.type));
+            const filtered = filteredItems.filter(item => updatedTags.includes(item.type));
             setFilteredItems(filtered);
         }
     };
