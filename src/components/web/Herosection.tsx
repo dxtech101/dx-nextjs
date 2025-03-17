@@ -28,27 +28,27 @@ const Herosection = () => {
             </div>
             <div className='hidden lg:flex flex-col lg:flex-row justify-end items-center gap-4 w-10/12 lg:w-7/12 p-0 lg:p-8'>
                 <div className='w-full lg:w-1/3 flex'>
-                    <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="/herosection1.png" alt="" />
+                    <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://dx-assests.s3.amazonaws.com/assets/herosection1.png" alt="" />
                 </div>
                 <div className="w-full lg:w-1/3 flex flex-col justify-between lg:justify-center gap-4">
-                    <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="/herosection2.png" alt="" />
-                    <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://static.shuffle.dev/components/preview/238eb578-e531-4cf4-a658-a1ff13c9b896/assets/public/flaro-assets/images/headers/people2.png" alt="" />
+                    <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://dx-assests.s3.amazonaws.com/assets/herosection2.png" alt="" />
+                    <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://dx-assests.s3.amazonaws.com/assets/herosection3.png" alt="" />
                 </div>
                 <div className="w-full lg:w-1/3 flex flex-row">
-                    <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://static.shuffle.dev/components/preview/238eb578-e531-4cf4-a658-a1ff13c9b896/assets/public/flaro-assets/images/headers/people3.png" alt="" />
+                    <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://dx-assests.s3.amazonaws.com/assets/herosection4.png" alt="" />
                 </div>
             </div>
             <div className='flex lg:hidden flex-col lg:flex-row justify-end items-center gap-4 w-10/12 p-0'>
                 <div className='w-full flex'>
-                    <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="/herosection1.png" alt="" />
+                    <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://dx-assests.s3.amazonaws.com/assets/herosection1.png" alt="" />
                 </div>
                 <div className='flex flex-row gap-4'>
                     <div className="w-full flex flex-col justify-between lg:justify-center gap-4">
-                        <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="/herosection2.png" alt="" />
-                        <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://static.shuffle.dev/components/preview/238eb578-e531-4cf4-a658-a1ff13c9b896/assets/public/flaro-assets/images/headers/people2.png" alt="" />
+                        <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://dx-assests.s3.amazonaws.com/assets/herosection2.png" alt="" />
+                        <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://dx-assests.s3.amazonaws.com/assets/herosection3.png" alt="" />
                     </div>
                     <div className="w-full flex flex-row">
-                        <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://static.shuffle.dev/components/preview/238eb578-e531-4cf4-a658-a1ff13c9b896/assets/public/flaro-assets/images/headers/people3.png" alt="" />
+                        <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://dx-assests.s3.amazonaws.com/assets/herosection4.png" alt="" />
                     </div>
                 </div>
 
