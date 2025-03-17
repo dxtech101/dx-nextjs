@@ -8,7 +8,7 @@ import { handleFormDataChange, validateForm } from '@/lib/helper';
 import { getDeveloperSalesforceContactId, userSignIn } from '@/lib/service/user.service';
 import { ArrowLeft, ArrowRight, EllipsisVertical, LoaderCircle, Mail, Trash2 } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
@@ -28,9 +28,11 @@ export default function Login() {
     });
     const [rememberMe, setRememberMe] = useState<any>(false);
     const [savedUserDetails, setSavedUserDetails] = useState<any>([]);
+    const searchParams = useSearchParams();
+    const next = searchParams.get("next");
 
     useEffect(() => {
-        if(localStorage.getItem("savedUserDetails")){
+        if (localStorage.getItem("savedUserDetails")) {
             setSavedUserDetails(JSON.parse(localStorage.getItem("savedUserDetails") || "[]"));
         }
     }, [])
@@ -60,9 +62,9 @@ export default function Login() {
                     <SuccessfulToast t={t} message={"Logged in successfully"} />
                 ));
                 if (response.user.role === "Individual") {
-                    router.push('/developer/dashboard');
+                    router.push(next ? next : '/developer/dashboard');
                 } else if (response.user.role === "Company") {
-                    router.push('/company/dashboard');
+                    router.push(next ? next : '/company/dashboard');
                 }
                 if (rememberMe) {
                     const existingData = JSON.parse(localStorage.getItem("savedUserDetails") || "[]");
