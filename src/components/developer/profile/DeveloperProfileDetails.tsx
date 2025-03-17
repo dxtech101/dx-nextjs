@@ -11,12 +11,6 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails, certification
     const [editModal, setEditModal] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        if (!editModal) {
-            updateDetails()
-        }
-    }, [editModal])
-
     const profileDetails = [{
         icon: <MailIcon className='w-5 h-5 text-purple-900' />,
         label: "Email",
@@ -118,6 +112,7 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails, certification
                     <DeveloperProfileDetailsForm
                         ref={formRef}
                         personalDetails={personalDetails}
+                        updateDetails={updateDetails}
                         loading={loading}
                         setLoading={setLoading}
                         setEditModal={setEditModal}

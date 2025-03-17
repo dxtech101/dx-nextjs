@@ -42,8 +42,9 @@ const ProfileCertificationComponent = ({
 
 
 const DeveloperProfileCertification = ({ certification, loading, updateDetails }: any) => {
+    console.log("Certification===>>", certification);
+
     const [visibleCount, setVisibleCount] = useState(6);
-    const [checkedItems, setCheckedItems] = useState();
     const [showAll, setShowAll] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [loadingUI, setLoadingUI] = useState(false);
@@ -52,10 +53,6 @@ const DeveloperProfileCertification = ({ certification, loading, updateDetails }
         setShowAll(!showAll);
         setVisibleCount(showAll ? 6 : certification.length);
     };
-
-    useEffect(() => {
-        updateDetails()
-    },[showModal])
 
     return (
         <>
@@ -107,6 +104,7 @@ const DeveloperProfileCertification = ({ certification, loading, updateDetails }
                     loading={loadingUI}
                     size="xl"
                     isFooter={false}
+                    onClose={() => updateDetails()}
                 >
                     <div className='py-6 min-h-96 bg-[url(/noRecordBG2.png)] -m-6 px-10 bg-no-repeat bg-fixed bottom-0 bg-contain bg-bottom rounded-2xl'>
                         <Certifications type="edit" />

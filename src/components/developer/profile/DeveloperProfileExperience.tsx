@@ -13,7 +13,6 @@ import DeveloperProfileCardHeader from './DeveloperProfileCardHeader';
 
 const WorkExperienceCard = (props: any) => {
     const { experience, index, openEditModal, deleteWorkExperience } = props;
-    console.log("experience===>>>", experience)
 
     return (
         <div className='relative bg-gray-100 rounded-3xl flex flex-col gap-4 flex-1 p-6 w-full z-10'>
@@ -131,12 +130,6 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
             setShowModal(false)
         }
     };
-
-    useEffect(() => {
-        if (!showModal) {
-            updateDetails()
-        }
-    }, [showModal])
 
     return (
         <>

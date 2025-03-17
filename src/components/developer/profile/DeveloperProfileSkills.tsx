@@ -2,34 +2,20 @@ import Modal from '@/components/modal/Modal';
 import { PencilIcon, Sparkle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Skills from '../onboarding/Skills';
-import Tooltip from '@/components/Tooltip';
 import DeveloperProfileCardHeader from './DeveloperProfileCardHeader';
+import { skillsDetails } from '@/constants/data';
 
-const ProfileSkillComponent = ({ name, skill_level }: any) => {
+const ProfileSkillComponent = ({ name, skill_level, url }: any) => {
     const [checkedItem, setCheckedItem] = useState<any>();
-    const initialItems = [
-        { text: 'Salesforce', imageSrc: '/Salesforce.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-        { text: 'Mulesoft', imageSrc: '/Mulesoft.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-        { text: 'Heroku', imageSrc: '/heroku.png', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
-        { text: 'Sales Cloud', imageSrc: '/sales-cloud.svg', bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-800' },
-        { text: 'Service Cloud', imageSrc: '/service-cloud.svg', bgColor: 'bg-pink-100', checkedColor: 'bg-pink-500', borderColor: 'border-pink-600', textColor: 'text-pink-600' },
-        { text: 'Marketing Cloud', imageSrc: '/marketing-cloud.svg', bgColor: 'bg-orange-100', checkedColor: 'bg-orange-500', borderColor: 'border-orange-600', textColor: 'text-orange-400' },
-        { text: 'B2B Commerce Cloud', imageSrc: '/commerce-cloud.svg', bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-800' },
-        { text: 'B2C Commerce Cloud', imageSrc: '/commerce-cloud.svg', bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-800' },
-        { text: 'Experience Cloud', imageSrc: '/Salesforce.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-        { text: 'Industry Cloud', imageSrc: '/Salesforce.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-        { text: 'Einstein Copilot', imageSrc: '/encop.webp', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
-        { text: 'AI', imageSrc: '/encop.webp', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
-    ];
 
     useEffect(() => {
-        setCheckedItem(initialItems.find((item: any) => item.text === name))
+        setCheckedItem(skillsDetails.find((item: any) => item.text === name))
     }, [])
 
     if (checkedItem?.bgColor) {
         return (
             <div className={`inline-flex gap-2 items-center min-w-max whitespace-nowrap ${checkedItem.bgColor} border ${checkedItem.borderColor} p-2 pl-4 rounded-full relative z-0`}>
-                <img className='w-auto h-5 lg:h-6' src={checkedItem.imageSrc} alt={name} />
+                <img className='w-auto h-5 lg:h-6 mix-blend-multiply' src={url} alt={name} />
                 <span className={`font-bold text-xs lg:text-base ${checkedItem.textColor}`}>
                     {name}
                 </span>
@@ -43,14 +29,7 @@ const ProfileSkillComponent = ({ name, skill_level }: any) => {
 
 const DeveloperProfileSkills = ({ skills, loading, updateDetails }: any) => {
     const [showModal, setShowModal] = useState(false);
-    console.log(skills)
-    
-
-    useEffect(() => {
-        if (!showModal) {
-            updateDetails()
-        }
-    }, [showModal])
+    console.log("Skill===>>>", skills);
 
     return (
         <>
@@ -117,7 +96,12 @@ const DeveloperProfileSkills = ({ skills, loading, updateDetails }: any) => {
                         {skills?.length > 0 ? (
                             <>
                                 {skills?.map((item: any, index: any) => (
-                                    <ProfileSkillComponent key={index} name={item.skill_name} skill_level={item.skill_level} />
+                                    <ProfileSkillComponent
+                                        key={index}
+                                        name={item.skill_name}
+                                        skill_level={item.skill_level}
+                                        url={item.url}
+                                    />
                                 ))}
                             </>
                         ) : (
@@ -137,6 +121,7 @@ const DeveloperProfileSkills = ({ skills, loading, updateDetails }: any) => {
                     // loading={loadingUI}
                     size="xl"
                     isFooter={false}
+                    onClose={() => updateDetails()}
                 >
                     <div className='min-h-96 bg-[url(/noRecordBG2.png)] -m-6 px-10 bg-no-repeat bg-cover bg-right rounded-xl'>
                         <Skills type="edit" />

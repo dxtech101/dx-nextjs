@@ -32,12 +32,10 @@ axios.interceptors.request.use(
   (config) => {
     const token = Cookies.get("userToken");
     const access_token = token ? JSON.parse(token)?.access_token : null;
-   
-    const excludedUrls = ["/users/enroll-user/", "/users/sign-in/"]; 
-    console.log(access_token);
-    console.log(!excludedUrls.some((url) => config.url?.includes(url)));
-    
-    if (!excludedUrls.some((url) => config.url?.includes(url)) && access_token) {    
+
+    const excludedUrls = ["/users/enroll-user/", "/users/sign-in/"];
+
+    if (!excludedUrls.some((url) => config.url?.includes(url)) && access_token) {
       config.headers.Authorization = `JWT ${access_token}`;
       // axios.defaults.headers.common["Authorization"] = `JWT ${access_token}`;
     }

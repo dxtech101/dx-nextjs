@@ -7,7 +7,7 @@ import { X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-const CheckboxItem = ({ id, checked, onChange, loadingUI, skill_level }: any) => {
+const CheckboxItem = ({ id, checked, onChange, loadingUI, skill_level, imageSrc }: any) => {
     const [checkedItem, setCheckedItem] = useState<any>();
 
     useEffect(() => {
@@ -18,7 +18,7 @@ const CheckboxItem = ({ id, checked, onChange, loadingUI, skill_level }: any) =>
         return (
             <div className={`${checkedItem.bgColor} border ${checkedItem.borderColor} p-2 pl-4 rounded-xl relative z-10 whitespace-nowrap min-w-max`}>
                 <div className='inline-flex gap-2 items-center'>
-                    <img className='w-auto h-6' src={checkedItem.imageSrc} alt={checkedItem.text} />
+                    <img className='w-auto h-6' src={imageSrc} alt={checkedItem.text} />
                     <span className={`font-normal ${checkedItem.textColor}`}>
                         {checkedItem.text}
                     </span>
@@ -204,13 +204,13 @@ const Skills = ({ type = "add" }: any) => {
             if (updatedTags.length === 0) {
                 setFilteredItems(items);
             } else {
-                const filtered = initialItems.filter(item => updatedTags.includes(item.type));
+                const filtered = filteredItems.filter(item => updatedTags.includes(item.type));
                 setFilteredItems(filtered);
             }
         } else {
             const updatedTags = [...selectedTags, category];
             setSelectedTags(updatedTags);
-            const filtered = initialItems.filter(item => updatedTags.includes(item.type));
+            const filtered = filteredItems.filter(item => updatedTags.includes(item.type));
             setFilteredItems(filtered);
         }
     };
@@ -339,7 +339,6 @@ const Skills = ({ type = "add" }: any) => {
                                                 </div>
                                             )}
                                         </div>
-
                                     ))
                                 ) : (
                                     <div className='text-md text-gray-400 p-4'>No matching skills</div>
@@ -366,6 +365,7 @@ const Skills = ({ type = "add" }: any) => {
                                     checked={checkedItems.some(checkedItem => checkedItem.sfid === item.sfid)}
                                     onChange={() => handleCheckboxChange(item?.skill?.sfid, item?.id)}
                                     skill_level={item.skill_level}
+                                    imageSrc={item?.skill?.url}
                                     loadingUI={loadingUI}
                                 />
                             )) : (
