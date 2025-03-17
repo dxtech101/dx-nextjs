@@ -1,14 +1,12 @@
 "use client";
 import InputArea from '@/components/InputArea';
 import AssessmentLoader from '@/components/loaders/AssessmentLoader';
-import { developerQuestions } from '@/constants/data';
 import { addUserProfile } from '@/feature/reducers/userProfile';
 import { getAllQuestions, getAnswer, submitAnswer, submitAssessment } from '@/lib/service/developerTest.service';
 import { ArrowLeft, ArrowRight, CircleAlert, DoorOpen, EllipsisVertical, HandHelping } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 
 
 const page = () => {
