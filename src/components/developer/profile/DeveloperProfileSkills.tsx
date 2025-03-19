@@ -29,7 +29,6 @@ const ProfileSkillComponent = ({ name, skill_level, url }: any) => {
 
 const DeveloperProfileSkills = ({ skills, loading, updateDetails }: any) => {
     const [showModal, setShowModal] = useState(false);
-    console.log("Skill===>>>", skills);
 
     return (
         <>

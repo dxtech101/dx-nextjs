@@ -59,7 +59,7 @@ const page = () => {
 
   return (
     <div className='bg-white border border-gray-300 rounded-3xl flex flex-col items-start justify-center gap-6 p-6'>
-      <DeveloperProfileDetails personalDetails={profileData?.personalDetails} certificationCount={profileData?.certifications?.length} updateDetails={getUserPortoflioDetails} />
+      <DeveloperProfileDetails loading={loading} personalDetails={profileData?.personalDetails} certificationCount={profileData?.certifications?.length} updateDetails={getUserPortoflioDetails} />
       <DeveloperProfileVideoSummary />
       <DeveloperProfileAISummary />
       <div className='w-full h-full flex flex-col lg:flex-row items-start justify-center gap-4'>

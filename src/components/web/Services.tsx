@@ -23,8 +23,8 @@ const Services = () => {
     ]
 
     return (
-        <section className="py-12 md:py-24 bg-gradient-to-b from-blue-100 from-1% rounded-t-[2rem] lg:rounded-t-[3rem] mx-3 lg:mx-6">
-            <div className="container mx-auto px-4">
+        <section className="py-12 md:py-24 bg-gradient-to-b from-blue-100 from-1% rounded-t-[2rem] lg:rounded-t-[3rem]">
+            <div className="px-4">
                 <div className="mb-12 text-center max-w-6xl mx-auto text-black">
                     <h1 className="mb-16 font-bold text-2xl sm:text-4xl md:text-5xl xl:text-11xl font-heading">
                         <span>Your trusted Platform for
