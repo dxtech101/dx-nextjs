@@ -32,7 +32,7 @@ export default function WebLayout({
       />
       <meta
         property="og:description"
-        content="Proactive learner, aspiring Software developer & Design enthusiast"
+        content="Join Developer Exchange, the premier Salesforce talent portal. Connect directly with top companies, earn higher rates, enjoy flexible work, and grow professionally. Showcase your skills, get matched with top projects, and join an elite network of Salesforce experts for career growth."
       />
       <title>DX Digital</title>
       <NavBar />
