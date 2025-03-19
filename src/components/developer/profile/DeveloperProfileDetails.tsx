@@ -1,15 +1,15 @@
 "use client"
 import Modal from '@/components/modal/Modal';
 import { BriefcaseBusiness, CakeIcon, CodeIcon, MailIcon, MapPinned, PencilIcon, Phone, ShieldCheck } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import DeveloperProfileDetailsForm from './DeveloperProfileDetailsForm';
 
-const DeveloperProfileDetails = ({ personalDetails, updateDetails, certificationCount }: any) => {
+const DeveloperProfileDetails = ({ personalDetails, updateDetails, certificationCount, loading }: any) => {
     const formRef = useRef<HTMLFormElement>(null)
     const userProfile = useSelector((state: any) => state.userProfile)
     const [editModal, setEditModal] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loadingUI, setLoadingUI] = useState(false);
 
     const profileDetails = [{
         icon: <MailIcon className='w-5 h-5 text-purple-900' />,
@@ -113,8 +113,8 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails, certification
                         ref={formRef}
                         personalDetails={personalDetails}
                         updateDetails={updateDetails}
-                        loading={loading}
-                        setLoading={setLoading}
+                        loading={loadingUI}
+                        setLoading={setLoadingUI}
                         setEditModal={setEditModal}
                     />
                 </Modal>

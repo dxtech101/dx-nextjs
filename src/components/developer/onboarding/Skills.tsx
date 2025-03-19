@@ -7,7 +7,7 @@ import { X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-const CheckboxItem = ({ id, checked, onChange, loadingUI, skill_level, imageSrc }: any) => {
+const CheckboxItem = ({ id, checked, onChange, loadingUI, skill_level, imageSrc, name }: any) => {
     const [checkedItem, setCheckedItem] = useState<any>();
 
     useEffect(() => {
@@ -18,9 +18,9 @@ const CheckboxItem = ({ id, checked, onChange, loadingUI, skill_level, imageSrc 
         return (
             <div className={`${checkedItem.bgColor} border ${checkedItem.borderColor} p-2 pl-4 rounded-xl relative z-10 whitespace-nowrap min-w-max`}>
                 <div className='inline-flex gap-2 items-center'>
-                    <img className='w-auto h-6' src={imageSrc} alt={checkedItem.text} />
+                    <img className='w-auto h-6 mix-blend-multiply' src={imageSrc} alt={checkedItem.text} />
                     <span className={`font-normal ${checkedItem.textColor}`}>
-                        {checkedItem.text}
+                        {name}
                     </span>
                     <input
                         type="checkbox"
@@ -90,6 +90,8 @@ const Skills = ({ type = "add" }: any) => {
             else if (reloadType === "update") setLoadingUI(false);
         }
     }
+
+    console.log("checkedItems::", checkedItems);
 
 
     useEffect(() => {
@@ -226,8 +228,6 @@ const Skills = ({ type = "add" }: any) => {
         setShowSkillLevel(id)
     }
 
-    console.log("checkedItems", filteredItems);
-
 
     return (
         <>
@@ -358,10 +358,11 @@ const Skills = ({ type = "add" }: any) => {
                         </>
                         :
                         <>
-                            {checkedItems.length > 0 ? checkedItems.map(item => (
+                            {checkedItems.length > 0 ? checkedItems.map((item, index) => (
                                 <CheckboxItem
-                                    key={item.sfid}
-                                    id={item?.skill?.sfid ? item?.skill?.sfid : item?.sfid}
+                                    key={index}
+                                    id={item?.skill?.sfid}
+                                    name={item?.skill?.name}
                                     checked={checkedItems.some(checkedItem => checkedItem.sfid === item.sfid)}
                                     onChange={() => handleCheckboxChange(item?.skill?.sfid, item?.id)}
                                     skill_level={item.skill_level}

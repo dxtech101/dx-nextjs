@@ -1,20 +1,7 @@
 "use client"
+import AboutCompany from '@/components/web/AboutCompany'
+import Link from 'next/link'
 import { useState } from 'react'
-
-const cbrdata = [
-    {
-        heading: "Salesforce Specialists",
-        descrition: "Browse and book Salesforce Specialists through our site tailored to your project needs. We cover a range of Salesforce niche skills covering core platform, Mulesoft and Industry Cloud.",
-    },
-    {
-        heading: "Flexible Resource Booking",
-        descrition: "Easy to use and flexible booking platform allowing you to select your own resource for the timing that work for you.",
-    },
-    {
-        heading: "Global Salesforce Talent",
-        descrition: "We bring together developers from across companies and across the world giving you direct access to the world's largest Salesforce talent pool.",
-    },
-]
 
 const TeamMemberCard = ({ name, position, image, socials }: any) => {
     return (
@@ -44,76 +31,96 @@ const TeamMemberCard = ({ name, position, image, socials }: any) => {
 const page = () => {
     const [selected, setSelected] = useState('developer')
 
+    const values = [{
+        icon: "🚀",
+        label: "Excellence",
+        description: "We uphold the highest standards by ensuring every developer is vetted by industry experts, delivering top - quality talent to our customers."
+    },
+    {
+        icon: "🔍",
+        label: "Transparency",
+        description: "We believe in clear, straightforward hiring processes that remove complexity and build trust between companies and developers."
+    },
+    {
+        icon: "🤝",
+        label: "Community Driven",
+        description: "We foster a strong network of Salesforce professionals through mentorship, knowledge - sharing, and career growth opportunities."
+    },
+    {
+        icon: "🌍",
+        label: "Flexibility & Accessibility",
+        description: "We provide businesses with flexible hiring options, including freelance, nearshore, and offshore talent, making Salesforce expertise more accessible."
+    },
+    {
+        icon: "💡",
+        label: "Innovation",
+        description: "We leverage cutting - edge technology and industry best practices to streamline talent acquisition and ensure faster, smarter hiring decisions."
+    },
+    {
+        icon: "🙌",
+        label: "Empowerment",
+        description: "We empower Salesforce professionals by giving them access to high - quality opportunities, fair compensation, and career development."
+    }]
+
     return (
         <>
-            <div className="-z-20 relative h-dvh bg-center bg-[url('https://images.pexels.com/photos/1181438/pexels-photo-1181438.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')]">
-                <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-b from-white from-1% -z-10'></div>
+            <div className="-z-20 relative h-dvh -mt-10 -mx-32 mx-auto bg-center bg-[url('https://dx-assests.s3.amazonaws.com/assets/about-us.jpeg')]">
+                <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-b from-white from-10% -z-10'></div>
                 <div className="max-w-4xl mx-auto text-center z-[100] pt-32">
                     <h1 className="font-heading text-4xl md:text-6xl font-bold text-gray-900 mb-8 sm:mb-14 z-20">
-                        <span>Your dedicated platform for
-                            <span className="font-serif italic">{" "}Salesforce{" "}</span>
-                            resources.
+                        <span className='leading-snug'>
+                            🚀 Build your{" "}
+                            <span className='relative inline-flex flex-row items-baseline justify-end gap-4'>
+                                <img src="/salesforce-no-type-logo.svg" alt="Salesforce" className='h-16 -z-10' />
+                                Salesforce{" "}
+                            </span>
+                            dream team today with DX.
                         </span>
                     </h1>
                 </div>
             </div>
-            <section className="py-20 mb-18 mx-5 overflow-hidden">
-                <div className="max-w-3xl mx-auto mb-16 text-center">
-                    <h1 className="font-heading text-4xl lg:text-6xl font-bold text-gray-900 mb-4">
-                        <span>Our Services</span>
-                    </h1>
-                    <p className="text-lg text-gray-500">We provide experienced advisors to help your company become more successful in the future.</p>
-                </div>
-                <div className="px-3 md:px-10 mx-auto">
-                    <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-10">
-                        {cbrdata.map((item, ind) => (
-                            <div className="w-full p-0" key={ind}>
-                                <div className="flex flex-col h-full p-10 border border-gray-900 rounded-3xl">
-                                    <h2 className="font-heading font-semibold mb-6 text-2xl md:text-4xl text-black tracking-5xl">{item.heading}</h2>
-                                    <p className="mb-24 text-lg text-black text-opacity-60">{item.descrition}</p>
+            <AboutCompany />
+
+            <section className='mt-0 w-full flex flex-col items-center justify-center'>
+                <section className="relative py-20 w-full">
+                    <img className="absolute right-0 -top-10 scale-x-[-1]" src="https://static.shuffle.dev/components/preview/2f808e47-944e-42cf-b821-2358251e0600/assets/public/saturn-assets/images/features/star-left.png" alt="" />
+                    <div className="relative container px-4 mx-auto">
+                        <div className="w-full mb-14 lg:mb-0">
+                            <h1 className="font-heading text-2xl md:text-6xl font-bold text-gray-900 mb-6">
+                                <span>Our Misson</span>
+                            </h1>
+                            <div className="max-w-4xl mb-10">
+                                <p className="text-gray-500">At Developer Exchange (DX), our mission is to revolutionize the way companies and Salesforce partners connect with top-tier Salesforce talent. We provide a trusted, high-quality marketplace where every developer is rigorously vetted by Certified Technical Architects (CTAs) and experienced Salesforce leaders. Our goal is to simplify hiring, reduce costs, and accelerate project success by ensuring businesses have on-demand access to elite Salesforce professionals—anytime, anywhere.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section className='container mx-auto px-4'>
+                    <div className="w-full mb-14 lg:mb-0">
+                        <h1 className="font-heading text-2xl md:text-6xl font-bold text-gray-900 mb-6">
+                            <span>Our Core Values</span>
+                        </h1>
+                        <div className="max-w-4xl mb-10">
+                            <p className="text-gray-500">At Developer Exchange (DX), our mission is to revolutionize the way companies and Salesforce partners connect with top-tier Salesforce talent. We provide a trusted, high-quality marketplace where every developer is rigorously vetted by Certified Technical Architects (CTAs) and experienced Salesforce leaders. Our goal is to simplify hiring, reduce costs, and accelerate project success by ensuring businesses have on-demand access to elite Salesforce professionals—anytime, anywhere.</p>
+                        </div>
+                    </div>
+                    <div className="mx-auto grid max-w-xl grid-cols-1 gap-8 lg:mx-auto lg:max-w-none lg:grid-cols-3">
+                        {values.map((vl: any) => (
+                            <div className="flex max-w-xl group flex-col items-start border border-black/10 justify-between p-4 px-6 rounded-3xl">
+                                <div className="group relative">
+                                    <h3 className="flex flex-col items-start gap-4 mt-3 text-xl font-semibold leading-6 text-black opacity-100">
+                                        {vl?.icon}
+                                        <div>
+                                            <span className="absolute inset-0 font-extrabold" />
+                                            {vl?.label}
+                                        </div>
+                                    </h3>
+                                    <p className="mt-5 text-sm leading-6 text-gray-400">
+                                        {vl?.description}
+                                    </p>
                                 </div>
                             </div>
                         ))}
-                    </div>
-                </div>
-            </section>
-            <section className='mt-0 lg:mt-24 w-full flex flex-col items-center justify-center'>
-                <div className='shadow-inner bg-black/10 my-10 flex flex-row w-11/12 lg:w-3/4 justify-around text-black items-center h-16 p-2 rounded-xl gap-2'>
-                    <button onClick={() => setSelected("developer")} className={`text-sm lg:text-base ${selected === "developer" ? "bg-white shadow-xl" : "bg-transparent text-slate-400 hover:text-slate-600 hover:bg-white/50"} relative  w-full h-full flex items-center justify-center gap-2 rounded-xl font-bold`}>
-                        Developers
-                    </button>
-                    <button onClick={() => setSelected("company")} className={`relative text-sm lg:text-base ${selected === "company" ? "bg-white shadow-xl" : "bg-transparent text-slate-400 hover:text-slate-600 hover:bg-white/50"} group w-full h-full flex items-center justify-center gap-2 rounded-xl font-bold`}>
-                        Companies
-                    </button>
-                    <button onClick={() => setSelected("partnership")} className={`relative text-sm lg:text-base ${selected === "partnership" ? "bg-white shadow-xl" : "bg-transparent text-slate-400 hover:text-slate-600 hover:bg-white/50"} group w-full h-full flex items-center justify-center gap-2 rounded-xl font-bold`}>
-                        Partnership
-                    </button>
-                </div>
-                <section className="relative py-20 overflow-hidden w-full">
-                    <img className="absolute left-0 top-0" src="https://static.shuffle.dev/components/preview/2f808e47-944e-42cf-b821-2358251e0600/assets/public/saturn-assets/images/features/star-left.png" alt="" />
-                    <img className="absolute right-0 bottom-0" src="https://static.shuffle.dev/components/preview/2f808e47-944e-42cf-b821-2358251e0600/assets/public/saturn-assets/images/features/light-orange.png" alt="" />
-                    <div className="relative container px-4 mx-auto">
-                        <div className="max-w-5xl mx-auto">
-                            <div className="flex flex-wrap -mx-4">
-                                <div className="w-full lg:w-1/2 px-4 mb-14 lg:mb-0">
-                                    <div className="max-w-md lg:max-w-lg mx-auto lg:mx-0">
-                                        <h1 className="font-heading text-2xl md:text-6xl font-bold text-gray-900 mb-6">
-                                            <span>Why we are</span>
-                                            <span className="font-serif italic">{" "}different{" "}</span>
-                                            <span>from other startups</span>
-                                        </h1>
-                                        <div className="max-w-sm mb-10">
-                                            <p className="text-gray-500">With us you can create a mobile app for your business in 2 weeks as well as create a website for your business in 2 days.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-full lg:w-1/2 px-4">
-                                    <div className="relative max-w-md lg:max-w-sm mx-auto lg:mr-0 rounded-xl">
-                                        <img className="w-full rounded-xl" src="https://static.shuffle.dev/components/preview/2f808e47-944e-42cf-b821-2358251e0600/assets/public/saturn-assets/images/features/color-pastel-image.png" alt="" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </section>
             </section>
@@ -129,9 +136,9 @@ const page = () => {
                         </p>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-10">
                             <TeamMemberCard
-                                name="Bret Michaelson"
+                                name="Bret Michaelsen"
                                 position="Founder & CEO"
-                                image="https://static.shuffle.dev/components/preview/2f808e47-944e-42cf-b821-2358251e0600/assets/public/saturn-assets/images/team/large-photo-color2.png"
+                                image="https://dx-assests.s3.amazonaws.com/assets/bret.jpeg"
                                 socials={[
                                     { name: "Facebook", url: "#" },
                                     { name: "Instagram", url: "#" },

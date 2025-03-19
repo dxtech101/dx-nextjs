@@ -10,8 +10,7 @@ import DashboardRecommendedJob from '@/components/developer/portal/DashboardReco
 import InputField from '@/components/InputField'
 import Modal from '@/components/modal/Modal'
 import authWrapper from '@/lib/hoc/AuthWrapper'
-import { ChevronRight, ChevronsDown, CornerUpRightIcon, DollarSign, MapPin } from 'lucide-react'
-import Link from 'next/link'
+import { ChevronsDown, DollarSign, MapPin } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -133,32 +132,32 @@ const page = () => {
                             size="lg"
                             loading={true}
                         >
-                            <div className='h-96 relative w-full flex flex-col items-end justify-center'>
+                            <div className='h-full relative w-full flex flex-col-reverse items-center xl:items-end justify-center'>
                                 <img
-                                    src="/welcome.svg"
-                                    alt=""
-                                    className='hidden md:flex h-64 lg:h-96 -m-6 bottom-0 left-2 object-contain rounded-3xl z-0 absolute'
+                                    src="https://dx-assests.s3.amazonaws.com/assets/welcome.svg"
+                                    alt="test"
+                                    className='hidden lg:flex xl:flex h-72 xl:h-96 -m-6 xl:bottom-0 xl:left-2 object-contain rounded-3xl z-0 xl:absolute'
                                 />
-                                <div className='flex flex-col gap-6 p-6 max-w-lg lg:max-w-2xl'>
+                                <div className='flex flex-col gap-6 p-6 w-full xl:max-w-2xl'>
                                     <div>
-                                        <h2 className='text-4xl font-bold mb-2 capitalize'>Welcome to DX Digital</h2>
-                                        <p className='text-gray-400 text-md'>
+                                        <h2 className='text-3xl md:text-4xl font-bold mb-2 capitalize'>Welcome to DX Digital</h2>
+                                        <p className='text-gray-400 text-xs lg:text-md'>
                                             We are excited to have you onboard to DX Digital. <br /> Please take a moment to review the following information.
                                         </p>
                                     </div>
 
                                     <div className='flex flex-row gap-4 items-center bg-gray-100 p-6 rounded-xl'>
-                                        <span className='text-5xl font-extrabold text-gray-300'>
+                                        <span className='text-3xl md:text-5xl font-extrabold text-gray-300'>
                                             {"</>"}
                                         </span>
-                                        <p className='text-gray-500 text-sm'>
+                                        <p className='text-gray-500 text-xs md:text-sm'>
                                             As a part of Onboarding Process, you will be required to take a quiz to verify your skills and knowledge.
                                         </p>
                                     </div>
 
                                     <button
                                         onClick={handleQuizStart}
-                                        className='bg-blue-500 text-white px-4 py-2 rounded-xl inline-flex items-center justify-center gap-2 w-1/2'>
+                                        className='bg-blue-500 text-white px-4 py-2 rounded-xl inline-flex items-center justify-center gap-2 w-full xl:w-1/2'>
                                         Take Quiz
                                     </button>
                                 </div>
