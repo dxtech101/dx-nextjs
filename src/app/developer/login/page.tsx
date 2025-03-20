@@ -2,6 +2,7 @@
 import InputField from '@/components/InputField';
 import ErrorToast from '@/components/toast/ErrorToast';
 import SuccessfulToast from '@/components/toast/SuccessfulToast';
+import { addUserCompany } from '@/feature/reducers/userCompany';
 import { addUserProfile } from '@/feature/reducers/userProfile';
 import { addSalesforceId } from '@/feature/reducers/userSalesforceId';
 import { handleFormDataChange, validateForm } from '@/lib/helper';
@@ -58,6 +59,7 @@ export default function Login() {
             if (response && response.user) {
                 dispatch(addUserProfile(response.user));
                 dispatch(addSalesforceId(userSalesforceId[0].sfid));
+                dispatch(addUserCompany(userSalesforceId[0].company_developer));
                 toast.custom((t) => (
                     <SuccessfulToast t={t} message={"Logged in successfully"} />
                 ));
@@ -93,10 +95,10 @@ export default function Login() {
     };
 
     return (
-        <section className="relative bg-white min-h-screen p-6 ">
+        <section className="relative bg-white min-h-screen p-6">
             <img className="absolute left-0 top-0 w-full h-screen" src="https://static.shuffle.dev/components/preview/238eb578-e531-4cf4-a658-a1ff13c9b896/assets/public/flaro-assets/images/sign-in/gradient.svg" alt="" />
-            <div className="relative z-10 flex flex-wrap justify-center min-h-screen items-center gap-6 m-0 lg:-m-8">
-                <div className="relative w-full flex flex-col justify-start items-start lg:max-w-2xl xl:max-w-xl mx-auto text-black gap-4 md:gap-20">
+            <div className="relative z-10 flex flex-wrap justify-center min-h-screen items-center gap-6 container mx-auto">
+                <div className="relative w-full flex flex-col justify-center items-start xl:max-w-xl mx-auto text-black gap-4">
                     <h1 className="text-3xl font-medium inline-flex gap-4 items-center">
                         <Link href='/' className='p-3 border border-gray-900 rounded-full'>
                             <ArrowLeft />
@@ -113,7 +115,7 @@ export default function Login() {
                     </span>
                 </div>
                 <div className="w-full xl:w-1/2">
-                    <form onSubmit={handleSubmit} className="w-full lg:w-3/4 flex flex-col gap-6">
+                    <form onSubmit={handleSubmit} className="w-full flex flex-col gap-6">
                         <InputField
                             type="email"
                             label={"Email Address"}

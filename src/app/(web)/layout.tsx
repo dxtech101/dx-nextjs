@@ -1,9 +1,10 @@
-"use client"
+"use client";
 import Footer from "@/components/web/Footer";
 import NavBar from "@/components/web/Navbar";
 import StateProvider from "@/feature/Provider";
 import "@/lib/axios-configuration";
 import localFont from "next/font/local";
+import Script from "next/script";
 import { Toaster } from 'react-hot-toast';
 import "../globals.css";
 
@@ -20,35 +21,56 @@ const geistMono = localFont({
 
 export default function WebLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
 
   return (
-    <>
-      <meta
-        property="og:image"
-        content="https://media.licdn.com/dms/image/D562DAQHBVIM3haY1Mg/profile-treasury-image-shrink_800_800/0/1703088018579?e=1703703600&v=beta&t=6JJU8HNqfTe3Y5L277JO1FJsGWbcRV9dY5T1x8x129o"
-      />
-      <meta
-        property="og:description"
-        content="Join Developer Exchange, the premier Salesforce talent portal. Connect directly with top companies, earn higher rates, enjoy flexible work, and grow professionally. Showcase your skills, get matched with top projects, and join an elite network of Salesforce experts for career growth."
-      />
-      <title>DX Digital</title>
-      <NavBar />
-      <div className="mt-16 container mx-auto px-6">
-        <StateProvider>
-          {children}
-        </StateProvider>
-        <Toaster
-          position="top-center"
-          reverseOrder={false}
-          toastOptions={{
-            duration: 1000,
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Google Analytics */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-9XRKRQNWT9"
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-9XRKRQNWT9', {
+                page_path: window.location.pathname,
+              });
+            `,
           }}
         />
-      </div>
-      <Footer />
-    </>
+        <meta
+          property="og:image"
+          content=""
+        />
+        <meta
+          property="og:description"
+          content="Join Developer Exchange, the premier Salesforce talent portal. Connect directly with top companies, earn higher rates, enjoy flexible work, and grow professionally. Showcase your skills, get matched with top projects, and join an elite network of Salesforce experts for career growth."
+        />
+        <title>DX Digital</title>
+      </head>
+      <body>
+        <NavBar />
+        <div className="mt-16">
+          <StateProvider>
+            {children}
+          </StateProvider>
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+            toastOptions={{
+              duration: 1000,
+            }}
+          />
+        </div>
+        <Footer />
+      </body>
+    </html>
   );
 }

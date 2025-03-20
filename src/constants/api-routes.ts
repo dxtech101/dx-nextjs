@@ -12,6 +12,7 @@ export const GET_USER_SALESFORCE_CONTACT_ID = `/users/contact-salesforce-id/`
 export const GET_USER_SALESFORCE_ACCOUNT_ID= `/users/account-salesforce-id/`
 export const PROFILE_UPLOAD = `/users/profile-picture/`
 export const PROFILE_UPDATE = `/users/profile-update/`
+export const VERIFY_COMPANY_DEVELOPER = `/users/update-company-email/`
 
 //DEVELOPER ONBOARDING API's ENDPOINTS
 export const USER_PORTFOLIO = (sfid:any) => `portfolio/detailed-contact-view/${sfid}`

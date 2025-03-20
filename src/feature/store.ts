@@ -1,25 +1,27 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import {
-  persistStore,
-  persistReducer,
   FLUSH,
-  REHYDRATE,
   PAUSE,
   PERSIST,
+  persistReducer,
+  persistStore,
   PURGE,
   REGISTER,
+  REHYDRATE,
 } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; 
+import storage from 'redux-persist/lib/storage';
+import companyCreateProjectIDReducer from './reducers/companyCreateProject';
+import userOnboardingReducer from './reducers/userOnboarding';
 import userProfileReducer from './reducers/userProfile';
 import userSalesforceIDReducer from './reducers/userSalesforceId';
-import userOnboardingReducer from './reducers/userOnboarding';
-import companyCreateProjectIDReducer from './reducers/companyCreateProject';
+import userCompanyReducer from './reducers/userCompany';
 
 const rootReducer = combineReducers({
   userProfile: userProfileReducer,
   userSalesforceID: userSalesforceIDReducer,
   userOnboarding: userOnboardingReducer,
+  userCompany: userCompanyReducer,
   companyCreateProject: companyCreateProjectIDReducer,
 });
 

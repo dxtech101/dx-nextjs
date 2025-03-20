@@ -21,9 +21,10 @@ const StepperComponent = ({ active, title, step, completed, stepData, onStepClic
 };
 
 
-const DashboardStepper = ({ role }: { role: "company" | "developer" }) => {
+const DashboardStepper = ({ role, company_developer }: { role: "company" | "developer"; company_developer: boolean }) => {
     const dispatch = useDispatch();
     const onboardingSteps: any = useSelector((state: any) => state.userOnboarding[`${role}Onboarding`]);
+    const filteredSteps = company_developer ? onboardingSteps.slice(0, 3) : onboardingSteps;
 
     const handleStepClick = (stepData: any) => {
         const currentStep = onboardingSteps.find((step: any) => step.isActive);
@@ -39,7 +40,7 @@ const DashboardStepper = ({ role }: { role: "company" | "developer" }) => {
         <section className="rounded-2xl w-full lg:w-fit h-full">
             <div className="container text-black h-full">
                 <div className="flex flex-row gap-1 flex-wrap md:flex-nowrap items-center justify-evenly h-full">
-                    {onboardingSteps?.map((step: any, index: number) => (
+                    {filteredSteps?.map((step: any, index: number) => (
                         <React.Fragment key={step.stepId}>
                             <StepperComponent
                                 stepData={step}
@@ -49,7 +50,7 @@ const DashboardStepper = ({ role }: { role: "company" | "developer" }) => {
                                 step={step.stepId}
                                 onStepClick={handleStepClick}
                             />
-                            {index < onboardingSteps.length - 1 && (
+                            {index < filteredSteps.length - 1 && (
                                 <span className="my-4 md:my-0 md:mx-4 lg:mx-6">
                                     <ArrowRight className="w-4 md:w-6" />
                                 </span>

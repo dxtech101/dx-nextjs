@@ -85,6 +85,7 @@ const WorkExperience = () => {
         job_title: "",
     });
     const contactSfid = useSelector((state: any) => state.userSalesforceID)
+    const company_developer = useSelector((state: any) => state.userCompany);
 
     useEffect(() => {
         getDeveloperWorkExperienceDetails();
@@ -220,8 +221,13 @@ const WorkExperience = () => {
                             Previous
                         </button>
                         <button
-                            onClick={handleNext}
-                            // onClick={() => setOpenConfirmModal(true)}
+                            onClick={() => {
+                                if (company_developer) {
+                                    setOpenConfirmModal(true)
+                                } else {
+                                    handleNext()
+                                }
+                            }}
                             disabled={loading}
                             className={`h-12 px-6 rounded-xl font-medium text-normal ${loading
                                 ? 'bg-blue-300 text-blue-100 cursor-not-allowed'

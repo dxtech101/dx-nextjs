@@ -10,6 +10,8 @@ import DashboardStepper from './DashboardStepper';
 
 const DashboardNavbar = ({ toggleSideBar, setToggleSideBar }: any) => {
     const userProfile = useSelector((state: any) => state.userProfile);
+    const company_developer = useSelector((state: any) => state.userCompany);
+
     const isUserOnboarded = userProfile.is_onboard;
     const router = useRouter();
     const pathName = usePathname();
@@ -25,7 +27,7 @@ const DashboardNavbar = ({ toggleSideBar, setToggleSideBar }: any) => {
                 }
 
                 <div className='block md:hidden'>
-                    {isUserOnboarded ? <DashbaordBreadcrumb type={role} /> : <DashboardStepper role={role} />}
+                    {isUserOnboarded ? <DashbaordBreadcrumb type={role} /> : <DashboardStepper role={role} company_developer={company_developer} />}
                 </div>
                 <div className="flex flex-row items-center justify-between w-full">
                     {isUserOnboarded &&
@@ -34,7 +36,7 @@ const DashboardNavbar = ({ toggleSideBar, setToggleSideBar }: any) => {
                         </button>
                     }
                     <div className='hidden md:block'>
-                        {isUserOnboarded ? <DashbaordBreadcrumb type={role} /> : <DashboardStepper role={role} />}
+                        {isUserOnboarded ? <DashbaordBreadcrumb type={role} /> : <DashboardStepper role={role} company_developer={company_developer} />}
                     </div>
                     <div className='hidden lg:flex items-center justify-end w-full space-x-2'>
                         {/* {isUserOnboarded &&

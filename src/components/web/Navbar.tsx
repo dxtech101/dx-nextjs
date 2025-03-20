@@ -36,7 +36,7 @@ const NavBar = () => {
     return (
         <div>
             <nav className={`fixed top-0 w-full py-6 bg-white z-30 tansition-transform duration-300 ${visible ? "translate-y-0" : "-translate-y-full"}`}>
-                <div className="flex items-center justify-between relative container mx-auto">
+                <div className="flex items-center justify-between relative container mx-auto px-4">
                     <Link className="inline-block text-xl font-bold" href="#">
                         <span>D<span className='text-blue-800'>X</span> | Developer Exchange</span>
                     </Link>

@@ -3,7 +3,7 @@ import InputArea from '@/components/InputArea';
 import AssessmentLoader from '@/components/loaders/AssessmentLoader';
 import { addUserProfile } from '@/feature/reducers/userProfile';
 import { getAllQuestions, getAnswer, submitAnswer, submitAssessment } from '@/lib/service/developerTest.service';
-import { ArrowLeft, ArrowRight, CircleAlert, DoorOpen, EllipsisVertical, HandHelping } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CircleAlert, DoorOpen, EllipsisVertical, HandHelping, LoaderCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -276,7 +276,7 @@ const page = () => {
                         <div className='p-6 z-20 bg-white flex flex-row items-center justify-between w-full fixed bottom-0 left-0 border-t border-gray-200'>
                             <button
                                 onClick={handlePrevious}
-                                disabled={currentQuestion === 1 || answerLoading}
+                                disabled={currentQuestion === 1 || answerLoading || dummyLoading}
                                 className='bg-gray-300 text-sm text-gray-700 p-4 rounded-xl inline-flex items-center gap-1'>
                                 <ArrowLeft className='h-4 w-4' /> Previous
                             </button>
@@ -290,7 +290,7 @@ const page = () => {
                                 }}
                                 disabled={answerLoading || dummyLoading}
                                 className='bg-green-700 text-sm text-white p-4 rounded-xl inline-flex items-center gap-1'>
-                                Save & Next <ArrowRight className='h-4' />
+                                {answerLoading || dummyLoading ? <><LoaderCircle className='animate-spin h-4 w-auto mr-2' /> Loading...</> : "Save & Next"} <ArrowRight className='h-4' />
                             </button>
                         </div>
                     )}
