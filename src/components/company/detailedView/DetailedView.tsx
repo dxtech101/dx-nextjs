@@ -146,7 +146,7 @@ const DetailedView = ({ loading, setLoading, setOpenModal }: any) => {
                 <CompanyProjectModalLoader />
             </> : <>
                 <div className='w-full sticky -top-6 z-20 p-2 md:p-4 border-b bg-white flex flex-col xl:flex-row justify-between gap-4 items-end xl:items-center'>
-                    <DashboardStepper role={"company"} />
+                    <DashboardStepper role={"company"} company_developer={false} />
                     <div className='flex items-center gap-3'>
                         <button
                             type='button'

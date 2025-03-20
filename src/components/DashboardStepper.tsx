@@ -21,7 +21,7 @@ const StepperComponent = ({ active, title, step, completed, stepData, onStepClic
 };
 
 
-const DashboardStepper = ({ role, company_developer }: { role: "company" | "developer"; company_developer: boolean }) => {
+const DashboardStepper = ({ role, company_developer }: { role: "company" | "developer"; company_developer?: boolean }) => {
     const dispatch = useDispatch();
     const onboardingSteps: any = useSelector((state: any) => state.userOnboarding[`${role}Onboarding`]);
     const filteredSteps = company_developer ? onboardingSteps.slice(0, 3) : onboardingSteps;
