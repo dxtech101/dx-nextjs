@@ -1,7 +1,8 @@
 "use client"
+import "@/lib/axios-configuration";
+import Script from "next/script";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
-import "@/lib/axios-configuration"
 
 export default function RootLayout({
   children,
@@ -12,6 +13,25 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Google Analytics */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-9XRKRQNWT9"
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-9XRKRQNWT9', {
+                page_path: window.location.pathname,
+              });
+            `,
+          }}
+        />
         <meta
           property="og:image"
           content=""
