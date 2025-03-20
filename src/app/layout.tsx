@@ -10,7 +10,17 @@ export default function RootLayout({
 }) {
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta
+          property="og:image"
+          content=""
+        />
+        <meta
+          property="og:description"
+          content="Join Developer Exchange, the premier Salesforce talent portal. Connect directly with top companies, earn higher rates, enjoy flexible work, and grow professionally. Showcase your skills, get matched with top projects, and join an elite network of Salesforce experts for career growth."
+        />
+      </head>
       <body>
         {children}
         <Toaster
