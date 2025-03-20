@@ -3,7 +3,7 @@ import React from 'react'
 
 const Herosection = () => {
     return (
-        <div className="flex flex-col gap-8 items-center my-32 xl:my-0 justify-evenly xl:justify-around xl:flex-row min-h-screen">
+        <div className="flex flex-col gap-8 items-center my-28 xl:my-0 justify-evenly xl:justify-around xl:flex-row min-h-screen container mx-auto">
             <div className="w-10/12 xl:w-4/12 p-0 lg:p-6">
                 <h1 className="mb-9 text-3xl sm:text-6xl md:text-7xl font-bold font-heading w-full xl:w-full leading-none text-black">
                     Hire Top

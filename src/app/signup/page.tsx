@@ -18,6 +18,7 @@ import PhoneInput from "react-phone-number-input";
 import Modal from "@/components/modal/Modal";
 import "react-phone-number-input/style.css";
 import TermsAndConditions from "@/components/TermsAndConditions";
+import { verifyCompanyDeveloper } from "@/lib/service/user.service";
 
 const page = () => {
   const [selected, setSelected] = useState("Individual");
@@ -69,7 +70,12 @@ const page = () => {
       setLoading(true);
       const response = await axios.post("/users/enroll-user/", signupData);
       console.log(response.data);
-      setSuccessModal(true);
+      const developerEmail = response.data.user.email;
+      if (developerEmail) {
+        verifyCompanyDeveloper(developerEmail).then((response: any) => {
+          setSuccessModal(true);
+        });
+      }
     } catch (error: any) {
       toast.custom((t) => (
         <ErrorToast t={t} message={error?.response?.data?.error} />

@@ -39,9 +39,6 @@ const page = () => {
         }
     };
 
-
-
-
     useEffect(() => {
         const handleScroll = () => {
             if (containerRef.current && containerRef.current.scrollTop > 5) {

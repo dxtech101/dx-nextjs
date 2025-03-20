@@ -64,14 +64,14 @@ const page = () => {
 
     return (
         <>
-            <div className="-z-20 relative h-dvh -mt-10 -mx-32 mx-auto bg-center bg-[url('https://dx-assests.s3.amazonaws.com/assets/about-us.jpeg')]">
+            <div className="-z-20 relative h-dvh w-full -mt-1 bg-no-repeat bg-center bg-[url('https://dx-assests.s3.amazonaws.com/assets/about-us.jpeg')]">
                 <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-b from-white from-10% -z-10'></div>
                 <div className="max-w-4xl mx-auto text-center z-[100] pt-32">
                     <h1 className="font-heading text-4xl md:text-6xl font-bold text-gray-900 mb-8 sm:mb-14 z-20">
                         <span className='leading-snug'>
                             🚀 Build your{" "}
                             <span className='relative inline-flex flex-row items-baseline justify-end gap-4'>
-                                <img src="/salesforce-no-type-logo.svg" alt="Salesforce" className='h-16 -z-10' />
+                                <img src="/salesforce-no-type-logo.svg" alt="Salesforce" className='h-16 -z-10 hidden lg:block' />
                                 Salesforce{" "}
                             </span>
                             dream team today with DX.

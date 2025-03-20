@@ -130,4 +130,96 @@ export const skillsDetails = [
     { id: "a0lIo000000wDwoIAE", text: "Excel", bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-900' }
 ];
 
-
+export const servicesData: any = {
+    "springBoot": {
+        "serviceName": "Spring Boot",
+        "imgUrl": "https://dx-assests.s3.amazonaws.com/assets/spring-boot.png",
+        "bgColor": "bg-green-100",
+        "borderColor": "border-green-200",
+        "tooltipTextColor": "text-green-800",
+        "textColor": "bg-green-600",
+        "side": "left",
+        "initailX": 225,
+        "initailY": 150,
+        "finalX": 0,
+        "finalY": 0
+    },
+    "react": {
+        "serviceName": "React.js",
+        "imgUrl": "https://dx-assests.s3.amazonaws.com/assets/React-icon.svg.png",
+        "bgColor": "bg-blue-100",
+        "borderColor": "border-blue-200",
+        "tooltipTextColor": "text-blue-800",
+        "textColor": "bg-blue-400",
+        "side": "left",
+        "initailX": 230,
+        "initailY": 160,
+        "finalX": 0,
+        "finalY": 0
+    },
+    "commerceCloud": {
+        "serviceName": "commerce",
+        "imgUrl": "https://dx-assests.s3.amazonaws.com/assets/commerce-cloud.svg",
+        "bgColor": "bg-green-100",
+        "borderColor": "border-green-200",
+        "tooltipTextColor": "text-green-800",
+        "textColor": "bg-green-400",
+        "side": "left",
+        "initailX": 230,
+        "initailY": 160,
+        "finalX": 0,
+        "finalY": 0
+    },
+    "marketingCloud": {
+        "serviceName": "marketing",
+        "imgUrl": "https://dx-assests.s3.amazonaws.com/assets/marketing-cloud.svg",
+        "bgColor": "bg-orange-100",
+        "borderColor": "border-orange-200",
+        "tooltipTextColor": "text-orange-600",
+        "textColor": "bg-orange-400",
+        "side": "left",
+        "initailX": 230,
+        "initailY": 160,
+        "finalX": 0,
+        "finalY": 0
+    },
+    "dx": {
+        "imgUrl": "/logo.png",
+        "imgSize": "size-28 lg:size-32 p-4",
+        "bgColor": "bg-blue-100",
+        "borderColor": "border-blue-200",
+        "tooltipTextColor": "text-blue-800",
+        "textColor": "bg-blue-400",
+        "side": "top",
+        "initailX": 230,
+        "initailY": 160,
+        "finalX": 0,
+        "finalY": 0
+    },
+    "node": {
+        "serviceName": "Node.js",
+        "imgUrl": "https://dx-assests.s3.amazonaws.com/assets/nodejs.gif",
+        "bgColor": "bg-green-100",
+        "borderColor": "border-green-200",
+        "tooltipTextColor": "text-green-800",
+        "textColor": "bg-green-400",
+        "side": "left",
+        "initailX": 230,
+        "initailY": 160,
+        "finalX": 0,
+        "finalY": 0
+    },
+    "muleSoft": {
+        "serviceName": "mulesoft",
+        "imgUrl": "https://dx-assests.s3.amazonaws.com/assets/Mulesoft.png",
+        "bgColor": "bg-blue-100",
+        "borderColor": "border-blue-200",
+        "tooltipTextColor": "text-blue-800",
+        "textColor": "bg-blue-400",
+        "side": "left",
+        "initailX": 230,
+        "initailY": 160,
+        "finalX": 0,
+        "finalY": 0
+    }
+};
