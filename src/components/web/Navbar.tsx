@@ -2,6 +2,7 @@
 import { X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 const NavBar = () => {
@@ -9,6 +10,8 @@ const NavBar = () => {
     const [scrollDirection, setScrollDirection] = useState("up");
     const [prevOffset, setPrevOffset] = useState(0);
     const [visible, setVisible] = useState(true);
+
+    const pathName = usePathname();
 
     const toggleVisible = () => {
         const currentScrollPos = window.scrollY;
@@ -27,10 +30,10 @@ const NavBar = () => {
     }, [prevOffset]);
 
     const navLinks = [
-        { href: "/", label: "Home" },
-        { href: "/services", label: "Services" },
-        { href: "/about-us", label: "About Us" },
-        { href: "/contact", label: "Contact Us" },
+        { href: "/", label: "Home", isActive: pathName === "/" },
+        { href: "/services", label: "Services", isActive: pathName === "/services" },
+        { href: "/about-us", label: "About Us", isActive: pathName === "/about-us" },
+        { href: "/contact", label: "Contact Us", isActive: pathName === "/contact" },
     ]
 
     return (
@@ -54,7 +57,11 @@ const NavBar = () => {
                     <ul className="hidden xl:flex lg:w-auto lg:space-x-12">
                         {navLinks && navLinks?.map((navLink, index) => {
                             return (
-                                <Link className="inline-block text-md text-gray-900 hover:text-orange-900 font-medium" href={navLink.href} key={index}>
+                                <Link
+                                    className={`relative inline-block text-md text-gray-900 font-medium after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-gray-900 after:transition-all after:duration-300 hover:after:w-full ${navLink.isActive && "after:w-full"}`}
+                                    href={navLink.href}
+                                    key={index}
+                                >
                                     {navLink.label}
                                 </Link>
                             )

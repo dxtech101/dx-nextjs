@@ -6,10 +6,10 @@ import { addUserCompany } from '@/feature/reducers/userCompany';
 import { addUserProfile } from '@/feature/reducers/userProfile';
 import { addSalesforceId } from '@/feature/reducers/userSalesforceId';
 import { handleFormDataChange, validateForm } from '@/lib/helper';
-import { getDeveloperSalesforceContactId, userSignIn } from '@/lib/service/user.service';
-import { ArrowLeft, ArrowRight, EllipsisVertical, LoaderCircle, Mail, Trash2 } from 'lucide-react';
+import { getDeveloperSalesforceContactId, userSignIn, verifyCompanyDeveloper } from '@/lib/service/user.service';
+import { ArrowLeft, ArrowRight, LoaderCircle, Mail, Trash2 } from 'lucide-react';
 import Link from 'next/link';
-import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
@@ -53,36 +53,38 @@ export default function Login() {
         try {
             setLoading(true)
             const response: any = await userSignIn(loginData);
-            const { results: userSalesforceId } = await getDeveloperSalesforceContactId(response.user.email);
-            console.log(userSalesforceId);
+            dispatch(addUserProfile(response.user));
 
-            if (response && response.user) {
-                dispatch(addUserProfile(response.user));
-                dispatch(addSalesforceId(userSalesforceId[0].sfid));
-                dispatch(addUserCompany(userSalesforceId[0].company_developer));
-                toast.custom((t) => (
-                    <SuccessfulToast t={t} message={"Logged in successfully"} />
-                ));
-                if (response.user.role === "Individual") {
-                    router.push(next ? next : '/developer/dashboard');
-                } else if (response.user.role === "Company") {
-                    router.push(next ? next : '/company/dashboard');
-                }
-                if (rememberMe) {
-                    const existingData = JSON.parse(localStorage.getItem("savedUserDetails") || "[]");
+            if (response && response?.user?.role === "Individual") {
+                verifyCompanyDeveloper(response?.user?.email).then(async (res) => {
+                    if (res) {
+                        const { results: userSalesforceId } = await getDeveloperSalesforceContactId(response.user.email);
+                        console.log(userSalesforceId);
+                        dispatch(addSalesforceId(userSalesforceId[0].sfid));
+                        dispatch(addUserCompany(userSalesforceId[0].company_developer));
+                        toast.custom((t) => (
+                            <SuccessfulToast t={t} message={"Logged in successfully"} />
+                        ));
+                        router.push(next ? next : '/developer/dashboard');
+                        if (rememberMe) {
+                            const existingData = JSON.parse(localStorage.getItem("savedUserDetails") || "[]");
 
-                    const updatedData = Array.isArray(existingData) ? existingData : [];
+                            const updatedData = Array.isArray(existingData) ? existingData : [];
 
-                    updatedData.push({
-                        email: formData.email,
-                        password: formData.password,
-                        profile_picture: response.user.profile_picture,
-                        first_name: response.user.first_name,
-                        last_name: response.user.last_name,
-                    });
+                            updatedData.push({
+                                email: formData.email,
+                                password: formData.password,
+                                profile_picture: response.user.profile_picture,
+                                first_name: response.user.first_name,
+                                last_name: response.user.last_name,
+                            });
 
-                    localStorage.setItem("savedUserDetails", JSON.stringify(updatedData));
-                }
+                            localStorage.setItem("savedUserDetails", JSON.stringify(updatedData));
+                        }
+                    }
+                })
+            } else if (response && response?.user?.role === "Company") {
+                router.push(next ? next : '/company/dashboard');
             }
         } catch (error: any) {
             toast.custom((t) => (

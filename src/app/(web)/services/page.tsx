@@ -1,4 +1,5 @@
 
+import DetailsSection from '@/components/web/services/DetailsSection'
 import { ServiceHerosection } from '@/components/web/services/ServiceHerosection'
 import React from 'react'
 
@@ -59,7 +60,7 @@ const page = () => {
           ))}
         </div>
       </section>
-
+      <DetailsSection />
     </>
 
   )

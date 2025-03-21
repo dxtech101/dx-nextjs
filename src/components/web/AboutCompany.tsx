@@ -4,7 +4,7 @@ const AboutCompany = () => {
     return (
         <section className="py-16">
             <div className="container px-4 mx-auto">
-                <h1 className="text-2xl lg:text-5xl font-semibold mb-6 mt-14 max-w-lg lg:max-w-3xl">About Developer Exchange (DX)                </h1>
+                <h1 className="text-3xl lg:text-5xl font-bold mb-6 mt-14 max-w-lg lg:max-w-3xl">About Developer Exchange (DX)                </h1>
                 <p className="text-gray-600 text-lg mb-10 w-full">Developer Exchange (DX) is the premier talent marketplace exclusively for the Salesforce ecosystem, connecting companies and Salesforce partners with pre-vetted, top-tier developers, architects, and consultants. Unlike traditional freelance platforms, DX ensures that <strong>every professional is rigorously vetted by Certified Technical Architects (CTAs) and experienced Salesforce leaders</strong> —not just the top 2%, but every developer on our platform.</p>
                 <div className="flex flex-wrap mb-8 -mx-4">
                     <div className="w-full lg:w-1/2 p-4">
