@@ -69,13 +69,7 @@ const page = () => {
     try {
       setLoading(true);
       const response = await axios.post("/users/enroll-user/", signupData);
-      console.log(response.data);
-      const developerEmail = response.data.user.email;
-      if (developerEmail) {
-        verifyCompanyDeveloper(developerEmail).then((response: any) => {
-          setSuccessModal(true);
-        });
-      }
+      setSuccessModal(true);
     } catch (error: any) {
       toast.custom((t) => (
         <ErrorToast t={t} message={error?.response?.data?.error} />

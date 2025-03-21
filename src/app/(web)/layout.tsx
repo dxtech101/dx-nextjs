@@ -24,38 +24,7 @@ export default function WebLayout({
 }: Readonly<{ children: React.ReactNode }>) {
 
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* Google Analytics */}
-        <Script
-          strategy="afterInteractive"
-          src="https://www.googletagmanager.com/gtag/js?id=G-9XRKRQNWT9"
-        />
-        <Script
-          id="google-analytics"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-9XRKRQNWT9', {
-                page_path: window.location.pathname,
-              });
-            `,
-          }}
-        />
-        <meta
-          property="og:image"
-          content=""
-        />
-        <meta
-          property="og:description"
-          content="Join Developer Exchange, the premier Salesforce talent portal. Connect directly with top companies, earn higher rates, enjoy flexible work, and grow professionally. Showcase your skills, get matched with top projects, and join an elite network of Salesforce experts for career growth."
-        />
-        <title>DX Digital</title>
-      </head>
-      <body>
+      <>
         <NavBar />
         <div className="mt-16">
           <StateProvider>
@@ -70,7 +39,6 @@ export default function WebLayout({
           />
         </div>
         <Footer />
-      </body>
-    </html>
+      </>
   );
 }
