@@ -3,11 +3,11 @@ import InputArea from '@/components/InputArea';
 import InputField from '@/components/InputField';
 import Modal from '@/components/modal/Modal';
 import MultiSelectDropdown from '@/components/MultiSelectDropdown';
-import { salesforce_technologies, industries } from '@/constants/data';
+import { industries, salesforce_technologies } from '@/constants/data';
 import { handleFormDataChange, InfoLabel, validateForm } from '@/lib/helper';
 import { WorkExperienceService } from '@/lib/service/portfolio.service';
-import { FileUser, PencilIcon, Plus } from 'lucide-react';
-import React, { useEffect, useState } from 'react'
+import { FileUser, Plus } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import DeveloperProfileCardHeader from './DeveloperProfileCardHeader';
 
@@ -22,16 +22,12 @@ const WorkExperienceCard = (props: any) => {
             <InfoLabel label="Project Name" content={experience.company_project_name} />
 
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
-                <InfoLabel label="Salesforce Cloud(s)" content="Sales Cloud, Service Cloud" />
+                <InfoLabel label="Duration" content={experience.duration || "N/A"} />
                 <InfoLabel label="Industry" content={experience.industry} />
             </div>
 
-            <div className='grid grid-cols-2 gap-4'>
-                <InfoLabel label="Duration" content={experience.duration || "N/A"} />
-            </div>
-
             <InfoLabel label="Work Experience Summary" content={experience.project_description || "N/A"} />
-            <div className='absolute bottom-0 right-0 flex gap-2 z-10 p-4'>
+            <div className='absolute bottom-0 right-0 flex gap-2 z-20 p-4'>
                 <button
                     onClick={() => openEditModal(experience)}
                     className='bg-blue-200 border hover:border-blue-400 text-sm text-blue-600 font-medium h-8 px-4 rounded-full'
@@ -39,7 +35,7 @@ const WorkExperienceCard = (props: any) => {
                     Edit
                 </button>
                 <button
-                    onClick={() => deleteWorkExperience(experience.sfid)}
+                    onClick={() => deleteWorkExperience(experience.id)}
                     className='bg-red-200 border hover:border-red-400 text-sm text-red-600 font-medium h-8 px-4 rounded-full'
                 >
                     Delete
@@ -50,7 +46,7 @@ const WorkExperienceCard = (props: any) => {
 }
 
 const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any) => {
-    console.log(experience)
+    const formRef = useRef<HTMLFormElement>(null)
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState<any>({
         company_project_name: "",
@@ -131,12 +127,6 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
         }
     };
 
-    useEffect(() => {
-        if (!showModal) {
-            updateDetails()
-        }
-    }, [showModal])
-
     return (
         <>
             <div className='bg-gray-50 rounded-2xl w-full flex flex-col gap-6 p-6'>
@@ -186,13 +176,14 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
             </div>
             {showModal && (
                 <Modal
-                    header="Edit Skills"
+                    header={`${type === "edit" ? "Edit" : "Add"} Experience`}
                     setModal={setShowModal}
                     loading={loadingUI}
-                    size="lg"
+                    size="md"
                     onSubmit={handleSubmit}
+                    formRef={formRef}
                 >
-                    <form className='w-full flex flex-col gap-4'>
+                    <form onSubmit={handleSubmit} className='w-full flex flex-col gap-4' ref={formRef}>
                         <div className='flex flex-col lg:flex-row w-full gap-6'>
                             <InputField
                                 label={"Project Name"}
@@ -222,7 +213,7 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
                                 value={formData.project_description}
                                 onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
                                 className="w-full"
-                                cols={20}
+                                rows={5}
                                 maxLength={1000}
                             />
                         </div>
@@ -236,13 +227,13 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
                             />
                         </div>
                         <div className='flex flex-col w-full gap-4 mt-2'>
-                            <MultiSelectDropdown
+                            {/* <MultiSelectDropdown
                                 id="salesforce_technologies"
                                 label={"Salesforce Technologies"}
                                 className="w-full"
                                 options={salesforce_technologies}
                                 onChange={(selectedValues) => setFormData({ ...formData, salesforce_technologies: selectedValues })}
-                            />
+                            /> */}
                             <MultiSelectDropdown
                                 id="industry"
                                 label={"Industry"}

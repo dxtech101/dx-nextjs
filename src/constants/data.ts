@@ -48,60 +48,178 @@ export const industries = [
 
 export const skill_level = ["JUNIOR", "MIDDLE", "EXPERT"];
 
-export const filterby = [
+export const filterbyCertificates = [
     "Admin",
-    "Developer", 
-    "Consultant", 
+    "Developer",
+    "Consultant",
     "Architect",
     "Marketing",
     "Commerce",
     "Industry Cloud",
     "Designer",
-    "CRM Analytics", 
+    "CRM Analytics",
     "Heroku",
     "Mulesoft"
 ];
 
+export const filterbySkills = [
+    "Salesforce",
+    "Front-end",
+    "Back-end",
+    "Integration",
+    "Business Analysis",
+    "Database"
+];
+
 export const prefered_hourly_rates = [
-    { value: "$5-10/hr", label: "$5-10/hr" }, 
-    { value: "$10-20/hr", label: "$10-20/hr" }, 
-    { value: "$20-40/hr", label: "$20-40/hr" }, 
+    { value: "$5-10/hr", label: "$5-10/hr" },
+    { value: "$10-20/hr", label: "$10-20/hr" },
+    { value: "$20-40/hr", label: "$20-40/hr" },
     { value: "$40-60/hr", label: "$40-60/hr" }
 ]
 
 export const available_hours = [
-    { value: "0-5hrs", label: "0-5 hrs" }, 
-    { value: "5-10hrs", label: "5-10 hrs" }, 
-    { value: "10-20hrs", label: "10-20 hrs" }, 
-    { value: "20-40hrs", label: "20-40 hrs" }, 
+    { value: "0-5hrs", label: "0-5 hrs" },
+    { value: "5-10hrs", label: "5-10 hrs" },
+    { value: "10-20hrs", label: "10-20 hrs" },
+    { value: "20-40hrs", label: "20-40 hrs" },
     { value: "40-60hrs", label: "40-60 hrs" }
 ]
 
 export const skillsDetails = [
-    { id: "a0lIo000000viJPIAY", text: 'Salesforce', imageSrc: '/Salesforce.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-    { id: "a0lIo000000viJQIAY", text: 'Mulesoft', imageSrc: '/Mulesoft.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-    { id: "a0lIo000000viJSIAY", text: 'Heroku', imageSrc: '/heroku.png', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
-    { id: "a0lIo000000viJTIAY", text: 'Sales Cloud', imageSrc: '/sales-cloud.svg', bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-800' },
-    { id: "a0lIo000000viJUIAY", text: 'Service Cloud', imageSrc: '/service-cloud.svg', bgColor: 'bg-pink-100', checkedColor: 'bg-pink-500', borderColor: 'border-pink-600', textColor: 'text-pink-600' },
-    { id: "a0lIo000000viJVIAY", text: 'Marketing Cloud', imageSrc: '/marketing-cloud.svg', bgColor: 'bg-orange-100', checkedColor: 'bg-orange-500', borderColor: 'border-orange-600', textColor: 'text-orange-400' },
-    { id: "a0lIo000000viJWIAY", text: 'B2B Commerce Cloud', imageSrc: '/commerce-cloud.svg', bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-800' },
-    { id: "a0lIo000000viJXIAY", text: 'B2C Commerce Cloud', imageSrc: '/commerce-cloud.svg', bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-800' },
-    { id: "a0lIo000000viJaIAI", text: 'Experience Cloud', imageSrc: '/Salesforce.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-    { id: "a0lIo000000viJRIAY", text: 'Industry Cloud', imageSrc: '/Salesforce.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-    { id: "a0lIo000000viJZIAY", text: 'Einstein Copilot', imageSrc: '/encop.webp', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
-    { id: "a0lIo000000viJYIAY", text: 'AI', imageSrc: '/encop.webp', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000viJPIAY", text: 'Salesforce', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
+    { id: "a0lIo000000viJQIAY", text: 'Mulesoft', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
+    { id: "a0lIo000000viJSIAY", text: 'Heroku', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000viJTIAY", text: 'Sales Cloud', bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-800' },
+    { id: "a0lIo000000viJUIAY", text: 'Service Cloud', bgColor: 'bg-pink-100', checkedColor: 'bg-pink-500', borderColor: 'border-pink-600', textColor: 'text-pink-600' },
+    { id: "a0lIo000000viJVIAY", text: 'Marketing Cloud', bgColor: 'bg-orange-100', checkedColor: 'bg-orange-500', borderColor: 'border-orange-600', textColor: 'text-orange-400' },
+    { id: "a0lIo000000viJWIAY", text: 'B2B Commerce Cloud', bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-800' },
+    { id: "a0lIo000000viJXIAY", text: 'B2C Commerce Cloud', bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-800' },
+    { id: "a0lIo000000viJaIAI", text: 'Experience Cloud', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
+    { id: "a0lIo000000viJRIAY", text: 'Industry Cloud', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000viJZIAY", text: 'Einstein Copilot', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000viJYIAY", text: 'AI', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000viJYIAY", text: 'AI', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDvkIAE", text: "React.js", bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-900' },
+    { id: "a0lIo000000wDvpIAE", text: "Next.js", bgColor: 'bg-white', checkedColor: 'bg-black', borderColor: 'border-black', textColor: 'text-black' },
+    { id: "a0lIo000000wDvqIAE", text: "Vue.js", bgColor: 'bg-indigo-100', checkedColor: 'bg-indigo-500', borderColor: 'border-indigo-600', textColor: 'text-indigo-900' },
+    { id: "a0lIo000000wDvuIAE", text: "Angular", bgColor: 'bg-red-100', checkedColor: 'bg-red-500', borderColor: 'border-red-600', textColor: 'text-red-900' },
+    { id: "a0lIo000000wDvzIAE", text: "Tailwind CSS", bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-900' },
+    { id: "a0lIo000000wDw4IAE", text: "Bootstrap", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDw9IAE", text: "Node.js", bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-900' },
+    { id: "a0lIo000000wDvlIAE", text: "Express.js", bgColor: 'bg-white', checkedColor: 'bg-black', borderColor: 'border-black', textColor: 'text-black' },
+    { id: "a0lIo000000wDw5IAE", text: "Django", bgColor: 'bg-white', checkedColor: 'bg-black', borderColor: 'border-black', textColor: 'text-black' },
+    { id: "a0lIo000000wDw6IAE", text: "Flask", bgColor: 'bg-white', checkedColor: 'bg-black', borderColor: 'border-black', textColor: 'text-black' },
+    { id: "a0lIo000000wDw7IAE", text: "Spring Boot", bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-900' },
+    { id: "a0lIo000000wDwEIAU", text: "ASP.NET Core", bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-900' },
+    { id: "a0lIo000000wDwJIAU", text: "Ruby on Rails", bgColor: 'bg-red-100', checkedColor: 'bg-red-500', borderColor: 'border-red-600', textColor: 'text-red-900' },
+    { id: "a0lIo000000wDwOIAU", text: "PostgreSQL", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDwTIAU", text: "MySQL", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDwYIAU", text: "MongoDB", bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-900' },
+    { id: "a0lIo000000wDwdIAE", text: "DynamoDB", bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-900' },
+    { id: "a0lIo000000wDwiIAE", text: "Redis", bgColor: 'bg-red-100', checkedColor: 'bg-red-500', borderColor: 'border-red-600', textColor: 'text-red-900' },
+    { id: "a0lIo000000wDwjIAE", text: "Apache Kafka", bgColor: 'bg-white', checkedColor: 'bg-black', borderColor: 'border-black', textColor: 'text-black' },
+    { id: "a0lIo000000wDwKIAU", text: "Google Cloud Pub/Sub", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDweIAE", text: "AWS Step Functions", bgColor: 'bg-rose-100', checkedColor: 'bg-rose-500', borderColor: 'border-rose-600', textColor: 'text-rose-900' },
+    { id: "a0lIo000000wDvrIAE", text: "Jira", bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-900' },
+    { id: "a0lIo000000wDvsIAE", text: "Confluence", bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-900' },
+    { id: "a0lIo000000wDwUIAU", text: "Microsoft Power BI", bgColor: 'bg-orange-100', checkedColor: 'bg-orange-500', borderColor: 'border-orange-600', textColor: 'text-orange-900' },
+    { id: "a0lIo000000wDwnIAE", text: "Tableau", bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
+    { id: "a0lIo000000wDwsIAE", text: "Lucidchart", bgColor: 'bg-orange-100', checkedColor: 'bg-orange-500', borderColor: 'border-orange-600', textColor: 'text-orange-900' },
+    { id: "a0lIo000000wDwkIAE", text: "Google Analytics", bgColor: 'bg-orange-100', checkedColor: 'bg-orange-500', borderColor: 'border-orange-600', textColor: 'text-orange-900' },
+    { id: "a0lIo000000wDwoIAE", text: "Excel", bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-900' }
 ];
 
-export const developerQuestions = [
-    "What inspired you to start your journey in software development, and how have your skills and perspective evolved over the years through various experiences?",
-    "Which programming language do you enjoy the most, and can you elaborate on the features or use cases that make it your preferred choice for development?",
-    "Describe a complex issue or bug you faced in a project, the challenges involved, and how you approached troubleshooting and resolving it systematically.",
-    "How do you stay current with new advancements in technology, tools, and frameworks while managing the demands of ongoing development projects effectively?",
-    "What’s the most rewarding personal or open-source project you’ve worked on, and how did it help shape your understanding of development practices?",
-    "When debugging challenging code or solving performance issues, what tools, methodologies, or strategies have proven most effective for identifying and resolving problems quickly?",
-    "Which tools, libraries, or frameworks do you consider essential in your workflow, and what advantages have they provided in streamlining development tasks?",
-    "Share an experience where you optimized a slow application or process, detailing the changes made and the measurable impact on performance or efficiency.",
-    "What advice would you give to someone starting their software development career, emphasizing habits, practices, and skills essential for long-term growth and success?"
-  ];
-  
-
+export const servicesData: any = {
+    "springBoot": {
+        "serviceName": "Spring Boot",
+        "imgUrl": "https://dx-assests.s3.amazonaws.com/assets/spring-boot.png",
+        "bgColor": "bg-green-100",
+        "borderColor": "border-green-200",
+        "tooltipTextColor": "text-green-800",
+        "textColor": "bg-green-600",
+        "side": "left",
+        "initailX": 225,
+        "initailY": 150,
+        "finalX": 0,
+        "finalY": 0
+    },
+    "react": {
+        "serviceName": "React.js",
+        "imgUrl": "https://dx-assests.s3.amazonaws.com/assets/React-icon.svg.png",
+        "bgColor": "bg-blue-100",
+        "borderColor": "border-blue-200",
+        "tooltipTextColor": "text-blue-800",
+        "textColor": "bg-blue-400",
+        "side": "left",
+        "initailX": 230,
+        "initailY": 160,
+        "finalX": 0,
+        "finalY": 0
+    },
+    "commerceCloud": {
+        "serviceName": "commerce",
+        "imgUrl": "https://dx-assests.s3.amazonaws.com/assets/commerce-cloud.svg",
+        "bgColor": "bg-green-100",
+        "borderColor": "border-green-200",
+        "tooltipTextColor": "text-green-800",
+        "textColor": "bg-green-400",
+        "side": "left",
+        "initailX": 230,
+        "initailY": 160,
+        "finalX": 0,
+        "finalY": 0
+    },
+    "marketingCloud": {
+        "serviceName": "marketing",
+        "imgUrl": "https://dx-assests.s3.amazonaws.com/assets/marketing-cloud.svg",
+        "bgColor": "bg-orange-100",
+        "borderColor": "border-orange-200",
+        "tooltipTextColor": "text-orange-600",
+        "textColor": "bg-orange-400",
+        "side": "left",
+        "initailX": 230,
+        "initailY": 160,
+        "finalX": 0,
+        "finalY": 0
+    },
+    "dx": {
+        "imgUrl": "/logo.png",
+        "imgSize": "size-28 lg:size-32 p-4",
+        "bgColor": "bg-blue-100",
+        "borderColor": "border-blue-200",
+        "tooltipTextColor": "text-blue-800",
+        "textColor": "bg-blue-400",
+        "side": "top",
+        "initailX": 230,
+        "initailY": 160,
+        "finalX": 0,
+        "finalY": 0
+    },
+    "node": {
+        "serviceName": "Node.js",
+        "imgUrl": "https://dx-assests.s3.amazonaws.com/assets/nodejs.gif",
+        "bgColor": "bg-green-100",
+        "borderColor": "border-green-200",
+        "tooltipTextColor": "text-green-800",
+        "textColor": "bg-green-400",
+        "side": "left",
+        "initailX": 230,
+        "initailY": 160,
+        "finalX": 0,
+        "finalY": 0
+    },
+    "muleSoft": {
+        "serviceName": "mulesoft",
+        "imgUrl": "https://dx-assests.s3.amazonaws.com/assets/Mulesoft.png",
+        "bgColor": "bg-blue-100",
+        "borderColor": "border-blue-200",
+        "tooltipTextColor": "text-blue-800",
+        "textColor": "bg-blue-400",
+        "side": "left",
+        "initailX": 230,
+        "initailY": 160,
+        "finalX": 0,
+        "finalY": 0
+    }
+};

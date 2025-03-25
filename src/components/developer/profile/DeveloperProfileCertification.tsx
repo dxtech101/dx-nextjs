@@ -1,9 +1,10 @@
 "use client"
 import Modal from '@/components/modal/Modal';
 import { PencilIcon, ShieldCheck } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Certifications from '../onboarding/Certifications';
 import DeveloperProfileCardHeader from './DeveloperProfileCardHeader';
+import { getAllSalesforceCertifications } from '@/lib/service/portfolio.service';
 
 const ProfileCertificationComponent = ({
     src,
@@ -30,7 +31,7 @@ const ProfileCertificationComponent = ({
                 />
             )}
             <label htmlFor={name} className='cursor-pointer flex flex-col items-center gap-2'>
-                <img className='w-12 md:w-24' src={'/' + name.split(' ').join('-') + '.png'} alt={name} />
+                <img className='w-12 md:w-24' src={src} alt={name} />
                 <span className='capitalize text-sm font-bold text-center text-gray-600 max-w-[7rem] line-clamp-2'>
                     {name.replace(/salesforce/i, '')}
                 </span>
@@ -41,6 +42,8 @@ const ProfileCertificationComponent = ({
 
 
 const DeveloperProfileCertification = ({ certification, loading, updateDetails }: any) => {
+    console.log("Certification===>>", certification);
+
     const [visibleCount, setVisibleCount] = useState(6);
     const [showAll, setShowAll] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -80,7 +83,7 @@ const DeveloperProfileCertification = ({ certification, loading, updateDetails }
                         <>
                             {certification?.length > 0 ? <>
                                 {certification?.slice(0, visibleCount)?.map((cert: any, index: any) => (
-                                    <ProfileCertificationComponent key={index} name={cert.certification_name} src={cert.src} />
+                                    <ProfileCertificationComponent key={index} name={cert.name} src={cert.url} />
                                 ))}
                                 {certification?.length > 6 && (
                                     <button onClick={handleShowMore} className='text-blue-700 font-bold'>
@@ -101,6 +104,7 @@ const DeveloperProfileCertification = ({ certification, loading, updateDetails }
                     loading={loadingUI}
                     size="xl"
                     isFooter={false}
+                    onClose={() => updateDetails()}
                 >
                     <div className='py-6 min-h-96 bg-[url(/noRecordBG2.png)] -m-6 px-10 bg-no-repeat bg-fixed bottom-0 bg-contain bg-bottom rounded-2xl'>
                         <Certifications type="edit" />

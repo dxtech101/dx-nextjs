@@ -1,9 +1,10 @@
-"use client"
+"use client";
 import Footer from "@/components/web/Footer";
 import NavBar from "@/components/web/Navbar";
 import StateProvider from "@/feature/Provider";
 import "@/lib/axios-configuration";
 import localFont from "next/font/local";
+import Script from "next/script";
 import { Toaster } from 'react-hot-toast';
 import "../globals.css";
 
@@ -20,27 +21,24 @@ const geistMono = localFont({
 
 export default function WebLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
 
   return (
-    <>
-      <title>DX Digital</title>
-      <NavBar />
-      <div className="mt-16">
-        <StateProvider>
-          {children}
-        </StateProvider>
-        <Toaster
-          position="top-center"
-          reverseOrder={false}
-          toastOptions={{
-            duration: 1000,
-          }}
-        />
-      </div>
-      <Footer />
-    </>
+      <>
+        <NavBar />
+        <div className="mt-16">
+          <StateProvider>
+            {children}
+          </StateProvider>
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+            toastOptions={{
+              duration: 1000,
+            }}
+          />
+        </div>
+        <Footer />
+      </>
   );
 }

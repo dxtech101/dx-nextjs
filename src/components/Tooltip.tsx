@@ -12,7 +12,7 @@ const Tooltip: React.FC<TooltipProps> = ({ children, popupContent, color = 'tran
         <div className="relative group z-50">
             {/* Tooltip Popup */}
             <div
-                className={`${!show && "group-hover:flex"} hidden items-center justify-center w-max max-w-xs text-xs font-bold uppercase text-gray-100 bg-slate-900 px-5 py-2 border border-gray-400 shadow-md rounded-xl absolute left-full bottom-1/2 translate-y-1/2 mt-1 ml-2`}
+                className={`${!show && "lg:group-hover:flex"} hidden items-center justify-center w-max max-w-xs text-xs font-bold uppercase text-gray-100 bg-slate-900 px-5 py-2 border border-gray-400 shadow-md rounded-xl absolute left-full bottom-1/2 translate-y-1/2 mt-1 ml-2`}
                 role="tooltip"
                 aria-label={popupContent}
             >

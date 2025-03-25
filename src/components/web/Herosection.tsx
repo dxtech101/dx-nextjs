@@ -3,66 +3,57 @@ import React from 'react'
 
 const Herosection = () => {
     return (
-        <section className="relative">
-            <div className="overflow-hidden pt-16 min-h-screen">
-                <div className="relative container px-4 mx-auto">
-                    <div className="flex flex-col lg:flex-row flex-wrap -mt-8">
-                        <div className="w-full lg:w-4/12 xl:w-6/12 p-8">
-                            <h1 className="mb-9 text-3xl sm:text-6xl md:text-7xl font-bold font-heading md:max-w-7xl leading-none text-black">
-                                Hire Top
-                                <br />
-                                <span className='inline-flex items-center gap-3'>
-                                    <img src="/salesforce-no-type-logo.svg" alt="Salesforce" className='w-16 md:w-24 z-0' />
-                                    <span className='z-10'>
-                                        Salesforce
-                                    </span>
-                                </span>
-                                <br />
-                                Talent
-                            </h1>
-                            <div>
-                                <p className="mb-9 text-lg text-gray-900 font-medium md:max-w-sm">
-                                    Trusted Salesforce Talent, Vetted for Excellence, Hired with Flexibility.
-                                </p>
-                                <div className="mb-12 md:inline-block">
-                                    <Link href={"/signup"} className="py-4 px-6 w-full text-white font-semibold border border-indigo-700 rounded-xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200" type="button">
-                                        Sign up now
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="w-full lg:w-8/12 xl:w-8/12 xl:absolute xl:right-0 xl:-bottom-16 p-2 md:p-8">
-                            <div className="flex justify-center items-center lg:justify-end -m-3">
-                                <div className="w-auto lg:w-1/3 xl:pt-28 p-3">
-                                    <div className="flex justify-end -m-3">
-                                        <div className="w-auto p-1 sm:p-3">
-                                            <img className="mx-auto rounded-3xl " src="/herosection1.png" alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-auto lg:w-1/3 p-3">
-                                    <div className="flex flex-wrap justify-center -m-3">
-                                        <div className="w-auto p-1 sm:p-3">
-                                            <img className="mx-auto rounded-3xl" src="/herosection2.png" alt="" />
-                                        </div>
-                                        <div className="w-auto p-1 sm:p-3">
-                                            <img className="mx-auto rounded-3xl" src="https://static.shuffle.dev/components/preview/238eb578-e531-4cf4-a658-a1ff13c9b896/assets/public/flaro-assets/images/headers/people2.png" alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-auto lg:w-1/3 p-3">
-                                    <div className="flex flex-wrap justify-center -m-3">
-                                        <div className="w-32 sm:w-44 md:w-48 lg:w-auto p-1 sm:p-3">
-                                            <img className="mx-auto rounded-3xl" src="https://static.shuffle.dev/components/preview/238eb578-e531-4cf4-a658-a1ff13c9b896/assets/public/flaro-assets/images/headers/people3.png" alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div className="flex flex-col gap-8 items-center my-28 xl:my-0 justify-evenly xl:justify-around xl:flex-row min-h-screen container mx-auto">
+            <div className="w-10/12 xl:w-4/12 p-0 lg:p-6">
+                <h1 className="mb-9 text-3xl sm:text-6xl md:text-7xl font-bold font-heading w-full xl:w-full leading-none text-black">
+                    Hire Top
+                    <br />
+                    <span className='inline-flex items-center gap-3'>
+                        <img src="/salesforce-no-type-logo.svg" alt="Salesforce" className='w-16 md:w-24 z-0' />
+                        <span className='z-10'>
+                            Salesforce
+                        </span>
+                    </span>
+                    <br />
+                    Talent
+                </h1>
+                <div>
+                    <p className="mb-9 text-lg text-gray-900 font-medium md:max-w-sm">
+                        Trusted Salesforce Talent, Vetted for Excellence, Hired with Flexibility.
+                    </p>
+                    <Link href={"/signup"} className="py-4 px-6 w-full text-white font-semibold border border-indigo-700 rounded-xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200" type="button">
+                        Sign up now
+                    </Link>
                 </div>
             </div>
-        </section>
+            <div className='hidden lg:flex flex-col lg:flex-row justify-end items-center gap-4 w-10/12 lg:w-7/12 p-0 lg:p-8'>
+                <div className='w-full lg:w-1/3 flex'>
+                    <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://dx-assests.s3.amazonaws.com/assets/herosection1.png" alt="" />
+                </div>
+                <div className="w-full lg:w-1/3 flex flex-col justify-between lg:justify-center gap-4">
+                    <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://dx-assests.s3.amazonaws.com/assets/herosection2.png" alt="" />
+                    <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://dx-assests.s3.amazonaws.com/assets/herosection3.png" alt="" />
+                </div>
+                <div className="w-full lg:w-1/3 flex flex-row">
+                    <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://dx-assests.s3.amazonaws.com/assets/herosection4.png" alt="" />
+                </div>
+            </div>
+            <div className='flex lg:hidden flex-col lg:flex-row justify-end items-center gap-4 w-10/12 p-0'>
+                <div className='w-full flex'>
+                    <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://dx-assests.s3.amazonaws.com/assets/herosection1.png" alt="" />
+                </div>
+                <div className='flex flex-row gap-4'>
+                    <div className="w-full flex flex-col justify-between lg:justify-center gap-4">
+                        <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://dx-assests.s3.amazonaws.com/assets/herosection2.png" alt="" />
+                        <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://dx-assests.s3.amazonaws.com/assets/herosection3.png" alt="" />
+                    </div>
+                    <div className="w-full flex flex-row">
+                        <img className="mx-auto object-cover rounded-xl lg:rounded-3xl" src="https://dx-assests.s3.amazonaws.com/assets/herosection4.png" alt="" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
     )
 }
 

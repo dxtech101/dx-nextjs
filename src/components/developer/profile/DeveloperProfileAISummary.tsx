@@ -46,10 +46,10 @@ const Sparkles = () => {
 const Skeleton = () => {
     return (
         <div className="p-8 overflow-hidden h-full relative flex items-center justify-center">
-            <div className="flex flex-row text-blue-300 text-6xl font-bold flex-shrink-0 justify-center items-center gap-2">
+            <div className="flex flex-row text-blue-300 text-2xl lg:text-6xl font-bold flex-shrink-0 justify-center items-center gap-2">
                 Generating AI Summary
             </div>
-            <div className="h-40 w-px absolute top-20 m-auto z-40 bg-gradient-to-b from-transparent via-gray-800 to-transparent animate-move">
+            <div className="h-40 w-px absolute top-10 lg:top-20 m-auto z-40 bg-gradient-to-b from-transparent via-gray-800 to-transparent animate-move">
                 <div className="w-10 h-32 top-1/2 -translate-y-1/2 absolute -left-10">
                     <Sparkles />
                 </div>
@@ -125,7 +125,7 @@ const DeveloperAISummary = () => {
                     </div>
                 }
             />
-            {loading ?
+            {!loading ?
                 <CardSkeletonContainer>
                     <Skeleton />
                 </CardSkeletonContainer> :

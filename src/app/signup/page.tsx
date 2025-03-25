@@ -18,6 +18,7 @@ import PhoneInput from "react-phone-number-input";
 import Modal from "@/components/modal/Modal";
 import "react-phone-number-input/style.css";
 import TermsAndConditions from "@/components/TermsAndConditions";
+import { verifyCompanyDeveloper } from "@/lib/service/user.service";
 
 const page = () => {
   const [selected, setSelected] = useState("Individual");
@@ -47,7 +48,6 @@ const page = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(validateForm(formData, errors, setErrors));
 
     if (!validateForm(formData, errors, setErrors)) {
       return;
@@ -68,7 +68,6 @@ const page = () => {
     try {
       setLoading(true);
       const response = await axios.post("/users/enroll-user/", signupData);
-      console.log(response.data);
       setSuccessModal(true);
     } catch (error: any) {
       toast.custom((t) => (
@@ -211,9 +210,9 @@ const page = () => {
                 }
                 defaultCountry="IN"
                 className={`h-12 pl-4 pr-4 w-full text-black border ${errors.phone
-                  ? "border-red-400 bg-red-100"
-                  : "border-gray-400 bg-white"
-                  } rounded-xl`}
+                  ? "border-red-400 border-2"
+                  : "border-gray-400"
+                  } bg-white rounded-xl`}
               />
             </div>
 

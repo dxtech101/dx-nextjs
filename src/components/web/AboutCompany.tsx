@@ -4,26 +4,12 @@ const AboutCompany = () => {
     return (
         <section className="py-16">
             <div className="container px-4 mx-auto">
-                <h1 className="text-5xl lg:text-7xl font-semibold mb-6 mt-14 max-w-lg lg:max-w-3xl">On a mission to make learning fun</h1>
-                <p className="text-gray-600 text-lg mb-48 lg:mb-32 max-w-xl">Our aim is to infuse every educational experience with the essence of joy, making learning an immersive adventure that fuels curiosity and fosters growth.</p>
-                <div className="relative mb-32 height-[800px]">
-                   
-                    <div className="w-full h-full absolute top-0 right-0 rounded-5xl bg-orange-50"></div>
-                    <div className="w-full h-full absolute md:top-5 md:right-5 rounded-5xl bg-purple-900"></div>
-                    <img className="w-full h-full absolute md:top-12 md:right-12 rounded-5xl object-cover" src="solstice-assets/images/about/picture6.png" alt="" />
-                </div>
-                <div className="flex flex-wrap mb-16 -mx-4">
-                    <div className="w-full lg:w-1/2 p-4">
-                        <h2 className="text-5xl font-semibold max-w-sm lg:max-w-lg">A company with values</h2>
-                    </div>
-                    <div className="w-full lg:w-1/2 p-4">
-                        <p className="text-gray-600 text-lg">Diversity, inclusion, and belonging are fundamental to our success. We believe the best solutions occur when a plurality of backgrounds, experiences, and identities work together.</p>
-                    </div>
-                </div>
+                <h1 className="text-3xl lg:text-5xl font-bold mb-6 mt-14 max-w-lg lg:max-w-3xl">About Developer Exchange (DX)                </h1>
+                <p className="text-gray-600 text-lg mb-10 w-full">Developer Exchange (DX) is the premier talent marketplace exclusively for the Salesforce ecosystem, connecting companies and Salesforce partners with pre-vetted, top-tier developers, architects, and consultants. Unlike traditional freelance platforms, DX ensures that <strong>every professional is rigorously vetted by Certified Technical Architects (CTAs) and experienced Salesforce leaders</strong> —not just the top 2%, but every developer on our platform.</p>
                 <div className="flex flex-wrap mb-8 -mx-4">
                     <div className="w-full lg:w-1/2 p-4">
                         <div className="border border-gray-200 rounded-3xl p-8">
-                            <div className="rounded-2xl bg-orange-500 w-14 h-14 flex items-center justify-center mb-4">
+                            <div className="rounded-2xl bg-blue-500 w-14 h-14 flex items-center justify-center mb-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
                                     <path d="M11.0001 2.66663V29.3333H10.4134C5.56008 29.3333 2.66675 26.44 2.66675 21.5866V10.4133C2.66675 5.55996 5.56008 2.66663 10.4134 2.66663H11.0001Z" fill="white"></path>
                                     <path d="M28.8333 10.4133V14.5H13.5V3.16663H21.5867C23.9139 3.16663 25.7113 3.85839 26.9264 5.07351C28.1416 6.28864 28.8333 8.08606 28.8333 10.4133Z" fill="white" stroke="white"></path>
@@ -31,15 +17,15 @@ const AboutCompany = () => {
                                 </svg>
                             </div>
                             <div className="flex mb-4">
-                                <div className="w-0.5 h-6 bg-orange-500 transform -translate-x-8"></div>
-                                <h2 className="text-2xl font-bold font-heading">Passion for Innovation</h2>
+                                <div className="w-0.5 h-6 bg-blue-500 transform -translate-x-8"></div>
+                                <h2 className="text-2xl font-bold font-heading">Flexible Talent Solutions</h2>
                             </div>
-                            <p className="text-gray-600">We thrive on a relentless passion for innovation. We constantly challenge the status quo, seeking out creative solutions and pushing the boundaries of what's possible.</p>
+                            <p className="text-gray-600">With flexible hiring options, including freelance, nearshore, and offshore talent, DX enables businesses to scale their Salesforce projects efficiently while minimizing operational costs. Our streamlined platform eliminates the complexity of hiring by providing trusted, high-quality talent on demand.</p>
                         </div>
                     </div>
                     <div className="w-full lg:w-1/2 p-4">
-                        <div className="border border-gray-200 rounded-3xl p-8">
-                            <div className="rounded-2xl bg-orange-500 w-14 h-14 flex items-center justify-center mb-4">
+                        <div className="border border-gray-200 rounded-3xl p-8 h-full">
+                            <div className="rounded-2xl bg-blue-500 w-14 h-14 flex items-center justify-center mb-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
                                     <path d="M11.0001 2.66663V29.3333H10.4134C5.56008 29.3333 2.66675 26.44 2.66675 21.5866V10.4133C2.66675 5.55996 5.56008 2.66663 10.4134 2.66663H11.0001Z" fill="white"></path>
                                     <path d="M28.8333 10.4133V14.5H13.5V3.16663H21.5867C23.9139 3.16663 25.7113 3.85839 26.9264 5.07351C28.1416 6.28864 28.8333 8.08606 28.8333 10.4133Z" fill="white" stroke="white"></path>
@@ -47,14 +33,13 @@ const AboutCompany = () => {
                                 </svg>
                             </div>
                             <div className="flex mb-4">
-                                <div className="w-0.5 h-6 bg-orange-500 transform -translate-x-8"></div>
-                                <h2 className="text-2xl font-bold font-heading">Collaborative Community</h2>
+                                <div className="w-0.5 h-6 bg-blue-500 transform -translate-x-8"></div>
+                                <h2 className="text-2xl font-bold font-heading">Seamless Salesforce Hiring</h2>
                             </div>
-                            <p className="text-gray-600">We foster an inclusive and supportive environment where every voice is heard, and diverse perspectives contribute to our collective success. Together, we achieve more.</p>
+                            <p className="text-gray-600">Whether you're a Salesforce partner looking to augment your team, an enterprise in need of specialized expertise, or a developer seeking premium opportunities, DX is your gateway to seamless, efficient, and reliable Salesforce hiring.</p>
                         </div>
                     </div>
                 </div>
-                
             </div>
         </section>
     )

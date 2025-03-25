@@ -90,7 +90,7 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({
             <label className="text-sm font-bold text-gray-700 text-nowrap">{label}</label>
             <div className="relative w-full">
                 <div
-                    className={`flex items-center gap-2 h-fit py-2 w-full pl-4 pr-10 bg-gray-100 border border-gray-400 rounded-xl flex-wrap whitespace-nowrap ${className}`}
+                    className={`flex items-center gap-2 h-fit py-2 w-full pl-4 pr-10 bg-white border border-gray-400 rounded-xl flex-wrap whitespace-nowrap ${className}`}
                     onClick={toggleDropdown}
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
@@ -98,7 +98,7 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({
                         selectedValues.map(value => (
                             <div
                                 key={value}
-                                className="flex items-center bg-blue-200 text-blue-700 text-xs font-semibold px-2 py-1 rounded-full"
+                                className="flex items-center bg-blue-200 text-blue-700 text-xs font-semibold px-2 py-1 rounded-full "
                             >
                                 <span>{options.find((opt: any) => opt.value === value)?.label}</span>
                                 <button
@@ -130,7 +130,7 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({
 
                 {isOpen && (
                     <div
-                        className={`absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-auto ${dropdownDirection === 'up' ? 'bottom-full mb-1' : 'top-full mt-1'
+                        className={`absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-auto ${dropdownDirection === 'up' ? 'bottom-full mb-1' : 'top-full mt-1'
                             }`}
                     >
                         {options.map((option: any) => (

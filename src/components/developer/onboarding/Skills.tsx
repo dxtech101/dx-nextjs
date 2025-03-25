@@ -1,16 +1,13 @@
 "use client"
 import InputField from '@/components/InputField';
-import ErrorToast from '@/components/toast/ErrorToast';
-import SuccessfulToast from '@/components/toast/SuccessfulToast';
-import { skill_level, skillsDetails } from '@/constants/data';
+import { filterbySkills, skill_level, skillsDetails } from '@/constants/data';
 import { onBoardingHandleNext, onBoardingHandlePrevious } from '@/feature/reducers/userOnboarding';
 import { getAllSalesforceSkills, SkillsService } from '@/lib/service/portfolio.service';
 import { X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 
-const CheckboxItem = ({ id, checked, onChange, loadingUI, skill_level }: any) => {
+const CheckboxItem = ({ id, checked, onChange, loadingUI, skill_level, imageSrc, name }: any) => {
     const [checkedItem, setCheckedItem] = useState<any>();
 
     useEffect(() => {
@@ -21,9 +18,9 @@ const CheckboxItem = ({ id, checked, onChange, loadingUI, skill_level }: any) =>
         return (
             <div className={`${checkedItem.bgColor} border ${checkedItem.borderColor} p-2 pl-4 rounded-xl relative z-10 whitespace-nowrap min-w-max`}>
                 <div className='inline-flex gap-2 items-center'>
-                    <img className='w-auto h-6' src={checkedItem.imageSrc} alt={checkedItem.text} />
+                    <img className='w-auto h-6 mix-blend-multiply' src={imageSrc} alt={checkedItem.text} />
                     <span className={`font-normal ${checkedItem.textColor}`}>
-                        {checkedItem.text}
+                        {name}
                     </span>
                     <input
                         type="checkbox"
@@ -66,6 +63,7 @@ const Skills = ({ type = "add" }: any) => {
     const containerRef: any = useRef(null);
     const contactSfid = useSelector((state: any) => state.userSalesforceID)
     const [showSkillLevel, setShowSkillLevel] = useState(false);
+    const [selectedTags, setSelectedTags] = useState<any>([]);
     const [selectedSkillLevel, setSelectedSkillLevel] = useState("JUNIOR");
 
     const dispatch = useDispatch();
@@ -92,6 +90,8 @@ const Skills = ({ type = "add" }: any) => {
             else if (reloadType === "update") setLoadingUI(false);
         }
     }
+
+    console.log("checkedItems::", checkedItems);
 
 
     useEffect(() => {
@@ -196,6 +196,27 @@ const Skills = ({ type = "add" }: any) => {
         } else setFilteredItems(items)
     }, [inputValue]);
 
+
+    const filterbyCategory = (category: any) => {
+        if (selectedTags.includes(category)) {
+            const updatedTags = selectedTags.filter((tag: any) => tag !== category);
+            setSelectedTags(updatedTags);
+            console.log("updatedTags ==>", updatedTags);
+
+            if (updatedTags.length === 0) {
+                setFilteredItems(items);
+            } else {
+                const filtered = filteredItems.filter(item => updatedTags.includes(item.type));
+                setFilteredItems(filtered);
+            }
+        } else {
+            const updatedTags = [...selectedTags, category];
+            setSelectedTags(updatedTags);
+            const filtered = filteredItems.filter(item => updatedTags.includes(item.type));
+            setFilteredItems(filtered);
+        }
+    };
+
     const handleSuggestionSelect = (item: any) => {
         setInputValue(item.text);
         handleCheckboxChange(item?.skill?.sfid || item?.sfid, item.id);
@@ -206,6 +227,7 @@ const Skills = ({ type = "add" }: any) => {
     const handleSkillSelected = (id: any) => {
         setShowSkillLevel(id)
     }
+
 
     return (
         <>
@@ -255,6 +277,23 @@ const Skills = ({ type = "add" }: any) => {
 
                         {showSuggestions && !loadingUI && (
                             <div className='absolute bg-white border-2 left-0 rounded-xl shadow-sm w-full lg:w-1/2 mt-1 max-h-48 overflow-y-auto z-20'>
+                                <div className='sticky top-0 w-full flex items-center gap-2 bg-white p-2 px-4 whitespace-nowrap'>
+                                    <span className='text-sm'>
+                                        Filter by:
+                                    </span>
+                                    <div className='flex overflow-x-scroll no-scrollbar gap-2 items-center'>
+                                        {filterbySkills.map((item: any, index: number) => {
+                                            return (
+                                                <button key={index} onClick={() => filterbyCategory(item)}
+                                                    className={`px-2 py-1 rounded-full text-xs ${selectedTags.includes(item) ? 'bg-blue-500 text-white' : 'bg-gray-100'}`}
+                                                >
+                                                    {item}
+                                                </button>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+
                                 {filteredItems.length > 0 ? (
                                     filteredItems.map((item) => (
                                         <div className={showSkillLevel === item.sfid ? "bg-gray-50" : ""}>
@@ -265,16 +304,20 @@ const Skills = ({ type = "add" }: any) => {
                                             >
                                                 {/* <img className='w-8 h-auto' src={'/' + item.name + '.png'} alt={item.name} /> */}
                                                 <span className='font-bold text-gray-800'>{item?.name || item?.skill?.name}</span>
-                                                {showSkillLevel === item.sfid && (
-                                                    <button
-                                                        onClick={() => handleSuggestionSelect(item)}
-                                                        className='flex bg-green-200 hover:bg-green-600 font-bold text-green-600 hover:text-green-200 duration-200 py-0.5 px-4 rounded-full flex-row text-sm justify-between items-center'>
-                                                        Add Skill
-                                                    </button>
-                                                )}
+                                                <div className='flex flex-row gap-3 items-center'>
+                                                    <span className='text-xs'>{item.type}</span>
+                                                    {showSkillLevel === item.sfid && (
+                                                        <button
+                                                            onClick={() => handleSuggestionSelect(item)}
+                                                            className='flex bg-green-200 hover:bg-green-600 font-bold text-green-600 hover:text-green-200 duration-200 py-0.5 px-4 rounded-full flex-row text-sm justify-between items-center'>
+                                                            Add Skill
+                                                        </button>
+                                                    )}
+                                                </div>
+
                                             </div>
                                             {showSkillLevel === item.sfid && (
-                                                <div className='mx-6 py-2 flex flex-row justify-between items-center'>
+                                                <div className='mx-6 py-2 flex flex-row justify-end gap-4 items-center'>
                                                     <span className='text-xs text-gray-400 '>
                                                         Select Skill Level
                                                     </span>
@@ -296,7 +339,6 @@ const Skills = ({ type = "add" }: any) => {
                                                 </div>
                                             )}
                                         </div>
-
                                     ))
                                 ) : (
                                     <div className='text-md text-gray-400 p-4'>No matching skills</div>
@@ -308,7 +350,7 @@ const Skills = ({ type = "add" }: any) => {
                 </div>
 
                 <h2 className='text-sm uppercase font-semibold z-10'>Selected Skills</h2>
-                <div className='pt-4 flex flex-row gap-4 flex-nowrap lg:flex-wrap z-40 overflow-x-auto w-full appearance-none'>
+                <div className='pt-4 flex flex-row gap-4 flex-wrap z-40 overflow-x-auto w-full appearance-none'>
                     {loading ?
                         <>
                             <div className={`animate-pulse inline-flex w-1/6 h-8 gap-2 items-center bg-gray-200 border p-2 pl-4 pr-4 rounded-full`} />
@@ -316,13 +358,15 @@ const Skills = ({ type = "add" }: any) => {
                         </>
                         :
                         <>
-                            {checkedItems.length > 0 ? checkedItems.map(item => (
+                            {checkedItems.length > 0 ? checkedItems.map((item, index) => (
                                 <CheckboxItem
-                                    key={item.sfid}
-                                    id={item?.skill?.sfid ? item?.skill?.sfid : item?.sfid}
+                                    key={index}
+                                    id={item?.skill?.sfid}
+                                    name={item?.skill?.name}
                                     checked={checkedItems.some(checkedItem => checkedItem.sfid === item.sfid)}
                                     onChange={() => handleCheckboxChange(item?.skill?.sfid, item?.id)}
                                     skill_level={item.skill_level}
+                                    imageSrc={item?.skill?.url}
                                     loadingUI={loadingUI}
                                 />
                             )) : (

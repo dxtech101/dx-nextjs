@@ -85,10 +85,25 @@ const WorkExperience = () => {
         job_title: "",
     });
     const contactSfid = useSelector((state: any) => state.userSalesforceID)
+    const company_developer = useSelector((state: any) => state.userCompany);
 
     useEffect(() => {
         getDeveloperWorkExperienceDetails();
     }, [])
+
+    const resetForm = () => {
+        setFormData({
+            company_project_name: "",
+            duration: "",
+            industry: "",
+            job_title: "",
+            project_description: ""
+        });
+        setErrors({
+            company_project_name: "",
+            job_title: "",
+        });
+    }
 
     const getDeveloperWorkExperienceDetails = async () => {
         try {
@@ -137,7 +152,6 @@ const WorkExperience = () => {
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
 
         if (!validateForm(formData, errors, setErrors)) {
             return;
@@ -157,12 +171,14 @@ const WorkExperience = () => {
             if (type === "add") {
                 const response = await WorkExperienceService.addWorkExperience(workExperienceData);
                 if (response) {
-                    getDeveloperWorkExperienceDetails()
+                    getDeveloperWorkExperienceDetails();
+                    resetForm();
                 }
             } else {
                 const response = await WorkExperienceService.updateWorkExperience(editID, workExperienceData);
                 if (response) {
-                    getDeveloperWorkExperienceDetails()
+                    getDeveloperWorkExperienceDetails();
+                    resetForm()
                 }
             }
         } catch (error) {
@@ -182,7 +198,7 @@ const WorkExperience = () => {
                             Complete your Profile
                         </h1>
                         <p className='pt-2 tracking-tight text-gray-600 max-w-sm inline-flex w-full'>
-                            Enter the Core skills that you have
+                            Enter your experience(s) that you have
                         </p>
                         {experience?.length > 0 &&
                             <button
@@ -205,8 +221,13 @@ const WorkExperience = () => {
                             Previous
                         </button>
                         <button
-                            onClick={handleNext}
-                            // onClick={() => setOpenConfirmModal(true)}
+                            onClick={() => {
+                                if (company_developer) {
+                                    setOpenConfirmModal(true)
+                                } else {
+                                    handleNext()
+                                }
+                            }}
                             disabled={loading}
                             className={`h-12 px-6 rounded-xl font-medium text-normal ${loading
                                 ? 'bg-blue-300 text-blue-100 cursor-not-allowed'
