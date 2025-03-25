@@ -48,7 +48,6 @@ const page = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(validateForm(formData, errors, setErrors));
 
     if (!validateForm(formData, errors, setErrors)) {
       return;

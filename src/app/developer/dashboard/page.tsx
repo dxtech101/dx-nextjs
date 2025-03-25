@@ -67,7 +67,7 @@ const page = () => {
                     </div>
 
                     <div className='flex flex-col md:flex-row w-full gap-5'>
-                        <DashboardGreeting updates="No Updates" />
+                        <DashboardGreeting />
                         <DashboardProfileCard userProfile={userProfile} className='hidden md:flex' />
                     </div>
                     <div className='flex flex-col items-center justify-center w-full text-left py-10 md:py-16 px-6 md:px-10'>

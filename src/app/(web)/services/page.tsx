@@ -21,7 +21,7 @@ const page = () => {
   }]
   return (
     <>
-      <section className='min-h-screen flex flex-col-reverse lg:flex-row gap-6 items-center justify-evenly container mx-auto px-4 relative'>
+      <section className='min-h-screen flex flex-col-reverse lg:flex-row gap-6 items-center justify-evenly container mx-auto px-4 relative overflow-hidden'>
         <div className='flex flex-col items-start justify-center w-full'>
           <h1 className='text-center text-4xl lg:text-6xl font-bold text-gray-900 mb-8'>
             <span>Our Services</span>

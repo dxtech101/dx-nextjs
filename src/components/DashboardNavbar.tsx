@@ -86,14 +86,14 @@ const DashboardNavbar = ({ toggleSideBar, setToggleSideBar }: any) => {
                                             )}
                                         </button>
                                     </div>
-                                    <Link href="#" className='w-full inline-flex items-center gap-4 p-5 hover:bg-gray-100 transition-all duration-300 ease-in-out text-sm'>
+                                    {/* <Link href="#" className='w-full inline-flex items-center gap-4 p-5 hover:bg-gray-100 transition-all duration-300 ease-in-out text-sm'>
                                         <Settings className='h-5' />
                                         Settings
                                     </Link>
                                     <Link href="#" className='w-full inline-flex items-center gap-4 p-5 hover:bg-gray-100 transition-all duration-300 ease-in-out text-sm'>
                                         <HelpCircle className='h-5' />
                                         Help
-                                    </Link>
+                                    </Link> */}
                                     <button onClick={() => {
                                         removeAuthenticationToken()
                                         router.push("/")

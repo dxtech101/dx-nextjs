@@ -4,6 +4,7 @@ import { BriefcaseBusiness, CakeIcon, CodeIcon, MailIcon, MapPinned, PencilIcon,
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import DeveloperProfileDetailsForm from './DeveloperProfileDetailsForm';
+import DeveloperProfileDetailsLoader from '@/components/loaders/DeveloperProfileDetailsLoader';
 
 const DeveloperProfileDetails = ({ personalDetails, updateDetails, certificationCount, loading }: any) => {
     const formRef = useRef<HTMLFormElement>(null)
@@ -52,52 +53,55 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails, certification
                             alt=""
                         />
                     </div>
+                    {loading ?
+                        <DeveloperProfileDetailsLoader />
+                        :
+                        <div className='w-full flex flex-col gap-6 justify-between h-full'>
+                            <div className='flex flex-col gap-2'>
+                                <span className='text-3xl lg:text-4xl font-bold capitalize'>{personalDetails?.name}</span>
+                                <div className='flex flex-wrap gap-2 text-sm'>
+                                    {personalDetails?.job_title && (
+                                        <span className='shadow-inner inline-flex items-center gap-2 bg-purple-100 border border-purple-300 text-purple-900 w-fit rounded-full py-0.5 px-4'>
+                                            <CodeIcon className='w-5 h-5' />
+                                            {personalDetails?.job_title}
+                                        </span>
+                                    )}
+                                    {certificationCount && (
+                                        <span className='inline-flex shadow-inner items-center gap-2 bg-amber-100 border border-amber-300 text-amber-900 w-fit rounded-full py-0.5 px-4'>
+                                            <ShieldCheck className='w-5 h-5' />
+                                            {certificationCount} Certification
+                                        </span>
+                                    )}
 
-                    <div className='w-full flex flex-col gap-6 justify-between h-full'>
-                        <div className='flex flex-col gap-2'>
-                            <span className='text-3xl lg:text-4xl font-bold capitalize'>{personalDetails?.name}</span>
-                            <div className='flex flex-wrap gap-2 text-sm'>
-                                {personalDetails?.job_title && (
-                                    <span className='shadow-inner inline-flex items-center gap-2 bg-purple-100 border border-purple-300 text-purple-900 w-fit rounded-full py-0.5 px-4'>
-                                        <CodeIcon className='w-5 h-5' />
-                                        {personalDetails?.job_title}
-                                    </span>
-                                )}
-                                {certificationCount && (
-                                    <span className='inline-flex shadow-inner items-center gap-2 bg-amber-100 border border-amber-300 text-amber-900 w-fit rounded-full py-0.5 px-4'>
-                                        <ShieldCheck className='w-5 h-5' />
-                                        {certificationCount} Certification
-                                    </span>
-                                )}
+                                    {personalDetails?.work_year_experience && (
+                                        <span className='inline-flex items-center shadow-inner gap-2 bg-blue-100 border border-blue-300 text-blue-900 w-fit rounded-full py-0.5 px-4'>
+                                            <BriefcaseBusiness className='w-5 h-5' />
+                                            {personalDetails?.work_year_experience}+ Years Experience
+                                        </span>
+                                    )}
 
-                                {personalDetails?.work_year_experience && (
-                                    <span className='inline-flex items-center shadow-inner gap-2 bg-blue-100 border border-blue-300 text-blue-900 w-fit rounded-full py-0.5 px-4'>
-                                        <BriefcaseBusiness className='w-5 h-5' />
-                                        {personalDetails?.work_year_experience}+ Years Experience
-                                    </span>
-                                )}
+                                </div>
+                            </div>
 
+
+                            <div className='grid grid-cols-2 lg:grid-cols-4 w-full gap-2 lg:gap-4 items-start justify-between'>
+                                {profileDetails?.map((item: any, index: any) => {
+                                    return (
+                                        <>
+                                            {item?.value && (
+                                                <>
+                                                    <span key={index} className='inline-flex items-center gap-2 font-semibold'>
+                                                        {item?.icon}{item?.label}
+                                                    </span>
+                                                    <span className='text-gray-800'>{item?.value}</span>
+                                                </>
+                                            )}
+                                        </>
+                                    )
+                                })}
                             </div>
                         </div>
-
-
-                        <div className='grid grid-cols-2 lg:grid-cols-4 w-full gap-2 lg:gap-4 items-start justify-between'>
-                            {profileDetails?.map((item: any, index: any) => {
-                                return (
-                                    <>
-                                        {item?.value && (
-                                            <>
-                                                <span key={index} className='inline-flex items-center gap-2 font-semibold'>
-                                                    {item?.icon}{item?.label}
-                                                </span>
-                                                <span className='text-gray-800'>{item?.value}</span>
-                                            </>
-                                        )}
-                                    </>
-                                )
-                            })}
-                        </div>
-                    </div>
+                    }
                 </div>
             </div >
             {editModal && (

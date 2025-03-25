@@ -30,9 +30,9 @@ const DeveloperTestimonialsCard = ({ imgUrl, details, skills }: any) => {
                 alt="herosection1"
                 className='rounded-xl h-50 w-auto'
             />
-            <div className='flex flex-col justify-between px-3'>
+            <div className='flex flex-col justify-between h-full px-3'>
                 <h4 className="mb-4 text-3xl font-bold text-black tracking-tight font-heading">
-                    Lorem ipsum.
+                    {details}
                     <p className='text-lg font-normal text-gray-700 '>Certified Technical Architect</p>
                 </h4>
                 <div className="flex flex-wrap gap-2">
@@ -61,7 +61,7 @@ const DeveloperTestimonials = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 container mx-auto">
                 <DeveloperTestimonialsCard
                     imgUrl="https://static.shuffle.dev/components/preview/2f808e47-944e-42cf-b821-2358251e0600/assets/public/saturn-assets/images/team/large-photo-color3.png"
-                    details={"Lorem ipsum."}
+                    details={"Sophia Mitchell"}
                     skills={[
                         { name: "B2B Commerce Cloud", icon: "https://dx-assests.s3.amazonaws.com/assets/commerce-cloud.svg" },
                         { name: "Salesforce", icon: "https://dx-assests.s3.amazonaws.com/assets/Salesforce.png" },
@@ -70,15 +70,16 @@ const DeveloperTestimonials = () => {
                 />
                 <DeveloperTestimonialsCard
                     imgUrl="https://static.shuffle.dev/components/preview/2f808e47-944e-42cf-b821-2358251e0600/assets/public/saturn-assets/images/team/large-photo-color1.png"
-                    details={"Lorem ipsum."}
+                    details={"Daniel Hayes"}
                     skills={[
-                        { name: "Mulesoft", icon: "https://dx-assests.s3.amazonaws.com/assets/Mulesoft.png" },
                         { name: "B2C Commerce Cloud", icon: "https://dx-assests.s3.amazonaws.com/assets/commerce-cloud.svg" },
-                        { name: "Experience Cloud", icon: "https://dx-assests.s3.amazonaws.com/assets/Salesforce.png" }]}
+                        { name: "Einstein Copilot", icon: "https://dx-assests.s3.amazonaws.com/assets/einstien.jpg" },
+                        { name: "Sales Cloud", icon: "https://dx-assests.s3.amazonaws.com/assets/sales-cloud.svg" },
+                    ]}
                 />
                 <DeveloperTestimonialsCard
                     imgUrl="https://static.shuffle.dev/components/preview/2f808e47-944e-42cf-b821-2358251e0600/assets/public/saturn-assets/images/team/large-photo-color2.png"
-                    details={"Lorem ipsum."}
+                    details={"Ethan Brooks"}
                     skills={[
                         { name: "Mulesoft", icon: "https://dx-assests.s3.amazonaws.com/assets/Mulesoft.png" },
                         { name: "Industry Cloud", icon: "https://dx-assests.s3.amazonaws.com/assets/industry.png" },

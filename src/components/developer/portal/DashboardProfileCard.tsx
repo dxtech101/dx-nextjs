@@ -2,7 +2,7 @@ import React from 'react'
 import clsx from 'clsx'
 import { usePathname, useRouter } from 'next/navigation';
 
-const DashboardProfileCard = ({ userProfile, className }: any) => {
+const DashboardProfileCard = ({ userProfile, className , setToggleSideBar}: any) => {
     const router = useRouter();
     const pathName = usePathname();
     const role: any = pathName.split('/')[1];
@@ -16,6 +16,7 @@ const DashboardProfileCard = ({ userProfile, className }: any) => {
                 <button 
                 onClick={() => {
                     router.push(`/${role}/dashboard/profile`)
+                    setToggleSideBar(false)
                 }}
                 className="mt-4 w-full bg-blue-100 text-blue-600 px-4 text-sm hover:bg-blue-600 hover:text-white py-2 rounded-lg">
                     Edit Profile
