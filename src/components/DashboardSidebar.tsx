@@ -1,23 +1,28 @@
 "use client"
 import { removeAuthenticationToken } from '@/lib/cookie';
 import { BriefcaseBusiness, ChevronLeft, LayoutDashboard, LogOut, UserRoundSearch } from 'lucide-react';
-import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import Tooltip from './Tooltip';
 import DashboardProfileCard from './developer/portal/DashboardProfileCard';
 
 
-const SidebarItem = ({ href, icon: Icon, label, toggleSideBar }: any) => {
-    const router = usePathname();
-    const isActive = router === href;
+const SidebarItem = ({ href, icon: Icon, label, toggleSideBar, setToggleSideBar }: any) => {
+    const path = usePathname();
+    const router = useRouter();
+    const isActive = path === href;
 
     return (
         <Tooltip popupContent={label} show={toggleSideBar}>
-            <Link href={href} className={`flex items-center ${toggleSideBar ? "justify-start pl-6" : "justify-center"} h-20 md:h-14 xl:h-16 ${isActive ? 'text-white bg-gray-800' : 'text-gray-600 bg-gray-100 hover:bg-gray-200'} gap-4 rounded-xl mb-4`}>
+            <button 
+            onClick={() => {
+                router.push(href)
+                setToggleSideBar(false)
+            }}
+            className={`flex items-center ${toggleSideBar ? "justify-start pl-6" : "justify-center"} h-20 md:h-14 xl:h-16 ${isActive ? 'text-white bg-gray-800' : 'text-gray-600 bg-gray-100 hover:bg-gray-200'} gap-4 rounded-xl mb-4 w-full`}>
                 <Icon className={`h-5 w-5 ${isActive ? 'text-white' : 'text-gray-600'}`} />
-                {toggleSideBar && <span className=" text-sm font-medium">{label}</span>}
-            </Link>
+                {toggleSideBar && <span className="text-sm font-medium">{label}</span>}
+            </button>
         </Tooltip>
     );
 };
@@ -125,7 +130,7 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
                             <div className="h-10" />
                         </a>
                         <ul>
-                            <DashboardProfileCard userProfile={currentUser} className="border border-gray-200 mb-4" />
+                            <DashboardProfileCard setToggleSideBar={setToggleSideBar} userProfile={currentUser} className="border border-gray-200 mb-4" />
                             {renderNavigationLinks().map((item: any, index: any) => (
                                 <SidebarItem
                                     key={index}
@@ -133,6 +138,7 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
                                     icon={item.icon}
                                     label={item.label}
                                     toggleSideBar={toggleSideBar}
+                                    setToggleSideBar={setToggleSideBar}
                                 />
                             ))}
                         </ul>

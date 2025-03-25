@@ -22,12 +22,8 @@ const WorkExperienceCard = (props: any) => {
             <InfoLabel label="Project Name" content={experience.company_project_name} />
 
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
-                <InfoLabel label="Salesforce Cloud(s)" content="Sales Cloud, Service Cloud" />
-                <InfoLabel label="Industry" content={experience.industry} />
-            </div>
-
-            <div className='grid grid-cols-2 gap-4'>
                 <InfoLabel label="Duration" content={experience.duration || "N/A"} />
+                <InfoLabel label="Industry" content={experience.industry} />
             </div>
 
             <InfoLabel label="Work Experience Summary" content={experience.project_description || "N/A"} />
@@ -183,7 +179,7 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
                     header={`${type === "edit" ? "Edit" : "Add"} Experience`}
                     setModal={setShowModal}
                     loading={loadingUI}
-                    size="lg"
+                    size="md"
                     onSubmit={handleSubmit}
                     formRef={formRef}
                 >
@@ -217,7 +213,7 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
                                 value={formData.project_description}
                                 onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
                                 className="w-full"
-                                cols={20}
+                                rows={5}
                                 maxLength={1000}
                             />
                         </div>
@@ -231,13 +227,13 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
                             />
                         </div>
                         <div className='flex flex-col w-full gap-4 mt-2'>
-                            <MultiSelectDropdown
+                            {/* <MultiSelectDropdown
                                 id="salesforce_technologies"
                                 label={"Salesforce Technologies"}
                                 className="w-full"
                                 options={salesforce_technologies}
                                 onChange={(selectedValues) => setFormData({ ...formData, salesforce_technologies: selectedValues })}
-                            />
+                            /> */}
                             <MultiSelectDropdown
                                 id="industry"
                                 label={"Industry"}

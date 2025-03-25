@@ -1,25 +1,21 @@
 // pages/index.js
 "use client"
-import Head from 'next/head';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function DetailsSection() {
     const [activeTab, setActiveTab] = useState('isv');
+    const router = useRouter();
 
     return (
-        <div className="min-h-screen">
-            <Head>
-                <title>DX - Salesforce PDO Services</title>
-                <meta name="description" content="Professional Salesforce PDO Services" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
+        <div className="min-h-screen overflow-hidden">
             <main className="my-20 bg-gray-50">
-                <div className='container mx-auto px-4 py-10 flex flex-col lg:flex-row justify-between gap-6'>
-                    <nav className="z-10 mt-10">
-                        <div className="flex flex-col gap-4 justify-center items-center pb-4">
+                <div className='container mx-auto px-4 py-10 flex flex-col justify-between gap-6'>
+                    <nav className="z-10 mt-1">
+                        <div className="flex gap-4 justify-center items-center pb-4">
                             <button
                                 className={`px-6 py-2 mx-2 rounded-full font-medium border-2 transition ${activeTab === 'isv'
-                                    ? 'bg-blue-600 text-white'
+                                    ? 'bg-black text-white'
                                     : 'bg-gray-100 hover:bg-gray-200'
                                     }`}
                                 onClick={() => setActiveTab('isv')}
@@ -85,8 +81,8 @@ export default function DetailsSection() {
                 </div>
             </main>
 
-            <section className='flex flex-col lg:flex-row container mx-auto pb-10'>
-                <h2 className="text-3xl font-bold text-center text-blue-800 my-12">Why Choose DX?</h2>
+            <section className='flex flex-col lg:flex-row container mx-auto px-4 pb-10'>
+                <h2 className="text-3xl font-bold text-center text-black my-12">Why Choose DX?</h2>
                 <div className="max-w-3xl mx-auto bg-white rounded-xl overflow-hidden">
                     <div className="p-8">
                         <div className="flex items-start mb-6">
@@ -118,7 +114,9 @@ export default function DetailsSection() {
                 <div className="container mx-auto px-4 text-center">
                     <h2 className="text-3xl font-bold mb-6">Empower your Salesforce projects with DX today!</h2>
                     <p className="text-xl mb-8 max-w-2xl mx-auto">Contact us to discuss your hiring or development needs.</p>
-                    <button className="bg-white text-blue-800 px-8 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
+                    <button
+                        onClick={() => router.push("/signup")}
+                        className="bg-white text-blue-800 px-8 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
                         Get Started Today
                     </button>
                 </div>
@@ -133,7 +131,7 @@ const ServiceCard = ({ title, description, icon }: any) => {
         <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition transform ">
             <div className="p-6">
                 <div className="text-4xl mb-4">{icon}</div>
-                <h3 className="text-xl font-bold text-blue-800 mb-3">{title}</h3>
+                <h3 className="text-xl font-bold text-black mb-3">{title}</h3>
                 <p className="text-gray-600">{description}</p>
             </div>
         </div>

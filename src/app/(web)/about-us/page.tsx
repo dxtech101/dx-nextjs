@@ -153,11 +153,11 @@ const page = () => {
                             <TeamMemberCard
                                 name="Prachi Mistry"
                                 position="Co-Founder & COO"
-                                image="https://static.shuffle.dev/components/preview/2f808e47-944e-42cf-b821-2358251e0600/assets/public/saturn-assets/images/team/large-photo-color3.png"
+                                image="https://dx-assests.s3.amazonaws.com/assets/prachi.jpeg"
                                 socials={[
                                     { name: "Facebook", url: "#" },
                                     { name: "Twitter", url: "#" },
-                                    { name: "LinkedIn", url: "#" },
+                                    { name: "LinkedIn", url: "https://www.linkedin.com/in/prachi-thakur-a2981937/" },
                                 ]} />
                             <TeamMemberCard
                                 name="Mitesh Mistry"

@@ -31,7 +31,7 @@ const Modal = ({
                         {(!loading || ristricted) && (
                             <button onClick={() => {
                                 setModal(false)
-                                onClose() 
+                                onClose && onClose() 
                             }}>
                                 <X className='w-8 h-8' strokeWidth={2} color='black' />
                             </button>
