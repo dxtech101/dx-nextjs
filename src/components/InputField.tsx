@@ -24,6 +24,7 @@ const InputField = ({
   handleSuggestionSelect,
   salutation = "",
   setSalutation = () => { },
+  onBlur
 }: any) => {
   const iconMap: any = {
     search: Icons.Search,
@@ -70,6 +71,7 @@ const InputField = ({
             onFocus={onFocus}
             onMouseDown={onMouseDown}
             disabled={disabled}
+            onBlur={onBlur}
           />
           {IconComponent && (
             <IconComponent
