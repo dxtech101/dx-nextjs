@@ -1,7 +1,8 @@
-import { GET_USER_SALESFORCE_ACCOUNT_ID, GET_USER_SALESFORCE_CONTACT_ID, PROFILE_UPDATE, PROFILE_UPLOAD, SIGN_IN_ENDPOINT, TOKEN_VERIFICATION, USER_ONBOARDED, VERIFY_COMPANY_DEVELOPER } from "@/constants/api-routes";
+import { FORGET_PASSWORD, GET_USER_SALESFORCE_ACCOUNT_ID, GET_USER_SALESFORCE_CONTACT_ID, PROFILE_UPDATE, PROFILE_UPLOAD, RESET_PASSWORD, SIGN_IN_ENDPOINT, TOKEN_VERIFICATION, USER_ONBOARDED, VERIFY_COMPANY_DEVELOPER } from "@/constants/api-routes";
 import "@/lib/axios-configuration";
 import axios from "axios";
 import { setAuthenticationToken } from "../cookie";
+import { th } from "framer-motion/client";
 
 export const tokenVerification = async (tokenVerificationData: any) => {
     try {
@@ -69,7 +70,25 @@ export const updateProfile = async (formData: any) => {
 
 export const verifyCompanyDeveloper = async (developerEmail: any) => {
     try {
-        const response = await axios.post(VERIFY_COMPANY_DEVELOPER,  { email: developerEmail })
+        const response = await axios.post(VERIFY_COMPANY_DEVELOPER, { email: developerEmail })
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const resetPassword = async (payload: any) => {
+    try {
+        const response = await axios.post(RESET_PASSWORD, payload)
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const forgetPassword = async (user_email: any) => {
+    try {
+        const response = await axios.post(FORGET_PASSWORD, { email: user_email })
         return response.data;
     } catch (error) {
         throw error;

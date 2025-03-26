@@ -11,7 +11,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
 
-  if (process.env.NEXT_PUBLIC_MAINTAINANCE_MODE) {
+  if (process.env.NEXT_PUBLIC_MAINTAINANCE_MODE === "true") {
     return (
       <html lang="en" suppressHydrationWarning>
         <head>
@@ -23,7 +23,7 @@ export default function RootLayout({
       </html>
     )
   }
-
+  
   return (
     <html lang="en" suppressHydrationWarning>
       <head>

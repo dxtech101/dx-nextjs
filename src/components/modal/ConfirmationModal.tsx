@@ -31,9 +31,9 @@ const ConfirmationModal = ({ setOpenConfirmModal }: any) => {
         <div className='absolute top-0 left-0 z-20 w-full h-full bg-black bg-opacity-65 text-black flex justify-center items-center'>
             <div className='absolute bg-white z-20 rounded-2xl w-1/2 h-fit p-6 xl:h-60 flex flex-col xl:flex-row gap-6 justify-center items-center'>
                 <img src='https://dx-assests.s3.amazonaws.com/assets/confim.png' width={360} className='w-1/2 bottom-0' />
-                <button onClick={() => setOpenConfirmModal(false)} className='absolute right-2 top-2'>
+                {/* <button onClick={() => setOpenConfirmModal(false)} className='absolute right-2 top-2'>
                     {!loading && <X className='w-5 h-5 text-black absolute right-2 top-2' strokeWidth={2} color='black' />}
-                </button>
+                </button> */}
                 <div className='flex flex-col gap-4'>
                     <span>
                         <span className='text-2xl font-bold mt-4'>
