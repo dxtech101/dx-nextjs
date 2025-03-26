@@ -19,8 +19,10 @@ import Modal from "@/components/modal/Modal";
 import "react-phone-number-input/style.css";
 import TermsAndConditions from "@/components/TermsAndConditions";
 import { verifyCompanyDeveloper } from "@/lib/service/user.service";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
   const [selected, setSelected] = useState("Individual");
   const [successModal, setSuccessModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -275,7 +277,13 @@ const page = () => {
           </div>
         </div>
       </div>
-      {successModal && <SuccessModal email={formData.email} />}
+      {successModal &&
+        <SuccessModal
+          email={formData.email}
+          type="confirmation"
+          onClose={() => router.push("/developer/login")}
+        />
+      }
       {showTermsConditions && (
         <Modal
           header="Terms and Conditions"
