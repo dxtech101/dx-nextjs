@@ -1,10 +1,9 @@
 
+import { BASE_URL } from "@/constants/api-routes";
 import axios from "axios";
-// cookie helpers
 import Cookies from "js-cookie";
-import { getAuthenticationToken } from "./cookie";
 
-axios.defaults.baseURL = "https://dx-digital-94bdac14721f.herokuapp.com/"
+axios.defaults.baseURL = BASE_URL
 axios.defaults.maxRedirects = 0;
 axios.defaults.timeout = 10000;
 
@@ -13,31 +12,16 @@ export const setAxiosHeader = (token: string) => {
   else axios.defaults.headers.common["Authorization"] = "";
 };
 
-// (function () {
-//   let authToken: any = getAuthenticationToken();
-//   try {
-//     authToken = authToken && typeof authToken === "string" ? JSON.parse(authToken) : null;
-//   } catch (error) {
-//     console.error("Invalid JSON token:", authToken);
-//     authToken = null;
-//   }
-
-//   if (authToken && authToken.access_token) setAxiosHeader(authToken.access_token);
-// })();
-
-// const UNAUTHORIZED = [401];
-
 // Add Axios request interceptor
 axios.interceptors.request.use(
   (config) => {
     const token = Cookies.get("userToken");
     const access_token = token ? JSON.parse(token)?.access_token : null;
 
-    const excludedUrls = ["/users/enroll-user/", "/users/sign-in/"];
+    const excludedUrls = ["/users/enroll-user/", "/users/sign-in/", "/users/reset-password/"];
 
     if (!excludedUrls.some((url) => config.url?.includes(url)) && access_token) {
       config.headers.Authorization = `JWT ${access_token}`;
-      // axios.defaults.headers.common["Authorization"] = `JWT ${access_token}`;
     }
 
     return config;

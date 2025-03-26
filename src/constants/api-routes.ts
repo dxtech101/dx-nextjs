@@ -1,7 +1,8 @@
 // Base URLS
 export const BASE_PROD = "https://dx-digital-94bdac14721f.herokuapp.com/";
-export const BASE_STAGING = "https://dx-digital-94bdac14721f.herokuapp.com/";
 export const BASE_LOCAL = "https://dx-digital-94bdac14721f.herokuapp.com/";
+
+export const BASE_URL = process.env.NEXT_PUBLIC_ENVIRONMENT === "development" ? BASE_LOCAL : BASE_PROD;
 
 //USERS API's ENDPOINTS
 export const SIGN_IN_ENDPOINT = "/users/sign-in/";
@@ -13,6 +14,8 @@ export const GET_USER_SALESFORCE_ACCOUNT_ID= `/users/account-salesforce-id/`
 export const PROFILE_UPLOAD = `/users/profile-picture/`
 export const PROFILE_UPDATE = `/users/profile-update/`
 export const VERIFY_COMPANY_DEVELOPER = `/users/update-company-email/`
+export const RESET_PASSWORD = `/users/reset-password/`
+export const FORGET_PASSWORD = `/users/forgot-password/`
 
 //DEVELOPER ONBOARDING API's ENDPOINTS
 export const USER_PORTFOLIO = (sfid:any) => `portfolio/detailed-contact-view/${sfid}`

@@ -3,6 +3,7 @@ import "@/lib/axios-configuration";
 import Script from "next/script";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
+import Maintainance from "@/components/Maintainance";
 
 export default function RootLayout({
   children,
@@ -10,6 +11,19 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
 
+  if (process.env.NEXT_PUBLIC_MAINTAINANCE_MODE === "true") {
+    return (
+      <html lang="en" suppressHydrationWarning>
+        <head>
+          <title>DX Digital</title>
+        </head>
+        <body>
+          <Maintainance />
+        </body>
+      </html>
+    )
+  }
+  
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
