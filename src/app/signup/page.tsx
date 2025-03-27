@@ -33,7 +33,7 @@ const page = () => {
     last_name: "",
     email: "",
     phone: "",
-    password: "",
+    // password: "",
     ...(selected === "company" && { company_name: "", industry: "" }),
     role: selected,
     terms: false,
@@ -44,7 +44,7 @@ const page = () => {
     last_name: "",
     email: "",
     phone: "",
-    password: "",
+    // password: "",
     terms: "",
   });
 
@@ -59,7 +59,7 @@ const page = () => {
     signupData.append("first_name", Salutation + " " + formData.first_name);
     signupData.append("last_name", formData.last_name);
     signupData.append("email", formData.email);
-    signupData.append("password", formData.password);
+    // signupData.append("password", formData.password);
     signupData.append("phone", formData.phone);
     if (selected === "company") {
       signupData.append("company_name", formData.company_name);
@@ -69,7 +69,7 @@ const page = () => {
     signupData.append("medium", "email");
     try {
       setLoading(true);
-      const response = await axios.post("/users/enroll-user/", signupData);
+      await axios.post("/users/enroll-user/", signupData);
       setSuccessModal(true);
     } catch (error: any) {
       toast.custom((t) => (
@@ -180,7 +180,7 @@ const page = () => {
               />
             </div>
 
-            <InputField
+            {/* <InputField
               type="password"
               label="Password"
               value={formData.password}
@@ -192,7 +192,7 @@ const page = () => {
               className="w-full"
               placeholder="Enter Password"
               error={errors.password}
-            />
+            /> */}
 
             <div className="flex flex-col w-full gap-2">
               <div className="w-full flex justify-between items-center">
@@ -251,7 +251,6 @@ const page = () => {
             </div>
 
             <button
-              // disabled={loading}
               className="mb-3 py-3 px-9 w-full text-white rounded-xl text-sm bg-indigo-600"
               type="submit"
             >
