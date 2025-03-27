@@ -11,10 +11,11 @@ const HeadingSection = () => (
     </div>
 );
 
-const AddressSection = () => (
+
+const AddressSection = ({ mapSrc, address }: any) => (
     <div className="relative w-full md:w-1/3 p-3">
         <iframe
-            src="https://www.google.com/maps/embed?..."
+            src=""
             className='w-full h-full rounded-3xl border-2 border-neutral-100'
             loading="lazy"
         ></iframe>
@@ -22,7 +23,7 @@ const AddressSection = () => (
             <div className="flex flex-col rounded-2xl border-2 border-neutral-200 justify-center items-start w-full p-5 font-semibold text-white bg-white">
                 <h4 className="mb-2 font-semibold text-neutral-600 tracking-tight font-heading">Address</h4>
                 <h4 className="text-xl font-medium tracking-tight font-heading text-black">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, fugit.
+                    {address}
                 </h4>
             </div>
         </div>
@@ -79,10 +80,13 @@ const ContactPage = () => (
         <div className="container mx-auto px-4">
             <HeadingSection />
             <div className="flex flex-wrap -m-3">
-                <AddressSection />
+                <AddressSection
+                    address="160 Robinson Rd, #03-12 SBF Center, Singapore 068914"
+                    mapSrc="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8254229772406!2d103.84534637465653!3d1.2782689987095823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da192c533dc7df%3A0x246388d8751a4fc!2sSBF%20Center!5e0!3m2!1sen!2sin!4v1743052375145!5m2!1sen!2sin"
+                />
                 <ContactForm />
-                <ContactInfo label="Phone number" value="+41 337003 00" />
-                <ContactInfo label="Email" value="hi@contactmigra" />
+                <ContactInfo label="Phone number" value="+1 386 898 5751" />
+                <ContactInfo label="Email" value="info@dx.digtal" />
             </div>
         </div>
     </section>
