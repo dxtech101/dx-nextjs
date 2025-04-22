@@ -59,7 +59,6 @@ export const validateForm = (
     setErrors: (errors: any) => void
 ) => {
     const newErrors = {};
-    console.log("Validating form");
 
     Object.keys(errors).forEach(field => {
         if (field in formData && field in errors) {
@@ -110,7 +109,6 @@ export const validateForm = (
 
 export const handleFormDataChange = (e: any, setFormData: any, setErrors?: any) => {
     const { id, value } = e.target;
-    console.log("id::", id, "value::", value);
 
     setFormData((prev: any) => ({
         ...prev,

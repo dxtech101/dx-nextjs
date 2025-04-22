@@ -1,15 +1,32 @@
-import DashboardStepper from '@/components/DashboardStepper'
-import { onBoardingHandleNext, onBoardingHandlePrevious } from '@/feature/reducers/userOnboarding';
-import { getAllResourceRequest, getCertificationsRequirementByResourceRequest, getCompanyProjects, getSkillRequirementByResourceRequest } from '@/lib/service/projectResource.service';
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { CompanyProjectCard } from '../project/CreateProjectForm';
-import { ResourceRequestCard } from '../resourceRequest/ResourceMandatoryForm';
-import { ShieldCheck, Sparkle, X } from 'lucide-react';
-import { skillsDetails } from '@/constants/data';
-import { getAllSalesforceSkills } from '@/lib/service/portfolio.service';
+import DashboardStepper from '@/components/DashboardStepper';
 import CompanyProjectModalLoader from '@/components/loaders/CompanyProjectModalLoader';
+import { skillsDetails } from '@/constants/data';
 import { removeProjectId } from '@/feature/reducers/companyCreateProject';
+import { onBoardingHandlePrevious } from '@/feature/reducers/userOnboarding';
+import { getAllSalesforceSkills } from '@/lib/service/portfolio.service';
+import { getAllResourceRequest, getCertificationsRequirementByResourceRequest, getCompanyProjects, getSkillRequirementByResourceRequest } from '@/lib/service/projectResource.service';
+import { Briefcase, Sparkle } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { InfoLabel } from '@/lib/helper';
+import { ResourceRequestCard } from '../resourceRequest/ResourceMandatoryForm';
+
+const CompanyProjectCard = (props: any) => {
+    const { project } = props;
+
+    return (
+        <div className='relative bg-gray-200 rounded-3xl flex flex-col gap-4 flex-1 p-6 w-full z-10'>
+            <Briefcase className={`absolute bottom-10 right-10  h-24 w-24  z-0 text-gray-300`} />
+            <div className='grid grid-cols-3 gap-4'>
+                <InfoLabel label="Industry" content={project?.industry} />
+                <InfoLabel label="Start Date" content={project?.start_date || "N/A"} />
+                <InfoLabel label="Project Duration" content={project.project_duration?.split(".")[0] || "N/A"} />
+            </div>
+            <InfoLabel label="Project Summary" content={project?.description || "N/A"} />
+        </div >
+    )
+}
+
 
 const SkillItem = ({ name }: any) => {
     const [checkedItem, setCheckedItem] = useState<any>();
@@ -28,19 +45,6 @@ const SkillItem = ({ name }: any) => {
             </div>
         );
     }
-};
-
-const CertifiationItem = ({ name, imageSrc, borderColor, textColor }: any) => {
-    console.log("name::", name);
-
-    return (
-        <div className={`inline-flex gap-2 items-center bg-white border ${borderColor} p-2 pl-4 pr-4 rounded-full relative z-10 whitespace-nowrap min-w-max`}>
-            <img className='w-auto h-16' src={'/' + imageSrc.split(' ').join('-') + '.png'} alt={name} />
-            <span className={`font-bold text-sm ${textColor}`}>
-                {name.replace(/salesforce/i, '')}
-            </span>
-        </div>
-    );
 };
 
 const DetailedView = ({ loading, setLoading, setOpenModal }: any) => {
@@ -96,7 +100,7 @@ const DetailedView = ({ loading, setLoading, setOpenModal }: any) => {
         try {
             setLoading(true);
             const { results: contactProjects } = await getCompanyProjects(accountSfid);
-            const filteredProject = contactProjects.filter((project: any) => project.id === projectId);
+            const filteredProject = contactProjects.filter((project: any) => project.id == projectId);
             setProjects(filteredProject);
         } catch (error) {
             console.error("Error fetching certifications:", error);
@@ -105,11 +109,15 @@ const DetailedView = ({ loading, setLoading, setOpenModal }: any) => {
         }
     }
 
+    console.log("Project", projectId);
+
     const getCompanyResourcesData = async () => {
         try {
             setLoading(true);
             const { results: contactProjects } = await getAllResourceRequest();
-            const filteredResourceRequests = contactProjects.filter((resource: any) => resource.project.id === projectId);
+            console.log("contactProjects", contactProjects);
+            
+            const filteredResourceRequests = contactProjects.filter((resource: any) => resource?.project?.id == projectId);
             setResources(filteredResourceRequests);
         } catch (error) {
             console.error("Error fetching certifications:", error);
@@ -140,6 +148,9 @@ const DetailedView = ({ loading, setLoading, setOpenModal }: any) => {
     const handlePrevious = async () => {
         dispatch(onBoardingHandlePrevious({ role: "company", stepperId: 3 }))
     }
+
+    console.log("ResourseDataLoader", resources);
+    
     return (
         <>
             {loading ? <>
@@ -205,22 +216,6 @@ const DetailedView = ({ loading, setLoading, setOpenModal }: any) => {
                                                     ))
                                                 ) : (
                                                     <span>No skills found</span>
-                                                )}
-                                            </div>
-                                        </div>
-                                        <div className='flex flex-col w-fit gap-4'>
-                                            <span className='inline-flex gap-2 items-center'>
-                                                <ShieldCheck /> <h2 className='text-sm uppercase font-semibold flex-1'>Certifications</h2>
-                                            </span>
-                                            <div className='flex flex-row flex-wrap gap-2 w-fit items-center'>
-                                                {loadingCertifications[resource.sfid] ? (
-                                                    <span>Loading certifications...</span>
-                                                ) : certifications.length > 0 ? (
-                                                    certifications.slice(0, 5).map((item: any, idx: number) => (
-                                                        <CertifiationItem key={idx} name={item.name} imageSrc={item.name} />
-                                                    ))
-                                                ) : (
-                                                    <span>No certifications found</span>
                                                 )}
                                             </div>
                                         </div>

@@ -1,6 +1,6 @@
 "use client"
 import { removeAuthenticationToken } from '@/lib/cookie';
-import { BriefcaseBusiness, ChevronLeft, LayoutDashboard, LogOut, UserRoundSearch } from 'lucide-react';
+import { BriefcaseBusiness, ChevronLeft, LayoutDashboard, LogOut, UserRoundSearch, UserSearch } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import Tooltip from './Tooltip';
@@ -14,12 +14,14 @@ const SidebarItem = ({ href, icon: Icon, label, toggleSideBar, setToggleSideBar 
 
     return (
         <Tooltip popupContent={label} show={toggleSideBar}>
-            <button 
-            onClick={() => {
-                router.push(href)
-                setToggleSideBar(false)
-            }}
-            className={`flex items-center ${toggleSideBar ? "justify-start pl-6" : "justify-center"} h-20 md:h-14 xl:h-16 ${isActive ? 'text-white bg-gray-800' : 'text-gray-600 bg-gray-100 hover:bg-gray-200'} gap-4 rounded-xl mb-4 w-full`}>
+            <button
+                onClick={() => {
+                    router.push(href)
+                    if (window.innerWidth < 768) {
+                        setToggleSideBar(false);
+                    }
+                }}
+                className={`flex items-center ${toggleSideBar ? "justify-start pl-5" : "justify-center"} h-20 md:h-14 xl:h-16 ${isActive ? 'text-white bg-gray-800' : 'text-gray-600 bg-gray-100 hover:bg-gray-200'} gap-2 rounded-xl mb-4 w-full`}>
                 <Icon className={`h-5 w-5 ${isActive ? 'text-white' : 'text-gray-600'}`} />
                 {toggleSideBar && <span className="text-sm font-medium">{label}</span>}
             </button>
@@ -46,15 +48,15 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
             label: "Dashboard"
         },
         {
-            href: "/company/dashboard/job-listing",
-            icon: BriefcaseBusiness,
-            label: "Job Listing"
+            href: "/company/dashboard/developers",
+            icon: UserSearch,
+            label: "Developer Search"
         },
-        {
-            href: "/company/dashboard/profile",
-            icon: UserRoundSearch,
-            label: "Profile"
-        },
+        // {
+        //     href: "/company/dashboard/projects",
+        //     icon: UserRoundSearch,
+        //     label: "Project"
+        // },
     ];
 
     const renderNavigationLinks = () => {
@@ -70,14 +72,14 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
         <>
             <div className="hidden lg:block relative h-full overflow-visible">
                 <div className="bg-white absolute top-0 left-0 w-full p-1 rounded-t-3xl border border-gray-300">
-                    <div className="flex items-center justify-center p-4 text-gray-900 rounded-xl">
-                        <span className="text-sm font-medium">DX{toggleSideBar && "Digital"}</span>
+                    <div className="flex items-center justify-center p-4 font-bold text-gray-900 rounded-lg">
+                        <span>D<span className='text-blue-800'>X</span> {toggleSideBar && "| Developer Exchange"}</span>
                     </div>
                 </div>
                 <nav className="w-full h-full flex flex-col px-4 bg-white overflow-visible border border-gray-300 rounded-3xl">
                     <div className="mb-6">
                         <a className="inline-block mb-12" href="#">
-                            <div className="h-7" />
+                            <div className="h-12" />
                         </a>
                         <ul>
                             {renderNavigationLinks().map((item: any, index: any) => (
@@ -87,6 +89,7 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
                                     icon={item.icon}
                                     label={item.label}
                                     toggleSideBar={toggleSideBar}
+                                    setToggleSideBar={setToggleSideBar}
                                 />
                             ))}
                         </ul>
@@ -118,8 +121,8 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
                     }}
                 >
                     <div className="bg-white absolute top-0 left-0 w-full p-1 border-b border-gray-300 flex items-center justify-between">
-                        <div className="flex items-center justify-center p-4 text-gray-900 rounded-xl">
-                            <span className="text-xl font-medium">DX {toggleSideBar && "Digital"}</span>
+                        <div className="flex items-center justify-center p-4 text-gray-900 rounded-xl font-bold">
+                            <span>D<span className='text-blue-800'>X</span> {toggleSideBar && "| Developer Exchange"}</span>
                         </div>
                         <button onClick={() => setToggleSideBar(false)}>
                             <ChevronLeft className='w-6 h-6 text-black mr-2' />
@@ -150,7 +153,7 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
                                 router.push("/")
                             }}
                             className="flex relative items-center justify-center w-full p-4 text-gray-300 rounded-xl">
-                            <img src="/Einstein.png" alt="bgImage" className='absolute bottom-0 left-2 h-44 object-left-bottom object-cover z-0' />
+                            {/* <img src="/Einstein.png" alt="bgImage" className='absolute bottom-0 left-2 h-44 object-left-bottom object-cover z-0' /> */}
                             <span className="ml-8 text-sm font-semibold group-hover:text-gray-100 text-gray-600">
                                 Log Out
                             </span>

@@ -1,51 +1,54 @@
+"use client"
 import Dropdown from '@/components/Dropdown';
 import InputArea from '@/components/InputArea';
 import InputField from '@/components/InputField';
 import Modal from '@/components/modal/Modal';
 import MultiSelectDropdown from '@/components/MultiSelectDropdown';
-import { industries, salesforce_technologies } from '@/constants/data';
+import { industries } from '@/constants/data';
 import { handleFormDataChange, InfoLabel, validateForm } from '@/lib/helper';
 import { WorkExperienceService } from '@/lib/service/portfolio.service';
 import { FileUser, Plus } from 'lucide-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import DeveloperProfileCardHeader from './DeveloperProfileCardHeader';
 
 const WorkExperienceCard = (props: any) => {
-    const { experience, index, openEditModal, deleteWorkExperience } = props;
+    const { experience, index, openEditModal, editable, deleteWorkExperience } = props;
 
     return (
         <div className='relative bg-gray-100 rounded-3xl flex flex-col gap-4 flex-1 p-6 w-full z-10'>
             <h1 className='absolute text-6xl lg:text-8xl top-0 right-0 font-bold p-5 text-gray-300 uppercase'>
                 {index + 1}
             </h1>
-            <InfoLabel label="Project Name" content={experience.company_project_name} />
+            <InfoLabel label="Project Name" content={experience.company_project_name || "N/A"} />
 
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
                 <InfoLabel label="Duration" content={experience.duration || "N/A"} />
-                <InfoLabel label="Industry" content={experience.industry} />
+                <InfoLabel label="Industry" content={experience.industry || "N/A"} />
             </div>
 
             <InfoLabel label="Work Experience Summary" content={experience.project_description || "N/A"} />
-            <div className='absolute bottom-0 right-0 flex gap-2 z-20 p-4'>
-                <button
-                    onClick={() => openEditModal(experience)}
-                    className='bg-blue-200 border hover:border-blue-400 text-sm text-blue-600 font-medium h-8 px-4 rounded-full'
-                >
-                    Edit
-                </button>
-                <button
-                    onClick={() => deleteWorkExperience(experience.id)}
-                    className='bg-red-200 border hover:border-red-400 text-sm text-red-600 font-medium h-8 px-4 rounded-full'
-                >
-                    Delete
-                </button>
-            </div>
+            {editable && (
+                <div className='absolute bottom-0 right-0 flex gap-2 z-20 p-4'>
+                    <button
+                        onClick={() => openEditModal(experience)}
+                        className='bg-blue-200 border hover:border-blue-400 text-sm text-blue-600 font-medium h-8 px-4 rounded-full'
+                    >
+                        Edit
+                    </button>
+                    <button
+                        onClick={() => deleteWorkExperience(experience.id)}
+                        className='bg-red-200 border hover:border-red-400 text-sm text-red-600 font-medium h-8 px-4 rounded-full'
+                    >
+                        Delete
+                    </button>
+                </div>
+            )}
         </div >
     )
 }
 
-const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any) => {
+const DeveloperProfileExperience = ({ experience, loading, updateDetails, editable = true }: any) => {
     const formRef = useRef<HTMLFormElement>(null)
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState<any>({
@@ -134,7 +137,7 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
                     headerIcon={<FileUser />}
                     headerTitle={"Work Experience"}
                     headerContent={
-                        <button
+                        editable && <button
                             onClick={() => {
                                 setType("add")
                                 setShowModal(true)
@@ -162,6 +165,7 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails }: any)
                                     key={index}
                                     experience={item}
                                     index={index}
+                                    editable={editable}
                                     openEditModal={openEditModal}
                                     deleteWorkExperience={deleteDeveloperWorkExperience}
                                 />

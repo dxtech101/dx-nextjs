@@ -40,6 +40,9 @@ const RaiseResourceRequestForm = ({ loading, setLoading, setResourceDetails, set
         daily_hours_required: "",
     });
 
+    console.log("projectId", projectId);
+
+
     const getCompanyResourcesData = async () => {
         try {
             setLoading(true);
@@ -188,7 +191,7 @@ const RaiseResourceRequestForm = ({ loading, setLoading, setResourceDetails, set
                                     <button onClick={() => setShowForm({ type: "add", resource: null, value: false })} className='bg-blue-500 text-white rounded-full p-2'>
                                         <ArrowLeft className='w-8 h-8' />
                                     </button>
-                                    {showForm.type === "add" ? "Raise" : "Edit"} Resource Request for {project?.project_name} 
+                                    {showForm.type === "add" ? "Raise" : "Edit"} Resource Request for {project?.project_name}
                                 </span>
                                 <div className='flex flex-row gap-4'>
                                     <button
@@ -268,13 +271,13 @@ const RaiseResourceRequestForm = ({ loading, setLoading, setResourceDetails, set
                                     Add More Resource Request
                                 </button>
                             </div>
-                            <div className="relative max-w-screen overflow-scroll md:w-full bg-white">
+                            <div className="relative max-w-screen overflow-scroll md:w-full bg-blue-900">
                                 <table className="w-full overflow-x-scroll table-auto border-collapse border border-gray-200 rounded-xl">
-                                    <thead className="bg-gray-100">
-                                        <tr>
-                                            <th className="w-fit border border-gray-200 text-left pl-3 uppercase text-xs">Sr. No.</th>
-                                            <th className="border border-gray-200 px-4 py-2 text-left uppercase text-xs">Resource Name</th>
-                                            <th className="border border-gray-200 px-4 py-2 text-left uppercase text-xs">Role Required</th>
+                                    <thead className="bg-blue-600">
+                                        <tr className="bg-blue-600">
+                                            <th className="w-fit bg-blue-600 border border-gray-200 text-left pl-3 uppercase text-xs">Sr. No.</th>
+                                            <th className="border bg-blue-600 border-gray-200 px-4 py-2 text-left uppercase text-xs">Resource Name</th>
+                                            <th className="border bg-blue-600 border-gray-200 px-4 py-2 text-left uppercase text-xs">Role Required</th>
                                             <th className="border border-gray-200 px-4 py-2 text-left uppercase text-xs">Start Date</th>
                                             <th className="border border-gray-200 px-4 py-2 text-left uppercase text-xs max-w-24">Daily Hours (in hrs)</th>
                                             <th className="border border-gray-200 px-4 py-2 text-left uppercase text-xs w-40">Action</th>

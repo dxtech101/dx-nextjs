@@ -2,39 +2,26 @@
 import Dropdown from '@/components/Dropdown'
 import InputField from '@/components/InputField'
 import Modal from '@/components/modal/Modal'
-import { getAllSalesforceSkills, getSkillsRelatedDevelopers } from '@/lib/service/portfolio.service'
+import { skillsDetails } from '@/constants/data'
+import { getAllSalesforceSkills, getSkillsRelatedDevelopers, getUserPortfolio } from '@/lib/service/portfolio.service'
 import { getCompanyProjects, getCompanyResources, getResourceRequest, shortlistResourceRequest } from '@/lib/service/projectResource.service'
-import { BriefcaseBusiness, CodeIcon, DollarSign, Loader, LoaderCircle, MapPin, ShieldCheck, Users, XIcon } from 'lucide-react'
+import { BriefcaseBusiness, CodeIcon, LoaderCircle, ShieldCheck, XIcon } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-const SkillItem = ({ name }: any) => {
+const SkillItem = ({ name, imageSrc }: any) => {
   const [checkedItem, setCheckedItem] = useState<any>();
-  const initialItems = [
-    { text: 'Salesforce', imageSrc: '/Salesforce.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-    { text: 'Mulesoft', imageSrc: '/Mulesoft.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-    { text: 'Heroku', imageSrc: '/heroku.png', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
-    { text: 'Sales Cloud', imageSrc: '/sales-cloud.svg', bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-800' },
-    { text: 'Service Cloud', imageSrc: '/service-cloud.svg', bgColor: 'bg-pink-100', checkedColor: 'bg-pink-500', borderColor: 'border-pink-600', textColor: 'text-pink-600' },
-    { text: 'Marketing Cloud', imageSrc: '/marketing-cloud.svg', bgColor: 'bg-orange-100', checkedColor: 'bg-orange-500', borderColor: 'border-orange-600', textColor: 'text-orange-400' },
-    { text: 'B2B Commerce Cloud', imageSrc: '/commerce-cloud.svg', bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-800' },
-    { text: 'B2C Commerce Cloud', imageSrc: '/commerce-cloud.svg', bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-800' },
-    { text: 'Experience Cloud', imageSrc: '/Salesforce.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-    { text: 'Industry Cloud', imageSrc: '/Salesforce.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-    { text: 'Einstein Copilot', imageSrc: '/encop.webp', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
-    { text: 'AI', imageSrc: '/encop.webp', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
-  ];
 
   useEffect(() => {
-    setCheckedItem(initialItems.find((item: any) => item.text === name))
+    setCheckedItem(skillsDetails.find((item: any) => item.text === name))
   }, [])
 
   if (checkedItem?.bgColor) {
     return (
-      <div className={`inline-flex gap-2 items-center min-w-max whitespace-nowrap ${checkedItem.bgColor} border ${checkedItem.borderColor} p-1 px-2 rounded-full relative z-0`}>
-        <img className='w-auto h-6' src={checkedItem.imageSrc} alt={name} />
-        <span className={`font-bold ${checkedItem.textColor}`}>
+      <div className={`inline-flex gap-2 items-center min-w-max whitespace-nowrap ${checkedItem.bgColor} border ${checkedItem.borderColor} p-1 px-3 rounded-full relative z-0`}>
+        <img className='w-auto h-4' src={imageSrc} alt={name} />
+        <span className={`font-bold text-xs ${checkedItem.textColor}`}>
           {name}
         </span>
       </div>
@@ -42,10 +29,11 @@ const SkillItem = ({ name }: any) => {
   }
 };
 
-const page = () => {
+const DeveloperSearch = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const containerRef = useRef<any>(null);
+  const [selectedDeveloperSFID, setSelectedDeveloperSFID] = useState<any>('');
   const [selectedResources, setSelectedResources] = useState<any>([]);
   const [resource, setResource] = useState<any>();
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -79,7 +67,7 @@ const page = () => {
   }
 
   useEffect(() => {
-    if (querySkills) {
+    if (querySkills?.length > 0) {
       handleSearch();
     }
   }, [querySkills])
@@ -97,6 +85,9 @@ const page = () => {
     }
   }
 
+  console.log("SearchDevelopers", searchDevelopers);
+
+
   const handleCheckboxChange = (id: any) => {
     const isChecked = checkedItems.find((i: any) => i.sfid === id);
     const item = initialItems.find((i: any) => i.sfid === id);
@@ -112,6 +103,7 @@ const page = () => {
       setCheckedItems([...checkedItems, item]);
       setItems(items.filter((i: any) => i.sfid !== id));
       setSelectedResources([...selectedResources, item.name]);
+      router.push(`/company/dashboard/developers/?skills=${[...selectedResources, item.name]}`)
     }
   };
 
@@ -164,6 +156,26 @@ const page = () => {
     }
   }
 
+  const getDeveloperData = async (selectedDeveloperSFID: any) => {
+    try {
+      setModalLoading(true);
+      const { results: developerData } = await getUserPortfolio(selectedDeveloperSFID);
+      console.log("developerData::", developerData);
+
+      setDeveloperDetails(developerData);
+    } catch (error) {
+      console.error("Error fetching certifications:", error);
+    } finally {
+      setModalLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    if (selectedDeveloperSFID) {
+      getDeveloperData(selectedDeveloperSFID);
+    }
+  }, [selectedDeveloperSFID])
+
   const getResourceRequestData = async () => {
     try {
       setModalLoading(true);
@@ -175,6 +187,17 @@ const page = () => {
       console.error("Error fetching certifications:", error);
     } finally {
       setModalLoading(false);
+    }
+  }
+
+  const generateDeveloperName = (name: string) => {
+    const nameArray = name.split(" ");
+    if (nameArray.length === 3) {
+      return nameArray[0] + " " + nameArray[1][0] + " " + nameArray[2];
+    } else if (nameArray.length === 2) {
+      return nameArray[0][0] + " " + nameArray[1];
+    } else {
+      return name;
     }
   }
 
@@ -208,29 +231,29 @@ const page = () => {
     }
   }, [openConfirmModal])
 
-  console.log("resource::", resource);
-
-
   return (
-    <>
-      <div className='flex flex-col items-center justify-center w-full text-left py-10 md:py-16 px-6 md:px-10'>
-        <div className='w-full flex flex-row items-center justify-between'>
-          <span className='pb-4'>
-            <h1 className="font-heading tracking-tight text-3xl md:text-5xl font-medium mb-4">
-              Search for Developer that best suits your needs 💼
-            </h1>
-            <p className='text-gray-500 text-sm'>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Praesentium, eum?
-            </p>
-          </span>
+    <div className='flex flex-col w-full'>
+      <div className={`flex flex-col items-center ${searchDevelopers.length === 0 ? "justify-start" : "justify-center"} h-full w-full text-left gap-6 py-10 px-6 md:px-10`}>
+        <div className='w-full h-full flex flex-col gap-4 items-center justify-between'>
+          <h1 className="font-heading tracking-tight text-3xl md:text-6xl max-w-2xl mx-auto text-center font-medium mb-2">
+            Search for Developer that best suits your needs 💼
+          </h1>
+          <div className='flex gap-2 w-full items-center justify-center'>
+            <span className='hidden md:block font-medium text-xs whitespace-nowrap bg-purple-100 rounded-full px-4 border border-purple-800 text-purple-800 py-1'>
+              500,000+ available developers
+            </span>
+            <span className='hidden md:block font-medium text-xs whitespace-nowrap bg-amber-100 rounded-full px-4 border border-amber-800 text-amber-800 py-1'>
+              100,000+ available companies
+            </span>
+          </div>
         </div>
 
-        <div className='mt-6 w-full flex flex-col md:flex-row items-center justify-center gap-4'>
-          <div ref={containerRef} className='relative w-full'>
+        <div className='mt-2 w-full flex flex-col md:flex-row items-center justify-center gap-4'>
+          <div ref={containerRef} className='relative w-8/12'>
             <InputField
               className='w-full'
               iconName='search'
-              placeHolder='Search your skills (Ex. Salesforce, Mulesoft, Heroku)'
+              placeHolder={checkedItems.length === 0 && `Search your skills (Ex. Salesforce, Mulesoft, Heroku)`}
               value={inputValue}
               onChange={(e: any) => setInputValue(e.target.value)}
               onFocus={() => setShowSuggestions(true)}
@@ -257,19 +280,9 @@ const page = () => {
             )}
           </div>
 
-          <div className='flex flex-wrap w-full gap-4'>
-            <button className='h-full bg-white rounded-xl px-4 py-2 text-black flex items-center gap-2 whitespace-nowrap'>
-              <MapPin className='h-5 w-5 text-blue-600' />
-              Newyork, NY
-            </button>
-            <button className='h-full bg-white rounded-xl px-4 py-2 text-black flex items-center gap-2 whitespace-nowrap'>
-              <DollarSign className='h-5 w-5 text-blue-600' />
-              2,000 - 4,000 USD
-            </button>
-            <button onClick={() => router.push(`/company/dashboard/developers/?skills=${selectedResources}`)} className='bg-blue-500 rounded-xl px-4 py-2 text-sm text-white whitespace-nowrap'>
-              Find Resources
-            </button>
-          </div>
+          <button onClick={handleSearch} className='bg-blue-500 rounded-lg px-4 py-3 text-sm text-white whitespace-nowrap'>
+            Find Resources
+          </button>
         </div>
       </div>
       {loading ? <>
@@ -285,13 +298,16 @@ const page = () => {
               <div className='flex flex-row gap-2 items-center text-lg'>
                 {querySkills.split(',').map((skill: any) => {
                   return (
-                    <SkillItem key={skill} name={skill} />
+                    <SkillItem key={skill} name={skill} imageSrc={skill.url} />
                   )
                 })}
               </div>
             </span>
             <button
-              onClick={() => router.push(`/company/dashboard/developers`)}
+              onClick={() => {
+                setSearchDevelopers([]);
+                router.push(`/company/dashboard/developers`)
+              }}
               className='bg-red-200 text-red-800 border hover:border-red-600 text-xs font-medium py-1 px-2 rounded-full inline-flex items-center gap-1'>
               <div className='bg-red-700 p-1 rounded-full'>
                 <XIcon className='w-3 h-3 text-red-100' />
@@ -301,65 +317,48 @@ const page = () => {
           </div>
         )}
 
-        {searchDevelopers.length > 0 ? <>
-          <div className='grid grid-cols-2 gap-4 items-center justify-between w-full'>
+        {searchDevelopers.length > 0 && <>
+          <div className='grid grid-cols-1 xl:grid-cols-2 gap-4 items-center justify-between w-full'>
             {searchDevelopers.map((developer: any, index: any) => {
+              const developerName = generateDeveloperName(developer?.developer_name);
               return (
-                <div key={index} className={`bg-white relative rounded-xl p-6 grid grid-cols-2 gap-4 h-fit`}>
-                  <span className='absolute right-0 top-0 p-4 text-5xl text-gray-300 font-extrabold'>{index + 1}</span>
-                  <div className='flex flex-row gap-1 items-center'>
-                    <span className='text-sm uppercase font-bold text-gray-800'>
-                      Name
-                    </span>
-                    <span className='font-normal text-gray-800 '>{developer.contact.name}</span>
+                <div key={index} className={`bg-white flex flex-col relative rounded-xl p-6 gap-2 h-full`}>
+                  <div className='absolute right-0 top-0 p-4 text-6xl text-gray-100 font-extrabold'>{index + 1}</div>
+                  <div className='flex flex-row gap-4'>
+                    <div className='relative w-1/2 bg-gray-100 rounded-xl overflow-hidden'>
+                      <img
+                        src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"
+                        alt=""
+                        className='w-full h-full object-cover rounded-xl'
+                      />
+
+                      <div className="absolute inset-0 bg-white/30 backdrop-blur-xl rounded-xl"></div>
+                    </div>
+                    <div className='flex flex-col gap-2 items-start w-full max-w-1/2'>
+                      <div className='flex flex-col items-start'>
+                        <span className='font-bold text-xl text-gray-800 '>{developerName}</span>
+                      </div>
+                      <div className='flex flex-wrap gap-2 items-center col-span-2 mb-2'>
+                        {developer?.skills.map((skill: any, index: any) => {
+                          return (
+                            <SkillItem key={index} name={skill.skill_name} imageSrc={skill.url} />
+                          )
+                        })}
+                      </div>
+                      <button
+                        onClick={() => {
+                          router.push(`/company/dashboard/developers/${developer?.developer_sfid}`)
+                        }}
+                        className='w-full bg-blue-200 hover:bg-blue-400 text-blue-700 hover:text-blue-50 duration-200 text-center rounded-lg p-2 px-4 inline-flex justify-center items-center gap-2'>
+                        View Profile
+                      </button>
+                    </div>
                   </div>
-                  <div className='flex flex-row gap-1 items-center'>
-                    <span className='text-sm uppercase font-bold text-gray-800'>
-                      Industries
-                    </span>
-                    <span className='font-normal text-gray-800 '>{developer.contact.industry_experience_c}</span>
-                  </div>
-                  <div className='flex flex-row gap-2 items-center col-span-2'>
-                    <span className='text-sm uppercase font-bold text-gray-800'>
-                      Skills
-                    </span>
-                    <span className='font-normal text-gray-800 '>
-                      <SkillItem key={index} name={developer?.skill?.name} />
-                    </span>
-                  </div>
-                  <button
-                    onClick={() => {
-                      setDeveloperDetails(developer)
-                      setOpenModal(true)
-                    }}
-                    className='col-span-2 bg-blue-200 hover:bg-blue-400 text-blue-700 hover:text-blue-50 duration-200 text-center rounded-lg p-2 px-4 inline-flex justify-center items-center gap-2'>
-                    View Profile
-                  </button>
                 </div>
               )
             })}
           </div>
-        </> : <>
-          <div className='flex flex-row gap-4 items-center justify-between w-full'>
-            <div className="w-full lg:w-1/2 bg-white border border-gray-300 text-black rounded-3xl flex-col p-6 gap-4 h-fit">
-              <div className='flex flex-row items-center justify-between w-full'>
-                <span className='inline-flex gap-2'>
-                  <Users className='w-6 h-6' />
-                  Recommmeded Resources
-                </span>
-              </div>
-            </div>
-            <div className="w-full lg:w-1/2 bg-white border border-gray-300 text-black rounded-3xl flex-col p-6 gap-4 h-fit">
-              <div className='flex flex-row items-center justify-between w-full'>
-                <span className='inline-flex gap-2'>
-                  <Users className='w-6 h-6' />
-                  Shortlisted Resources
-                </span>
-              </div>
-            </div>
-          </div>
-        </>
-        }
+        </>}
       </>}
 
       {openModal && (
@@ -374,10 +373,10 @@ const page = () => {
             <img
               className="h-1/2 w-1/2 lg:h-1/4 lg:w-1/4 aspect-square rounded-full object-cover object-right relative"
               src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"
-              alt=""
+              alt="img"
             />
             <div className='flex flex-col gap-2 w-full'>
-              <span className='text-3xl lg:text-4xl font-bold capitalize'>{developerDetails.contact.name}</span>
+              <span className='text-3xl lg:text-4xl font-bold capitalize'>{developerDetails?.contact?.name}</span>
               <div className='flex flex-wrap gap-2 text-sm'>
                 <span className='shadow-inner inline-flex items-center gap-2 bg-purple-100 border border-purple-300 text-purple-900 w-fit rounded-full py-0.5 px-4'>
                   <CodeIcon className='w-5 h-5' />
@@ -410,23 +409,6 @@ const page = () => {
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, voluptates.
             </p>
           </div>
-          <div className='flex flex-row gap-4 items-center justify-between w-full'>
-            <button
-              onClick={() => {
-                setOpenModal(false)
-                shortListResource(developerDetails.contact.sfid)
-                setOpenConfirmModal(true)
-              }}
-              className='bg-blue-500 text-white rounded-lg w-full p-2 px-4 inline-flex items-center justify-center gap-2'>
-              Next
-            </button>
-            <button
-              onClick={() => setOpenModal(false)}
-              className='bg-gray-200 text-gray-400 rounded-lg w-full p-2 px-4 inline-flex items-center justify-center gap-2'>
-              Cancel
-            </button>
-          </div>
-
         </Modal>
       )}
 
@@ -478,8 +460,8 @@ const page = () => {
           </button>
         </Modal>
       )}
-    </>
+    </div>
   )
 }
 
-export default page
+export default DeveloperSearch

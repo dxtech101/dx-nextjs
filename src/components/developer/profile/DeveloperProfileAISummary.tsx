@@ -1,3 +1,4 @@
+"use client"
 import { getExperienceSummary } from '@/lib/service/portfolio.service'
 import cn from "clsx"
 import { motion } from 'framer-motion'

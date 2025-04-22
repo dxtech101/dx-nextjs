@@ -1,3 +1,4 @@
+import { getUserPortfolio } from '@/lib/service/portfolio.service';
 import { getProject } from '@/lib/service/projectResource.service';
 import { ChevronRight, HomeIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -11,6 +12,16 @@ const fetchEntityName = async (routeType: string, id: string, setLoading: any) =
         if (routeType === "projects") {
             const { results: project } = await getProject(id);
             name = project.project_name;
+        } else if (routeType === "developers") {
+            const { results: developer } = await getUserPortfolio(id);
+            const nameArray = developer.personal_details?.name.split(" ");
+            if (nameArray.length === 3) {
+                name = nameArray[0] + " " + nameArray[1][0] + " " + nameArray[2];
+            } else if (nameArray.length === 2) {
+                name = nameArray[0][0] + " " + nameArray[1];
+            } else {
+                name = developer.personal_details?.name;
+            }
         }
         return name;
     } catch (error) {
@@ -42,7 +53,11 @@ const DashboardBreadcrumb = ({ type }: { type: string }) => {
             const updatedNames: Record<string, string> = {};
 
             for (const [index, crumb] of breadCrumbArray.entries()) {
-                if (/^[a-zA-Z0-9]{10,}$/.test(crumb)) {
+                console.log("/^[a-zA-Z0-9]{10,}$/.test(crumb)", crumb);
+
+                if (/^\d+$/.test(crumb) || /^[a-zA-Z0-9]{10,}$/.test(crumb)) {
+                    console.log("I in here in breadcrumb");
+
                     const routeType = (breadCrumbArray[index - 1])
                     const name = await fetchEntityName(routeType, crumb, setLoading);
                     updatedNames[crumb] = name;

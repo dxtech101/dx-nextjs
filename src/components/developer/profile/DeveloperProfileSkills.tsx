@@ -1,3 +1,4 @@
+"use client"
 import Modal from '@/components/modal/Modal';
 import { PencilIcon, Sparkle } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -27,7 +28,7 @@ const ProfileSkillComponent = ({ name, skill_level, url }: any) => {
     }
 };
 
-const DeveloperProfileSkills = ({ skills, loading, updateDetails }: any) => {
+const DeveloperProfileSkills = ({ skills, loading, updateDetails, editable = true }: any) => {
     const [showModal, setShowModal] = useState(false);
 
     return (
@@ -38,16 +39,17 @@ const DeveloperProfileSkills = ({ skills, loading, updateDetails }: any) => {
                     headerTitle={"Skills"}
                     headerContent={
                         <div className='flex flex-row gap-4 items-center'>
-
-                            <button
-                                onClick={() => setShowModal(true)}
-                                className='bg-gray-200 border border-gray-300 flex flex-row items-center justify-center gap-2 rounded-full text-gray-900 py-2 px-4 text-sm font-bold group'
-                            >
-                                <PencilIcon className="w-4 h-4 cursor-pointer ml-2" />
-                                <span className="overflow-hidden whitespace-nowrap transition-all duration-700 ease-in-out opacity-0 w-0 group-hover:w-auto group-hover:opacity-100">
-                                    Edit
-                                </span>
-                            </button>
+                            {editable && (
+                                <button
+                                    onClick={() => setShowModal(true)}
+                                    className='bg-gray-200 border border-gray-300 flex flex-row items-center justify-center gap-2 rounded-full text-gray-900 py-2 px-4 text-sm font-bold group'
+                                >
+                                    <PencilIcon className="w-4 h-4 cursor-pointer ml-2" />
+                                    <span className="overflow-hidden whitespace-nowrap transition-all duration-700 ease-in-out opacity-0 w-0 group-hover:w-auto group-hover:opacity-100">
+                                        Edit
+                                    </span>
+                                </button>
+                            )}
                         </div>
                     }
                 />

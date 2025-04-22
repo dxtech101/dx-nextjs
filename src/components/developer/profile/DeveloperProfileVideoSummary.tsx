@@ -1,12 +1,12 @@
+"use client"
 import FileUpload from '@/components/FileUpload';
 import Modal from '@/components/modal/Modal';
 import { addUserProfile } from '@/feature/reducers/userProfile';
 import { updateProfile } from '@/lib/service/user.service';
-import Image from 'next/image';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-const DeveloperVideoProfile = () => {
+const DeveloperVideoProfile = ({ editable = true }) => {
     const dispatch = useDispatch();
     const userProfile = useSelector((state: any) => state.userProfile)
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,6 +28,10 @@ const DeveloperVideoProfile = () => {
         } finally {
             setLoading(false);
         }
+    }
+
+    if (!editable && !userProfile?.intro_video) {
+        return <></>
     }
 
     return (

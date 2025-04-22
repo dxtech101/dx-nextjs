@@ -3,10 +3,10 @@ import { Calendar, CalendarCheck, CalendarIcon, ChevronDown, ChevronLeft, Chevro
 import { useState } from 'react';
 
 const InterviewCard = ({ title, time, platform, salesforceTechnology, status }: any) => {
-    const color = status === "completed" ? "teal" : "blue";
-
+    const color = status === "completed" ? "green" : "blue";
+    
     return (
-        <div className={`flex flex-col gap-4 border border-gray-300 rounded-lg p-4 mt-6`}>
+        <div className={`flex flex-col gap-4 border border-gray-300 rounded-lg p-4`}>
             <div className='flex flex-row items-center justify-between'>
                 <span className='font-bold'>
                     {title}
@@ -161,7 +161,7 @@ const CompanyInterviewSchedule = () => {
     }
 
     return (
-        <div className="w-full lg:w-1/3 bg-white border border-gray-300 text-black rounded-3xl flex-col p-6 gap-4 h-fit">
+        <div className="w-full lg:w-1/3 bg-white border border-gray-300 text-black rounded-3xl flex-col p-6 gap-4 h-full">
             <div className='flex flex-row items-center justify-between w-full'>
                 <span className='inline-flex gap-2'>
                     <CalendarIcon className='w-6 h-6' />
@@ -175,7 +175,7 @@ const CompanyInterviewSchedule = () => {
             <div className='flex flex-col gap-8 border-b border-b-gray-200 pb-6 my-6'>
                 <DateCarousel />
             </div>
-            <div>
+            <div className='flex flex-col gap-4'>
                 <div className='flex flex-col lg:flex-row items-center justify-between gap-4 w-full'>
                     <button
                         onClick={() => setSelected("scheduled")}
@@ -190,23 +190,16 @@ const CompanyInterviewSchedule = () => {
                         Completed
                     </button>
                 </div>
-
+                <div className='flex flex-row items-center justify-between w-full'>
+                    <span className='text-sm font-semibold'>
+                        {selected === "scheduled" ? "Upcoming" : "Completed"} Inteviews
+                    </span>
+                    <button className='text-xs text-gray-500 flex flex-row items-center gap-1'>
+                        See all <ChevronRight className='w-4 h-4 text-gray-500' />
+                    </button>
+                </div>
                 <InterviewCard
                     title="Inteview with James Brown"
-                    time="8:00 AM - 9:00 AM (UTC)"
-                    platform="Sales Cloud"
-                    salesforceTechnology="Salesforce"
-                    status={selected}
-                />
-                <InterviewCard
-                    title="Interview with James Brown"
-                    time="8:00 AM - 9:00 AM (UTC)"
-                    platform="Sales Cloud"
-                    salesforceTechnology="Salesforce"
-                    status={selected}
-                />
-                <InterviewCard
-                    title="Interview with James Brown"
                     time="8:00 AM - 9:00 AM (UTC)"
                     platform="Sales Cloud"
                     salesforceTechnology="Salesforce"

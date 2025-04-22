@@ -14,7 +14,6 @@ const Modal = ({
     onClose,
     formRef
 }: any) => {
-    console.log(formRef);
 
     return (
         <div
