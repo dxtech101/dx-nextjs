@@ -71,20 +71,32 @@ const NavBar = () => {
                         <div className="flex group items-center">
                             <button className="relative inline-block py-3 px-4 text-sm font-semibold text-indigo-500 hover:text-indigo-50 bg-indigo-100 hover:bg-indigo-600 rounded-md transition duration-300" >
                                 <span className="relative">Login / Signup</span>
-                                <div className='text-black hidden group-hover:block absolute z-50 top-full right-0'>
+                                <div className='text-black hidden group-hover:block  absolute z-50 top-full right-0'>
                                     <div className="-top-2 z-20 absolute right-10 w-4 h-4 rounded-sm bg-white border-l border-t border-gray-200 transform rotate-45"></div>
-                                    <div className="w-full shadow-lg max-w-xl bg-white border border-gray-200 rounded-3xl pt-4 pb-4 px-4 flex flex-col gap-4">
-                                        <Link href="/developer/login" className='w-64 h-fit bg-purple-100 hover:bg-purple-200 rounded-xl flex justify-center items-center p-3 relative gap-3'>
-                                            <Image src="/developer.png" alt="Developer" width={60} height={60} />
-                                            <span className='font-bold text-xl flex flex-col items-start text-purple-900'>
-                                                Login
-                                                <span className='text-xs font-normal text-gray-500 text-start'>
-                                                    Access your account and continue exploring!
+                                    <div className="w-full shadow-lg max-w-xl bg-white border border-gray-200 rounded-3xl pt-4 pb-4 px-4 flex flex-row gap-4">
+                                        <div className='flex flex-col gap-4'>
+                                            <Link href="/developer/login" className='w-64 h-fit bg-purple-100 hover:bg-purple-200 rounded-xl flex justify-center items-center p-3 relative gap-3'>
+                                                <Image src="/developer.png" alt="Developer" width={60} height={60} />
+                                                <span className='font-bold text-xl flex flex-col items-start text-purple-900'>
+                                                    Developer
+                                                    <span className='text-xs font-normal text-gray-500 text-start'>
+                                                        Access your account and continue exploring!
+                                                    </span>
                                                 </span>
-                                            </span>
-                                        </Link>
-                                        <Link href="/signup" className='w-64 h-fit bg-blue-50 hover:bg-blue-100 rounded-xl flex flex-row gap-3 justify-start items-start p-3 relative'>
-                                            <Image src="/company.png" alt="Developer" width={60} height={60} />
+                                            </Link>
+                                            <Link href="/company/login" className='w-64 h-fit bg-emerald-100 hover:bg-emerald-200 rounded-xl flex justify-center items-center p-3 relative gap-3'>
+                                                <Image src="/company.png" alt="Developer" width={60} height={60} />
+                                                <span className='font-bold text-xl flex flex-col items-start text-emerald-900'>
+                                                    Company
+                                                    <span className='text-xs font-normal text-gray-500 text-start'>
+                                                        Access your account and continue exploring!
+                                                    </span>
+                                                </span>
+                                            </Link>
+                                        </div>
+
+                                        <Link href="/signup" className='w-64 bg-blue-50 hover:bg-blue-100 rounded-xl flex flex-col gap-1 justify-evenly items-start p-3 relative'>
+                                            <Image src="/signup.jpg" alt="Developer" width={130} height={120} className='mix-blend-multiply' />
                                             <span className='font-bold text-xl flex flex-col items-start text-blue-900 '>
                                                 Sign Up
                                                 <span className='text-xs font-normal text-gray-500 max-w-xl text-start'>

@@ -1,5 +1,4 @@
 "use client"
-import DeveloperProfileAISummary from '@/components/developer/profile/DeveloperProfileAISummary'
 import DeveloperProfileCertification from '@/components/developer/profile/DeveloperProfileCertification'
 import DeveloperProfileDetails from '@/components/developer/profile/DeveloperProfileDetails'
 import DeveloperProfileExperience from '@/components/developer/profile/DeveloperProfileExperience'

@@ -41,7 +41,7 @@ const ProfileCertificationComponent = ({
 }
 
 
-const DeveloperProfileCertification = ({ certification, loading, updateDetails }: any) => {
+const DeveloperProfileCertification = ({ certification, loading, updateDetails, editable = true }: any) => {
     console.log("Certification===>>", certification);
 
     const [visibleCount, setVisibleCount] = useState(6);
@@ -61,15 +61,17 @@ const DeveloperProfileCertification = ({ certification, loading, updateDetails }
                     headerIcon={<ShieldCheck />}
                     headerTitle={"Salesforce Certifications"}
                     headerContent={
-                        <button
-                            onClick={() => setShowModal(true)}
-                            className='bg-gray-200 border border-gray-300 flex flex-row items-center justify-center gap-2 rounded-full text-gray-900 py-2 px-4 text-sm font-bold group'
-                        >
-                            <PencilIcon className="w-4 h-4 cursor-pointer ml-2" />
-                            <span className="overflow-hidden whitespace-nowrap transition-all duration-700 ease-in-out opacity-0 w-0 group-hover:w-auto group-hover:opacity-100">
-                                Edit
-                            </span>
-                        </button>
+                        editable && (
+                            <button
+                                onClick={() => setShowModal(true)}
+                                className='bg-gray-200 border border-gray-300 flex flex-row items-center justify-center gap-2 rounded-full text-gray-900 py-2 px-4 text-sm font-bold group'
+                            >
+                                <PencilIcon className="w-4 h-4 cursor-pointer ml-2" />
+                                <span className="overflow-hidden whitespace-nowrap transition-all duration-700 ease-in-out opacity-0 w-0 group-hover:w-auto group-hover:opacity-100">
+                                    Edit
+                                </span>
+                            </button>
+                        )
                     }
                 />
 

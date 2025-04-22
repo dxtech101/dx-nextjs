@@ -1,3 +1,4 @@
+"use client"
 import { Cloud } from 'lucide-react'
 import React from 'react'
 

@@ -117,10 +117,10 @@ export default function Login() {
 
     return (
         <>
-            <section className="relative bg-white min-h-screen p-6">
-                <img className="absolute left-0 top-0 w-full h-screen" src="https://static.shuffle.dev/components/preview/238eb578-e531-4cf4-a658-a1ff13c9b896/assets/public/flaro-assets/images/sign-in/gradient.svg" alt="" />
+            <section className="relative bg-white h-fit lg:h-screen p-6 xl:p-0">
+                <img className="absolute left-0 top-0 w-full h-full" src="https://static.shuffle.dev/components/preview/238eb578-e531-4cf4-a658-a1ff13c9b896/assets/public/flaro-assets/images/sign-in/gradient.svg" alt="" />
                 <div className="relative z-10 flex flex-wrap justify-center min-h-screen items-center gap-6 container mx-auto">
-                    <div className="relative w-full flex flex-col justify-center items-start xl:max-w-xl mx-auto text-black gap-4">
+                    <div className="relative w-full flex flex-col justify-center items-start xl:max-w-lg mx-auto text-black gap-10">
                         <h1 className="text-3xl font-medium inline-flex gap-4 items-center">
                             <Link href='/' className='p-3 border border-gray-900 rounded-full'>
                                 <ArrowLeft />
@@ -131,7 +131,7 @@ export default function Login() {
                             <h2 className="text-4xl md:text-7xl font-medium leading-tight">
                                 Sign in and Grow Your Career!
                             </h2>
-                            <p className='text-gray-500 text-xl'>
+                            <p className='text-gray-500 text-md xl:text-xl'>
                                 Unlock your potential with endless Salesforce opportunities tailored just for you.
                             </p>
                         </span>

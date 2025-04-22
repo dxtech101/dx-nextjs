@@ -2,38 +2,25 @@
 import Dropdown from '@/components/Dropdown'
 import InputField from '@/components/InputField'
 import Modal from '@/components/modal/Modal'
+import { skillsDetails } from '@/constants/data'
 import { getAllSalesforceSkills, getSkillsRelatedDevelopers, getUserPortfolio } from '@/lib/service/portfolio.service'
 import { getCompanyProjects, getCompanyResources, getResourceRequest, shortlistResourceRequest } from '@/lib/service/projectResource.service'
-import { BriefcaseBusiness, CodeIcon, DollarSign, Loader, LoaderCircle, MapPin, ShieldCheck, Users, XIcon } from 'lucide-react'
+import { BriefcaseBusiness, CodeIcon, LoaderCircle, ShieldCheck, XIcon } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-const SkillItem = ({ name }: any) => {
+const SkillItem = ({ name, imageSrc }: any) => {
   const [checkedItem, setCheckedItem] = useState<any>();
-  const initialItems = [
-    { text: 'Salesforce', imageSrc: '/Salesforce.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-    { text: 'Mulesoft', imageSrc: '/Mulesoft.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-    { text: 'Heroku', imageSrc: '/heroku.png', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
-    { text: 'Sales Cloud', imageSrc: '/sales-cloud.svg', bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-800' },
-    { text: 'Service Cloud', imageSrc: '/service-cloud.svg', bgColor: 'bg-pink-100', checkedColor: 'bg-pink-500', borderColor: 'border-pink-600', textColor: 'text-pink-600' },
-    { text: 'Marketing Cloud', imageSrc: '/marketing-cloud.svg', bgColor: 'bg-orange-100', checkedColor: 'bg-orange-500', borderColor: 'border-orange-600', textColor: 'text-orange-400' },
-    { text: 'B2B Commerce Cloud', imageSrc: '/commerce-cloud.svg', bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-800' },
-    { text: 'B2C Commerce Cloud', imageSrc: '/commerce-cloud.svg', bgColor: 'bg-green-100', checkedColor: 'bg-green-500', borderColor: 'border-green-600', textColor: 'text-green-800' },
-    { text: 'Experience Cloud', imageSrc: '/Salesforce.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-    { text: 'Industry Cloud', imageSrc: '/Salesforce.png', bgColor: 'bg-blue-100', checkedColor: 'bg-blue-500', borderColor: 'border-blue-600', textColor: 'text-blue-400' },
-    { text: 'Einstein Copilot', imageSrc: '/encop.webp', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
-    { text: 'AI', imageSrc: '/encop.webp', bgColor: 'bg-purple-100', checkedColor: 'bg-purple-500', borderColor: 'border-purple-600', textColor: 'text-purple-900' },
-  ];
 
   useEffect(() => {
-    setCheckedItem(initialItems.find((item: any) => item.text === name))
+    setCheckedItem(skillsDetails.find((item: any) => item.text === name))
   }, [])
 
   if (checkedItem?.bgColor) {
     return (
       <div className={`inline-flex gap-2 items-center min-w-max whitespace-nowrap ${checkedItem.bgColor} border ${checkedItem.borderColor} p-1 px-3 rounded-full relative z-0`}>
-        <img className='w-auto h-4' src={checkedItem.imageSrc} alt={name} />
+        <img className='w-auto h-4' src={imageSrc} alt={name} />
         <span className={`font-bold text-xs ${checkedItem.textColor}`}>
           {name}
         </span>
@@ -97,6 +84,9 @@ const DeveloperSearch = () => {
       setLoading(false);
     }
   }
+
+  console.log("SearchDevelopers", searchDevelopers);
+
 
   const handleCheckboxChange = (id: any) => {
     const isChecked = checkedItems.find((i: any) => i.sfid === id);
@@ -241,13 +231,10 @@ const DeveloperSearch = () => {
     }
   }, [openConfirmModal])
 
-  console.log("resource::", resource);
-
-
   return (
     <div className='flex flex-col w-full'>
       <div className={`flex flex-col items-center ${searchDevelopers.length === 0 ? "justify-start" : "justify-center"} h-full w-full text-left gap-6 py-10 px-6 md:px-10`}>
-        <div className='w-full h-full flex flex-col gap-4 items-center justify-between mb-24'>
+        <div className='w-full h-full flex flex-col gap-4 items-center justify-between'>
           <h1 className="font-heading tracking-tight text-3xl md:text-6xl max-w-2xl mx-auto text-center font-medium mb-2">
             Search for Developer that best suits your needs 💼
           </h1>
@@ -311,7 +298,7 @@ const DeveloperSearch = () => {
               <div className='flex flex-row gap-2 items-center text-lg'>
                 {querySkills.split(',').map((skill: any) => {
                   return (
-                    <SkillItem key={skill} name={skill} />
+                    <SkillItem key={skill} name={skill} imageSrc={skill.url} />
                   )
                 })}
               </div>
@@ -331,7 +318,7 @@ const DeveloperSearch = () => {
         )}
 
         {searchDevelopers.length > 0 && <>
-          <div className='grid grid-cols-2 gap-4 items-center justify-between w-full'>
+          <div className='grid grid-cols-1 xl:grid-cols-2 gap-4 items-center justify-between w-full'>
             {searchDevelopers.map((developer: any, index: any) => {
               const developerName = generateDeveloperName(developer?.developer_name);
               return (
@@ -354,14 +341,13 @@ const DeveloperSearch = () => {
                       <div className='flex flex-wrap gap-2 items-center col-span-2 mb-2'>
                         {developer?.skills.map((skill: any, index: any) => {
                           return (
-                            <SkillItem key={index} name={skill.skill_name} />
+                            <SkillItem key={index} name={skill.skill_name} imageSrc={skill.url} />
                           )
                         })}
                       </div>
                       <button
                         onClick={() => {
-                          setSelectedDeveloperSFID(developer?.developer_sfid)
-                          setOpenModal(true)
+                          router.push(`/company/dashboard/developers/${developer?.developer_sfid}`)
                         }}
                         className='w-full bg-blue-200 hover:bg-blue-400 text-blue-700 hover:text-blue-50 duration-200 text-center rounded-lg p-2 px-4 inline-flex justify-center items-center gap-2'>
                         View Profile
@@ -423,23 +409,6 @@ const DeveloperSearch = () => {
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, voluptates.
             </p>
           </div>
-          {/* <div className='flex flex-row gap-4 items-center justify-between w-full'>
-            <button
-              onClick={() => {
-                setOpenModal(false)
-                shortListResource(developerDetails.contact.sfid)
-                setOpenConfirmModal(true)
-              }}
-              className='bg-blue-500 text-white rounded-lg w-full p-2 px-4 inline-flex items-center justify-center gap-2'>
-              Next
-            </button>
-            <button
-              onClick={() => setOpenModal(false)}
-              className='bg-gray-200 text-gray-400 rounded-lg w-full p-2 px-4 inline-flex items-center justify-center gap-2'>
-              Cancel
-            </button>
-          </div> */}
-
         </Modal>
       )}
 

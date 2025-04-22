@@ -72,14 +72,14 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
         <>
             <div className="hidden lg:block relative h-full overflow-visible">
                 <div className="bg-white absolute top-0 left-0 w-full p-1 rounded-t-3xl border border-gray-300">
-                    <div className="flex items-center justify-center p-4 text-gray-900 rounded-xl">
-                        <span className="text-sm font-medium">DX{toggleSideBar && "Digital"}</span>
+                    <div className="flex items-center justify-center p-4 font-bold text-gray-900 rounded-lg">
+                        <span>D<span className='text-blue-800'>X</span> {toggleSideBar && "| Developer Exchange"}</span>
                     </div>
                 </div>
                 <nav className="w-full h-full flex flex-col px-4 bg-white overflow-visible border border-gray-300 rounded-3xl">
                     <div className="mb-6">
                         <a className="inline-block mb-12" href="#">
-                            <div className="h-7" />
+                            <div className="h-12" />
                         </a>
                         <ul>
                             {renderNavigationLinks().map((item: any, index: any) => (
@@ -121,8 +121,8 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
                     }}
                 >
                     <div className="bg-white absolute top-0 left-0 w-full p-1 border-b border-gray-300 flex items-center justify-between">
-                        <div className="flex items-center justify-center p-4 text-gray-900 rounded-xl">
-                            <span className="text-xl font-medium">DX {toggleSideBar && "Digital"}</span>
+                        <div className="flex items-center justify-center p-4 text-gray-900 rounded-xl font-bold">
+                            <span>D<span className='text-blue-800'>X</span> {toggleSideBar && "| Developer Exchange"}</span>
                         </div>
                         <button onClick={() => setToggleSideBar(false)}>
                             <ChevronLeft className='w-6 h-6 text-black mr-2' />
@@ -153,7 +153,7 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
                                 router.push("/")
                             }}
                             className="flex relative items-center justify-center w-full p-4 text-gray-300 rounded-xl">
-                            <img src="/Einstein.png" alt="bgImage" className='absolute bottom-0 left-2 h-44 object-left-bottom object-cover z-0' />
+                            {/* <img src="/Einstein.png" alt="bgImage" className='absolute bottom-0 left-2 h-44 object-left-bottom object-cover z-0' /> */}
                             <span className="ml-8 text-sm font-semibold group-hover:text-gray-100 text-gray-600">
                                 Log Out
                             </span>

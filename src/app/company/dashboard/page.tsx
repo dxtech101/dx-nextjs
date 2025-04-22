@@ -24,7 +24,7 @@ const page = () => {
         <div className='flex flex-col xl:flex-row w-full h-full gap-5'>
             <div className='flex flex-col gap-5 h-1/2 w-full'>
                 <DashboardGreeting />
-                <div className='flex flex-col xl:flex-row w-full h-1/2 gap-4'>
+                <div className='w-full h-full gap-4'>
                     <DeveloperSearch />
                     {/* <CompanyCurrentProjects /> */}
                     {/* <CompanyResourceRequest /> */}

@@ -1,3 +1,4 @@
+"use client"
 import Dropdown from '@/components/Dropdown'
 import FileUpload from '@/components/FileUpload'
 import InputDate from '@/components/InputDate'

@@ -1,3 +1,4 @@
+"use client"
 import { Factory } from 'lucide-react'
 import React from 'react'
 

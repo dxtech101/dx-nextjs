@@ -42,7 +42,7 @@ const page = () => {
     first_name: "",
     last_name: "",
     email: "",
-    phone: "", 
+    phone: "",
     terms: "",
     ...(selected === "company" && { company_name: "" }),
   });
@@ -86,16 +86,21 @@ const page = () => {
         alt=""
       />
       <div className="relative z-10 flex flex-wrap justify-center min-h-screen items-center gap-6 m-0 xl:-m-8">
-        <div className="relative w-full flex flex-col justify-start items-start lg:max-w-3xl xl:max-w-lg mx-auto lg:pb-12 xl:pb-32 text-black gap-4 xl:gap-20">
+        <div className="relative w-full flex flex-col justify-start items-start lg:max-w-3xl xl:max-w-lg mx-auto text-black gap-4 xl:gap-10">
           <h1 className="text-3xl font-medium inline-flex gap-4 items-center">
             <Link href="/" className="p-3 border border-gray-900 rounded-full">
               <ArrowLeft />
             </Link>
             DX Digital
           </h1>
-          <h2 className="text-5xl md:text-7xl font-medium leading-tight">
-            Create an account & get started.
-          </h2>
+          <span className='flex flex-col gap-6'>
+            <h2 className="text-5xl md:text-7xl font-medium leading-tight">
+              Create an account & get started.
+            </h2>
+            <p className='text-gray-500 text-xl'>
+              Unlock your potential with endless Salesforce opportunities tailored just for you.
+            </p>
+          </span>
         </div>
         <div className="relative w-full xl:w-1/2 flex flex-col justify-center items-center">
           <div className='shadow-inner bg-black/10 my-10 flex flex-row w-full lg:w-3/4 justify-around text-black items-center h-16 p-2 rounded-xl gap-2'>
