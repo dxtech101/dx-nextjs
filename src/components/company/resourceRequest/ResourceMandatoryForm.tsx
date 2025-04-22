@@ -1,16 +1,16 @@
 import InputField from '@/components/InputField';
 import ErrorToast from '@/components/toast/ErrorToast';
 import SuccessfulToast from '@/components/toast/SuccessfulToast';
-import { filterbyCertificates, skillsDetails } from '@/constants/data';
+import { skillsDetails } from '@/constants/data';
 import { InfoLabel } from '@/lib/helper';
-import { getAllSalesforceSkills, getAllSalesforceCertifications } from '@/lib/service/portfolio.service';
+import { getAllSalesforceCertifications, getAllSalesforceSkills } from '@/lib/service/portfolio.service';
 import { addCertificationsRequirement, addSkillRequirement, deleteCertificationsRequirement, deleteSkillRequirement, getAllResourceRequest, getCertificationsRequirementByResourceRequest, getSkillRequirementByResourceRequest } from '@/lib/service/projectResource.service';
-import { CircleUserRound, X } from 'lucide-react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { CircleUserRound } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 
-const SkillCheckboxItem = ({ id, checked, onChange }: any) => {
+const SkillCheckboxItem = ({ id, imageSrc, checked, onChange }: any) => {
     const [checkedItem, setCheckedItem] = useState<any>();
 
     useEffect(() => {
@@ -20,7 +20,7 @@ const SkillCheckboxItem = ({ id, checked, onChange }: any) => {
     if (checkedItem?.bgColor) {
         return (
             <div className={`inline-flex gap-2 items-center ${checkedItem.bgColor} border ${checkedItem.borderColor} p-2 pl-4 rounded-full relative z-10 whitespace-nowrap min-w-max`}>
-                <img className='w-auto h-6' src={checkedItem.imageSrc} alt={checkedItem.text} />
+                <img className='w-auto h-6' src={imageSrc} alt={checkedItem.text} />
                 <span className={`font-normal ${checkedItem.textColor}`}>
                     {checkedItem.text}
                 </span>
@@ -106,16 +106,6 @@ const ResourceMandatoryForm = ({ loading, setLoading, resourceDetails, setMandat
     const [initialCheckedCertificationsItems, setInitialCheckedCertificationsItems] = useState<any[]>([]);
     const [checkedCertificationsItems, setCheckedCertificationsItems] = useState<any[]>([]);
 
-    const accountSfid = useSelector((state: any) => state.userSalesforceID)
-
-    // console.log("initialCertificationsItems::", initialCertificationsItems);
-    // console.log("initialSkillsItems::", initialSkillsItems);
-    // console.log("initialCheckedCertificationsItems::", initialCheckedCertificationsItems);
-    // console.log("initialCheckedSkillsItems::", initialCheckedSkillsItems);
-    // console.log("checkedCertificationsItems::", checkedCertificationsItems);
-    // console.log("checkedSkillsItems::", checkedSkillsItems);
-    // console.log("certificationsItems::", certificationsItems);
-    // console.log("skillsItems::", skillsItems);
 
     const getCompanyResourcesData = async () => {
         try {
@@ -143,18 +133,6 @@ const ResourceMandatoryForm = ({ loading, setLoading, resourceDetails, setMandat
         }
     }
 
-    const getCertificationsRequirementByResourceRequestData = async (sfid: any) => {
-        try {
-            setLoading(true);
-            const { results: certificationsRequirement } = await getCertificationsRequirementByResourceRequest(sfid);
-            // setInitialCertificationsItems(certificationsRequirement);
-        } catch (error) {
-            console.error("Error fetching certifications:", error);
-        } finally {
-            setLoading(false);
-        }
-    }
-
     const getSkillsDetails = async () => {
         try {
             setLoading(true);
@@ -170,25 +148,10 @@ const ResourceMandatoryForm = ({ loading, setLoading, resourceDetails, setMandat
 
     console.log("checkedCertificationItems", checkedCertificationsItems);
 
-    const getCertificationDetails = async () => {
-        try {
-            setLoading(true);
-            const { results: allCertifications } = await getAllSalesforceCertifications();
-            setCertificationsItems(allCertifications);
-            setInitialCertificationsItems(allCertifications)
-        } catch (error) {
-            console.error("Error fetching certifications:", error);
-        } finally {
-            setLoading(false)
-        }
-    }
-
     useEffect(() => {
-        getCertificationDetails();
         getSkillsDetails();
         if (resourceSfid) {
             getSkillRequirementByResourceRequestData(resourceSfid);
-            getCertificationsRequirementByResourceRequestData(resourceSfid);
         }
     }, [])
 
@@ -217,16 +180,15 @@ const ResourceMandatoryForm = ({ loading, setLoading, resourceDetails, setMandat
     ) => {
         const filteredResource = await getCompanyResourcesData();
         console.log("filteredResource::", filteredResource);
-        setResourceSfid(filteredResource.sfid);
         const body = type === 'skill'
             ? {
                 "name": item.name,
-                "resource_request_sfid": filteredResource.sfid,
+                "resource_request_sfid": filteredResource.id,
                 "skill_sfid": item.sfid,
                 "skill_level": "Junior",
             } : {
                 "name": item.name,
-                "resource_request_sfid": filteredResource.sfid,
+                "resource_request_sfid": filteredResource.id,
                 "certification_sfid": item.sfid
             };
 
@@ -235,18 +197,18 @@ const ResourceMandatoryForm = ({ loading, setLoading, resourceDetails, setMandat
         if (type === 'skill') {
             if (operation === 'add') {
                 apiFunction = addSkillRequirement;
-                successMessage = "Salesforce Skill requiremnet created Successfully";
+                successMessage = "Salesforce Skill requirement created Successfully";
             } else {
                 apiFunction = deleteSkillRequirement;
-                successMessage = "Salesforce Skill requiremnet deleted Successfully";
+                successMessage = "Salesforce Skill requirement deleted Successfully";
             }
         } else if (type === 'certification') {
             if (operation === 'add') {
                 apiFunction = addCertificationsRequirement;
-                successMessage = "Salesforce Certification requiremnet added Successfully";
+                successMessage = "Salesforce Certification requirement added Successfully";
             } else {
                 apiFunction = deleteCertificationsRequirement;
-                successMessage = "Salesforce Certification requiremnet deleted Successfully";
+                successMessage = "Salesforce Certification requirement deleted Successfully";
             }
         }
 
@@ -256,8 +218,6 @@ const ResourceMandatoryForm = ({ loading, setLoading, resourceDetails, setMandat
             if (response) {
                 const checkedSkills: any = await getSkillRequirementByResourceRequestData(response.results.resource_request.sfid)
                 setInitialCheckedSkillsItems(checkedSkills);
-                const checkedCertifications: any = await getCertificationsRequirementByResourceRequestData(response.results.resource_request.sfid)
-                setInitialCheckedCertificationsItems(checkedCertifications);
                 toast.custom((t) => (
                     <SuccessfulToast t={t} message={successMessage} />
                 ));
@@ -310,24 +270,6 @@ const ResourceMandatoryForm = ({ loading, setLoading, resourceDetails, setMandat
     ) => {
         handleCheckboxChange(item);
         setShowSuggestions(false);
-    };
-
-    const filterbyCategory = (category: any) => {
-        if (selectedTags.includes(category)) {
-            const updatedTags = selectedTags.filter((tag: any) => tag !== category);
-            setSelectedTags(updatedTags);
-            if (updatedTags.length === 0) {
-                setCertificationsItems(initialCertificationsItems);
-            } else {
-                const filtered = initialCertificationsItems.filter((item: any) => updatedTags.includes(item.type));
-                setCertificationsItems(filtered);
-            }
-        } else {
-            const updatedTags = [...selectedTags, category];
-            setSelectedTags(updatedTags);
-            const filtered = initialCertificationsItems.filter((item: any) => updatedTags.includes(item.type));
-            setCertificationsItems(filtered);
-        }
     };
 
     return (
@@ -441,6 +383,7 @@ const ResourceMandatoryForm = ({ loading, setLoading, resourceDetails, setMandat
                                                 <SkillCheckboxItem
                                                     key={item.sfid}
                                                     id={item.sfid}
+                                                    imageSrc={item.url}
                                                     checked={checkedSkillsItems.some(checkedItem => checkedItem.sfid === item.sfid)}
                                                     onChange={() => {
                                                         handleCheckboxChange(
@@ -462,120 +405,6 @@ const ResourceMandatoryForm = ({ loading, setLoading, resourceDetails, setMandat
                                             )}
                                         </>
                                     }
-                                </div>
-                            </div>
-                        </div>
-                        <div className='flex flex-col w-full gap-6 py-6'>
-                            <div className=''>
-                                <h2 className='font-semibold mb-4 uppercase text-sm'>Search Certifications</h2>
-                                <div ref={certificationsContainerRef} className='relative mt-4'>
-                                    {loading ?
-                                        <div className='animate-pulse w-full h-12 rounded-xl bg-gray-200' /> :
-                                        <InputField
-                                            className='w-full z-10'
-                                            iconName='search'
-                                            placeHolder='Search your Certifications (Ex. Salesforce Administrator, Salesforce Developer)'
-                                            onChange={(e: any) => {
-                                                if (e.target.value.trim()) {
-                                                    const filtered = certificationsItems.filter((item: any) => item.name.toLowerCase().includes(e.target.value.toLowerCase()));
-                                                    setCertificationsItems(filtered);
-                                                    setShowCertificationSuggestions(true);
-                                                } else setCertificationsItems(initialCertificationsItems)
-                                            }}
-                                            onFocus={() => setShowCertificationSuggestions(true)}
-                                        />
-                                    }
-
-                                    {showCertificationSuggestions && (
-                                        <div className='absolute overflow-x-scroll bg-white border-2 left-0 border-gray-100 rounded-xl w-full mt-1 max-h-56 overflow-y-auto z-20'>
-                                            <div className='sticky top-0 w-full flex items-center gap-2 bg-white p-2 px-4 whitespace-nowrap'>
-                                                <span className='text-sm'>
-                                                    Filter by:
-                                                </span>
-                                                <div className='flex overflow-x-scroll no-scrollbar gap-2 items-center'>
-                                                    {filterbyCertificates.map((item: any, index: number) => {
-                                                        return (
-                                                            <button key={index} onClick={() => filterbyCategory(item)}
-                                                                className={`px-2 py-1 rounded-full text-xs ${selectedTags.includes(item) ? 'bg-blue-500 text-white' : 'bg-gray-100'}`}
-                                                            >
-                                                                {item}
-                                                            </button>
-                                                        )
-                                                    })}
-                                                </div>
-                                            </div>
-                                            {certificationsItems?.length > 0 ? (
-                                                certificationsItems?.map((item: any) => (
-                                                    <div
-                                                        key={item.sfid}
-                                                        className='flex items-center justify-between gap-2 p-3 border border-b-0 cursor-pointer hover:bg-gray-100'
-                                                        onMouseDown={() => {
-                                                            handleSuggestionSelect(
-                                                                item,
-                                                                () => handleCheckboxChange(
-                                                                    item,
-                                                                    checkedCertificationsItems,
-                                                                    setCheckedCertificationsItems,
-                                                                    certificationsItems,
-                                                                    setCertificationsItems,
-                                                                    initialCertificationsItems,
-                                                                    'certification',
-                                                                    resourceDetails
-                                                                ),
-                                                                setShowCertificationSuggestions
-                                                            );
-                                                        }}
-                                                    >
-                                                        <div className='inline-flex items-center gap-2'>
-                                                            <img className='w-8 h-auto' src={'/' + item.name.split(' ').join('-') + '.png'} alt={item.text} />
-                                                            <span className='font-bold text-gray-800 ml-4'>{item.name}</span>
-                                                        </div>
-
-                                                        <span className='text-xs'>{item.type}</span>
-                                                    </div>
-                                                ))
-                                            ) : (
-                                                <div className='text-md text-gray-400 p-4'>No matching Certification</div>
-                                            )}
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                            <div className='flex-1'>
-                                <h2 className='text-sm uppercase font-semibold mb-4'>Selected Certifications</h2>
-                                <div className='mt-2 flex flex-row gap-4 flex-nowrap lg:flex-wrap z-40 overflow-x-auto w-full appearance-none'>
-                                    {loading ?
-                                        <>
-                                            <div className={`animate-pulse inline-flex w-1/3 h-20 gap-2 items-center bg-gray-200 border p-2 pl-4 pr-4 rounded-full`} />
-                                            <div className={`animate-pulse inline-flex w-1/3 h-20 gap-2 items-center bg-gray-200 border p-2 pl-4 pr-4 rounded-full`} />
-                                        </>
-                                        :
-                                        <>
-                                            {checkedCertificationsItems.length > 0 ? checkedCertificationsItems.map(item => (
-                                                <CertificationCheckboxItem
-                                                    key={item.sfid}
-                                                    text={item.name}
-                                                    imageSrc={item.name}
-                                                    checked={checkedCertificationsItems.some(checkedItem => checkedItem.sfid === item.sfid)}
-                                                    onChange={() => {
-                                                        handleCheckboxChange(
-                                                            item,
-                                                            checkedCertificationsItems,
-                                                            setCheckedCertificationsItems,
-                                                            certificationsItems,
-                                                            setCertificationsItems,
-                                                            initialCertificationsItems,
-                                                            'certification',
-                                                            resourceDetails
-                                                        )
-                                                    }}
-                                                />
-                                            )) : (
-                                                <span className="text-md font-normal text-gray-400 ml-2">
-                                                    No Certification Selected...
-                                                </span>
-                                            )}
-                                        </>}
                                 </div>
                             </div>
                         </div>

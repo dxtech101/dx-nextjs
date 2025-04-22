@@ -57,7 +57,7 @@ const CompanyCurrentProjects = () => {
 
     return (
         <>
-            <div className='border border-gray-300 rounded-3xl flex-col p-6 gap-4 h-full w-full bg-white bg-no-repeat bg-contain bg-top'>
+            <div className='border border-gray-300 rounded-3xl flex-col p-6 gap-4 h-full w-1/3 bg-white bg-no-repeat bg-contain bg-top'>
                 <div className='flex flex-row items-center justify-between w-full'>
                     <span className='inline-flex gap-2'>
                         <Zap className='w-6 h-6' />

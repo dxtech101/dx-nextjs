@@ -12,7 +12,7 @@ const DashboardNavbar = ({ toggleSideBar, setToggleSideBar }: any) => {
     const userProfile = useSelector((state: any) => state.userProfile);
     const company_developer = useSelector((state: any) => state.userCompany);
 
-    const isUserOnboarded = userProfile.is_onboard;
+    const isUserOnboarded = userProfile?.role === "Company" ? true : userProfile.is_onboard;
     const router = useRouter();
     const pathName = usePathname();
     const role: any = pathName.split('/')[1];

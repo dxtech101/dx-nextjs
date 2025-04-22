@@ -1,6 +1,6 @@
 "use client"
 import { removeAuthenticationToken } from '@/lib/cookie';
-import { BriefcaseBusiness, ChevronLeft, LayoutDashboard, LogOut, UserRoundSearch } from 'lucide-react';
+import { BriefcaseBusiness, ChevronLeft, LayoutDashboard, LogOut, UserRoundSearch, UserSearch } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import Tooltip from './Tooltip';
@@ -14,12 +14,14 @@ const SidebarItem = ({ href, icon: Icon, label, toggleSideBar, setToggleSideBar 
 
     return (
         <Tooltip popupContent={label} show={toggleSideBar}>
-            <button 
-            onClick={() => {
-                router.push(href)
-                setToggleSideBar(false)
-            }}
-            className={`flex items-center ${toggleSideBar ? "justify-start pl-6" : "justify-center"} h-20 md:h-14 xl:h-16 ${isActive ? 'text-white bg-gray-800' : 'text-gray-600 bg-gray-100 hover:bg-gray-200'} gap-4 rounded-xl mb-4 w-full`}>
+            <button
+                onClick={() => {
+                    router.push(href)
+                    if (window.innerWidth < 768) {
+                        setToggleSideBar(false);
+                    }
+                }}
+                className={`flex items-center ${toggleSideBar ? "justify-start pl-5" : "justify-center"} h-20 md:h-14 xl:h-16 ${isActive ? 'text-white bg-gray-800' : 'text-gray-600 bg-gray-100 hover:bg-gray-200'} gap-2 rounded-xl mb-4 w-full`}>
                 <Icon className={`h-5 w-5 ${isActive ? 'text-white' : 'text-gray-600'}`} />
                 {toggleSideBar && <span className="text-sm font-medium">{label}</span>}
             </button>
@@ -46,15 +48,15 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
             label: "Dashboard"
         },
         {
-            href: "/company/dashboard/job-listing",
-            icon: BriefcaseBusiness,
-            label: "Job Listing"
+            href: "/company/dashboard/developers",
+            icon: UserSearch,
+            label: "Developer Search"
         },
-        {
-            href: "/company/dashboard/profile",
-            icon: UserRoundSearch,
-            label: "Profile"
-        },
+        // {
+        //     href: "/company/dashboard/projects",
+        //     icon: UserRoundSearch,
+        //     label: "Project"
+        // },
     ];
 
     const renderNavigationLinks = () => {
@@ -87,6 +89,7 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
                                     icon={item.icon}
                                     label={item.label}
                                     toggleSideBar={toggleSideBar}
+                                    setToggleSideBar={setToggleSideBar}
                                 />
                             ))}
                         </ul>

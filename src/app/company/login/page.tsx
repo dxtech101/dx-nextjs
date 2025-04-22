@@ -8,9 +8,9 @@ import { addSalesforceId } from '@/feature/reducers/userSalesforceId';
 import { handleFormDataChange, validateForm } from '@/lib/helper';
 import { getCompanySalesforceAccountId, userOnBoarded, userSignIn } from '@/lib/service/user.service';
 import { ArrowLeft, LoaderCircle } from 'lucide-react';
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 

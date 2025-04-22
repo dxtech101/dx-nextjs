@@ -1,8 +1,6 @@
 "use client";
 import * as Icons from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
-import { getCountries, getCountryCallingCode } from 'react-phone-number-input';
-
+import { useRef, useState } from 'react';
 
 const InputField = ({
   type,
@@ -125,12 +123,12 @@ const InputField = ({
             </div>
           )}
           {checkedItems && (
-            <div className="absolute top-1.5 left-10 mt-1 w-fit sm:w-auto">
-              <div className="relative flex flex-row flex-wrap gap-2 mb-2">
+            <div className="absolute top-2.5 left-10 w-fit overflow-x-scroll">
+              <div className="relative flex flex-row gap-2 mb-2">
                 {checkedItems.map((item: any) => (
                   <div
                     key={item?.sfid}
-                    className="flex items-center gap-1 bg-gray-200 px-3 py-1 rounded-full text-sm"
+                    className="flex items-center gap-1 bg-gray-200 px-3 py-1 rounded-full whitespace-nowrap text-sm"
                   >
                     <span>{item?.name}</span>
                     <button

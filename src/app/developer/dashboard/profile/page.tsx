@@ -61,7 +61,7 @@ const page = () => {
     <div className='bg-white border border-gray-300 rounded-3xl flex flex-col items-start justify-center gap-6 p-6'>
       <DeveloperProfileDetails loading={loading} personalDetails={profileData?.personalDetails} certificationCount={profileData?.certifications?.length} updateDetails={getUserPortoflioDetails} />
       <DeveloperProfileVideoSummary />
-      <DeveloperProfileAISummary />
+      {/* <DeveloperProfileAISummary /> */}
       <div className='w-full h-full flex flex-col lg:flex-row items-start justify-center gap-4'>
         <DeveloperProfileSkills loading={loading} skills={profileData?.skills} updateDetails={getUserPortoflioDetails} />
         {/* <DeveloperProfileTechnologies loading={loading} technologies={technologies} /> */}

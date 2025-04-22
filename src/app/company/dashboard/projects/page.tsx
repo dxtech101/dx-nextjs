@@ -8,15 +8,14 @@ import CompanyProjectTableLoader from '@/components/loaders/CompanyProjectTableL
 import ResourseDataLoader from '@/components/loaders/ResourseDataLoader'
 import Modal from '@/components/modal/Modal'
 import { skillsDetails } from '@/constants/data'
-import { InfoLabel } from '@/lib/helper'
-import { getAllResourceRequest, getCompanyProjects, getSkillRequirementByResourceRequest } from '@/lib/service/projectResource.service'
-import { ArrowUp, ArrowUpRight, ChevronRight, CircleUserRound, Pencil, Plus, Sparkle, Trash } from 'lucide-react'
+import { deleteProject, getAllResourceRequest, getCompanyProjects, getSkillRequirementByResourceRequest } from '@/lib/service/projectResource.service'
+import { ArrowUpRight, Pencil, Plus, Sparkle, Trash } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-const SkillItem = ({ name }: any) => {
+const SkillItem = ({ name, imageSrc }: any) => {
   const [checkedItem, setCheckedItem] = useState<any>();
 
   useEffect(() => {
@@ -26,7 +25,7 @@ const SkillItem = ({ name }: any) => {
   if (checkedItem?.bgColor) {
     return (
       <div className={`inline-flex gap-2 items-center min-w-max whitespace-nowrap ${checkedItem.bgColor} border ${checkedItem.borderColor} p-2 px-4 rounded-full relative z-10`}>
-        <img className='w-auto h-6' src={checkedItem.imageSrc} alt={name} />
+        <img className='w-auto h-6' src={imageSrc} alt={name} />
         <span className={`font-bold ${checkedItem.textColor}`}>
           {name}
         </span>
@@ -109,9 +108,17 @@ const page = () => {
     setLoadingResources(false);
   };
 
+  const handleProjectDelete = async (projectId: any) => {
+    await deleteProject(projectId);
+    setShowProjectDetails({ type: false, id: null });
+    getCompanyProjectsData();
+  };
+
   useEffect(() => {
     getCompanyProjectsData();
   }, [])
+
+
 
   const userOnboarding = useSelector((state: any) => state.userOnboarding["companyOnboarding"])
   return (
@@ -189,6 +196,7 @@ const page = () => {
                             <Pencil className='w-4 h-4' />
                           </Link>
                           <button
+                            onClick={() => handleProjectDelete(project.sfid)}
                             className='inline-flex gap-2 bg-red-200 text-red-800 border hover:border-red-800 text-xs font-extrabold uppercase rounded-full px-3 py-2 ml-2'>
                             <Trash className='w-4 h-4' />
                           </button>
@@ -223,7 +231,7 @@ const page = () => {
                                               <span>Loading skills...</span>
                                             ) : skills.length > 0 ? (
                                               skills.slice(0, 5).map((item: any, idx: number) => (
-                                                <SkillItem key={idx} name={item.name} />
+                                                <SkillItem key={idx} name={item.name} imageSrc={item.skill.url} />
                                               ))
                                             ) : (
                                               <span>No skills found</span>

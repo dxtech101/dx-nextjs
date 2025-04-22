@@ -33,8 +33,7 @@ const page = () => {
     last_name: "",
     email: "",
     phone: "",
-    // password: "",
-    ...(selected === "company" && { company_name: "", industry: "" }),
+    ...(selected === "company" && { company_name: "" }),
     role: selected,
     terms: false,
   });
@@ -43,9 +42,9 @@ const page = () => {
     first_name: "",
     last_name: "",
     email: "",
-    phone: "",
-    // password: "",
+    phone: "", 
     terms: "",
+    ...(selected === "company" && { company_name: "" }),
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -59,7 +58,6 @@ const page = () => {
     signupData.append("first_name", Salutation + " " + formData.first_name);
     signupData.append("last_name", formData.last_name);
     signupData.append("email", formData.email);
-    // signupData.append("password", formData.password);
     signupData.append("phone", formData.phone);
     if (selected === "company") {
       signupData.append("company_name", formData.company_name);
@@ -100,20 +98,20 @@ const page = () => {
           </h2>
         </div>
         <div className="relative w-full xl:w-1/2 flex flex-col justify-center items-center">
-          {/* <div className='shadow-inner bg-black/10 my-10 flex flex-row w-full lg:w-3/4 justify-around text-black items-center h-16 p-2 rounded-xl gap-2'>
-                            <button onClick={() => setSelected("Individual")} className={`text-sm lg:text-base ${selected === "Individual" ? "bg-white shadow-xl" : "bg-transparent text-slate-400 hover:text-slate-600 hover:bg-white/50"}  w-full h-full flex items-center justify-center gap-2 rounded-xl font-bold`}>
-                                <div className={`${selected === "Individual" ? "bg-blue-100" : "bg-gray-200"} bg-blue-100 w-6 h-6 lg:w-8 lg:h-8 rounded-full flex items-center justify-center`}>
-                                    <CodeXml className='h-4 lg:h-6' color={selected === "Individual" ? "#3b82fc" : "#4b5563"} strokeWidth={2} />
-                                </div>
-                                Developer
-                            </button>
-                            <button onClick={() => setSelected("Company")} className={`text-sm lg:text-base ${selected === "Company" ? "bg-white shadow-xl" : "bg-transparent text-slate-400 hover:text-slate-600 hover:bg-white/50"} group w-full h-full flex items-center justify-center gap-2 rounded-xl font-bold`}>
-                                <div className={`${selected === "Company" ? "bg-blue-100" : "bg-gray-200 group-hover:bg-gray-100"} bg-blue-100 w-6 h-6 lg:w-8 lg:h-8 rounded-full flex items-center justify-center`}>
-                                    <Building2 className='h-4 lg:h-6' color={selected === "Company" ? "#3b82fc" : "#4b5563"} strokeWidth={2} />
-                                </div>
-                                Company
-                            </button>
-                        </div> */}
+          <div className='shadow-inner bg-black/10 my-10 flex flex-row w-full lg:w-3/4 justify-around text-black items-center h-16 p-2 rounded-xl gap-2'>
+            <button onClick={() => setSelected("Individual")} className={`text-sm lg:text-base ${selected === "Individual" ? "bg-white shadow-xl" : "bg-transparent text-slate-400 hover:text-slate-600 hover:bg-white/50"}  w-full h-full flex items-center justify-center gap-2 rounded-xl font-bold`}>
+              <div className={`${selected === "Individual" ? "bg-blue-100" : "bg-gray-200"} bg-blue-100 w-6 h-6 lg:w-8 lg:h-8 rounded-full flex items-center justify-center`}>
+                <CodeXml className='h-4 lg:h-6' color={selected === "Individual" ? "#3b82fc" : "#4b5563"} strokeWidth={2} />
+              </div>
+              Developer
+            </button>
+            <button onClick={() => setSelected("Company")} className={`text-sm lg:text-base ${selected === "Company" ? "bg-white shadow-xl" : "bg-transparent text-slate-400 hover:text-slate-600 hover:bg-white/50"} group w-full h-full flex items-center justify-center gap-2 rounded-xl font-bold`}>
+              <div className={`${selected === "Company" ? "bg-blue-100" : "bg-gray-200 group-hover:bg-gray-100"} bg-blue-100 w-6 h-6 lg:w-8 lg:h-8 rounded-full flex items-center justify-center`}>
+                <Building2 className='h-4 lg:h-6' color={selected === "Company" ? "#3b82fc" : "#4b5563"} strokeWidth={2} />
+              </div>
+              Company
+            </button>
+          </div>
           <form
             onSubmit={handleSubmit}
             className="w-full lg:w-3/4 flex flex-col gap-6"
@@ -152,19 +150,19 @@ const page = () => {
             </div>
 
             <div className="flex flex-col lg:flex-row gap-4">
-              {/* {selected === "Company" && (
-                                <InputField
-                                    type="text"
-                                    isRequired={true}
-                                    label="Company Name"
-                                    value={formData.company_name}
-                                    onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
-                                    id="company_name"
-                                    className="w-full"
-                                    placeholder="Enter company name"
-                                    error={errors.company_name}
-                                />
-                            )} */}
+              {selected === "Company" && (
+                <InputField
+                  type="text"
+                  isRequired={true}
+                  label="Company Name"
+                  value={formData.company_name}
+                  onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
+                  id="company_name"
+                  className="w-full"
+                  placeholder="Enter company name"
+                  error={errors.company_name}
+                />
+              )}
               <InputField
                 type="text"
                 label="Email Address"

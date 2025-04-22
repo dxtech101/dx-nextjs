@@ -1,13 +1,29 @@
 "use client";
-import { CompanyProjectCard } from '@/components/company/project/CreateProjectForm';
 import { ResourceRequestCard } from '@/components/company/resourceRequest/ResourceMandatoryForm';
 import { skillsDetails } from '@/constants/data';
+import { InfoLabel } from '@/lib/helper';
 import { getAllResourceRequest, getProject, getSkillRequirementByResourceRequest } from '@/lib/service/projectResource.service';
-import { ArrowLeft, Pencil, Sparkle } from 'lucide-react';
+import { ArrowLeft, Briefcase, Pencil, Sparkle } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-const SkillItem = ({ name }: any) => {
+export const CompanyProjectCard = (props: any) => {
+    const { project } = props;
+
+    return (
+        <div className='relative bg-gray-200 rounded-3xl flex flex-col gap-4 flex-1 p-6 w-full z-10'>
+            <Briefcase className={`absolute bottom-10 right-10  h-24 w-24  z-0 text-gray-300`} />
+            <div className='grid grid-cols-3 gap-4'>
+                <InfoLabel label="Industry" content={project?.industry} />
+                <InfoLabel label="Start Date" content={project?.start_date || "N/A"} />
+                <InfoLabel label="Project Duration" content={project.project_duration?.split(".")[0] || "N/A"} />
+            </div>
+            <InfoLabel label="Project Summary" content={project?.description || "N/A"} />
+        </div >
+    )
+}
+
+const SkillItem = ({ name, imageSrc }: any) => {
     const [checkedItem, setCheckedItem] = useState<any>();
 
     useEffect(() => {
@@ -17,7 +33,7 @@ const SkillItem = ({ name }: any) => {
     if (checkedItem?.bgColor) {
         return (
             <div className={`inline-flex gap-2 items-center min-w-max whitespace-nowrap ${checkedItem.bgColor} border ${checkedItem.borderColor} p-2 px-4 rounded-full relative z-10`}>
-                <img className='w-auto h-6' src={checkedItem.imageSrc} alt={name} />
+                <img className='w-auto h-6' src={imageSrc} alt={name} />
                 <span className={`font-bold ${checkedItem.textColor}`}>
                     {name}
                 </span>
@@ -71,15 +87,8 @@ const page = ({ params }: any) => {
     const getCompanyResourcesData = async () => {
         try {
             setLoading(true);
-            const { results: contactProjects } = await getAllResourceRequest();
-            const filteredResourceRequests = contactProjects.filter((resource: any) => {
-                if (resource.project && resource.project.sfid) {
-                    return resource.project.sfid === projectID;
-                } else {
-                    console.warn("Invalid resource project:", resource);
-                    return false;
-                }
-            });
+            const { results: contactResources } = await getAllResourceRequest();
+            const filteredResourceRequests = contactResources.filter((resource: any) => resource?.project?.id == projectID);
             setResources(filteredResourceRequests);
         } catch (error) {
             console.error("Error fetching certifications:", error);
@@ -96,6 +105,7 @@ const page = ({ params }: any) => {
     console.log("skillsMap::", skillsMap);
     console.log("skills::", skills);
     console.log("projects::", projects);
+    console.log("Resoources::", resources);
 
     return (
         <div>
@@ -118,7 +128,7 @@ const page = ({ params }: any) => {
             </> : <>
                 <div className='w-full flex flex-row justify-between items-center gap-6 py-4'>
                     <h1 className="font-heading tracking-tight text-4xl md:text-5xl font-medium mb-4">
-                        Project Details
+                        {projects?.project_name}
                     </h1>
                     <div className='flex flex-row gap-4'>
                         <Link href={`/company/dashboard/projects`} className='inline-flex gap-2 items-center bg-blue-500 text-white rounded-xl px-3 py-3'>
@@ -132,12 +142,11 @@ const page = ({ params }: any) => {
                     </div>
                 </div>
                 <div className='flex justify-between gap-6 w-full py-4'>
-                    {projects && projects.length > 0 && projects?.map((project: any, index: any) => (
+                    {projects &&
                         <CompanyProjectCard
-                            index={index}
-                            project={project}
+                            project={projects}
                         />
-                    ))}
+                    }
                 </div>
                 <span className='text-xl font-bold'>
                     Resource Requests
@@ -163,7 +172,7 @@ const page = ({ params }: any) => {
                                                     <span>Loading skills...</span>
                                                 ) : skills.length > 0 ? (
                                                     skills.slice(0, 5).map((item: any, idx: number) => (
-                                                        <SkillItem key={idx} name={item.name} />
+                                                        <SkillItem key={idx} name={item.name} imageSrc={item.skill.url} />
                                                     ))
                                                 ) : (
                                                     <span>No skills found</span>
