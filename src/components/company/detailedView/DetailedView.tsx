@@ -5,12 +5,28 @@ import { removeProjectId } from '@/feature/reducers/companyCreateProject';
 import { onBoardingHandlePrevious } from '@/feature/reducers/userOnboarding';
 import { getAllSalesforceSkills } from '@/lib/service/portfolio.service';
 import { getAllResourceRequest, getCertificationsRequirementByResourceRequest, getCompanyProjects, getSkillRequirementByResourceRequest } from '@/lib/service/projectResource.service';
-import { ShieldCheck, Sparkle } from 'lucide-react';
+import { Briefcase, Sparkle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { InfoLabel } from '@/lib/helper';
 import { ResourceRequestCard } from '../resourceRequest/ResourceMandatoryForm';
-import { CompanyProjectCard } from '@/app/company/dashboard/projects/[project_id]/page';
+
+const CompanyProjectCard = (props: any) => {
+    const { project } = props;
+
+    return (
+        <div className='relative bg-gray-200 rounded-3xl flex flex-col gap-4 flex-1 p-6 w-full z-10'>
+            <Briefcase className={`absolute bottom-10 right-10  h-24 w-24  z-0 text-gray-300`} />
+            <div className='grid grid-cols-3 gap-4'>
+                <InfoLabel label="Industry" content={project?.industry} />
+                <InfoLabel label="Start Date" content={project?.start_date || "N/A"} />
+                <InfoLabel label="Project Duration" content={project.project_duration?.split(".")[0] || "N/A"} />
+            </div>
+            <InfoLabel label="Project Summary" content={project?.description || "N/A"} />
+        </div >
+    )
+}
+
 
 const SkillItem = ({ name }: any) => {
     const [checkedItem, setCheckedItem] = useState<any>();

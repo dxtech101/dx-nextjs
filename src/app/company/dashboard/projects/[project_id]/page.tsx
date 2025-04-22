@@ -7,7 +7,7 @@ import { ArrowLeft, Briefcase, Pencil, Sparkle } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-export const CompanyProjectCard = (props: any) => {
+const CompanyProjectCard = (props: any) => {
     const { project } = props;
 
     return (
