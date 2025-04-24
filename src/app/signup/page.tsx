@@ -1,6 +1,8 @@
 "use client";
 import InputField from "@/components/InputField";
+import Modal from "@/components/modal/Modal";
 import SuccessModal from "@/components/modal/SuccessModal";
+import TermsAndConditions from "@/components/TermsAndConditions";
 import ErrorToast from "@/components/toast/ErrorToast";
 import { handleFormDataChange, validateForm } from "@/lib/helper";
 import axios from "axios";
@@ -8,18 +10,14 @@ import {
   ArrowLeft,
   Building2,
   CodeXml,
-  LoaderCircle,
-  ScrollText,
+  LoaderCircle
 } from "lucide-react";
 import Link from "next/link";
-import React, { forwardRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import PhoneInput from "react-phone-number-input";
-import Modal from "@/components/modal/Modal";
 import "react-phone-number-input/style.css";
-import TermsAndConditions from "@/components/TermsAndConditions";
-import { verifyCompanyDeveloper } from "@/lib/service/user.service";
-import { useRouter } from "next/navigation";
 
 const page = () => {
   const router = useRouter();
@@ -37,6 +35,14 @@ const page = () => {
     role: selected,
     terms: false,
   });
+
+  const queryParams = useSearchParams().get("tab");
+
+  useEffect(() => {
+    if (queryParams) {
+      setSelected(queryParams === "company" ? "Company" : "Individual");
+    }
+  }, [queryParams]);
 
   const [errors, setErrors] = useState({
     first_name: "",

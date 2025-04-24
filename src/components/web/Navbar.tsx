@@ -144,24 +144,25 @@ const NavBar = () => {
                             </span>
                             <Image src="/developer.png" alt="Developer" width={80} height={80} className='' />
                         </Link>
-                        {/* <Link href="/company/login" className='w-64 h-24 bg-amber-50 hover:bg-amber-100 border-[1px] border-amber-400 rounded-xl flex justify-around items-center relative'>
-                            <span className='font-extrabold flex flex-col text-amber-900'>
+                        <Link href="/company/login" className='w-64 h-24 bg-emerald-100 hover:bg-emerald-200 rounded-xl flex justify-center items-center p-3 relative gap-3'>
+                            <span className='font-extrabold flex flex-col items-start text-emerald-900'>
                                 Company
-                                <span className='text-xs text-gray-500'>
-                                    Login as company
+                                <span className='text-xs font-normal text-gray-500 text-start'>
+                                    Access your account & continue exploring!
                                 </span>
                             </span>
-                            <Image src="/company.png" alt="Developer" width={100} height={100} className='' />
-                        </Link> */}
-                        <Link href="/signup" className='w-64 h-24 bg-blue-50 hover:bg-blue-100 p-3 rounded-xl flex justify-around items-center relative'>
-                            <span className='font-extrabold flex flex-col text-blue-900'>
+                            <Image src="/company.png" alt="Developer" width={80} height={80} />
+                        </Link>
+                        <Link href="/signup" className='w-64 h-24 bg-blue-50 hover:bg-blue-100 rounded-xl flex flex-row-reverse gap-1 justify-evenly items-center p-3 relative'>
+                            <Image src="/signup.jpg" alt="Developer" width={80} height={80} className='mix-blend-multiply' />
+                            <span className='font-extrabold flex flex-col items-start text-blue-900 '>
                                 Sign Up
-                                <span className='text-xs font-normal text-gray-500 text-start'>
+                                <span className='text-xs font-normal text-gray-500 max-w-xl text-start'>
                                     Join us today and start your journey!
                                 </span>
                             </span>
-                            <Image src="/company.png" alt="Developer" width={80} height={80} className='' />
                         </Link>
+                    
                     </div>
                 </nav>
             </div>
