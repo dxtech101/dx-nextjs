@@ -19,7 +19,7 @@ import toast from "react-hot-toast";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 
-export default function SignUp() {
+export default function page() {
   const router = useRouter();
   const [selected, setSelected] = useState("Individual");
   const [successModal, setSuccessModal] = useState(false);
@@ -36,13 +36,13 @@ export default function SignUp() {
     terms: false,
   });
 
-  const queryParams = useSearchParams().get("tab");
+  // const queryParams = useSearchParams().get("tab");
 
-  useEffect(() => {
-    if (queryParams) {
-      setSelected(queryParams === "company" ? "Company" : "Individual");
-    }
-  }, [queryParams]);
+  // useEffect(() => {
+  //   if (queryParams) {
+  //     setSelected(queryParams === "company" ? "Company" : "Individual");
+  //   }
+  // }, [queryParams]);
 
   const [errors, setErrors] = useState({
     first_name: "",
