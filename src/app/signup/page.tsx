@@ -36,13 +36,13 @@ export default function page() {
     terms: false,
   });
 
-  const queryParams = useSearchParams().get("tab");
+  // const queryParams = useSearchParams().get("tab");
 
-  useEffect(() => {
-    if (queryParams) {
-      setSelected(queryParams === "company" ? "Company" : "Individual");
-    }
-  }, [queryParams]);
+  // useEffect(() => {
+  //   if (queryParams) {
+  //     setSelected(queryParams === "company" ? "Company" : "Individual");
+  //   }
+  // }, [queryParams]);
 
   const [errors, setErrors] = useState({
     first_name: "",
