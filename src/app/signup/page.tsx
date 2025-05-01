@@ -124,7 +124,7 @@ const page = () => {
             >
               <span className='flex flex-col gap-6'>
                 <h2 className="text-4xl md:text-6xl font-medium leading-tight">
-                  Coming Soon!
+                  Coming Soon in May 2025!
                 </h2>
                 <p className='text-gray-500 text-md xl:text-xl'>
                   Hire Exceptional Salesforce Experts for Your Projects

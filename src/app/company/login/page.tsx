@@ -83,7 +83,7 @@ export default function Login() {
                         <div className="relative w-full flex flex-col justify-start items-start xl:max-w-lg mx-auto text-black gap-10">
                             <span className='flex flex-col gap-6'>
                                 <h2 className="text-4xl md:text-7xl font-medium leading-tight">
-                                    Coming Soon!
+                                    Coming Soon in May 2025!
                                 </h2>
                                 <p className='text-gray-500 text-md xl:text-xl'>
                                     Hire Exceptional Salesforce Experts for Your Projects
