@@ -13,8 +13,8 @@ import {
   LoaderCircle
 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
@@ -35,6 +35,14 @@ export default function page() {
     role: selected,
     terms: false,
   });
+
+  const queryParams = useSearchParams().get("tab");
+
+  useEffect(() => {
+    if (queryParams) {
+      setSelected(queryParams === "company" ? "Company" : "Individual");
+    }
+  }, [queryParams]);
 
   const [errors, setErrors] = useState({
     first_name: "",
