@@ -1,6 +1,8 @@
 "use client";
 import InputField from "@/components/InputField";
+import Modal from "@/components/modal/Modal";
 import SuccessModal from "@/components/modal/SuccessModal";
+import TermsAndConditions from "@/components/TermsAndConditions";
 import ErrorToast from "@/components/toast/ErrorToast";
 import { handleFormDataChange, validateForm } from "@/lib/helper";
 import axios from "axios";
@@ -8,20 +10,16 @@ import {
   ArrowLeft,
   Building2,
   CodeXml,
-  LoaderCircle,
-  ScrollText,
+  LoaderCircle
 } from "lucide-react";
 import Link from "next/link";
-import React, { forwardRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import PhoneInput from "react-phone-number-input";
-import Modal from "@/components/modal/Modal";
 import "react-phone-number-input/style.css";
-import TermsAndConditions from "@/components/TermsAndConditions";
-import { verifyCompanyDeveloper } from "@/lib/service/user.service";
-import { useRouter } from "next/navigation";
 
-const page = () => {
+export default function page() {
   const router = useRouter();
   const [selected, setSelected] = useState("Individual");
   const [successModal, setSuccessModal] = useState(false);
@@ -331,4 +329,3 @@ const page = () => {
   );
 };
 
-export default page;
