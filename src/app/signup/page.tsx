@@ -19,7 +19,7 @@ import toast from "react-hot-toast";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 
-const page = () => {
+export default function SignUp() {
   const router = useRouter();
   const [selected, setSelected] = useState("Individual");
   const [successModal, setSuccessModal] = useState(false);
@@ -337,4 +337,3 @@ const page = () => {
   );
 };
 
-export default page;
