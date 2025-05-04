@@ -23,7 +23,7 @@ export default function RootLayout({
       </html>
     )
   }
-  
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -46,6 +46,27 @@ export default function RootLayout({
             `,
           }}
         />
+        <Script
+          id="apollo-tracking"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              function initApollo() {
+                var n = Math.random().toString(36).substring(7);
+                var o = document.createElement("script");
+                o.src = "https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache=" + n;
+                o.async = true;
+                o.defer = true;
+                o.onload = function() {
+                  window.trackingFunctions.onLoad({ appId: "67f3c60694c826001142c267" });
+                };
+                document.head.appendChild(o);
+              }
+              initApollo();
+            `,
+          }}
+        />
+
         <meta
           property="og:image"
           content=""
