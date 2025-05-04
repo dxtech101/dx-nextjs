@@ -32,7 +32,7 @@ export default function Home() {
                                 <Button
                                     size="lg"
                                     className="bg-emerald-600 hover:bg-emerald-700 text-white"
-                                    onClick={() => router.push("/signup?tab=company")}
+                                    onClick={() => router.push("https://salesiq360ltd.my.site.com/SUMOScheduler/s/invitemanager?inviteId=a15J3000000dn2KIAQ")}
                                 >
                                     Schedule a Meeting
                                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -365,7 +365,7 @@ export default function Home() {
                             <Button
                                 size="lg"
                                 className="bg-white text-emerald-600 hover:bg-emerald-50"
-                                onClick={() => router.push("/signup?tab=company")}
+                                onClick={() => router.push("https://salesiq360ltd.my.site.com/SUMOScheduler/s/invitemanager?inviteId=a15J3000000dn2KIAQ")}
                             >
                                 Schedule a Meeting
                                 <ArrowRight className="ml-2 h-4 w-4" />
