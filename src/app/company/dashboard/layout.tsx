@@ -24,7 +24,7 @@ export default function CompanyDashboardLayout({
     children: React.ReactNode;
 }>) {
     const [toggleSideBar, setToggleSideBar] = useState(true);
-    const commingSoon = true;
+    const commingSoon = false;
 
     if (commingSoon) {
         return (

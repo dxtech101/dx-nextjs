@@ -124,7 +124,7 @@ export default function page() {
             </button>
           </div>
 
-          {selected === "Company" ? <>
+           {/* {selected === "Company" ? <>
             <div
               className="w-full lg:w-3/4 flex flex-col gap-6"
             >
@@ -151,7 +151,8 @@ export default function page() {
                 <img src="/comingsoon.png" alt="sumo logo" className="rounded-xl aspect-auto object-cover h-48 lg:h-64 w-auto z-20" />
               </div>
             </div>
-          </> : <>
+          </> :  */}
+          <>
             <form
               onSubmit={handleSubmit}
               className="w-full lg:w-3/4 flex flex-col gap-6"
@@ -312,7 +313,8 @@ export default function page() {
                 SignIn
               </Link>
             </div>
-          </>}
+          </>
+          {/* } */}
         </div>
       </div>
       {successModal &&

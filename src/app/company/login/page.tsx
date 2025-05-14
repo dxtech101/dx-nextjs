@@ -19,7 +19,7 @@ export default function Login() {
 
     const router = useRouter();
     const dispatch = useDispatch();
-    const [commingSoon, setCommingSoon] = useState(true);
+    const [commingSoon, setCommingSoon] = useState(false);
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
