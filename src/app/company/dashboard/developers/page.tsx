@@ -1,14 +1,10 @@
 "use client"
-import Dropdown from '@/components/Dropdown'
 import InputField from '@/components/InputField'
-import Modal from '@/components/modal/Modal'
 import { skillsDetails } from '@/constants/data'
-import { getAllSalesforceSkills, getSkillsRelatedDevelopers, getUserPortfolio } from '@/lib/service/portfolio.service'
-import { getCompanyProjects, getCompanyResources, getResourceRequest, shortlistResourceRequest } from '@/lib/service/projectResource.service'
-import { BriefcaseBusiness, CodeIcon, LoaderCircle, ShieldCheck, XIcon } from 'lucide-react'
+import { getAllSalesforceSkills, getSkillsRelatedDevelopers } from '@/lib/service/portfolio.service'
+import { XIcon } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
 
 const SkillItem = ({ name, imageSrc }: any) => {
   const [checkedItem, setCheckedItem] = useState<any>();
@@ -33,26 +29,16 @@ const DeveloperSearch = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const containerRef = useRef<any>(null);
-  const [selectedDeveloperSFID, setSelectedDeveloperSFID] = useState<any>('');
   const [selectedResources, setSelectedResources] = useState<any>([]);
-  const [resource, setResource] = useState<any>();
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [initialItems, setInitialItems] = useState<any[]>([]);
   const [items, setItems] = useState<any[]>([]);
   const [checkedItems, setCheckedItems] = useState<any[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(false);
-  const [modalLoading, setModalLoading] = useState(false);
   const [searchDevelopers, setSearchDevelopers] = useState<any>([]);
-  const [openModal, setOpenModal] = useState(false);
-  const [developerDetails, setDeveloperDetails] = useState<any>({});
-  const [openConfirmModal, setOpenConfirmModal] = useState(false);
-  const [projects, setProjects] = useState<any>([]);
-  const accountSfid = useSelector((state: any) => state.userSalesforceID)
 
   const querySkills: any = searchParams.get('skills');
-  const queryResource: any = searchParams.get('resource');
-  const queryResourceId: any = searchParams.get('id');
 
   const handleSearch = async () => {
     try {
@@ -84,9 +70,6 @@ const DeveloperSearch = () => {
       setLoading(false);
     }
   }
-
-  console.log("SearchDevelopers", searchDevelopers);
-
 
   const handleCheckboxChange = (id: any) => {
     const isChecked = checkedItems.find((i: any) => i.sfid === id);
@@ -128,67 +111,6 @@ const DeveloperSearch = () => {
     };
   }, [])
 
-  const getCompanyProjectsData = async () => {
-    try {
-      setModalLoading(true);
-      const { results: contactProjects } = await getCompanyProjects(accountSfid);
-      setProjects(
-        contactProjects.map((project: any) => ({
-          value: project.project_name,
-          label: project.project_name,
-        }))
-      );
-    } catch (error) {
-      console.error("Error fetching certifications:", error);
-    } finally {
-      setModalLoading(false);
-    }
-  }
-
-  const getCompanyResourcesData = async () => {
-    try {
-      setModalLoading(true);
-      const { results: contactResources } = await getCompanyResources(accountSfid);
-    } catch (error) {
-      console.error("Error fetching certifications:", error);
-    } finally {
-      setModalLoading(false);
-    }
-  }
-
-  const getDeveloperData = async (selectedDeveloperSFID: any) => {
-    try {
-      setModalLoading(true);
-      const { results: developerData } = await getUserPortfolio(selectedDeveloperSFID);
-      console.log("developerData::", developerData);
-
-      setDeveloperDetails(developerData);
-    } catch (error) {
-      console.error("Error fetching certifications:", error);
-    } finally {
-      setModalLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    if (selectedDeveloperSFID) {
-      getDeveloperData(selectedDeveloperSFID);
-    }
-  }, [selectedDeveloperSFID])
-
-  const getResourceRequestData = async () => {
-    try {
-      setModalLoading(true);
-      const { results: contactResource } = await getResourceRequest(queryResourceId);
-      console.log("contactResource::", contactResource);
-
-      setResource(contactResource);
-    } catch (error) {
-      console.error("Error fetching certifications:", error);
-    } finally {
-      setModalLoading(false);
-    }
-  }
 
   const generateDeveloperName = (name: string) => {
     const nameArray = name.split(" ");
@@ -201,35 +123,6 @@ const DeveloperSearch = () => {
     }
   }
 
-  const shortListResource = async (contactId: any) => {
-    const shortlistResourceRequestData = {
-      resource_request_id: queryResource,
-      contact_id: contactId
-    }
-    console.log("shortlistResourceRequestData::", shortlistResourceRequestData);
-    try {
-      setModalLoading(true);
-      const { results: contactResource } = await shortlistResourceRequest(shortlistResourceRequestData);
-      console.log("contactResource::", contactResource);
-      setResource(contactResource);
-    } catch (error) {
-      console.error("Error fetching certifications:", error);
-    } finally {
-      setModalLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    if (openConfirmModal) {
-      if (queryResource) {
-        getResourceRequestData();
-      }
-      else {
-        getCompanyResourcesData();
-        getCompanyProjectsData();
-      }
-    }
-  }, [openConfirmModal])
 
   return (
     <div className='flex flex-col w-full'>
@@ -249,7 +142,7 @@ const DeveloperSearch = () => {
         </div>
 
         <div className='mt-2 w-full flex flex-col md:flex-row items-center justify-center gap-4'>
-          <div ref={containerRef} className='relative w-8/12'>
+          <div ref={containerRef} className='relative w-full lg:w-8/12'>
             <InputField
               className='w-full'
               iconName='search'
@@ -280,7 +173,7 @@ const DeveloperSearch = () => {
             )}
           </div>
 
-          <button onClick={handleSearch} className='bg-blue-500 rounded-lg px-4 py-3 text-sm text-white whitespace-nowrap'>
+          <button onClick={handleSearch} className='bg-blue-500 rounded-lg px-4 py-3 w-full lg:w-2/12 text-sm text-white whitespace-nowrap'>
             Find Resources
           </button>
         </div>
@@ -292,13 +185,13 @@ const DeveloperSearch = () => {
         </div>
       </> : <>
         {querySkills && (
-          <div className=" mb-6 sticky top-0 p-6 rounded-2xl border border-gray-300 bg-white z-10 flex flex-row gap-3 justify-between items-center">
-            <span className='font-heading tracking-tight text-3xl font-medium flex flex-row gap-3'>
+          <div className="mb-6 sticky top-0 p-6 rounded-2xl border border-gray-300 bg-white z-10 flex flex-row gap-3 justify-between items-center">
+            <span className='font-heading tracking-tight text-3xl font-medium flex flex-wrap gap-3'>
               Search Results for
-              <div className='flex flex-row gap-2 items-center text-lg'>
+              <div className='flex flex-wrap gap-2 items-center text-lg'>
                 {querySkills.split(',').map((skill: any) => {
                   return (
-                    <SkillItem key={skill} name={skill} imageSrc={skill.url} />
+                    <SkillItem key={skill} name={skill} imageSrc={skill.image_url} />
                   )
                 })}
               </div>
@@ -306,9 +199,10 @@ const DeveloperSearch = () => {
             <button
               onClick={() => {
                 setSearchDevelopers([]);
+                setCheckedItems([]);
                 router.push(`/company/dashboard/developers`)
               }}
-              className='bg-red-200 text-red-800 border hover:border-red-600 text-xs font-medium py-1 px-2 rounded-full inline-flex items-center gap-1'>
+              className='absolute top-2 right-2 bg-red-200 text-red-800 border hover:border-red-600 text-xs font-medium py-1 px-2 rounded-full inline-flex items-center gap-1'>
               <div className='bg-red-700 p-1 rounded-full'>
                 <XIcon className='w-3 h-3 text-red-100' />
               </div>
@@ -318,41 +212,94 @@ const DeveloperSearch = () => {
         )}
 
         {searchDevelopers.length > 0 && <>
-          <div className='grid grid-cols-1 xl:grid-cols-2 gap-4 items-center justify-between w-full'>
+          <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 items-center justify-between w-full'>
             {searchDevelopers.map((developer: any, index: any) => {
               const developerName = generateDeveloperName(developer?.developer_name);
               return (
-                <div key={index} className={`bg-white flex flex-col relative rounded-xl p-6 gap-2 h-full`}>
+                <div key={index} className={`bg-white flex flex-col justify-between relative rounded-xl p-6 gap-4 h-full`}>
                   <div className='absolute right-0 top-0 p-4 text-6xl text-gray-100 font-extrabold'>{index + 1}</div>
-                  <div className='flex flex-row gap-4'>
-                    <div className='relative w-1/2 bg-gray-100 rounded-xl overflow-hidden'>
+                  <div className='flex flex-row items-center gap-4'>
+                    <div className='relative w-44 h-44 bg-gray-100 rounded-full overflow-hidden'>
                       <img
                         src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"
                         alt=""
-                        className='w-full h-full object-cover rounded-xl'
+                        className='w-full h-full object-cover object-right-bottom rounded-xl'
                       />
-
-                      <div className="absolute inset-0 bg-white/30 backdrop-blur-xl rounded-xl"></div>
                     </div>
-                    <div className='flex flex-col gap-2 items-start w-full max-w-1/2'>
-                      <div className='flex flex-col items-start'>
-                        <span className='font-bold text-xl text-gray-800 '>{developerName}</span>
+                    <div className='flex flex-col gap-4 items-start'>
+                      <span className='font-bold text-xl text-gray-800 '>{developerName}</span>
+                      <div className='flex flex-row items-center gap-2'>
+                        <span className='shadow-inner p-2 flex flex-col h-fit w-fit justify-center items-center gap-1 bg-purple-100 border border-purple-300 text-purple-900 rounded-xl'>
+                          <span className='text-3xl'>🧑🏻‍💻</span>
+                          <span className='text-xs font-bold'>{"Developer"}</span>
+                        </span>
+                        <span className='h-fit p-2 w-fit flex flex-col shadow-inner justify-center items-center gap-1 bg-amber-100 border border-amber-300 text-amber-900 rounded-xl'>
+                          <span className='text-3xl'>🏆</span>
+                          <span className='text-xs font-bold'>{5} Certification</span>
+                        </span>
                       </div>
-                      <div className='flex flex-wrap gap-2 items-center col-span-2 mb-2'>
-                        {developer?.skills.map((skill: any, index: any) => {
+                    </div>
+                  </div>
+
+                  <div className='flex flex-col gap-2 items-start w-full max-w-1/2'>
+                    <div className='flex flex-row items-center justify-center gap-2 border w-full rounded-lg p-3'>
+                      <span className='text-sm text-gray-500 font-medium'>
+                        Expertise
+                      </span>
+                      <div className='flex flex-wrap gap-2 items-center col-span-2'>
+                        {developer?.skills.slice(0, 3).map((skill: any, index: any) => {
                           return (
-                            <SkillItem key={index} name={skill.skill_name} imageSrc={skill.url} />
+                            <SkillItem key={index} name={skill.skill_name} imageSrc={skill.image_url} />
                           )
                         })}
                       </div>
-                      <button
-                        onClick={() => {
-                          router.push(`/company/dashboard/developers/${developer?.developer_sfid}`)
-                        }}
-                        className='w-full bg-blue-200 hover:bg-blue-400 text-blue-700 hover:text-blue-50 duration-200 text-center rounded-lg p-2 px-4 inline-flex justify-center items-center gap-2'>
-                        View Profile
-                      </button>
                     </div>
+                    <div className='flex flex-row gap-2'>
+                      <div className='flex flex-col items-center justify-center gap-2 border w-full rounded-lg p-3 '>
+                        <span className='text-sm text-gray-500 font-medium'>
+                          Integration
+                        </span>
+                        <div className='flex flex-wrap gap-2 items-center col-span-2'>
+                          {developer?.skills.slice(0, 3).map((skill: any, index: any) => {
+                            return (
+                              <SkillItem key={index} name={skill.skill_name} imageSrc={skill.image_url} />
+                            )
+                          })}
+                        </div>
+                      </div>
+                      <div className='flex flex-col items-center justify-center gap-2 border w-full rounded-lg p-3'>
+                        <span className='text-sm text-gray-500 font-medium'>
+                          Backend
+                        </span>
+                        <div className='flex flex-wrap gap-2 items-center col-span-2'>
+                          {developer?.skills.slice(0, 3).map((skill: any, index: any) => {
+                            return (
+                              <SkillItem key={index} name={skill.skill_name} imageSrc={skill.image_url} />
+                            )
+                          })}
+                        </div>
+                      </div>
+                      <div className='flex flex-col items-center justify-center gap-2 border w-full rounded-lg p-3'>
+                        <span className='text-sm text-gray-500 font-medium'>
+                          Frontend
+                        </span>
+                        <div className='flex flex-wrap gap-2 items-center col-span-2'>
+                          {developer?.skills.slice(0, 3).map((skill: any, index: any) => {
+                            return (
+                              <SkillItem key={index} name={skill.skill_name} imageSrc={skill.image_url} />
+                            )
+                          })}
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        router.push(`/company/dashboard/developers/${developer?.developer_sfid}`)
+                      }}
+                      className='w-full bg-blue-200 hover:bg-blue-400 text-blue-700 hover:text-blue-50 duration-200 text-center rounded-lg p-2 px-4 inline-flex justify-center items-center gap-2'>
+                      View Profile
+                    </button>
                   </div>
                 </div>
               )
@@ -361,105 +308,6 @@ const DeveloperSearch = () => {
         </>}
       </>}
 
-      {openModal && (
-        <Modal
-          header={"Developer Profile"}
-          setModal={setOpenModal}
-          isFooter={false}
-          loading={loading}
-          size={"md"}
-        >
-          <div className='w-full h-full flex flex-row items-center justify-center gap-4'>
-            <img
-              className="h-1/2 w-1/2 lg:h-1/4 lg:w-1/4 aspect-square rounded-full object-cover object-right relative"
-              src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"
-              alt="img"
-            />
-            <div className='flex flex-col gap-2 w-full'>
-              <span className='text-3xl lg:text-4xl font-bold capitalize'>{developerDetails?.contact?.name}</span>
-              <div className='flex flex-wrap gap-2 text-sm'>
-                <span className='shadow-inner inline-flex items-center gap-2 bg-purple-100 border border-purple-300 text-purple-900 w-fit rounded-full py-0.5 px-4'>
-                  <CodeIcon className='w-5 h-5' />
-                  Senior Developer
-                </span>
-                <span className='inline-flex shadow-inner items-center gap-2 bg-amber-100 border border-amber-300 text-amber-900 w-fit rounded-full py-0.5 px-4'>
-                  <ShieldCheck className='w-5 h-5' />
-                  16 Certification
-                </span>
-                <span className='inline-flex items-center shadow-inner gap-2 bg-blue-100 border border-blue-300 text-blue-900 w-fit rounded-full py-0.5 px-4'>
-                  <BriefcaseBusiness className='w-5 h-5' />
-                  7+ Years Experience
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className='my-4 flex flex-row gap-2 items-center'>
-            <span className='uppercase text-xs font-medium text-gray-500'>
-              Skills
-            </span>
-            <span className='font-normal text-gray-800 '>
-              <SkillItem name={developerDetails?.skill?.name} />
-            </span>
-          </div>
-          <div className='my-4'>
-            <span className='uppercase text-xs font-medium text-gray-500'>
-              Work Experience
-            </span>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, voluptates.
-            </p>
-          </div>
-        </Modal>
-      )}
-
-      {openConfirmModal && (
-        <Modal
-          header={"Resource Shortlisted"}
-          setModal={setOpenConfirmModal}
-          isFooter={false}
-          loading={modalLoading}
-          size={"md"}
-        >
-          {queryResource ? <>
-            {modalLoading ? <>
-              <div className='flex flex-row gap-2 items-center justify-center w-full p-10'>
-                <LoaderCircle className='animate-spin h-6 w-auto mr-2' />
-                Loading...
-              </div>
-            </> : <>
-              {resource?.length > 0 && (
-                <div className='w-full h-20 flex flex-col items-center justify-center gap-3'>
-                  <span className='font-heading tracking-tight text-3xl font-medium flex flex-row gap-3'>
-                    🎉{" "}Resource Shortlisted for {" "}
-                    {resource[0]?.name}
-                  </span>
-
-                </div>
-              )}
-            </>}
-          </> : <>
-            <div className='w-full h-40 flex flex-col gap-3'>
-              <Dropdown
-                id={'project'}
-                label={'Select a Project'}
-                options={projects}
-                onChange={() => console.log("onChange")}
-              />
-              <Dropdown
-                id={'resource'}
-                label={'Select Project Related Resource Request'}
-                options={projects}
-                onChange={() => console.log("onChange")}
-              />
-            </div>
-          </>}
-          <button
-            onClick={() => { setOpenConfirmModal(false) }}
-            className='bg-blue-500 text-white rounded-lg w-full p-2 px-4 inline-flex items-center justify-center gap-2'>
-            {modalLoading ? "Loading..." : "Shortlist Resource"}
-          </button>
-        </Modal>
-      )}
     </div>
   )
 }

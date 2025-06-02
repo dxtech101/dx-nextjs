@@ -82,7 +82,7 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
                             <div className="h-12" />
                         </a>
                         <ul>
-                            {renderNavigationLinks().map((item: any, index: any) => (
+                            {renderNavigationLinks()?.map((item: any, index: any) => (
                                 <SidebarItem
                                     key={index}
                                     href={item.href}
@@ -134,7 +134,7 @@ const DashboardSidebar = ({ toggleSideBar, setToggleSideBar }: any) => {
                         </a>
                         <ul>
                             <DashboardProfileCard setToggleSideBar={setToggleSideBar} userProfile={currentUser} className="border border-gray-200 mb-4" />
-                            {renderNavigationLinks().map((item: any, index: any) => (
+                            {renderNavigationLinks()?.map((item: any, index: any) => (
                                 <SidebarItem
                                     key={index}
                                     href={item.href}

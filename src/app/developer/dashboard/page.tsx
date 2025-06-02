@@ -77,7 +77,7 @@ const page = () => {
                                     Let's find your Dream Job 💼
                                 </h1>
                                 <p className='text-gray-500 text-sm'>
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Praesentium, eum?
+                                    The next step in your career starts here — explore new opportunities.
                                 </p>
                             </span>
                             <div className='flex gap-2'>
