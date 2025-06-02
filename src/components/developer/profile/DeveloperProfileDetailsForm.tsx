@@ -26,7 +26,6 @@ const DeveloperProfileDetailsForm = forwardRef(({
     updateDetails
 }: any, ref: any) => {
     const dispatch = useDispatch();
-    const [salutation, setSalutation] = useState<any>("")
     const [selectedFile, setSelectedFile] = useState()
     const [formData, setFormData] = useState<any>({
         "birth_date": "",

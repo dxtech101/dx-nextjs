@@ -15,10 +15,10 @@ const Footer = () => {
                         </div>
                         <div className="w-full lg:w-auto">
                             <ul className="flex flex-wrap space-x-4 lg:space-x-8 items-center text-sm">
-                                <li className="mb-2 md:mb-0"><Link className="text-sm font-medium" href="#">About</Link></li>
-                                <li className="mb-2 md:mb-0"><Link className="text-sm font-medium" href="#">Company</Link></li>
-                                <li className="mb-2 md:mb-0"><Link className="text-sm font-medium" href="#">Services</Link></li>
-                                <li className="mb-2 md:mb-0"><Link className="text-sm font-medium" href="#">Testimonials</Link></li>
+                                <li className="mb-2 md:mb-0"><Link className="text-sm font-medium" href="/about-us">About</Link></li>
+                                <li className="mb-2 md:mb-0"><Link className="text-sm font-medium" href="/services">Services</Link></li>
+                                <li className="mb-2 md:mb-0"><Link className="text-sm font-medium" href="/developer/login">Developer Login</Link></li>
+                                <li className="mb-2 md:mb-0"><Link className="text-sm font-medium" href="/company/login">Company Login</Link></li>
                             </ul>
                         </div>
                     </div>

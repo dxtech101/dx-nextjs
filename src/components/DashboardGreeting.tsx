@@ -21,7 +21,7 @@ const DashboardGreeting = ({ updates }: any) => {
     }, [])
 
     return (
-        <div className={`relative text-white rounded-3xl flex-1 flex items-center justify-start h-96`}>
+        <div className={`relative text-white rounded-3xl flex-1 flex items-center justify-start`}>
             <img src={`/${greeting}.png`} alt="" className='w-full h-full object-cover rounded-3xl z-0 absolute' />
             <div className={`p-6 ${greeting === "Good-Evening" ? "text-white" : "text-black"} z-10`}>
                 <h2 className={`text-2xl font-semibold mb-2 capitalize`}>{greeting.split('-').join(' ')} {userProfile.first_name}</h2>
