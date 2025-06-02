@@ -2,7 +2,7 @@
 import InputField from '@/components/InputField'
 import { skillsDetails } from '@/constants/data'
 import { getAllSalesforceSkills, getSkillsRelatedDevelopers } from '@/lib/service/portfolio.service'
-import { XIcon } from 'lucide-react'
+import { Blocks, Code, Laptop, Workflow, XIcon } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
@@ -55,6 +55,9 @@ const DeveloperSearch = () => {
   useEffect(() => {
     if (querySkills?.length > 0) {
       handleSearch();
+      // const querySkills: any = items?.filter((item: any) => querySkills.includes(item.name))
+      // console.log("query Skills ===>>", querySkills)
+
     }
   }, [querySkills])
 
@@ -70,6 +73,8 @@ const DeveloperSearch = () => {
       setLoading(false);
     }
   }
+
+
 
   const handleCheckboxChange = (id: any) => {
     const isChecked = checkedItems.find((i: any) => i.sfid === id);
@@ -184,39 +189,12 @@ const DeveloperSearch = () => {
           <div className='w-full h-32 bg-gray-300 animate-pulse rounded-xl' />
         </div>
       </> : <>
-        {querySkills && (
-          <div className="mb-6 sticky top-0 p-6 rounded-2xl border border-gray-300 bg-white z-10 flex flex-row gap-3 justify-between items-center">
-            <span className='font-heading tracking-tight text-3xl font-medium flex flex-wrap gap-3'>
-              Search Results for
-              <div className='flex flex-wrap gap-2 items-center text-lg'>
-                {querySkills.split(',').map((skill: any) => {
-                  return (
-                    <SkillItem key={skill} name={skill} imageSrc={skill.image_url} />
-                  )
-                })}
-              </div>
-            </span>
-            <button
-              onClick={() => {
-                setSearchDevelopers([]);
-                setCheckedItems([]);
-                router.push(`/company/dashboard/developers`)
-              }}
-              className='absolute top-2 right-2 bg-red-200 text-red-800 border hover:border-red-600 text-xs font-medium py-1 px-2 rounded-full inline-flex items-center gap-1'>
-              <div className='bg-red-700 p-1 rounded-full'>
-                <XIcon className='w-3 h-3 text-red-100' />
-              </div>
-              Clear Search
-            </button>
-          </div>
-        )}
-
         {searchDevelopers.length > 0 && <>
           <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 items-center justify-between w-full'>
             {searchDevelopers.map((developer: any, index: any) => {
               const developerName = generateDeveloperName(developer?.developer_name);
               return (
-                <div key={index} className={`bg-white flex flex-col justify-between relative rounded-xl p-6 gap-4 h-full`}>
+                <div key={index} className={`bg-white flex flex-col justify-baseline items-baseline relative rounded-xl p-6 gap-4 h-full`}>
                   <div className='absolute right-0 top-0 p-4 text-6xl text-gray-100 font-extrabold'>{index + 1}</div>
                   <div className='flex flex-row items-center gap-4'>
                     <div className='relative w-44 h-44 bg-gray-100 rounded-full overflow-hidden'>
@@ -241,9 +219,9 @@ const DeveloperSearch = () => {
                     </div>
                   </div>
 
-                  <div className='flex flex-col gap-2 items-start w-full max-w-1/2'>
-                    <div className='flex flex-row items-center justify-center gap-2 border w-full rounded-lg p-3'>
-                      <span className='text-sm text-gray-500 font-medium'>
+                  <div className='flex flex-col gap-2 items-start justify-between w-full h-full max-w-1/2'>
+                    <div className='flex flex-row items-center justify-start gap-2 border w-full h-full rounded-lg p-3'>
+                      <span className='text-sm font-bold'>
                         Expertise
                       </span>
                       <div className='flex flex-wrap gap-2 items-center col-span-2'>
@@ -254,53 +232,57 @@ const DeveloperSearch = () => {
                         })}
                       </div>
                     </div>
-                    <div className='flex flex-row gap-2'>
-                      <div className='flex flex-col items-center justify-center gap-2 border w-full rounded-lg p-3 '>
-                        <span className='text-sm text-gray-500 font-medium'>
+                    <div className='flex flex-row justify-between gap-2 w-full h-full'>
+                      <div className='relative flex flex-col items-start justify-between gap-2 border w-full rounded-lg p-3'>
+                        <span className='text-sm font-bold'>
                           Integration
                         </span>
-                        <div className='flex flex-wrap gap-2 items-center col-span-2'>
+                        <Workflow className='w-10 h-10 text-black opacity-10 absolute right-2 top-2' />
+                        <div className='flex flex-col items-start col-span-2'>
                           {developer?.skills.slice(0, 3).map((skill: any, index: any) => {
                             return (
-                              <SkillItem key={index} name={skill.skill_name} imageSrc={skill.image_url} />
+                              <span className='text-sm font-medium text-gray-500'>{skill.skill_name}</span>
                             )
                           })}
                         </div>
                       </div>
-                      <div className='flex flex-col items-center justify-center gap-2 border w-full rounded-lg p-3'>
-                        <span className='text-sm text-gray-500 font-medium'>
+                      <div className='relative flex flex-col items-start justify-between gap-2 border w-full rounded-lg p-3'>
+                        <span className='text-sm font-bold'>
                           Backend
                         </span>
-                        <div className='flex flex-wrap gap-2 items-center col-span-2'>
+                        <Code className='w-10 h-10 text-black opacity-10 absolute right-2 top-2' />
+                        <div className='flex flex-col items-start col-span-2'>
                           {developer?.skills.slice(0, 3).map((skill: any, index: any) => {
                             return (
-                              <SkillItem key={index} name={skill.skill_name} imageSrc={skill.image_url} />
+                              <span className='text-sm font-medium text-gray-500'>{skill.skill_name}</span>
                             )
                           })}
                         </div>
                       </div>
-                      <div className='flex flex-col items-center justify-center gap-2 border w-full rounded-lg p-3'>
-                        <span className='text-sm text-gray-500 font-medium'>
+                      <div className='relative flex flex-col items-start justify-between gap-2 border w-full rounded-lg p-3'>
+                        <span className='text-sm font-bold'>
                           Frontend
                         </span>
-                        <div className='flex flex-wrap gap-2 items-center col-span-2'>
+                        <Laptop className='w-10 h-10 text-black opacity-10 absolute right-2 top-2' />
+                        <div className='flex flex-col items-start col-span-2 '>
                           {developer?.skills.slice(0, 3).map((skill: any, index: any) => {
                             return (
-                              <SkillItem key={index} name={skill.skill_name} imageSrc={skill.image_url} />
+                              <span className='text-sm font-medium text-gray-500'>{skill.skill_name}</span>
                             )
                           })}
                         </div>
                       </div>
                     </div>
 
-                    <button
-                      onClick={() => {
-                        router.push(`/company/dashboard/developers/${developer?.developer_sfid}`)
-                      }}
-                      className='w-full bg-blue-200 hover:bg-blue-400 text-blue-700 hover:text-blue-50 duration-200 text-center rounded-lg p-2 px-4 inline-flex justify-center items-center gap-2'>
-                      View Profile
-                    </button>
+
                   </div>
+                  <button
+                    onClick={() => {
+                      router.push(`/company/dashboard/developers/${developer?.developer_sfid}`)
+                    }}
+                    className='w-full mt-2 bg-blue-200 hover:bg-blue-400 text-blue-700 hover:text-blue-50 duration-200 text-center rounded-lg p-2 px-4 inline-flex justify-center items-center gap-2'>
+                    View Profile
+                  </button>
                 </div>
               )
             })}

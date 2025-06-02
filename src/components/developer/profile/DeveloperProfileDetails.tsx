@@ -1,12 +1,12 @@
 "use client"
 import DeveloperProfileDetailsLoader from '@/components/loaders/DeveloperProfileDetailsLoader';
 import Modal from '@/components/modal/Modal';
-import { BriefcaseBusiness, CakeIcon, CodeIcon, MailIcon, MapPinned, PencilIcon, Phone, ShieldCheck } from 'lucide-react';
+import { BriefcaseBusiness, CakeIcon, CodeIcon, MailIcon, MapPinned, PencilIcon, Phone, ShieldCheck, VideoIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import DeveloperProfileDetailsForm from './DeveloperProfileDetailsForm';
 
-const DeveloperProfileDetails = ({ personalDetails, updateDetails, certificationCount, loading, editable = true }: any) => {
+const DeveloperProfileDetails = ({ personalDetails, updateDetails, certificationCount, loading, editable = true, hourlyRates }: any) => {
     const formRef = useRef<HTMLFormElement>(null)
     const userProfile = useSelector((state: any) => state.userProfile)
     const [editModal, setEditModal] = useState(false);
@@ -92,8 +92,14 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails, certification
                         <DeveloperProfileDetailsLoader />
                         :
                         <div className='w-full flex flex-col gap-6 justify-between h-full'>
-                            <div className='flex flex-col gap-2'>
-                                <span className='text-3xl lg:text-4xl font-bold capitalize'>{editable ? personalDetails?.name : generateDeveloperName(personalDetails?.name)}</span>
+                            <div className='flex flex-col gap-4'>
+                                <span className='text-3xl lg:text-4xl font-bold capitalize flex flex-row items-end'>
+                                    {editable ? personalDetails?.name : generateDeveloperName(personalDetails?.name)}
+                                    <span className='text-lg font-medium ml-2 py-1 bg-amber-200 text-amber-800 px-3 rounded-full'>
+                                        {hourlyRates}
+                                    </span>
+                                </span>
+
                                 <div className='flex flex-wrap gap-2 text-sm'>
                                     {personalDetails?.job_title && ["Individual"].includes(userProfile?.role) && (
                                         <span className='shadow-inner inline-flex items-center gap-2 bg-purple-100 border border-purple-300 text-purple-900 w-fit rounded-full py-0.5 px-4'>
@@ -135,7 +141,7 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails, certification
                                         </span>
                                     )}
 
-                                    {personalDetails?.country && ["Company"].includes(userProfile?.role) && (
+                                    {personalDetails?.work_year_experience && ["Company"].includes(userProfile?.role) && (
                                         <span className='shadow-inner p-4 flex flex-col h-fit w-fit justify-center items-center gap-2 bg-green-100 border border-green-300 text-green-900 rounded-xl'>
                                             <span className='text-6xl'>{personalDetails?.work_year_experience}+</span>
                                             <span>Years Experience</span>
@@ -144,6 +150,19 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails, certification
                                 </div>
                             </div>
 
+                            {["Company"].includes(userProfile?.role) && <>
+                                <div className='flex flex-row items-center justify-start gap-2 w-fit'>
+                                    <button className='bg-blue-200 hover:bg-blue-400 text-blue-700 hover:text-blue-50 duration-200 text-center rounded-lg p-2 px-4 inline-flex justify-center items-center gap-2'>
+                                        <Phone className='animate-pulse' />
+                                        Schedules DX Call
+                                    </button>
+                                    <button className='bg-blue-200 hover:bg-blue-400 text-blue-700 hover:text-blue-50 duration-200 text-center rounded-lg p-2 px-4 inline-flex justify-center items-center gap-2'>
+                                        <VideoIcon />
+                                        Schedules Inteview
+                                    </button>
+                                    <img src="/sumo_logo.svg" alt="sumo logo" className="h-8 w-auto" />
+                                </div>
+                            </>}
 
                             <div className='grid grid-cols-2 lg:grid-cols-4 w-full gap-2 lg:gap-4 items-start justify-between'>
                                 {profileDetails?.map((item: any, index: any) => {

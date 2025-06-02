@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react'
 const page = () => {
     const [loading, setLoading] = useState(true);
     const [profileData, setProfileData] = useState<any>({
+        hourly_rates: {},
         skills: [],
         certifications: [],
         workExperience: [],
@@ -28,6 +29,7 @@ const page = () => {
             const { results: allSkills } = await getAllSalesforceSkills();
 
             setProfileData({
+                hourly_rates: results.hourly_rates,
                 skills: allSkills.filter((item: any) => results.skills.some((skill: any) => skill.skill_name === item.name))
                     .map((item: any) => {
                         const matchedSkill = results.skills.find((skill: any) => skill.skill_name === item.name);
@@ -57,11 +59,25 @@ const page = () => {
 
     return (
         <div className='bg-white border border-gray-300 rounded-3xl flex flex-col items-start justify-center gap-6 p-6'>
-            <DeveloperProfileDetails editable={false} loading={loading} personalDetails={profileData?.personalDetails} certificationCount={profileData?.certifications?.length} updateDetails={getUserPortoflioDetails} />
-            <DeveloperProfileVideoSummary editable={false} />
+            <DeveloperProfileDetails
+                editable={false}
+                loading={loading}
+                personalDetails={profileData?.personalDetails}
+                certificationCount={profileData?.certifications?.length}
+                hourlyRates={profileData?.hourly_rates}
+                updateDetails={getUserPortoflioDetails}
+            />
+            <DeveloperProfileVideoSummary
+                editable={false}
+            />
             {/* <DeveloperProfileAISummary /> */}
             <div className='w-full h-full flex flex-col lg:flex-row items-start justify-center gap-4'>
-                <DeveloperProfileSkills editable={false} loading={loading} skills={profileData?.skills} updateDetails={getUserPortoflioDetails} />
+                <DeveloperProfileSkills
+                    editable={false}
+                    loading={loading}
+                    skills={profileData?.skills}
+                    updateDetails={getUserPortoflioDetails}
+                />
                 {/* <DeveloperProfileTechnologies loading={loading} technologies={technologies} /> */}
             </div>
             {/* <DeveloperProfileIndustries loading={loading} industries={industries}/> */}
