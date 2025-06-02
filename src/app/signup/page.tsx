@@ -124,7 +124,7 @@ export default function page() {
             </button>
           </div>
 
-           {/* {selected === "Company" ? <>
+          {selected === "Company" ? <>
             <div
               className="w-full lg:w-3/4 flex flex-col gap-6"
             >
@@ -151,75 +151,75 @@ export default function page() {
                 <img src="/comingsoon.png" alt="sumo logo" className="rounded-xl aspect-auto object-cover h-48 lg:h-64 w-auto z-20" />
               </div>
             </div>
-          </> :  */}
-          <>
-            <form
-              onSubmit={handleSubmit}
-              className="w-full lg:w-3/4 flex flex-col gap-6"
-            >
-              <div className="flex flex-col lg:flex-row w-full justify-between gap-4">
-                <InputField
-                  type="text"
-                  isRequired={true}
-                  label="First Name"
-                  value={formData.first_name}
-                  onChange={(e: any) =>
-                    handleFormDataChange(e, setFormData, setErrors)
-                  }
-                  id="first_name"
-                  className="w-full"
-                  placeholder="Enter first name"
-                  error={errors.first_name}
-                  customTag={{ options: ["Mr", "Mrs", "Ms"] }}
-                  setSalutation={setSalutation}
-                  salutation={Salutation}
-                />
-
-                <InputField
-                  type="text"
-                  isRequired={true}
-                  label="Last Name"
-                  value={formData.last_name}
-                  onChange={(e: any) =>
-                    handleFormDataChange(e, setFormData, setErrors)
-                  }
-                  id="last_name"
-                  className="w-full"
-                  placeholder="Enter last name"
-                  error={errors.last_name}
-                />
-              </div>
-
-              <div className="flex flex-col lg:flex-row gap-4">
-                {selected === "Company" && (
+          </> :
+            <>
+              <form
+                onSubmit={handleSubmit}
+                className="w-full lg:w-3/4 flex flex-col gap-6"
+              >
+                <div className="flex flex-col lg:flex-row w-full justify-between gap-4">
                   <InputField
                     type="text"
                     isRequired={true}
-                    label="Company Name"
-                    value={formData.company_name}
-                    onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
-                    id="company_name"
+                    label="First Name"
+                    value={formData.first_name}
+                    onChange={(e: any) =>
+                      handleFormDataChange(e, setFormData, setErrors)
+                    }
+                    id="first_name"
                     className="w-full"
-                    placeholder="Enter company name"
-                    error={errors.company_name}
+                    placeholder="Enter first name"
+                    error={errors.first_name}
+                    customTag={{ options: ["Mr", "Mrs", "Ms"] }}
+                    setSalutation={setSalutation}
+                    salutation={Salutation}
                   />
-                )}
-                <InputField
-                  type="text"
-                  label="Email Address"
-                  value={formData.email}
-                  isRequired={true}
-                  onChange={(e: any) =>
-                    handleFormDataChange(e, setFormData, setErrors)
-                  }
-                  id="email"
-                  className="w-full"
-                  placeholder="Enter email address"
-                  error={errors.email}
-                />
-              </div>
 
-              {/* <InputField
+                  <InputField
+                    type="text"
+                    isRequired={true}
+                    label="Last Name"
+                    value={formData.last_name}
+                    onChange={(e: any) =>
+                      handleFormDataChange(e, setFormData, setErrors)
+                    }
+                    id="last_name"
+                    className="w-full"
+                    placeholder="Enter last name"
+                    error={errors.last_name}
+                  />
+                </div>
+
+                <div className="flex flex-col lg:flex-row gap-4">
+                  {selected === "Company" && (
+                    <InputField
+                      type="text"
+                      isRequired={true}
+                      label="Company Name"
+                      value={formData.company_name}
+                      onChange={(e: any) => handleFormDataChange(e, setFormData, setErrors)}
+                      id="company_name"
+                      className="w-full"
+                      placeholder="Enter company name"
+                      error={errors.company_name}
+                    />
+                  )}
+                  <InputField
+                    type="text"
+                    label="Email Address"
+                    value={formData.email}
+                    isRequired={true}
+                    onChange={(e: any) =>
+                      handleFormDataChange(e, setFormData, setErrors)
+                    }
+                    id="email"
+                    className="w-full"
+                    placeholder="Enter email address"
+                    error={errors.email}
+                  />
+                </div>
+
+                {/* <InputField
               type="password"
               label="Password"
               value={formData.password}
@@ -233,88 +233,88 @@ export default function page() {
               error={errors.password}
             /> */}
 
-              <div className="flex flex-col w-full gap-2">
-                <div className="w-full flex justify-between items-center">
-                  <label className="text-sm font-bold text-gray-700 text-nowrap">
-                    Phone Number <span className="text-red-600"> *</span>
-                  </label>
-                  {errors.phone && (
-                    <span className="text-xs text-red-500 font-bold">
-                      {errors.phone}
-                    </span>
-                  )}
-                </div>
-                <PhoneInput
-                  value={formData.phone}
-                  onChange={(value) =>
-                    setFormData((prev: any) => ({ ...prev, phone: value }))
-                  }
-                  defaultCountry="IN"
-                  className={`h-12 pl-4 pr-4 w-full text-black border ${errors.phone
-                    ? "border-red-400 border-2"
-                    : "border-gray-400"
-                    } bg-white rounded-xl`}
-                />
-              </div>
-
-              <div className="flex flex-row items-center justify-between gap-2 w-full">
-                <div className="flex flex-row items-center gap-2">
-                  <input
-                    type="checkbox"
-                    name="terms"
-                    id="terms"
-                    checked={formData.terms}
-                    onChange={(e: any) =>
-                      handleFormDataChange(e, setFormData, setErrors)
-                    }
-                  />
-                  <label htmlFor="terms" className="text-sm text-gray-700">
-                    I agree to the{" "}
-                    <button
-                      type="button"
-                      onClick={() => setShowTermsConditions(true)}
-                      className="text-blue-600 font-semibold"
-                    >
-                      Terms and Conditions
-                    </button>
-                  </label>
-                </div>
-
-                <div>
-                  {errors.terms && (
-                    <span className="text-xs text-red-500 font-bold">
-                      {errors.terms}
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              <button
-                className="mb-3 py-3 px-9 w-full text-white rounded-xl text-sm bg-indigo-600"
-                type="submit"
-              >
-                {loading ? (
-                  <div className="flex items-center justify-center">
-                    <LoaderCircle className="animate-spin h-6 w-auto mr-2" />
-                    Loading...
+                <div className="flex flex-col w-full gap-2">
+                  <div className="w-full flex justify-between items-center">
+                    <label className="text-sm font-bold text-gray-700 text-nowrap">
+                      Phone Number <span className="text-red-600"> *</span>
+                    </label>
+                    {errors.phone && (
+                      <span className="text-xs text-red-500 font-bold">
+                        {errors.phone}
+                      </span>
+                    )}
                   </div>
-                ) : (
-                  "Sign Up"
-                )}
-              </button>
-            </form>
-            <div className="text-sm text-black float-start">
-              Already have an account?{" "}
-              <Link
-                href={`/${selected === "Company" ? "company" : "developer"
-                  }/login`}
-                className="font-bold text-blue-600"
-              >
-                SignIn
-              </Link>
-            </div>
-          </>
-          {/* } */}
+                  <PhoneInput
+                    value={formData.phone}
+                    onChange={(value) =>
+                      setFormData((prev: any) => ({ ...prev, phone: value }))
+                    }
+                    defaultCountry="IN"
+                    className={`h-12 pl-4 pr-4 w-full text-black border ${errors.phone
+                      ? "border-red-400 border-2"
+                      : "border-gray-400"
+                      } bg-white rounded-xl`}
+                  />
+                </div>
+
+                <div className="flex flex-row items-center justify-between gap-2 w-full">
+                  <div className="flex flex-row items-center gap-2">
+                    <input
+                      type="checkbox"
+                      name="terms"
+                      id="terms"
+                      checked={formData.terms}
+                      onChange={(e: any) =>
+                        handleFormDataChange(e, setFormData, setErrors)
+                      }
+                    />
+                    <label htmlFor="terms" className="text-sm text-gray-700">
+                      I agree to the{" "}
+                      <button
+                        type="button"
+                        onClick={() => setShowTermsConditions(true)}
+                        className="text-blue-600 font-semibold"
+                      >
+                        Terms and Conditions
+                      </button>
+                    </label>
+                  </div>
+
+                  <div>
+                    {errors.terms && (
+                      <span className="text-xs text-red-500 font-bold">
+                        {errors.terms}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <button
+                  className="mb-3 py-3 px-9 w-full text-white rounded-xl text-sm bg-indigo-600"
+                  type="submit"
+                >
+                  {loading ? (
+                    <div className="flex items-center justify-center">
+                      <LoaderCircle className="animate-spin h-6 w-auto mr-2" />
+                      Loading...
+                    </div>
+                  ) : (
+                    "Sign Up"
+                  )}
+                </button>
+              </form>
+              <div className="text-sm text-black float-start">
+                Already have an account?{" "}
+                <Link
+                  href={`/${selected === "Company" ? "company" : "developer"
+                    }/login`}
+                  className="font-bold text-blue-600"
+                >
+                  SignIn
+                </Link>
+              </div>
+            </>
+          }
         </div>
       </div>
       {successModal &&
