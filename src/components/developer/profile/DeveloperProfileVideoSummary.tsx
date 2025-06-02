@@ -16,12 +16,13 @@ const DeveloperVideoProfile = ({ editable = true }) => {
 
     const handleUploadVideo = async (file: any) => {
         const profileUpdateData = new FormData();
-        profileUpdateData.append("intro_video", file);
+
+        profileUpdateData.append("intro_video", selectedFile);
         setLoading(true);
         try {
             const { results } = await updateProfile(profileUpdateData);
             if (results) {
-                dispatch(addUserProfile(results));
+                setIsModalOpen(false);
             }
         } catch (error) {
             console.error("Error uploading profile picture:", error);

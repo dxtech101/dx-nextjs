@@ -1,10 +1,10 @@
 "use client"
+import DeveloperProfileDetailsLoader from '@/components/loaders/DeveloperProfileDetailsLoader';
 import Modal from '@/components/modal/Modal';
 import { BriefcaseBusiness, CakeIcon, CodeIcon, MailIcon, MapPinned, PencilIcon, Phone, ShieldCheck } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import DeveloperProfileDetailsForm from './DeveloperProfileDetailsForm';
-import DeveloperProfileDetailsLoader from '@/components/loaders/DeveloperProfileDetailsLoader';
 
 const DeveloperProfileDetails = ({ personalDetails, updateDetails, certificationCount, loading, editable = true }: any) => {
     const formRef = useRef<HTMLFormElement>(null)
@@ -45,19 +45,23 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails, certification
     const profileDetails = [{
         icon: <MailIcon className='w-5 h-5 text-purple-900' />,
         label: "Email",
-        value: personalDetails?.email
+        value: personalDetails?.email,
+        visible: ["Individual"]?.includes(userProfile?.role)
     }, {
         icon: <Phone className='w-5 h-5 text-purple-900' />,
         label: "Phone",
-        value: personalDetails?.phone
+        value: personalDetails?.phone,
+        visible: ["Individual"]?.includes(userProfile?.role)
     }, {
         icon: <MapPinned className='w-5 h-5 text-purple-900' />,
         label: "Country",
-        value: personalDetails?.country
+        value: personalDetails?.country,
+        visible: ["Individual"]?.includes(userProfile?.role)
     }, {
         icon: <CakeIcon className='w-5 h-5 text-purple-900' />,
         label: "DOB",
-        value: personalDetails?.birthdate
+        value: personalDetails?.birthdate,
+        visible: ["Individual"]?.includes(userProfile?.role)
     }]
 
     return (
@@ -91,26 +95,52 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails, certification
                             <div className='flex flex-col gap-2'>
                                 <span className='text-3xl lg:text-4xl font-bold capitalize'>{editable ? personalDetails?.name : generateDeveloperName(personalDetails?.name)}</span>
                                 <div className='flex flex-wrap gap-2 text-sm'>
-                                    {personalDetails?.job_title && (
+                                    {personalDetails?.job_title && ["Individual"].includes(userProfile?.role) && (
                                         <span className='shadow-inner inline-flex items-center gap-2 bg-purple-100 border border-purple-300 text-purple-900 w-fit rounded-full py-0.5 px-4'>
                                             <CodeIcon className='w-5 h-5' />
                                             {personalDetails?.job_title}
                                         </span>
                                     )}
-                                    {certificationCount && (
+                                    {certificationCount && ["Individual"].includes(userProfile?.role) && (
                                         <span className='inline-flex shadow-inner items-center gap-2 bg-amber-100 border border-amber-300 text-amber-900 w-fit rounded-full py-0.5 px-4'>
                                             <ShieldCheck className='w-5 h-5' />
                                             {certificationCount} Certification
                                         </span>
                                     )}
-
-                                    {personalDetails?.work_year_experience && (
+                                    {personalDetails?.work_year_experience && ["Individual"].includes(userProfile?.role) && (
                                         <span className='inline-flex items-center shadow-inner gap-2 bg-blue-100 border border-blue-300 text-blue-900 w-fit rounded-full py-0.5 px-4'>
                                             <BriefcaseBusiness className='w-5 h-5' />
                                             {personalDetails?.work_year_experience}+ Years Experience
                                         </span>
                                     )}
 
+                                    {personalDetails?.job_title && ["Company"].includes(userProfile?.role) && (
+                                        <span className='shadow-inner p-4 flex flex-col h-fit w-fit justify-center items-center gap-2 bg-purple-100 border border-purple-300 text-purple-900 rounded-xl'>
+                                            <span className='text-6xl'>🧑🏻‍💻</span>
+                                            <span>{personalDetails?.job_title}</span>
+                                        </span>
+                                    )}
+
+                                    {certificationCount && ["Company"].includes(userProfile?.role) && (
+                                        <span className='h-fit p-4 w-fit flex flex-col shadow-inner justify-center items-center gap-2 bg-amber-100 border border-amber-300 text-amber-900 rounded-xl'>
+                                            <span className='text-6xl'>🏆</span>
+                                            <span>{certificationCount} Certification</span>
+                                        </span>
+                                    )}
+
+                                    {personalDetails?.country && ["Company"].includes(userProfile?.role) && (
+                                        <span className='shadow-inner p-4 flex flex-col h-fit w-fit justify-center items-center gap-2 bg-blue-100 border border-blue-300 text-blue-900 rounded-xl'>
+                                            <span className='text-6xl'>🌎</span>
+                                            <span>{personalDetails?.country}</span>
+                                        </span>
+                                    )}
+
+                                    {personalDetails?.country && ["Company"].includes(userProfile?.role) && (
+                                        <span className='shadow-inner p-4 flex flex-col h-fit w-fit justify-center items-center gap-2 bg-green-100 border border-green-300 text-green-900 rounded-xl'>
+                                            <span className='text-6xl'>{personalDetails?.work_year_experience}+</span>
+                                            <span>Years Experience</span>
+                                        </span>
+                                    )}
                                 </div>
                             </div>
 
@@ -119,7 +149,7 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails, certification
                                 {profileDetails?.map((item: any, index: any) => {
                                     return (
                                         <>
-                                            {item?.value && (
+                                            {item?.value && item?.visible && (
                                                 <>
                                                     <span key={index} className='inline-flex w-20 items-center gap-2 font-semibold'>
                                                         {item?.icon}{item?.label}
