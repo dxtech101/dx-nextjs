@@ -78,14 +78,14 @@ export default function RootLayout({
         <title>DX Digital</title>
       </head>
       <body>
-        {children}
-        <Toaster
-          position="top-center"
-          reverseOrder={false}
-          toastOptions={{
-            duration: 1000,
-          }}
-        />
+          {children}
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+            toastOptions={{
+              duration: 1000,
+            }}
+          />
       </body>
     </html>
   )

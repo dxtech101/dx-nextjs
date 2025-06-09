@@ -13,10 +13,10 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails, certification
     const [loadingUI, setLoadingUI] = useState(false);
 
     const generateDeveloperName = (name: string) => {
-        const nameArray = name.split(" ");
-        if (nameArray.length === 3) {
+        const nameArray = name?.split(" ");
+        if (nameArray?.length === 3) {
             return nameArray[0] + " " + nameArray[1][0] + " " + nameArray[2];
-        } else if (nameArray.length === 2) {
+        } else if (nameArray?.length === 2) {
             return nameArray[0][0] + " " + nameArray[1];
         } else {
             return name;

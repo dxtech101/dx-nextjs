@@ -159,7 +159,7 @@ const page = () => {
                                     { name: "Twitter", url: "#" },
                                     { name: "LinkedIn", url: "https://www.linkedin.com/in/prachi-thakur-a2981937/" },
                                 ]} />
-                            <TeamMemberCard
+                            {/* <TeamMemberCard
                                 name="Mitesh Mistry"
                                 position="Strategic Advisor"
                                 image="https://dx-assests.s3.amazonaws.com/assets/mitesh.jpeg"
@@ -167,7 +167,7 @@ const page = () => {
                                     { name: "Facebook", url: "#" },
                                     { name: "Twitter", url: "#" },
                                     { name: "LinkedIn", url: "https://www.linkedin.com/in/mitesh-mistry-3a288718/" },
-                                ]} />
+                                ]} /> */}
                         </div>
                     </div>
                 </div>
