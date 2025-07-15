@@ -83,7 +83,7 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails, certification
                 <div className='w-full h-full flex flex-col xl:flex-row items-center justify-between gap-10'>
                     <div className="h-1/2 w-1/2 overflow-hidden lg:h-1/3 lg:w-1/3 relative rounded-full">
                         <img
-                            className='rounded-full aspect-square object-cover object-center border border-gray-300 overflow-hidden'
+                            className='rounded-full aspect-square object-cover object-top border border-gray-300 overflow-hidden'
                             src={userProfile?.profile_picture || "https://www.tech101.in/wp-content/uploads/2018/07/blank-profile-picture.png"}
                             alt=""
                         />
@@ -95,9 +95,11 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails, certification
                             <div className='flex flex-col gap-4'>
                                 <span className='text-3xl lg:text-4xl font-bold capitalize flex flex-row items-end'>
                                     {editable ? personalDetails?.name : generateDeveloperName(personalDetails?.name)}
-                                    <span className='text-lg font-medium ml-2 py-1 bg-amber-200 text-amber-800 px-3 rounded-full'>
-                                        {hourlyRates}
-                                    </span>
+                                    {hourlyRates && (
+                                        <span className='text-lg font-medium ml-2 py-1 bg-amber-200 text-amber-800 px-3 rounded-full'>
+                                            {hourlyRates}
+                                        </span>
+                                    )}
                                 </span>
 
                                 <div className='flex flex-wrap gap-2 text-sm'>

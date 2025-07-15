@@ -55,7 +55,7 @@ const DashboardNavbar = ({ toggleSideBar, setToggleSideBar }: any) => {
                         } */}
 
                         <div className="relative group flex items-center p-1 rounded-full bg-gray-100 gap-1">
-                            <img className="w-10 h-10 rounded-full object-cover mr-0 object-right z-0" src={userProfile?.profile_picture || "https://www.tech101.in/wp-content/uploads/2018/07/blank-profile-picture.png"} alt="" />
+                            <img className="w-10 h-10 rounded-full object-cover mr-0 object-top z-0" src={userProfile?.profile_picture || "https://www.tech101.in/wp-content/uploads/2018/07/blank-profile-picture.png"} alt="" />
                             <ChevronDown className="h-4 w-4 text-black mr-2" />
                             <div className='text-black hidden group-hover:flex transition-all duration-300 ease-in-out absolute z-50 top-full right-0 w-fit'>
                                 <div className="w-full shadow-lg max-w-xl bg-white border border-gray-200 rounded-2xl flex flex-col">

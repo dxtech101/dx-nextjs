@@ -14,6 +14,9 @@ const CheckboxItem = ({ id, checked, onChange, loadingUI, skill_level, imageSrc,
         setCheckedItem(skillsDetails.find((item: any) => item.id === id))
     }, [])
 
+    console.log("checkedItem", checkedItem);
+
+
     if (checkedItem?.bgColor) {
         return (
             <div className={`${checkedItem.bgColor} border ${checkedItem.borderColor} p-2 pl-4 rounded-xl relative z-10 whitespace-nowrap min-w-max`}>
@@ -22,22 +25,24 @@ const CheckboxItem = ({ id, checked, onChange, loadingUI, skill_level, imageSrc,
                     <span className={`font-normal ${checkedItem.textColor}`}>
                         {name}
                     </span>
-                    <input
-                        type="checkbox"
-                        className={`w-6 h-6 ${checkedItem.textColor} bg-gray-100 border-2 ${checkedItem.borderColor} rounded-xl appearance-none `}
-                        checked={checked}
-                        disabled={loadingUI}
-                        onChange={onChange}
-                    />
-                    {checked && (
-                        <button
-                            className={`absolute top-2.5 right-2.5 w-5 h-5 flex items-center justify-center ${checkedItem.checkedColor} rounded-full cursor-pointer`}
-                            onClick={onChange}
+                    <div className="relative inline-block">
+                        <input
+                            type="checkbox"
+                            className={`w-6 h-6 ${checkedItem.textColor} bg-gray-100 border-2 ${checkedItem.borderColor} rounded-xl appearance-none`}
+                            checked={checked}
                             disabled={loadingUI}
-                        >
-                            <X className="w-4 h-4" strokeWidth={2} color='white' />
-                        </button>
-                    )}
+                            onChange={onChange}
+                        />
+                        {checked && (
+                            <button
+                                className={`absolute top-3 right-3 w-5 h-5 flex items-center justify-center ${checkedItem.checkedColor} rounded-full cursor-pointer -translate-y-1/2 translate-x-1/2`}
+                                onClick={onChange}
+                                disabled={loadingUI}
+                            >
+                                <X className="w-4 h-4" strokeWidth={2} color="white" />
+                            </button>
+                        )}
+                    </div>
                 </div>
 
                 <div className='text-xs text-black normal-case'>
@@ -358,18 +363,21 @@ const Skills = ({ type = "add" }: any) => {
                         </>
                         :
                         <>
-                            {checkedItems.length > 0 ? checkedItems.map((item, index) => (
-                                <CheckboxItem
-                                    key={index}
-                                    id={item?.skill?.sfid}
-                                    name={item?.skill?.name}
-                                    checked={checkedItems.some(checkedItem => checkedItem.sfid === item.sfid)}
-                                    onChange={() => handleCheckboxChange(item?.skill?.sfid, item?.id)}
-                                    skill_level={item.skill_level}
-                                    imageSrc={item?.skill?.url}
-                                    loadingUI={loadingUI}
-                                />
-                            )) : (
+                            {checkedItems.length > 0 ? checkedItems.map((item, index) => {
+                                return (
+                                    <CheckboxItem
+                                        key={index}
+                                        id={item?.skill?.sfid}
+                                        name={item?.skill?.name}
+                                        checked={checkedItems.some(checkedItem => checkedItem.sfid === item.sfid)}
+                                        onChange={() => handleCheckboxChange(item?.skill?.sfid, item?.id)}
+                                        skill_level={item.skill_level}
+                                        imageSrc={item?.skill?.url}
+                                        loadingUI={loadingUI}
+                                    />
+                                )
+                            }
+                            ) : (
                                 <span className="text-md font-normal text-gray-400 ml-2 z-10">
                                     No Skills Selected...
                                 </span>

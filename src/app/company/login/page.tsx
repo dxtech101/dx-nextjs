@@ -55,9 +55,9 @@ export default function Login() {
                     dispatch(addUserProfile(results));
                 }
                 dispatch(addSalesforceId(userSalesforceId[0].sfid));
-                toast.custom((t) => (
-                    <SuccessfulToast t={t} message={"Logged in successfully"} />
-                ));
+                // toast.custom((t) => (
+                //     <SuccessfulToast t={t} message={"Logged in successfully"} />
+                // ));
                 dispatch(onBoardingHandleNext({ role: "developer", stepperId: 2 }))
                 if (response.user.role === "Individual") {
                     router.push('/developer/dashboard');

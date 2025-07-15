@@ -123,36 +123,6 @@ export default function page() {
               Company
             </button>
           </div>
-
-          {selected === "Company" ? <>
-            <div
-              className="w-full lg:w-3/4 flex flex-col gap-6"
-            >
-              <span className='flex flex-col gap-6'>
-                <h2 className="text-4xl md:text-6xl font-medium leading-tight">
-                  Coming Soon in May 2025!
-                </h2>
-                <p className='text-gray-500 text-md xl:text-xl'>
-                  Hire Exceptional Salesforce Experts for Your Projects
-                </p>
-                <Link href='/'>
-                  <div className="bg-black text-white px-6 py-2 w-fit rounded-full flex items-center">
-                    Explore more <span className="ml-1">→</span>
-                  </div>
-                </Link>
-              </span>
-              <div className='flex flex-col gap-6 items-center w-full relative'>
-                <div
-                  className="size-[40rem] rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                  style={{
-                    backgroundImage: 'radial-gradient(circle, rgba(139,92,246,0.5) 0%, transparent 70%)'
-                  }}
-                />
-                <img src="/comingsoon.png" alt="sumo logo" className="rounded-xl aspect-auto object-cover h-48 lg:h-64 w-auto z-20" />
-              </div>
-            </div>
-          </> :
-            <>
               <form
                 onSubmit={handleSubmit}
                 className="w-full lg:w-3/4 flex flex-col gap-6"
@@ -218,21 +188,6 @@ export default function page() {
                     error={errors.email}
                   />
                 </div>
-
-                {/* <InputField
-              type="password"
-              label="Password"
-              value={formData.password}
-              isRequired={true}
-              onChange={(e: any) =>
-                handleFormDataChange(e, setFormData, setErrors)
-              }
-              id="password"
-              className="w-full"
-              placeholder="Enter Password"
-              error={errors.password}
-            /> */}
-
                 <div className="flex flex-col w-full gap-2">
                   <div className="w-full flex justify-between items-center">
                     <label className="text-sm font-bold text-gray-700 text-nowrap">
@@ -313,8 +268,6 @@ export default function page() {
                   SignIn
                 </Link>
               </div>
-            </>
-          }
         </div>
       </div>
       {successModal &&
