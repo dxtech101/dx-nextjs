@@ -130,6 +130,8 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails, editab
         }
     };
 
+    console.log("formData", formData);
+
     return (
         <>
             <div className='bg-gray-50 rounded-2xl w-full flex flex-col gap-6 p-6'>
@@ -140,6 +142,13 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails, editab
                         editable && <button
                             onClick={() => {
                                 setType("add")
+                                setFormData({
+                                    company_project_name: "",
+                                    duration: "",
+                                    industry: [],
+                                    job_title: "",
+                                    project_description: ""
+                                });
                                 setShowModal(true)
                             }}
                             className='bg-gray-200 border border-gray-300 flex flex-row items-center justify-center gap-2 rounded-full text-gray-900 py-2 px-4 text-sm font-bold group'
@@ -225,9 +234,10 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails, editab
                             <Dropdown
                                 id="rates"
                                 label={"Duration"}
+                                defaultValue={formData.duration}
                                 className="w-full flex-1"
                                 onChange={(value) => setFormData({ ...formData, duration: value })}
-                                options={[{ value: "0-5months", label: "<6 Months" }, { value: "6-12months", label: "6-12 Months" }, { value: "morethan12months", label: ">12 Months" }]}
+                                options={[{ value: "<6months", label: "<6 Months" }, { value: "6-12months", label: "6-12 Months" }, { value: ">12months", label: ">12 Months" }]}
                             />
                         </div>
                         <div className='flex flex-col w-full gap-4 mt-2'>
@@ -242,6 +252,7 @@ const DeveloperProfileExperience = ({ experience, loading, updateDetails, editab
                                 id="industry"
                                 label={"Industry"}
                                 className="w-full"
+                                defaultValues={Array.isArray(formData?.industry) ? formData?.industry : formData?.industry?.split(";")}
                                 options={industries}
                                 onChange={(selectedValues) => setFormData({ ...formData, industry: selectedValues })}
                             />

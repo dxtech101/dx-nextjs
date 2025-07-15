@@ -50,7 +50,7 @@ const DeveloperProfileDetailsForm = forwardRef(({
             "phone": personalDetails?.phone || "",
             "birth_date": personalDetails?.birthdate || "",
             "job_title": personalDetails?.job_title || "",
-            "work_year_experience": personalDetails?.work_experience || "",
+            "work_year_experience": personalDetails?.work_year_experience || "",
             "industry_experience": personalDetails?.industry_experience || "",
             "country": personalDetails?.country || "",
             "preferred_time_zone": personalDetails?.preferred_timezone || ""
@@ -61,9 +61,8 @@ const DeveloperProfileDetailsForm = forwardRef(({
         e.preventDefault();
 
         if (!validateForm(formData, errors, setErrors)) return;
-
+        setLoading(true);
         const profileUpdateData = new FormData();
-        console.log("formData.preferred_time_zone===>>>", formData.preferred_time_zone);
 
         if (formData.first_name) profileUpdateData.append("firstname", formData.first_name);
         if (formData.last_name) profileUpdateData.append("lastname", formData.last_name);
@@ -75,7 +74,7 @@ const DeveloperProfileDetailsForm = forwardRef(({
         if (formData.preferred_time_zone) profileUpdateData.append("preferred_timezone_c", formData.preferred_time_zone);
         if (selectedFile) profileUpdateData.append("profile_picture", selectedFile);
 
-        setLoading(true);
+
         try {
             const { results } = await updateProfile(profileUpdateData);
             if (results) {
@@ -89,8 +88,6 @@ const DeveloperProfileDetailsForm = forwardRef(({
             setLoading(false);
         }
     };
-
-    console.log("FormData===>>>", formData);
 
 
     return (
@@ -193,6 +190,7 @@ const DeveloperProfileDetailsForm = forwardRef(({
                             label={'Industry Experience'}
                             options={industries}
                             className=''
+                            defaultValues={Array.isArray(formData?.industry_experience) ? formData?.industry_experience : formData?.industry_experience?.split(",")}
                             // defaultValues={formData.industry_experience}
                             onChange={(selectedValues) => setFormData({ ...formData, industry_experience: selectedValues })}
                         />

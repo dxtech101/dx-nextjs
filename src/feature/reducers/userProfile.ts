@@ -10,9 +10,15 @@ const userProfileSlice = createSlice({
     addUserProfile: (state, action) => {
       return action.payload;
     },
+    updateUserIntroVideo: (state: any, action: any) => {
+      return {
+        ...state,
+        intro_video: action.payload,
+      };
+    },
   },
 });
 
-export const { addUserProfile } = userProfileSlice.actions;
+export const { addUserProfile, updateUserIntroVideo } = userProfileSlice.actions;
 
 export default userProfileSlice.reducer;

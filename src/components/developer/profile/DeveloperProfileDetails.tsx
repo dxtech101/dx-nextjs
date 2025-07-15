@@ -1,7 +1,7 @@
 "use client"
 import DeveloperProfileDetailsLoader from '@/components/loaders/DeveloperProfileDetailsLoader';
 import Modal from '@/components/modal/Modal';
-import { BriefcaseBusiness, CakeIcon, CodeIcon, MailIcon, MapPinned, PencilIcon, Phone, ShieldCheck, VideoIcon } from 'lucide-react';
+import { BriefcaseBusiness, CakeIcon, CodeIcon, MailIcon, MapPinned, PencilIcon, Phone, ShieldCheck, TimerIcon, VideoIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import DeveloperProfileDetailsForm from './DeveloperProfileDetailsForm';
@@ -61,6 +61,11 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails, certification
         icon: <CakeIcon className='w-5 h-5 text-purple-900' />,
         label: "DOB",
         value: personalDetails?.birthdate,
+        visible: ["Individual"]?.includes(userProfile?.role)
+    }, {
+        icon: <TimerIcon className='w-5 h-5 text-purple-900' />,
+        label: "Timezone",
+        value: personalDetails?.preferred_timezone,
         visible: ["Individual"]?.includes(userProfile?.role)
     }]
 
@@ -166,14 +171,14 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails, certification
                                 </div>
                             </>}
 
-                            <div className='grid grid-cols-2 lg:grid-cols-4 w-full gap-2 lg:gap-4 items-start justify-between'>
+                            <div className='grid grid-cols-2 lg:grid-cols-4 w-full gap-2 lg:gap-4  items-start justify-between'>
                                 {profileDetails?.map((item: any, index: any) => {
                                     return (
                                         <>
                                             {item?.value && item?.visible && (
                                                 <>
-                                                    <span key={index} className='inline-flex w-20 items-center gap-2 font-semibold'>
-                                                        {item?.icon}{item?.label}
+                                                    <span key={index} className='inline-flex w-fit items-center gap-2 font-semibold'>
+                                                        {item?.icon}{" "}{item?.label}
                                                     </span>
                                                     <span className='text-gray-800'>
                                                         {editable ? item?.value : obfuscateValue(item.label, item.value)}
@@ -192,7 +197,7 @@ const DeveloperProfileDetails = ({ personalDetails, updateDetails, certification
                 <Modal
                     header={"Edit Profile"}
                     setModal={setEditModal}
-                    loading={loading}
+                    loading={loadingUI}
                     isFooter={true}
                     size="lg"
                     formRef={formRef}

@@ -36,12 +36,9 @@ const WorkExperienceCard = (props: any) => {
             <InfoLabel label="Project Name" content={experience.company_project_name} />
 
             <div className='grid grid-cols-2 gap-4'>
-                <InfoLabel label="Salesforce Cloud(s)" content="Sales Cloud, Service Cloud" />
-                <InfoLabel label="Industry" content={experience.industry || "N/A"} />
-            </div>
-
-            <div className='grid grid-cols-2 gap-4'>
+                {/* <InfoLabel label="Salesforce Cloud(s)" content="Sales Cloud, Service Cloud" /> */}
                 <InfoLabel label="Duration" content={experience.duration || "N/A"} />
+                <InfoLabel label="Industry" content={experience.industry || "N/A"} />
             </div>
 
             <InfoLabel label="Work Experience Summary" content={experience.project_description || "N/A"} />
@@ -327,19 +324,19 @@ const WorkExperience = () => {
                             />
                         </div>
                         <div className='flex flex-col w-full gap-4 mt-2'>
-                            <MultiSelectDropdown
+                            {/* <MultiSelectDropdown
                                 id="salesforce_technologies"
                                 label={"Salesforce Skills"}
                                 className="w-full"
                                 defaultValues={formData.salesforce_technologies}
                                 options={salesforce_technologies}
                                 onChange={(selectedValues) => setFormData({ ...formData, salesforce_technologies: selectedValues })}
-                            />
+                            /> */}
                             <MultiSelectDropdown
                                 id="industry"
                                 label={"Industry"}
                                 className="w-full"
-                                defaultValues={type === "edit" ? formData?.industry?.split(";") : ""}
+                                defaultValues={type === "edit" ? Array.isArray(formData?.industry) ? formData?.industry : formData?.industry?.split(";") : ""}
                                 options={industries}
                                 onChange={(selectedValues) => setFormData({ ...formData, industry: selectedValues })}
                             />

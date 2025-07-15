@@ -8,7 +8,7 @@ interface DropdownProps {
     className?: string;
     options?: { value: string; label: string }[];
     onChange?: (value: string) => void;
-    defaultValues?: string;
+    defaultValues?: any
 }
 
 const MultiSelectDropdown: React.FC<DropdownProps> = ({
@@ -25,11 +25,10 @@ const MultiSelectDropdown: React.FC<DropdownProps> = ({
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (defaultValues) {
-            console.log("defaultValues::", defaultValues);
-            setSelectedValues(defaultValues)
+        if (defaultValues && Array.isArray(defaultValues)) {
+            setSelectedValues(defaultValues);
         }
-    }, [defaultValues])
+    }, [defaultValues]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
