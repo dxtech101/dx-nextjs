@@ -24,7 +24,7 @@ function DeveloperDashboardLayout({
     children: React.ReactNode;
 }>) {
     const userProfile = useSelector((state: any) => state.userProfile);
-    const [toggleSideBar, setToggleSideBar] = useState("true");
+    const [toggleSideBar, setToggleSideBar] = useState("false");
 
     const isUserOnboarded = userProfile.is_onboard;
 

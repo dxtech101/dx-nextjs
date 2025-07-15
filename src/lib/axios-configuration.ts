@@ -18,7 +18,7 @@ axios.interceptors.request.use(
     const token = Cookies.get("userToken");
     const access_token = token ? JSON.parse(token)?.access_token : null;
 
-    const excludedUrls = ["/users/enroll-user/", "/users/sign-in/", "/users/reset-password/"];
+    const excludedUrls = ["/users/enroll-user/", "/users/sign-in/", "/users/reset-password/", "/users/forgot-password/"];
 
     if (!excludedUrls.some((url) => config.url?.includes(url)) && access_token) {
       config.headers.Authorization = `JWT ${access_token}`;

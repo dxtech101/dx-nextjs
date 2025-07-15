@@ -1,7 +1,7 @@
 "use client"
 import FileUpload from '@/components/FileUpload';
 import Modal from '@/components/modal/Modal';
-import { addUserProfile } from '@/feature/reducers/userProfile';
+import { addUserProfile, updateUserIntroVideo } from '@/feature/reducers/userProfile';
 import { updateProfile } from '@/lib/service/user.service';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,8 @@ const DeveloperVideoProfile = ({ editable = true }) => {
     const [selectedFile, setSelectedFile] = useState<any>(null);
     const [loading, setLoading] = useState(false);
 
+    console.log(userProfile)
+    
 
     const handleUploadVideo = async (file: any) => {
         const profileUpdateData = new FormData();
@@ -22,6 +24,7 @@ const DeveloperVideoProfile = ({ editable = true }) => {
         try {
             const { results } = await updateProfile(profileUpdateData);
             if (results) {
+                dispatch(updateUserIntroVideo(results.user.intro_video));
                 setIsModalOpen(false);
             }
         } catch (error) {

@@ -22,7 +22,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   isRequired = false,
   error
 }: DropdownProps) => {
-  const [selectedValue, setSelectedValue] = useState<string>('');
+  const [selectedValue, setSelectedValue] = useState<any>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [dropdownDirection, setDropdownDirection] = useState<'down' | 'up'>('down');
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -92,7 +92,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       >
         <span className={`${selectedValue ? 'text-gray-700' : 'text-gray-500'} whitespace-nowrap truncate`}>
           {selectedValue
-            ? options.find((option) => option.value === selectedValue)?.label
+            ? selectedValue
             : 'Select an option...'}
         </span>
         <button
